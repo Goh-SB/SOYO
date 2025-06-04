@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+	<resultMap id="noticeResultSet" type="notice">
+		<id column="NOTICE_NO" property="noticeNo" />
+		<result column="NOTICE_TITLE" property="noticeTitle" />
+		<result column="NOTICE_DATE" property="noticeDate" />
+		<result column="STATUS" property="status" />
+		<result column="NOTICE_CONTENT" property="noticeContent" />
+		<result column="NOTICE_IMAGE" property="noticeImage" />
+	
+	</resultMap>
+
+
+	<select id="noticeListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM NOTICE
+	</select>
+
+	<select id="noticeList" resultMap="noticeResultSet">
+		SELECT NOTICE_NO
+		     , NOTICE_TITLE
+		     , NOTICE_DATE
+		     , STATUS
+		  FROM NOTICE
+		 ORDER BY NOTICE_NO DESC
+	</select>
+	
+	
+	<update id="noticeDelete" parameterType="_int">
+		UPDATE NOTICE
+		   SET STATUS = 'N'
+		 WHERE NOTICE_NO = #{noticeNo}
+		   AND STATUS = 'Y'
+	</update>
+
+	<update id="noticeRepair" parameterType="_int">
+		UPDATE NOTICE
+		   SET STATUS = 'Y'
+		 WHERE NOTICE_NO = #{noticeNo}
+		   AND STATUS = 'N'
+	</update>
+	
+	<select id="noticeDetail" parameterType="_int"
+								resultMap="noticeResultSet">
+		SELECT NOTICE_NO
+		     , NOTICE_TITLE
+		     , NOTICE_CONTENT
+		     , NOTICE_DATE 
+		     , NOTICE_IMAGE
+		  FROM NOTICE
+		 WHERE NOTICE_NO = #{noticeNo} 
+	
+	</select>
+
+</mapper>

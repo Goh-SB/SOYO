@@ -1,0 +1,16 @@
+#noticeDetail{
+
+    width : 70%;
+    margin : 0 auto; 
+
+}
+#noticeTitle{
+    font-size : 40px;
+}
+
+#notice-Detail-Table{
+    width : 100%;
+}
+#noticeContent{
+    font-size : 20px;
+}

@@ -1,0 +1,53 @@
+package com.kh.soyo.member.model.service;
+
+import java.util.ArrayList;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.member.model.dao.MemberDao;
+import com.kh.soyo.member.model.vo.Member;
+
+@Service
+public class MemberServiceImpl implements MemberService{
+
+	@Autowired
+	private MemberDao memberDao; 
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	@Override
+	public ArrayList<Member> MemberList(PageInfo pi) {
+		return memberDao.MemberList(sqlSession, pi);
+	}
+
+	@Override
+	public int memberListCount() {
+		return memberDao.memberListCount(sqlSession);
+	}
+
+	@Override
+	public int deleteMember(String memberId) {
+		return memberDao.deleteMember(sqlSession, memberId);
+	}
+
+	@Override
+	public int repairMember(String memberId) {
+		return memberDao.repairMember(sqlSession, memberId);
+	}
+
+	@Override
+	public Member memberDetail(String memberId) {
+		return memberDao.memberDetail(sqlSession,  memberId);
+	}
+
+	@Override
+	public int memberUpdateForm(Member m) {
+		return memberDao.memberUpdateForm(sqlSession, m);
+	}
+	
+
+}
