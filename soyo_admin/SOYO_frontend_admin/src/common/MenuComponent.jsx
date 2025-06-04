@@ -18,7 +18,7 @@ function MenuComponent() {
 
 
     let chatAlram = () => {
-
+        location.href = "https://dashboard.tawk.to/#/chat";
     };
 
 
