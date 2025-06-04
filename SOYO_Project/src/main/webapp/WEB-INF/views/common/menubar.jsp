@@ -310,7 +310,6 @@
 	        <ul class="user-submenu">
 	          <li style="cursor : none; margin-bottom: 10px;"><a><b>${ sessionScope.loginUser.memberName }</b>&nbsp;님</a></li>
 	          <li><a href="<c:url value='/member/logout' />">로그아웃</a></li>
-	          <li><a href="#">회원가입</a></li>
 	          <li><a href="#">주문 목록</a></li>
 	          <li><a href="#">마이페이지</a></li>
 	          <li><a href="#">최근 본 상품</a></li>

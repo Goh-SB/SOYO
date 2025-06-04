@@ -1,0 +1,28 @@
+#member-table {
+    width: 500px;
+    height: 600px;
+    margin: auto;
+}
+
+form button {
+    margin: auto;
+    display: inline-block;
+}
+
+#member-form {
+    width: 1000px;
+    height: 1200px;
+    margin: auto;
+}
+
+#updateBtn {
+    background-color: #E3E4FA;
+    border: none;
+    border-radius: 10px;
+}
+
+#listBtn {
+    background-color: #A8A8A8;
+    border: none;
+    border-radius: 10px;
+}
