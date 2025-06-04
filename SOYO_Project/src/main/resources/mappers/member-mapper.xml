@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<!-- 
+		MEMBER 테이블 각 컬럼값 -> 자바 Member 클래스 필드값으로 옮기기
+	-->
+	<resultMap type="member" id="memberResultSet">
+		<id column="MEMBER_ID" property="memberId" />
+		<result column="MEMBER_PWD" property="memberPwd" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="GENDER" property="gender" />
+		<result column="BIRTH_DATE" property="birthDate" />
+		<result column="EMAIL" property="email" />
+		<result column="PHONE" property="phone" />
+		<result column="ADDRESS" property="address" />
+		<result column="ENROLL_DATE" property="enrollDate" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+
+	<!-- 로그인용 쿼리문 -->
+	<select id="loginMember" parameterType="member"
+							 resultMap="memberResultSet">
+		SELECT *
+		  FROM MEMBER
+		 WHERE MEMBER_ID = #{memberId}
+		   AND MEMBER_PWD = #{memberPwd}
+		   AND STATUS = 'Y'
+	</select>
+
+</mapper>
