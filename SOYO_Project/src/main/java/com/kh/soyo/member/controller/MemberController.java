@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.soyo.board.model.service.MemberService;
+import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpSession;

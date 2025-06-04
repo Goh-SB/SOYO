@@ -146,9 +146,12 @@
 
     <!-- 항상 모든 페이지 상단에는 메뉴바가 보여지게끔 include -->
     <jsp:include page="../common/menubar.jsp" />
+    
+    <br><br><br>
 
     <div class="login-section">
         <div class="login-container">
+        
             <h1 class="login-title">환영합니다</h1>
             <p id="login-title-p">소요 계정에 로그인하세요</p>
             
@@ -174,6 +177,8 @@
             </form>
         </div>
     </div>
+    
+    <br>
 
     <!-- 항상 모든 페이지 하단에는 푸터가 보여지게끔 include -->
     <jsp:include page="../common/footer.jsp" />
