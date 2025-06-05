@@ -21,11 +21,33 @@ public class PortOneController {
 	
     @PostMapping("/cancelPayment")
     @ResponseBody
-    public String handleCancelPayment(@RequestBody Map<String, Object> data) {
-    		
-    	 String impUid = (String) data.get("imp_uid");
-    	    String reason = (String) data.get("reason");
-    	    return cancelPayment(impUid, reason);
+    public Map<String, Object> handleCancelPayment(@RequestBody Map<String, Object> data) {
+        String impUid = (String) data.get("imp_uid");
+        String reason = (String) data.get("reason");
+
+        String apiResponse = cancelPayment(impUid, reason);
+
+        Map<String, Object> result = new HashMap<>();
+        try {
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            Map<String, Object> jsonMap = mapper.readValue(apiResponse, Map.class);
+
+            Object codeObj = jsonMap.get("code");
+            int code = (codeObj instanceof Number) ? ((Number) codeObj).intValue() : -1;
+
+            if (code == 0) {
+                result.put("success", true);
+                result.put("message", "환불 성공");
+            } else {
+                result.put("success", false);
+                result.put("message", jsonMap.get("message"));
+            }
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "응답 파싱 오류: " + e.getMessage());
+        }
+
+        return result;
     }
 
     public String getPortOneAccessToken() {
