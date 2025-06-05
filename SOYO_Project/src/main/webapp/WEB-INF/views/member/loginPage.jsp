@@ -15,7 +15,7 @@
 
         body {
             margin: 0;
-            background-color: #E3E4FA;
+            background: linear-gradient(135deg, #f5f6fd 0%, #f8f9ff 100%);
         }
 
         .wrapper {

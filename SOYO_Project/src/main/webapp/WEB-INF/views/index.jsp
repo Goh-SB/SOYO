@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,7 +12,7 @@
     <style>
         :root {
             --primary-color: #F9F3FF;
-            --color1: #91a2aa;
+            --color1: #98acb6 !important;
             --color2: #F4A6A6;
             --color3: #F6E5AC;
             --color4: #F8F8F8;
@@ -229,6 +230,11 @@
             </div>
         </section>
 
+		<!-- 테스트용 코드. 테스트 완료 후 지우기 -->
+		<form action="<c:url value='/product/productDetail' />" method="get">
+		  <button type="submit" style="padding: 20px; margin-left: 820px">상품 상세보기 테스트 페이지 - 삭제 예정</button>
+		</form>
+
         <section class="featured-products">
             <h2>추천 상품</h2>
             <div class="product-grid">
@@ -256,8 +262,8 @@
         <section class="about">
             <h2>소요의 이야기</h2>
             <div class="about-content">
-                <p>한복의 아름다움을 현대적으로 재해석한 소요는,
-                   전통과 현대를 넘어서<br>새로운 패션 트렌드를 제시합니다.</p>
+                <p>한복의 아름다움을 감각적으로 재해석한 소요.<br>
+				   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
                 <a href="#about" class="cta-button">더 알아보기</a>
             </div>
         </section>
