@@ -29,8 +29,6 @@ function MenuComponent() {
                     <img id="logo" width="60" height="60" src="../../resources/soyo-logo.png"
                         onClick={() => { navigate("/") }} />
                     <div className='side-menu-content link-menu'
-                         onClick={ () => {navigate("/")}}>
-                          HOME
                         onClick={() => { navigate("/") }}>
                         HOME
 
