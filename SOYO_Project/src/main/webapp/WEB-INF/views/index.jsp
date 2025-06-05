@@ -12,7 +12,7 @@
     <style>
         :root {
             --primary-color: #F9F3FF;
-            --color1: #91a2aa;
+            --color1: #98acb6 !important;
             --color2: #F4A6A6;
             --color3: #F6E5AC;
             --color4: #F8F8F8;
@@ -262,8 +262,8 @@
         <section class="about">
             <h2>소요의 이야기</h2>
             <div class="about-content">
-                <p>한복의 아름다움을 현대적으로 재해석한 소요는,
-                   전통과 현대를 넘어서<br>새로운 패션 트렌드를 제시합니다.</p>
+                <p>한복의 아름다움을 감각적으로 재해석한 소요.<br>
+				   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
                 <a href="#about" class="cta-button">더 알아보기</a>
             </div>
         </section>
