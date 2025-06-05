@@ -49,22 +49,22 @@
     }
 
     body {
-      font-family: 'Noto Sans KR', sans-serif !important;
-      line-height: 1.6 !important;
-      color: #333 !important;
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.6;
+      color: #333;
     }
 
 	.navbar {
-	  background-color: var(--primary-color) !important;
+	  background-color: var(--primary-color);
 	  padding: 0.7rem 5%;
-	  display: flex !important;
-	  justify-content: space-between !important;
-	  align-items: center !important;
-	  position: fixed !important;
-	  width: 100% !important;
-	  top: 0 !important;
-	  z-index: 1000 !important;
-	  box-shadow: 0 2px 5px rgba(0,0,0,0.15) !important;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  position: fixed;
+	  width: 100%;
+	  top: 0;
+	  z-index: 1000;
+	  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 	  font-family: 'S-CoreDream', sans-serif;
 	  font-size: 21px;
 	}
@@ -130,7 +130,7 @@
 
     .submenu a:hover {
       background-color: var(--color1);
-      color: rgb(54, 54, 54);
+      color: rgb(54, 54, 54) !important;
     }
 
 	.nav-links a {
@@ -222,12 +222,6 @@
 
     #menu {
       cursor: none;
-    }
-
-    nav.navbar .nav-links a {
-      color: var(--color5) !important;
-      opacity: 1 !important;
-      filter: none !important;
     }
 
   </style>
