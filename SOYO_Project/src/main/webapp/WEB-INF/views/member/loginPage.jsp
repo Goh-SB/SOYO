@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -91,7 +92,7 @@
         .form-control:not(:placeholder-shown) + .form-label {
             top: 0;
             font-size: 0.8rem;
-            color: #E3E4FA;
+            color: #9798a8;
         }
 
         .remember-me {
@@ -158,17 +159,23 @@
             <!-- 로그인 전에 보여지는 로그인 폼 -->
             <form action="${pageContext.request.contextPath}/member/login" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="memberId" name="memberId" placeholder=" ">
+                    <input type="text" class="form-control" id="memberId" name="memberId" placeholder=" " required
+                    value="${ cookie.saveId.value }">
                     <label class="form-label" for="memberId">아이디</label>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="memberPwd" name="memberPwd" placeholder=" ">
+                    <input type="password" class="form-control" id="memberPwd" name="memberPwd" placeholder=" " required>
                     <label class="form-label" for="memberPwd">비밀번호</label>
                 </div>
+                
+                <!-- 아이디 저장 체크박스 구성 -->
                 <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">아이디 저장</label>
+                    <input type="checkbox" id="saveId"
+                    	   name="saveId" value="y"
+                    	   <c:if test="${not empty cookie.saveId.value}">checked</c:if>>
+                    <label for="saveId">아이디 저장</label>
                 </div>
+                
                 <button type="submit" class="login-button">로그인</button>
                 <div class="additional-links">
                     <a href="#">회원가입</a>
@@ -184,5 +191,6 @@
     <jsp:include page="../common/footer.jsp" />
 
 </div>
+
 </body>
 </html>

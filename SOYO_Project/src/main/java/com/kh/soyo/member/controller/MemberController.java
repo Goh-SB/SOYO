@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -26,7 +28,39 @@ public class MemberController {
 	
 	// 로그인 요청 처리용 메서드
 	@PostMapping("/login")
-	public String loginMember(Member m, Model model, HttpSession session) {
+	public String loginMember(Member m, Model model,
+			String saveId, HttpSession session,
+			HttpServletResponse response) {
+		
+		// 로그인 처리 전 쿠키 사용하여 아이디 저장
+		if(saveId != null && saveId.equals("y")) {
+			// > 아이디 저장 OK (키 + 밸류 세트로 아이디를 쿠키에 저장)
+			
+			Cookie cookie = new Cookie("saveId", m.getMemberId());
+			
+			// 1 일 동안 저장할 수 있게끔 만료 설정 (초단위)
+			cookie.setMaxAge(1 * 24 * 60 * 60);
+			
+			// 쿠키 데이터가 이 웹사이트 전역에서 모두 정확하게 활용 가능하게끔
+			cookie.setPath("/soyo/");
+			
+			// 응답정보로 브라우저에 쿠키 저장
+			response.addCookie(cookie);
+			
+		} else { // 저장 X
+		    // 기존 쿠키 완전 삭제
+		    Cookie cookie = new Cookie("saveId", null);
+		    cookie.setMaxAge(0);
+		    cookie.setPath("/soyo/");
+		    response.addCookie(cookie);
+		    
+		    // 추가로 빈 값 쿠키도 설정 (브라우저 호환성)
+		    Cookie emptyCookie = new Cookie("saveId", "");
+		    emptyCookie.setMaxAge(0);
+		    emptyCookie.setPath("/soyo/");
+		    response.addCookie(emptyCookie);
+		}
+		
 		
 		// VO 객체를 서비스로 전달하면서 요청 후 결과 받기
 		Member loginUser = memberService.loginMember(m);
