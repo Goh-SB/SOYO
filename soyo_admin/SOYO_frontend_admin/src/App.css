@@ -1,10 +1,11 @@
-#main{
-    width : 1600px;
-    height : 1500px;
-    margin : auto;
+#main {
+    width: 1600px;
+    height: 1500px;
+    margin: auto;
+
 }
 
-.list-table{
-    margin : auto;
-    width:1400px;
+.list-table {
+    margin: auto;
+    width: 1400px;
 }

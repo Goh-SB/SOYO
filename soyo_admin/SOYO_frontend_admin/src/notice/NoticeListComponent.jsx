@@ -55,7 +55,10 @@ function NoticeListComponent() {
                         <td>{item.noticeTitle}</td>
                         <td>{item.noticeDate}</td>
                         <td>{item.status}  &nbsp;
-                            <button onClick={() => { deleteBtn(item.noticeNo) }}>
+                            <button onClick={(e) => { 
+                                    e.stopPropagation();
+                                    deleteBtn(item.noticeNo) 
+                                }}>
                                 삭제
                             </button>
                         </td>
@@ -66,13 +69,16 @@ function NoticeListComponent() {
             } else {
 
                 return (
-                    <tr key={index} onClick={ () => {navigate("/notice/detail" + item.noticeNo);} }>
+                    <tr key={index} onClick={ () => {navigate("/notice/detail/" + item.noticeNo);} }>
                         <td>{item.noticeNo}</td>
                         <td>{item.noticeTitle}</td>
                         <td>{item.noticeDate}</td>
                         <td>
                             {item.status} &nbsp;
-                            <button onClick={() => { repairBtn(item.noticeNo) }}>
+                            <button onClick={(e) => { 
+                                e.stopPropagation();
+                                repairBtn(item.noticeNo) 
+                                }}>
                                 복구
                             </button>
                         </td>
