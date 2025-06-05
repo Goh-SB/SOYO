@@ -23,6 +23,7 @@
 		SELECT *
 		  FROM MEMBER
 		 ORDER BY ENROLL_DATE DESC
+	
 	</select>
 	
 	<select id="memberListCount" resultType="_int">

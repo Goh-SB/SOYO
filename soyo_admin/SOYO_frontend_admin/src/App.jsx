@@ -29,7 +29,6 @@ function App() {
         <Route path="/notice/detail/:noticeNo" element={<NoticeDetailComponent />} />
         <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent /> } />
         <Route path="/delivery" element={<DeliveryComponent/>} />
-        
       </Routes>
       {/* footer? */}
 

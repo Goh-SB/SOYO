@@ -9,6 +9,7 @@
 		<result column="STATUS" property="status" />
 		<result column="NOTICE_CONTENT" property="noticeContent" />
 		<result column="NOTICE_IMAGE" property="noticeImage" />
+		<result column="NOTICE_TYPE" property="noticeType" />
 	
 	</resultMap>
 
@@ -22,6 +23,7 @@
 		SELECT NOTICE_NO
 		     , NOTICE_TITLE
 		     , NOTICE_DATE
+		     , NOTICE_TYPE
 		     , STATUS
 		  FROM NOTICE
 		 ORDER BY NOTICE_NO DESC
@@ -49,9 +51,23 @@
 		     , NOTICE_CONTENT
 		     , NOTICE_DATE 
 		     , NOTICE_IMAGE
+		     , NOTICE_TYPE
 		  FROM NOTICE
 		 WHERE NOTICE_NO = #{noticeNo} 
 	
 	</select>
+
+
+	<insert id="noticeEnrollForm" parameterType="notice">
+		INSERT INTO NOTICE VALUES (SEQ_NOTICE.NEXTVAL
+                        , #{noticeTitle}
+                        , #{noticeContent}
+                        , SYSDATE
+                        , #{noticeImage}
+                        , #{noticeType}
+                        , 'Y')
+	
+	</insert>
+	
 
 </mapper>

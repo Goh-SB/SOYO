@@ -27,15 +27,17 @@ function MenuComponent() {
             <div id="wrap">
                 <div id="side-menu" style={{ left: "-400px" }}>
                     <img id="logo" width="60" height="60" src="../../resources/soyo-logo.png"
-                            onClick={ () => { navigate("/")}} />
+                        onClick={() => { navigate("/") }} />
                     <div className='side-menu-content link-menu'
                          onClick={ () => {navigate("/")}}>
                           HOME
+                        onClick={() => { navigate("/") }}>
+                        HOME
 
                     </div>
                     <div className='side-menu-content link-menu'
-                        onClick={ () => {navigate("/member/list")}}>
-                            회원정보
+                        onClick={() => { navigate("/member/list") }}>
+                        회원정보
                     </div>
                     <div className='side-menu-content'>
                         상품 정보
@@ -44,11 +46,11 @@ function MenuComponent() {
                         문의
                     </div>
                     <div className='side-menu-content link-menu'
-                        onClick={ () => { navigate("/notice/list")}}>
-                            공지사항
+                        onClick={() => { navigate("/notice/list") }}>
+                        공지사항
                     </div>
                     <div className='side-menu-content'
-                        onClick={ () => { navigate("/delivery")}}>
+                        onClick={() => { navigate("/delivery") }}>
                         배송정보
                     </div>
 
@@ -60,7 +62,7 @@ function MenuComponent() {
                 <div id="top-menu-icon" align="center">
                     <span>
                         <img src="../../resources/soyo-logo.png"
-                            id="mainLogo" onClick={ ()=> { navigate("/")}} />
+                            id="mainLogo" onClick={() => { navigate("/") }} />
 
                         <span className="material-symbols-outlined"
                             onClick={hideSideMenu}
