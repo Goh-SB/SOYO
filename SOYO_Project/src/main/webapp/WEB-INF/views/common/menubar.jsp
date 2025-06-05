@@ -9,6 +9,15 @@
   <title>SOYO - MENUBAR</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  
+  <!-- alertify 연동하기 -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <!-- 테마 (옵션) -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+  <!-- JS -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  
   <style>
     :root {
       --primary-color: #F9F3FF;
@@ -45,33 +54,33 @@
       color: #333;
     }
 
-    .navbar {
-      background-color: var(--primary-color);
-      padding: 0.7rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      font-family: 'S-CoreDream', sans-serif;
-      font-size: 21px;
-    }
+	.navbar {
+	  background-color: var(--primary-color);
+	  padding: 0.7rem 5%;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  position: fixed;
+	  width: 100%;
+	  top: 0;
+	  z-index: 1000;
+	  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+	  font-family: 'S-CoreDream', sans-serif;
+	  font-size: 21px;
+	}
 
-    .logo h1 {
-      font-size: 2rem;
-      color: #C8A2C8;
-      font-family: 'HancomSans-Light', sans-serif;
-    }
+	.logo h1 {
+	  font-size: 2rem;
+	  color: #C8A2C8;
+	  font-family: 'HancomSans-Light', sans-serif;
+	}
 
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 5rem;
-      position: relative;
-    }
+	.nav-links {
+	  display: flex;
+	  list-style: none;
+	  gap: 5rem;
+	  position: relative;
+	}
 
     .heart-icon {
       color: #8d8d8d;
@@ -124,12 +133,12 @@
       color: rgb(54, 54, 54) !important;
     }
 
-    .nav-links a {
-      text-decoration: none;
-      color: var(--color5);
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
+	.nav-links a {
+	  text-decoration: none;
+	  color: var(--color5);
+	  font-weight: 500;
+	  transition: color 0.3s ease;
+	}
 
     .nav-links a:hover {
       color: var(--color2);
@@ -154,7 +163,7 @@
     }
 
     .nav-icons .user-dropdown {
-      position: relative; /* 기준 위치 */
+      position: relative;
       display: inline-block;
     }
 
@@ -278,11 +287,21 @@
       <li class="dropdown">
         <a id="menu">문의</a>
         <ul class="submenu">
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">관리자 문의</a></li>
+          <li><a href="<c:url value='/faq' />">FAQ</a></li>
+          <li><a href="#" id="admin-contact">관리자 문의</a></li>
         </ul>
       </li>
     </ul>
+    
+    <script>
+	  document.getElementById("admin-contact").addEventListener("click", function(e) {
+	    e.preventDefault(); // a 태그의 기본 동작(페이지 이동) 막기
+	    alertify.alert(
+	    		"관리자 문의 안내",
+	    		"문의 사항이 있으신 경우, 화면 우측 하단의 채팅 아이콘을<br>통하여 관리자에게 연락하실 수 있습니다."
+	    		);
+	  });
+	</script>
     
     
 	<!-- 관리자 문의 스크립트 -->
@@ -298,10 +317,6 @@
 		})();
 	</script>
 	
-		    
-    
-    
-    
     
     <c:choose>
     <c:when test="${ empty sessionScope.loginUser }">
