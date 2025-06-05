@@ -173,7 +173,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(10px);
       background-color: white;
-      min-width: 150px;
+      min-width: 120px;
       border-radius: 12px;
       box-shadow: 0 0px 10px rgba(0,0,0,0.25);
       z-index: 1000;
@@ -211,6 +211,7 @@
       white-space: nowrap;
       width: 100%;
       border-radius: 0;
+      font-size: 1.2rem;
     }
 
     .user-submenu a:hover {
