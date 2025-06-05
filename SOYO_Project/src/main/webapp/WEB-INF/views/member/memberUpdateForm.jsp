@@ -135,7 +135,7 @@
                     <table>
                         
                         <tr>
-                        	<td colspan="2"><input type="hidden" name="memberId" value="${ sessionScope.loginUser.memberId }" ></td>
+                        	<td colspan="3"><input type="hidden" name="memberId" value="${ sessionScope.loginUser.memberId }" ></td>
                         </tr>
                         <tr>
                             <th width="200px">이름</th>
@@ -144,8 +144,8 @@
                         <tr>
                         	<th>성별</th>
                         	<td style="padding: 10px; font-size: 17px;">
-                        		<input name="gender" type="radio" style="width: 20px; height: 20px;" value="M">&nbsp;남
-                                <input name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F">&nbsp;여
+                        		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M">&nbsp;남
+                                <input id="genderF" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F">&nbsp;여
                         	</td>
                         </tr>
                         <tr>
@@ -179,5 +179,14 @@
     </div>
     <jsp:include page="../common/footer.jsp" />
 </body>
-</body>
+<script>
+
+    if("${sessionScope.loginUser.gender}" == 'M') {
+        document.getElementById("genderM").checked = true;
+        // console.log("${sessionScope.loginUser.gender}");
+
+    } else if("${sessionScope.loginUser.gender} == 'F'"){
+        document.getElementById("genderF").checked = true;
+    }
+</script>
 </html>

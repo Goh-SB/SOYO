@@ -127,7 +127,7 @@ public class MemberController {
 	// 내 정보 변경시 실행할 메소드
 	@PostMapping("update")
 	public String updateMember(Member m, HttpSession session) {
-		// System.out.println(m);
+		System.out.println(m);
 		
 		// 정보 바꾸고 오기
 		int result = memberService.updateMember(m);
