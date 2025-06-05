@@ -35,7 +35,7 @@ function NoticeListComponent() {
             }
         }).then((response) => {
 
-
+            console.log(response.data)
             setState(response.data);
 
 
@@ -50,39 +50,43 @@ function NoticeListComponent() {
         const trArr = data.list.map((item, index) => {
             if (item.status == 'Y') {
                 return (
-                    <tr key={index} onClick={ () => { navigate("/notice/detail/" + item.noticeNo); } }>
+                    <tr key={index} onClick={() => { navigate("/notice/detail/" + item.noticeNo); }}>
                         <td>{item.noticeNo}</td>
-                        <td>{item.noticeTitle}</td>
+                        <td>&#91;{item.noticeType}&#93;&nbsp;{item.noticeTitle}</td>
                         <td>{item.noticeDate}</td>
                         <td>{item.status}  &nbsp;
-                            <button onClick={(e) => { 
-                                    e.stopPropagation();
-                                    deleteBtn(item.noticeNo) 
-                                }}>
+                            <button onClick={(e) => {
+                                e.stopPropagation();
+                                deleteBtn(item.noticeNo)
+                            }}>
                                 삭제
                             </button>
                         </td>
-                        <td>{(item.noticeImage != null) ? "*" : ""}</td>
+                        <td>{(item.noticeImage == null) ? "" : <span class="material-symbols-outlined">
+                            imagesmode
+                        </span>}</td>
 
                     </tr>
                 );
             } else {
 
                 return (
-                    <tr key={index} onClick={ () => {navigate("/notice/detail/" + item.noticeNo);} }>
+                    <tr key={index} onClick={() => { navigate("/notice/detail/" + item.noticeNo); }}>
                         <td>{item.noticeNo}</td>
-                        <td>{item.noticeTitle}</td>
+                        <td>&#91;{item.noticeType}&#93;&nbsp;{item.noticeTitle}</td>
                         <td>{item.noticeDate}</td>
                         <td>
                             {item.status} &nbsp;
-                            <button onClick={(e) => { 
+                            <button onClick={(e) => {
                                 e.stopPropagation();
-                                repairBtn(item.noticeNo) 
-                                }}>
+                                repairBtn(item.noticeNo)
+                            }}>
                                 복구
                             </button>
                         </td>
-                        <td>{(item.noticeImage != null) ? "*" : ""}</td>
+                        <td>{(item.noticeImage == null) ? "" : <span class="material-symbols-outlined">
+                            imagesmode
+                        </span>}</td>
 
                     </tr>
                 );
@@ -191,18 +195,18 @@ function NoticeListComponent() {
 
             <br /><br />
             <div>
-                <button onClick={ () => {navigate("/notice/enrollForm");}}>
+                <button onClick={() => { navigate("/notice/enrollForm"); }}>
                     작성하기
                 </button>
             </div>
-            <table className="table list-table">
+            <table className="table list-table table-hover">
                 <thead>
                     <tr>
                         <th>글번호</th>
                         <th>제목</th>
                         <th>작성일</th>
                         <th>상태</th>
-                        <th>첨부파일 여부</th>
+                        <th>이미지</th>
                     </tr>
                 </thead>
                 <tbody>

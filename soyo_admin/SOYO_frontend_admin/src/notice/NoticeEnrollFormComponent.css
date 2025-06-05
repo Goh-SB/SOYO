@@ -1,0 +1,11 @@
+#noticeContent{
+    resize : none;
+    height : 400px;
+}
+#selectOption{
+    width : 150px;
+    height : 40px;
+    font-size : 26px;
+    display : block;
+    float : left;
+}

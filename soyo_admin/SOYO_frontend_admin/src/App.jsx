@@ -10,12 +10,13 @@ import NoticeDetailComponent from './notice/NoticeDetailComponent';
 import NoticeEnrollFormComponent from './notice/NoticeEnrollFormComponent';
 import DeliveryComponent from './delevery/DeliveryComponent';
 
+
 function App() {
 
 
   return (
     <div id="main">
-
+     
       {/* 메뉴 */}
       <MenuComponent />
       {/* content */}
