@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.soyo.board.model.dao.MemberDao;
 import com.kh.soyo.member.model.vo.Member;
@@ -28,9 +29,10 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public int updateMember(Member m) {
-		return 0;
+		return memberDao.updateMember(sqlSession, m);
 	}
 
 	@Override
