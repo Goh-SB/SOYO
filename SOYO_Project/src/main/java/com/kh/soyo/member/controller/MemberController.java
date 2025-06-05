@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
@@ -102,6 +103,36 @@ public class MemberController {
 		
 		return "redirect:/";
 		
+	}
+	
+	// 주문 목록 조회 페이지
+	@GetMapping("/myOrderPage")
+	public String myOrderListPage() {
+		return "member/myOrderPage";
+	}
+	
+	// 내 정보 조회 페이지 이동메소드
+	@GetMapping("/myInformation")
+	public String myInformation() {
+		
+		return "member/myInformation";
+	}
+	
+	// 내 정보 수정페이지 이동메소드
+	@GetMapping("/memberUpdateForm")
+	public String memberUpdateForm(){
+		return "member/memberUpdateForm";
+	}
+	
+	// 내 정보 변경시 실행할 메소드
+	@PostMapping("update")
+	public String updateMember(Member m, HttpSession session) {
+		// System.out.println(m);
+		
+		// 정보 바꾸고 오기
+		int result = memberService.updateMember(m);
+		
+		return "member/myInformation";
 	}
 	
 }

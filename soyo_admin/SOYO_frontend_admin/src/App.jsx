@@ -8,6 +8,7 @@ import NoticeListComponent from './notice/NoticeListComponent';
 import MemberDetailComponent from './member/MemberDetailComponent';
 import NoticeDetailComponent from './notice/NoticeDetailComponent';
 import NoticeEnrollFormComponent from './notice/NoticeEnrollFormComponent';
+import DeliveryComponent from './delevery/DeliveryComponent';
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
         <Route path="/member/detail/:memberId" element={<MemberDetailComponent />} /> 
         <Route path="/notice/detail/:noticeNo" element={<NoticeDetailComponent />} />
         <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent /> } />
+        <Route path="/delivery" element={<DeliveryComponent/>} />
+        
       </Routes>
       {/* footer? */}
 

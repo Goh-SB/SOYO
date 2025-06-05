@@ -47,8 +47,9 @@ function MenuComponent() {
                         onClick={ () => { navigate("/notice/list")}}>
                             공지사항
                     </div>
-                    <div className='side-menu-content'>
-                        test2
+                    <div className='side-menu-content'
+                        onClick={ () => { navigate("/delivery")}}>
+                        배송정보
                     </div>
 
                 </div>
