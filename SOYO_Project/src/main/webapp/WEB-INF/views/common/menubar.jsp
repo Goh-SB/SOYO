@@ -9,6 +9,15 @@
   <title>SOYO - MENUBAR</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  
+  <!-- alertify 연동하기 -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <!-- 테마 (옵션) -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+  <!-- JS -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  
   <style>
     :root {
       --primary-color: #F9F3FF;
@@ -279,11 +288,20 @@
         <a id="menu">문의</a>
         <ul class="submenu">
           <li><a href="#">FAQ</a></li>
-          <li><a href="#">관리자 문의</a></li>
+          <li><a href="#" id="admin-contact">관리자 문의</a></li>
         </ul>
       </li>
     </ul>
     
+    <script>
+	  document.getElementById("admin-contact").addEventListener("click", function(e) {
+	    e.preventDefault(); // a 태그의 기본 동작(페이지 이동) 막기
+	    alertify.alert(
+	    		"관리자 문의 안내",
+	    		"문의 사항이 있으신 경우, 화면 우측 하단의 채팅 아이콘을<br>통하여 관리자에게 연락하실 수 있습니다."
+	    		);
+	  });
+	</script>
     
 	<!-- 관리자 문의 스크립트 -->
 	<script type="text/javascript">
