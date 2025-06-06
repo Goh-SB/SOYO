@@ -16,7 +16,8 @@
 
         body {
             margin: 0;
-            background: linear-gradient(135deg, #f5f6fd 0%, #f8f9ff 100%);
+            background: url('<c:url value="/resources/images/login-bg.jpg" />') no-repeat center center fixed;
+            background-size: cover;
         }
 
         .wrapper {
@@ -33,10 +34,11 @@
         }
 
         .login-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(3px);
             padding: 2.5rem;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
             width: 100%;
             max-width: 480px;
         }
