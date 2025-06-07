@@ -19,6 +19,13 @@
             background: url('<c:url value="/resources/images/login-bg.jpg" />') no-repeat center center fixed;
             background-size: cover;
         }
+        
+        @font-face {
+            font-family: 'ONE-Mobile-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         .wrapper {
             display: flex;
@@ -37,8 +44,9 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(3px);
             padding: 2.5rem;
-            border-radius: 12px;
+            border-radius: 12px;    
             box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            font-family: 'ONE-Mobile-Regular';
             width: 100%;
             max-width: 480px;
         }
@@ -47,12 +55,12 @@
             text-align: center;
             color: #333;
             margin-bottom: 1rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 500;
         }
 
         #login-title-p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #666;
             text-align: center;
             margin-bottom: 2rem;
@@ -68,7 +76,7 @@
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
 
@@ -115,7 +123,7 @@
             border: none;
             border-radius: 6px;
             color: #333;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -134,7 +142,7 @@
         .additional-links a {
             color: #666;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 1.05rem;
             transition: color 0.3s ease;
         }
 
