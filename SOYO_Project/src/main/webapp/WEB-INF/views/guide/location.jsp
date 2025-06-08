@@ -203,7 +203,7 @@
             top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: var(--dark-purple);
+            background: #B19CD9;
             z-index: 2;
         }
 
@@ -225,48 +225,70 @@
 
         /* 왼쪽 상단 구역 */
         .building.surrounding-1 {
-            width: 50px;
-            height: 70px;
-            top: 20%;
-            left: 20%;
+            width: 45px;
+            height: 65px;
+            top: 15%;
+            left: 15%;
+            transform: rotate(-5deg);
         }
 
         .building.surrounding-2 {
-            width: 40px;
-            height: 60px;
+            width: 35px;
+            height: 50px;
             top: 25%;
-            left: 35%;
+            left: 30%;
+            transform: rotate(3deg);
         }
 
         /* 오른쪽 상단 구역 */
         .building.surrounding-3 {
-            width: 45px;
-            height: 65px;
-            top: 20%;
-            right: 20%;
+            width: 40px;
+            height: 70px;
+            top: 18%;
+            right: 15%;
+            transform: rotate(5deg);
         }
 
         .building.surrounding-4 {
-            width: 55px;
-            height: 75px;
-            top: 25%;
-            right: 35%;
+            width: 50px;
+            height: 60px;
+            top: 22%;
+            right: 30%;
+            transform: rotate(-3deg);
         }
 
         /* 왼쪽 하단 구역 */
         .building.surrounding-5 {
-            width: 35px;
-            height: 50px;
-            bottom: 20%;
-            left: 20%;
+            width: 42px;
+            height: 55px;
+            bottom: 25%;
+            left: 18%;
+            transform: rotate(2deg);
+        }
+
+        .building.surrounding-6 {
+            width: 38px;
+            height: 45px;
+            bottom: 30%;
+            left: 32%;
+            transform: rotate(-4deg);
         }
 
         /* 오른쪽 하단 구역 */
-        .building.surrounding-6 {
-            width: 40px;
-            height: 55px;
-            bottom: 20%;
-            right: 20%;
+        .building.surrounding-7 {
+            width: 44px;
+            height: 58px;
+            bottom: 28%;
+            right: 17%;
+            transform: rotate(3deg);
+        }
+
+        .building.surrounding-8 {
+            width: 36px;
+            height: 52px;
+            bottom: 32%;
+            right: 33%;
+            transform: rotate(-2deg);
         }
 
         .building-label {
@@ -295,7 +317,7 @@
             font-weight: bold;
         }
 
-        /* 마커 스타일 수정 */
+        /* 마커 스타일 */
         .location-marker {
             position: absolute;
             top: 45%;
@@ -312,7 +334,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: #FF6B6B;  /* 마커 색상 변경 */
+            background: #FF6B6B;
             border-radius: 50%;
             top: 0;
             left: 50%;
@@ -335,7 +357,7 @@
         .map-info {
             position: absolute;
             bottom: 20px;
-            left: 20px;
+            right: 20px;
             background: white;
             padding: 15px 20px;
             border-radius: 10px;
@@ -343,6 +365,7 @@
             max-width: 300px;
             transform: translateY(0);
             transition: transform 0.3s ease;
+            z-index: 5;
         }
 
         .map-info:hover {
@@ -533,6 +556,8 @@
                     <div class="building surrounding surrounding-4"></div>
                     <div class="building surrounding surrounding-5"></div>
                     <div class="building surrounding surrounding-6"></div>
+                    <div class="building surrounding surrounding-7"></div>
+                    <div class="building surrounding surrounding-8"></div>
                     <div class="building soyo"></div>
                     <div class="building station"></div>
                     <div class="building-label soyo">소요빌딩</div>
@@ -597,29 +622,6 @@
             virtualMap.scrollTop = scrollTop - walkY;
         });
 
-        // 모바일 터치 이벤트 지원
-        virtualMap.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].pageX - virtualMap.offsetLeft;
-            startY = e.touches[0].pageY - virtualMap.offsetTop;
-            scrollLeft = virtualMap.scrollLeft;
-            scrollTop = virtualMap.scrollTop;
-        });
-
-        virtualMap.addEventListener('touchend', () => {
-            isDragging = false;
-        });
-
-        virtualMap.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-            const x = e.touches[0].pageX - virtualMap.offsetLeft;
-            const y = e.touches[0].pageY - virtualMap.offsetTop;
-            const walkX = (x - startX) * 2;
-            const walkY = (y - startY) * 2;
-            virtualMap.scrollLeft = scrollLeft - walkX;
-            virtualMap.scrollTop = scrollTop - walkY;
-        });
     </script>
 </body>
 </html>
