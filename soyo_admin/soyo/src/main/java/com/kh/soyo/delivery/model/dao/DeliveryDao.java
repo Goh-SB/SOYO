@@ -16,6 +16,10 @@ public class DeliveryDao {
 
 	}
 
+	public Delivery deliveryDetail(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("deliveryMapper.deliveryDetail",orderNo);
+	}
+
 
 
 }

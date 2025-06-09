@@ -13,7 +13,7 @@ function DeliveryComponent() {
             url,
             method: "get"
         }).then((response) => {
-            
+            console.log(response);
             setDataList(response.data); // 화면에 출력할 데이터 저장
         }).catch(() => {
             console.log("❌ 주문내역 통신 실패");
@@ -21,7 +21,7 @@ function DeliveryComponent() {
     };
 
     useEffect(() => {
-        selectDelivery(); // ✅ 여기서 실행!
+        selectDelivery(); // 
     }, []);
 
     return (
@@ -44,7 +44,7 @@ function DeliveryComponent() {
                     {dataList.map((delivery, index) => (
                         <tr align="center" key={index} >
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderNo}</td>
-                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.receiverName}</td>
+                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.memberName}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.receiverPhone}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderDate}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}><span>{delivery.orderStatus}</span></td>

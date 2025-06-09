@@ -35,7 +35,7 @@ function NoticeListComponent() {
             }
         }).then((response) => {
 
-            console.log(response.data)
+            // console.log(response.data)
             setState(response.data);
 
 

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kh.soyo.board.model.dao.MemberDao;
+import com.kh.soyo.member.model.dao.MemberDao;
 import com.kh.soyo.member.model.vo.Member;
 
 @Service

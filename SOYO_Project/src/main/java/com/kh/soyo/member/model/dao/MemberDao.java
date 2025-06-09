@@ -1,4 +1,4 @@
-package com.kh.soyo.board.model.dao;
+package com.kh.soyo.member.model.dao;
 
 import java.util.HashMap;
 

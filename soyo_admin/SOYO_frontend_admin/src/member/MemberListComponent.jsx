@@ -24,7 +24,7 @@ function MemberListComponent() {
             selectMember();
 
         } else {
-
+            searchMember();
         }
 
 
@@ -179,13 +179,44 @@ function MemberListComponent() {
                 memberId
             }
         }).then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             selectMember();
         }).catch(() => {
             console.log("복구 실패");
         });
     };
 
+    const searchMember = (e) => {
+
+        let searchMenu = document.getElementById("searchMenu").value;
+        let searchText = document.getElementById("searchText").value;
+        let url = "http://localhost:8100/soyo/member/searchMember";
+        // console.log(searchMenu, searchText);
+
+        axios({
+            url,
+            method : "get",
+            params : {
+             searchMenu,
+             searchText,
+             cpage
+            }
+        }).then((response) => { 
+            // console.log(response.data)
+            setMember(response.data);
+        }).catch(() => { 
+            console.log("검색 통신 실패");
+        })
+    };
+
+
+    const searchClick = (e) => {
+        e.preventDefault();
+        let searchText = document.getElementById("searchText").value;
+        setKeyword(searchText);
+        setCpage(1);
+
+    };
 
     return (
 
@@ -212,13 +243,21 @@ function MemberListComponent() {
             <div align="center">
                 {pageList}
             </div>
-            <div>
-                <select id="">
-                    <option value=""></option>
-                    <option value=""></option>
-                    
-                </select>
-            </div>
+            <form>
+                <div id="searchBox">
+                    <br />
+                    <select id="searchMenu">
+                        <option value="memberId">아이디</option>
+                        <option value="memberName">이름</option>
+                    </select>
+                    &nbsp;
+                    <input type="search" id="searchText" />
+                    <button type="submit" id="searchBtn"
+                        onClick={searchClick}>
+                        검색
+                    </button>
+                </div>
+            </form>
         </div>
     );
 

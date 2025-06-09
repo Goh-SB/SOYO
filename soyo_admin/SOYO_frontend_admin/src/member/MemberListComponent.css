@@ -1,4 +1,36 @@
 h2{
     text-align: center;
 }
+tbody>tr:hover {
+    cursor : pointer;
+}
 
+#searchBox{
+    width : 400px;
+    margin : auto;
+    text-align: center;
+    position : relative;
+}
+#searchMenu, #searchText{
+    height : 50px;
+    padding : 5px;
+    border-radius : 10px;
+    
+}
+#searchText{
+    width : 80%;
+    padding : 10px;
+}
+#searchBtn{
+
+    background-color: white;
+    justify-content: center;
+    height : 40px;
+    float : right;
+    position : absolute;
+    right : 5px;
+    border-radius : 10px;
+    bottom : 5px;
+    border : none;
+}
+    
