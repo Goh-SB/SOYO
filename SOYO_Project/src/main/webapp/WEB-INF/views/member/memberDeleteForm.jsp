@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내 정보 관리</title>
+<title>회원 탈퇴</title>
 <style>
-	        .container{
+        .container{
             width: 1200px;
             margin: auto;
         }
@@ -89,7 +88,7 @@
             margin: 20px;
         }
         
-        .goUpdate{
+        #goUpdate{
         	width: 100px;
         	height: 30px;
         	margin-top: 30px;
@@ -116,7 +115,7 @@
 <jsp:include page="../common/menubar.jsp" />
 <div class="container">
         <div class="" id="myTitle">
-            마이페이지
+            회원탈퇴
         </div>
         <div class="" id="content">
             <div class="" id="left-Menu">
@@ -131,54 +130,22 @@
             </div>
             <div class="" id="myContent">
                 <div style="height: 5%; font-size: 30px; text-align: center;
-                padding: 15px;">내 정보</div>
-                <form action="" align="center">
+                padding: 15px;">회원탈퇴</div>
+                <form id="mydeleteForm" action="../member/delete" align="center" method="post" onsubmit="return deleteUser()">
                     <table>
-                        <tr height="40px">
+                        <tr>
                             <th width="200px">아이디</th>
                             <td width="400px">${ sessionScope.loginUser.memberId }</td>
                         </tr>
-                        <tr height="40px">
-                            <th>이름</th>
-                            <td>${ sessionScope.loginUser.memberName }</td>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td><input type="password" name="userPwd"></td>
                         </tr>
-                        <tr height="40px">
-                        	<th>성별</th>
-                        	<td style="padding: 10px; font-size: 17px; font: bold;">
-                        		<c:choose>
-                        			<c:when test="${ sessionScope.loginUser.gender =='M'}">남</c:when>
-                        			<c:when test="${ sessionScope.loginUser.gender =='F'}">여</c:when>
-                        			<c:otherwise>선택안함</c:otherwise>
-                        		</c:choose>
-                        	</td>
-                        </tr>
-                        <tr height="40px">
-                            <th>생년월일</th>
-                            <td>${ sessionScope.loginUser.birthDate }</td>
-                        </tr>
-                        <tr height="40px">
-                            <th>이메일</th>
-                            <td>${ sessionScope.loginUser.email }</td>
-                        </tr>
-                        <tr height="40px">
-                            <th>휴대전화번호</th>
-                            <td>${ sessionScope.loginUser.phone }</td>
-                        </tr>
-                        <tr height="40px">
-                            <th>주소</th>
-                            <td>${ sessionScope.loginUser.address }</td>
-                        </tr>
-                        <tr height="40px">
-                        	<th>가입일</th>
-                        	<td>${ sessionScope.loginUser.enrollDate }</td>
-                        </tr>
-                    
                     </table>
 
                     <div>
-                        <button type="button" class="goUpdate" onclick="updatePage();">수정하기</button>
-                        <button type="button" class="goUpdate" onclick="updatePwd();">비밀번호 변경</button>
-                        <button type="button" class="goUpdate" onclick="deletePage();">회원탈퇴</button>
+                        <button type="submit">탈퇴하기</button>
+                        <button type="button" onclick="history.back();">취소</button>
                     </div>
                     
                 </form>
@@ -187,19 +154,11 @@
             </div>
         </div>
     </div>
-    <jsp:include page="../common/footer.jsp" />
-    <script>
-        function updatePage() {
-            location.href = "../member/memberUpdateForm";
-        }
-
-        function deletePage() {
-            location.href = "../member/memberDeleteForm";
-        }
-
-        function updatePwd() {
-            location.href = "../member/memberPwdUpdateForm";
-        }
-    </script>
+<jsp:include page="../common/footer.jsp" />
+<script>
+    function deleteUser(){
+        return confirm("회원을 탈퇴하시겠습니까?");
+    }
+</script>
 </body>
 </html>

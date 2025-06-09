@@ -1,0 +1,21 @@
+#write-form{
+    width : 1400px;
+    height : 600px;
+    margin : auto;
+}
+#quillBtn{
+    float: right;
+    width : 90%;
+}
+#submitBtn{
+    width : 200px;
+    height : 40px;
+}
+#quill-title{
+    width : 800px;
+    height : 50px;
+    margin-bottom : 30px;
+    font-size : 25px;
+    font-weight: 800;
+    
+}

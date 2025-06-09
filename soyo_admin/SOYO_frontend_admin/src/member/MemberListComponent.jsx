@@ -224,7 +224,7 @@ function MemberListComponent() {
 
             <h2>회원 관리</h2>
             <br /><br />
-            <table className="table list-table table-hover">
+            <table className="table list-table table-hover member-table">
                 <thead>
                     <tr>
                         <th>아이디</th>

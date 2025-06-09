@@ -1,7 +1,4 @@
-h2{
-    text-align: center;
-}
-tbody>tr:hover {
+#member-table>tbody>tr:hover {
     cursor : pointer;
 }
 

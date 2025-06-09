@@ -1,7 +1,3 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-
 function DeliveryDetailComponent(){
 
     // 실행할 구문

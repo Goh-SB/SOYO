@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="productMapper">
+ 
+ 	<resultMap id="productResultSet" type="product">
+ 		<id column="PRODUCT_NO" property="productNo" />
+ 		<result column="PRODUCT_NAME" property="productName" />
+ 		<result column="PRODUCT_PRICE" property="productPrice" />
+ 		<result column="PRODUCT_CATEGORY" property="productCategory" />
+ 		<result column="PRODUCT_CAPTION" property="productCaption" />
+ 		<result column="PRODUCT_SUB_CAPTION" property="productSubCaption" />
+ 		<result column="PRODUCT_ORIGIN" property="productOrigin" />
+ 		<result column="PRODUCT_CHANGE" property="productChange" />
+ 		<result column="PRODUCT_COUNT" property="productCount" />
+ 		<result column="PRODUCT_REGISTERED_DATE" property="productRegisteredDate" />
+ 		<result column="STATUS" property="status" />
+ 		<result column="PRODUCT_SIZE_NO" property="productSizeNo" />
+ 	
+ 	</resultMap>
+ 
+ 
+ 	<select id="productListCount" resultType="_int">
+ 		SELECT COUNT(*)
+ 		  FROM PRODUCT
+ 	</select>
+ 
+ 	<select id="productList" resultMap="productResultSet" >
+ 		SELECT PRODUCT_NO,
+ 			   PRODUCT_NAME,
+ 			   PRODUCT_PRICE,
+ 			   PRODUCT_CATEGORY,
+ 			   PRODUCT_CAPTION,
+ 			   PRODUCT_ORIGIN,
+ 			   PRODUCT_CHANGE,
+ 			   PRODUCT_COUNT,
+ 			   STATUS,
+ 			   PRODUCT_SIZE_NO
+ 		FROM PRODUCT
+ 	   ORDER BY PRODUCT_NO DESC
+ 	</select>
+ 
+ 
+</mapper>

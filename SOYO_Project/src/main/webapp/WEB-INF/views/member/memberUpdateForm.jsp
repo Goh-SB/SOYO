@@ -142,6 +142,9 @@
                             <td width="400px"><input name="memberName" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
                         </tr>
                         <tr>
+                            <td><input type="password" name="memberPwd" value="${ sessionScope.loginUser.memberPwd }" style="display: none;"></td>
+                        </tr>
+                        <tr>
                         	<th>성별</th>
                         	<td style="padding: 10px; font-size: 17px;">
                         		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M">&nbsp;남
@@ -169,6 +172,7 @@
 
                     <div id="buttondiv">
                         <button type="submit">수정완료</button>
+                        <button type="button" onclick="history.back();">취소</button>
                     </div>
                     
                 </form>
@@ -181,6 +185,7 @@
 </body>
 <script>
 
+    // 라디오버튼 성별 체크표시를 위한 스크립트
     if("${sessionScope.loginUser.gender}" == 'M') {
         document.getElementById("genderM").checked = true;
         // console.log("${sessionScope.loginUser.gender}");

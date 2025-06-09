@@ -20,7 +20,6 @@
 	    
 	    <result property="memberName" column="MEMBER_NAME" />
 	</resultMap>
-	
 	<select id="deliveryList" resultMap="deliveryResultSet">
 	SELECT O.*,
 	       M.MEMBER_NAME

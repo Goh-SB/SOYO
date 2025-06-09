@@ -1,6 +1,7 @@
 package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMember(sqlSession, m);
 	}
 
+	@Transactional
 	@Override
 	public int deleteMember(String memberId) {
-		return 0;
+		return memberDao.deleteMember(sqlSession, memberId);
 	}
 
 	@Override
@@ -45,6 +47,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDao.loginMember(sqlSession, m);
 		
+	}
+
+	@Transactional
+	@Override
+	public int updatePwd(HashMap<String, String> hm) {
+		
+		return memberDao.updatePwd(sqlSession, hm);
 	}
 
 }

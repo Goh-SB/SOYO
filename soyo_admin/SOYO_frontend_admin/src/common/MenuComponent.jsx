@@ -58,7 +58,7 @@ function MenuComponent() {
             </div>
 
             <div id="top-menu">
-                <div id="top-menu-icon" align="center">
+                <div id="top-menu-icon">
                     <span>
                         <img src="../../resources/soyo-logo.png"
                             id="mainLogo" onClick={() => { navigate("/") }} />

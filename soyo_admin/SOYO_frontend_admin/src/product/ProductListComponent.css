@@ -1,3 +1,7 @@
+#product-table>tbody>tr{
+    display: inline-block;
+}
+
 .product-Object {
     text-align: center;
     width: 300px;
@@ -6,4 +10,8 @@
 
 .product-img {
     margin: auto;
+}
+#product-Write{
+    text-align : right;
+    width : 95%;
 }

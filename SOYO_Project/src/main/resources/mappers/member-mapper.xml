@@ -27,5 +27,32 @@
 		   AND MEMBER_PWD = #{memberPwd}
 		   AND STATUS = 'Y'
 	</select>
+	
+	<!-- 회원정보 수정용 쿼리문 -->
+	<update id="updateMember" parameterType="member">
+		UPDATE MEMBER
+			   SET MEMBER_NAME = #{memberName}
+	             , GENDER = #{gender}
+	             , BIRTH_DATE = #{birthDate}
+	             , EMAIL = #{email}
+			     , PHONE = #{phone}
+			     , ADDRESS = #{address}
+			 WHERE MEMBER_ID = #{memberId}
+			   AND STATUS = 'Y'
+	</update>
+	
+	<!-- 회원 삭제용 쿼리문 -->
+	<update id="deleteMember" parameterType="string">
+		UPDATE MEMBER SET STATUS = 'N'
+		    WHERE MEMBER_ID = #{memberId}
+		    AND STATUS = 'Y'
+	</update>
+	
+	<!-- 비밀번호 변경용 쿼리문 -->
+	<update id="updatePwd" parameterType="hashmap">
+		UPDATE MEMBER SET MEMBER_PWD = #{updatePwd}
+		    WHERE MEMBER_ID = #{memberId}
+		    AND STATUS = 'Y'
+	</update>
 
 </mapper>

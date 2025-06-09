@@ -1,5 +1,7 @@
 package com.kh.soyo.member.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,38 @@ public class MemberController {
 	public String showLoginPage() {
 		return "member/loginPage";
 	}
+	
+	// 주문 목록 조회 페이지
+	@GetMapping("/myOrderPage")
+	public String myOrderListPage() {
+		return "member/myOrderPage";
+	}
+	
+	// 내 정보 조회 페이지 이동메소드
+	@GetMapping("/myInformation")
+	public String myInformation() {
+		
+		return "member/myInformation";
+	}
+	
+	// 내 정보 수정페이지 이동메소드
+	@GetMapping("/memberUpdateForm")
+	public String memberUpdateForm(){
+		return "member/memberUpdateForm";
+	}
+	
+	// 회원 탈퇴페이지 이동메소드
+	@GetMapping("/memberDeleteForm")
+	public String memberDeleteForm() {
+		return "member/memberDeleteForm";
+	}
+	
+	// 비밀번호 변경페이지 이동 메소드
+	@GetMapping("/memberPwdUpdateForm")
+	public String memberPwdUpdateForm() {
+		return "member/memberPwdUpdateForm";
+	}
+	
 	
 	// 로그인 요청 처리용 메서드
 	@PostMapping("/login")
@@ -105,34 +139,121 @@ public class MemberController {
 		
 	}
 	
-	// 주문 목록 조회 페이지
-	@GetMapping("/myOrderPage")
-	public String myOrderListPage() {
-		return "member/myOrderPage";
-	}
-	
-	// 내 정보 조회 페이지 이동메소드
-	@GetMapping("/myInformation")
-	public String myInformation() {
-		
-		return "member/myInformation";
-	}
-	
-	// 내 정보 수정페이지 이동메소드
-	@GetMapping("/memberUpdateForm")
-	public String memberUpdateForm(){
-		return "member/memberUpdateForm";
-	}
 	
 	// 내 정보 변경시 실행할 메소드
 	@PostMapping("update")
-	public String updateMember(Member m, HttpSession session) {
-		System.out.println(m);
+	public ModelAndView updateMember(Member m, HttpSession session, ModelAndView mv) {
+		// System.out.println(m);
 		
 		// 정보 바꾸고 오기
 		int result = memberService.updateMember(m);
 		
-		return "member/myInformation";
+		if(result > 0) {
+			
+			Member updateMem = memberService.loginMember(m);
+			
+			session.setAttribute("loginUser", updateMem);
+			
+			session.setAttribute("alertMsg", "회원정보 변경 성공");
+			
+			mv.setViewName("redirect:/member/myInformation");
+			
+		} else {
+			
+			mv.addObject("alertMsg", "회원정보 변경 실패");
+			
+			mv.setViewName("member/loginPage");
+		}
+		
+		return mv;
+		
+		
+	}
+	
+	// 비밀번호 변경시 실행할 메소드
+	@PostMapping("updatePwd")
+	public String memberPwdUpdate(String originPwd, String updatePwd ,String checkPwd, HttpSession session) {
+		
+		// 세션에서 현재 접속중인 회원의 아이디 얻어오기
+		String userId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
+		// 비밀번호 비교를 위해 세션에서 비밀번호 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		// 일단 현재 사용중인 비밀번호가 맞는지 확인
+		// 암호화 작업을 안했기 때문에 일단은 단순 문자열 비교로 판단하기
+		if(loginUser.getMemberPwd().equals(originPwd)) { // 같을경우
+			
+			// 해시맵으로 묶어서 전달값 넘겨주기
+			HashMap<String, String> hm = new HashMap<>();
+			hm.put("memberId", userId);
+			hm.put("updatePwd", updatePwd);
+			
+			// 비밀번호 변경 진행
+			int result = memberService.updatePwd(hm);
+			
+			if(result > 0) { // 성공
+				
+				// 갱신된 회원 정보 세션에 다시 넣어 덮어씌워주기
+				Member m = new Member();
+				m.setMemberId(userId);
+				m.setMemberPwd(updatePwd);
+				
+				
+				Member updateMem = memberService.loginMember(m);
+				System.out.println(updateMem);
+				session.setAttribute("loginUser", updateMem);
+				
+				session.setAttribute("alertMsg", "비밀번호 변경 성공");
+				
+			} else { // 실패
+				 session.setAttribute("alertMsg", "비밀번호 변경 실패");
+			}
+			
+			
+		} else {
+			
+			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+		}
+		
+		return "redirect:/member/myInformation";
+	}
+	
+	// 인젝션 공격 막아야함
+	// 회원 탈퇴용 메소드
+	@PostMapping("delete")
+	public String deleteMember(String userPwd, HttpSession session) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		//loginUser에 세션값 담기
+		// System.out.println(loginUser);
+		
+		if(loginUser.getMemberPwd().equals(userPwd)) { // 성공시
+			// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가시 변경해야함)
+			
+			int result = memberService.deleteMember(loginUser.getMemberId());
+			// 회원탈퇴 시키고 오기
+			if(result > 0) { // 탈퇴 성공시
+				
+				session.setAttribute("alertMsg", "회원탈퇴 성공");
+				
+				session.removeAttribute("loginUser");
+				
+				return "redirect:/";
+				
+			} else { // 탈퇴 실패시
+				
+				session.setAttribute("alertMsg", "회원탈퇴 실패");
+				
+				return "common/errorPage";
+			}
+			
+		} else { // 실패시
+			session.setAttribute("alertMsg", "잘못된 비밀번호 입니다.");
+			
+			return "redirect:/member/myInformation";
+		}
+		
 	}
 	
 }

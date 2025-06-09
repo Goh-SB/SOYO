@@ -7,6 +7,4 @@ import com.kh.soyo.delivery.model.vo.Delivery;
 public interface DeliveryService {
 
 	 List<Delivery> deliveryList();
-
-	 Delivery deliveryDetail(int orderNo);
 }
