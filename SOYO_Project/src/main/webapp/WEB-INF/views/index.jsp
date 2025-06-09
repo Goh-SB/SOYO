@@ -254,8 +254,8 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             cursor: pointer;
             z-index: 10;
             display: flex;
