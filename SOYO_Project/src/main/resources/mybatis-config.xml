@@ -8,6 +8,8 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.soyo.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.soyo.cart.model.vo.Cart" alias="cart" />
+		<typeAlias type="com.kh.soyo.notice.model.vo.Notice" alias="notice" />
 	</typeAliases>
 
 </configuration>
