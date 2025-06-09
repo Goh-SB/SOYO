@@ -26,4 +26,24 @@ public class CartServiceImpl implements CartService {
 	public ArrayList<Cart> cartList(String memberId) {
 		return cartDao.cartList(sqlSession, memberId);
 	}
+
+	@Override
+	public int sumMoney(String memberId) {
+		return cartDao.sumMoney(sqlSession, memberId);
+	}
+
+	@Override
+	public int deleteCart(int cartNo) {
+		return cartDao.deleteCart(sqlSession, cartNo);
+	}
+
+	@Override
+	public int deleteAllCart(String memberId) {
+		return cartDao.deleteAllCart(sqlSession, memberId);
+	}
+
+	@Override
+	public int modifyCart(Cart c) {
+		return cartDao.modifyCart(sqlSession, c);
+	}
 }
