@@ -25,8 +25,6 @@ function DeliveryDetailComponent(){
             method: "get"
 
         }).then((response) => {
-            console.log(response);
-            console.log("response.data", response.data);
 
             setDelivery(response.data); 
               
@@ -50,6 +48,7 @@ function DeliveryDetailComponent(){
                    style={{ width: "500px" , 
                             border: "1px solid black",
                             borderCollapse: "collapse",
+                            marginTop:"30px",
                             marginLeft:"150px",
                             marginRight: "100px",
                              }}
@@ -78,10 +77,6 @@ function DeliveryDetailComponent(){
                         <th>요청사항</th>
                         <td>{delivery.requestMsg}</td>
                     </tr>
-                                        <tr>
-                        <th>요청사항</th>
-                        <td>{delivery.orderStatus}</td>
-                    </tr>
                 </tbody>
             </table>
 
@@ -108,7 +103,6 @@ function DeliveryDetailComponent(){
                    <tr align="center">
                         <th width="250px">이미지</th>   
                         <th width="600px">상품명</th>
-                        <th width="130px">상품 사이즈</th>
                         <th width="130px">구매수량</th>
                         <th>가격</th>                       
                    </tr>
@@ -117,14 +111,12 @@ function DeliveryDetailComponent(){
                    <tr align="center">
                         <th width="250px">이미지1</th>
                         <th width="600px">상품명1</th>
-                        <th width="130px">상품 사이즈1</th>
-                        <th width="130px">구매수량1</th>
-                        <th>가격1</th>                       
+                        <th width="130px"></th>
+                        <th>{delivery.totalPrice}</th>                       
                    </tr>
                     <tr align="center">
                         <th width="250px">이미지1</th>
                         <th width="600px">상품명1</th>
-                        <th width="130px">상품 사이즈1</th>
                         <th width="130px">구매수량1</th>
                         <th>가격1</th>                       
                    </tr>
