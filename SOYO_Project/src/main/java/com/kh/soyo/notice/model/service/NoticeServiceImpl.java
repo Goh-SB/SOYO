@@ -32,8 +32,8 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Override
 	@Transactional
-	public int updateNotice(int noticeNo) {
-		return noticeDao.updateNotice(sqlSession, noticeNo);
+	public int updateNotice(Notice n) {
+		return noticeDao.updateNotice(sqlSession, n);
 	}
 
 	@Override
