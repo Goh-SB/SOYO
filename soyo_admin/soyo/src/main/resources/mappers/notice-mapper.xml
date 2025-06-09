@@ -25,6 +25,7 @@
 		     , NOTICE_DATE
 		     , NOTICE_TYPE
 		     , STATUS
+		     , NOTICE_IMAGE
 		  FROM NOTICE
 		 ORDER BY NOTICE_NO DESC
 	</select>

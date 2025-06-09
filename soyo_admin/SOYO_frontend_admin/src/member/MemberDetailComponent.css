@@ -4,7 +4,7 @@
     margin: auto;
 }
 
-form button {
+#member-form>button {
     margin: auto;
     display: inline-block;
 }

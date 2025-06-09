@@ -3,3 +3,7 @@
     margin : auto;
 
 }
+#notice-write-btn{
+    width : 95%;
+    text-align: right;
+}

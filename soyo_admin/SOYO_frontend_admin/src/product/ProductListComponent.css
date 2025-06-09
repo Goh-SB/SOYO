@@ -1,5 +1,4 @@
-tr {
-
+#product-table>tbody>tr{
     display: inline-block;
 }
 
@@ -11,4 +10,8 @@ tr {
 
 .product-img {
     margin: auto;
+}
+#product-Write{
+    text-align : right;
+    width : 95%;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import './NoticeListComponent.css';
 
 function NoticeListComponent() {
 
@@ -51,6 +52,7 @@ function NoticeListComponent() {
             if (item.status == 'Y') {
                 return (
                     <tr key={index} onClick={() => { navigate("/notice/detail/" + item.noticeNo); }}>
+                        
                         <td>{item.noticeNo}</td>
                         <td>&#91;{item.noticeType}&#93;&nbsp;{item.noticeTitle}</td>
                         <td>{item.noticeDate}</td>
@@ -62,9 +64,10 @@ function NoticeListComponent() {
                                 삭제
                             </button>
                         </td>
-                        <td>{(item.noticeImage == null) ? "" : <span class="material-symbols-outlined">
+                        <td>{(item.noticeImage == null) ? "" : <span className="material-symbols-outlined">
                             imagesmode
                         </span>}</td>
+                        
 
                     </tr>
                 );
@@ -84,7 +87,7 @@ function NoticeListComponent() {
                                 복구
                             </button>
                         </td>
-                        <td>{(item.noticeImage == null) ? "" : <span class="material-symbols-outlined">
+                        <td>{(item.noticeImage == null) ? "" : <span className="material-symbols-outlined">
                             imagesmode
                         </span>}</td>
 
@@ -194,11 +197,13 @@ function NoticeListComponent() {
             <h2>공지사항 목록</h2>
 
             <br /><br />
-            <div>
+            <div id="notice-write-btn">
                 <button onClick={() => { navigate("/notice/enrollForm"); }}>
                     작성하기
                 </button>
+
             </div>
+            <br />
             <table className="table list-table table-hover">
                 <thead>
                     <tr>
