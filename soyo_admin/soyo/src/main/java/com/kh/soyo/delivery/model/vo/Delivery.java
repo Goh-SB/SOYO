@@ -30,4 +30,6 @@ public class Delivery {
 	
 	private String addressName;
 	private String addressOther;
+	
+	private String memberName;
 }

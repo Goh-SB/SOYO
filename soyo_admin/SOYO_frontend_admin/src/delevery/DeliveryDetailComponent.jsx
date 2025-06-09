@@ -5,13 +5,16 @@ import axios from 'axios';
 function DeliveryDetailComponent(){
 
     // 실행할 구문
-    const [delivery,setDelivery]=useState({});
+    const [delivery,setDelivery]=useState({
+
+        status:''
+    });
     const orderNo= useParams().orderNo;
     let navigate = useNavigate();
 
     useEffect(() => {
-        deliveryDetail();
-    }, []);
+    deliveryDetail(); // 딱 한 번만 실행
+    }, []); 
 
     const deliveryDetail = ()=>{
 
@@ -22,8 +25,11 @@ function DeliveryDetailComponent(){
             method: "get"
 
         }).then((response) => {
-            console.log(response.data);
-             setDelivery(response.data); 
+            console.log(response);
+            console.log("response.data", response.data);
+
+            setDelivery(response.data); 
+              
         }).catch(() => {
             console.log("ajax 요청 실패");
         });
@@ -35,6 +41,8 @@ function DeliveryDetailComponent(){
             <h2>배송정보 상세 조회</h2>
 
             <br /><br />
+
+                 
 
             <div align="center">
             
@@ -48,7 +56,7 @@ function DeliveryDetailComponent(){
                    align="left">
                 <tbody align="center">
                     <tr>
-                        <th>이름</th>
+                        <th>수령인</th>
                         <td>{delivery.receiverName}</td>
                     </tr>
                     <tr>
@@ -70,38 +78,25 @@ function DeliveryDetailComponent(){
                         <th>요청사항</th>
                         <td>{delivery.requestMsg}</td>
                     </tr>
-                </tbody>
-            </table>
-
-            
-
-             <table className="table" 
-                   style={{ width: "800px" , 
-                            border: "1px solid black",
-                            borderCollapse: "collapse",
-                            padding:"30px"
-                             }}
-                   align="rights">
-                <tbody align="center">
-                    <tr>
-                        <th>이름</th>
-                        <td>홍길동</td>
-                    </tr>
-                    <tr>
-                        <th>주문번호</th>
-                        <td>123123</td>
-                    </tr>
-                    <tr>
-                        <th>배송지</th>
-                        <td>배송중학교</td>
-                    </tr>
-                    <tr>
-                        <th>배송완료일</th>
-                        <td>2025-06-09</td>
+                                        <tr>
+                        <th>요청사항</th>
+                        <td>{delivery.orderStatus}</td>
                     </tr>
                 </tbody>
             </table>
-            
+
+            <img src={  delivery.orderStatus == '배송전'
+            ? '/img/배송전1.png'
+            : delivery.orderStatus == '배송중'
+            ? '/img/배송중1.png'
+            : '/img/배송완료.png'
+            }
+            alt="배송 상태 트럭"
+            style={{ width: '700px'}}
+            />
+
+           
+       
             </div>
 
             <br /><br />
