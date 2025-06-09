@@ -21,7 +21,7 @@ function DeliveryComponent() {
     };
 
     useEffect(() => {
-        selectDelivery(); // ✅ 여기서 실행!
+        selectDelivery(); // 
     }, []);
 
     return (

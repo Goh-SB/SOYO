@@ -9,6 +9,7 @@ import MemberDetailComponent from './member/MemberDetailComponent';
 import NoticeDetailComponent from './notice/NoticeDetailComponent';
 import NoticeEnrollFormComponent from './notice/NoticeEnrollFormComponent';
 import DeliveryComponent from './delevery/DeliveryComponent';
+import DeliveryDetailComponent from './delevery/DeliveryDetailComponent';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/notice/detail/:noticeNo" element={<NoticeDetailComponent />} />
         <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent /> } />
         <Route path="/delivery" element={<DeliveryComponent/>} />
+        <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent/>} />
       </Routes>
       {/* footer? */}
 
