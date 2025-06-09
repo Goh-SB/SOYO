@@ -27,4 +27,9 @@ public class Delivery {
 	private Date orderDate;
 	private String orderStatus;
 	private String memberId;
+	
+	private String addressName;
+	private String addressOther;
+	
+	private String memberName;
 }

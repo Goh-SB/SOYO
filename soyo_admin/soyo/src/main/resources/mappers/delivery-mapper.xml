@@ -14,10 +14,37 @@
 	    <result property="orderDate" column="ORDER_DATE" />
 	    <result property="orderStatus" column="ORDER_STATUS" />
 	    <result property="memberId" column="MEMBER_ID" />
+	    
+	    <result property="addressName" column="ADDRESS_NAME" />
+	    <result property="addressOther" column="ADDRESS_OTHER"/>
+	    
+	    <result property="memberName" column="MEMBER_NAME" />
 	</resultMap>
 	<select id="deliveryList" resultMap="deliveryResultSet">
-		SELECT *
-		FROM ORDER_TB
-		 
+	SELECT O.*,
+	       M.MEMBER_NAME
+	  FROM ORDER_TB O
+	  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID 
+	</select>
+	
+	<select id="deliveryDetail" parameterType="_int"
+								resultMap="deliveryResultSet">
+		SELECT  O.ORDER_NO,
+			    O.ORDER_IMPNO,
+			    O.TOTAL_PRICE,
+			    O.RECEIVER_NAME,
+			    O.RECEIVER_PHONE,
+			    O.REQUEST_MSG,
+			    O.DELIVERY_DATE,
+			    O.CANCEL_DATE,
+			    O.ORDER_DATE,
+			    O.ORDER_STATUS,
+			    M.MEMBER_ID,
+			    D.ADDRESS_NAME,
+			    D.ADDRESS_OTHER
+		FROM ORDER_TB O
+		JOIN MEMBER M ON M.MEMBER_ID=O.MEMBER_ID
+		JOIN DELIVERY_ADDRESS D ON O.MEMBER_ID = D.MEMBER_ID
+		WHERE O.ORDER_NO = #{orderNo}
 	</select>
 </mapper> 

@@ -1,4 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
+	<!-- NOTICE 테이블 → Notice 객체 -->
+	<resultMap id="noticeResultSet" type="notice">
+		<id column="NOTICE_NO" property="noticeNo" />
+		<result column="NOTICE_TITLE" property="noticeTitle" />
+		<result column="NOTICE_WRITER" property="noticeWriter" />
+		<result column="NOTICE_CONTENT" property="noticeContent" />
+		<result column="NOTICE_DATE" property="noticeDate" />
+	</resultMap>
+	
+	<!-- 공지사항 목록 조회용 쿼리문 -->
+	<select id="noticeList" resultMap="noticeResultSet">
+		SELECT NOTICE_NO,
+			NOTICE_TITLE,
+			NOTICE_WRITER,
+			NOTICE_DATE
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+		ORDER BY NOTICE_NO DESC
+	</select>
+	
+	<!-- 공지사항 상세 조회용 쿼리문 -->
+	<select id="noticeDatail" parameterType="_int" 
+		resultMap="noticeResultSet">
+		SELECT NOTICE_NO,
+			NOTICE_TITLE,
+			NOTICE_WRITER,
+			NOTICE_CONTENT,
+			NOTICE_DATE
+		FROM NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
+			AND STATUS = 'Y'
+	</select>
+	
+	<!-- 공지사항 수정용 쿼리문 -->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE NOTICE
+		SET NOTICE_TITLE = #{noticeTitle},
+			NOTICE_CONTENT = #{noticeContent}
+		WHERE NOTICE_NO = #{noticeNo}
+			AND STATUS = 'Y'
+	</update>
+	
+	<!-- 공지사항 삭제용 쿼리문 -->
+	<update id="deleteNotice" parameterType="_int">
+		UPDATE NOTICE
+		SET STATUS = 'N'
+		WHERE NOTICE_NO = #{noticeNo}
+			AND STATUS = 'Y'
+	</update>
 </mapper>
