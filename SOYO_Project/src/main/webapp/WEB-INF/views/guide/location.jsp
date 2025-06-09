@@ -279,7 +279,7 @@
             width: 44px;
             height: 58px;
             bottom: 28%;
-            right: 17%;
+            right: 24%;
             transform: rotate(3deg);
         }
 
@@ -523,7 +523,7 @@
                     <span class="material-icons">location_on</span>
                     <div class="info-content">
                         <h3>주소</h3>
-                        <p>서울특별시 영등포구 당산동<br>소요빌딩</p>
+                        <p>서울특별시 영등포구 당산동<br>소요빌딩 19F</p>
                     </div>
                 </div>
                 
@@ -565,7 +565,7 @@
                     <div class="location-marker"></div>
                     <div class="map-info">
                         <h4>소요</h4>
-                        <p>서울특별시 영등포구 당산동<br>소요빌딩</p>
+                        <p>서울특별시 영등포구 당산동<br>소요빌딩 19F</p>
                     </div>
                 </div>
             </div>
