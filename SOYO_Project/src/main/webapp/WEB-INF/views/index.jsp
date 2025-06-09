@@ -26,6 +26,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -175,12 +182,14 @@
         .collections {
             padding: 5rem 10%;
             background-color: var(--primary-color);
+            font-family: 'NanumSquareRound', sans-serif;
         }
 
         .collections h2 {
             text-align: center;
             color: var(--color1);
             margin-bottom: 3rem;
+            font-size: 1.8rem;
         }
 
         .collection-grid {
@@ -198,18 +207,23 @@
 
         .collection-card img {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
         }
 
         .collection-card h3 {
             padding: 1rem;
             color: var(--color1);
+            text-align: center;
+            font-size: 1.4rem;
         }
 
         .collection-card p {
             padding: 0 1rem;
             color: var(--color5);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
         /* 캐러셀 스타일 */
@@ -357,17 +371,17 @@
             <h2>컬렉션</h2>
             <div class="collection-grid">
                 <div class="collection-card">
-                    <img src="https://via.placeholder.com/400x300" alt="컬렉션1">
+                    <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card1.png" alt="컬렉션1">
                     <h3>오방색 컬렉션</h3>
                     <p>전통 색상의 현대적 재해석</p>
                 </div>
                 <div class="collection-card">
-                    <img src="https://via.placeholder.com/400x300" alt="컬렉션2">
+                    <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card2.png" alt="컬렉션2">
                     <h3>모던 컬렉션</h3>
                     <p>세련된 현대 스타일</p>
                 </div>
                 <div class="collection-card">
-                    <img src="https://via.placeholder.com/400x300" alt="컬렉션3">
+                    <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card3.png" alt="컬렉션3">
                     <h3>웨딩 컬렉션</h3>
                     <p>전통과 현대의 조화</p>
                 </div>
