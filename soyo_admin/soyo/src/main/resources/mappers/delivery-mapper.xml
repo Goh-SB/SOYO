@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="deliveryMapper">
+
+	<resultMap id="deliveryResultSet" type="Delivery">
+	    <result property="orderNo" column="ORDER_NO" />
+	    <result property="orderImpNo" column="ORDER_IMPNO" />
+	    <result property="totalPrice" column="TOTAL_PRICE" />
+	    <result property="receiverName" column="RECEIVER_NAME" />
+	    <result property="receiverPhone" column="RECEIVER_PHONE" />
+	    <result property="requestMsg" column="REQUEST_MSG" />
+	    <result property="deliveryDate" column="DELIVERY_DATE" />
+	    <result property="cancelDate" column="CANCEL_DATE" />
+	    <result property="orderDate" column="ORDER_DATE" />
+	    <result property="orderStatus" column="ORDER_STATUS" />
+	    <result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+	<select id="deliveryList" resultMap="deliveryResultSet">
+		SELECT *
+		FROM ORDER_TB
+		 
+	</select>
+</mapper> 

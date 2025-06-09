@@ -38,6 +38,10 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.noticeDetail", noticeNo);
 	}
 
+	public int noticeEnrollForm(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.insert("noticeMapper.noticeEnrollForm", n);
+	}
+
 	
 	
 }

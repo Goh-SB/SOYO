@@ -17,5 +17,7 @@ public interface NoticeService {
 	int noticeRepair(int noticeNo);
 
 	Notice noticeDetail(int noticeNo);
+
+	int noticeEnrollForm(Notice n);
 	
 }

@@ -266,7 +266,7 @@
         }
 
         .product-description {
-            margin: 2rem 0;
+            margin-bottom: 0.5rem;
             line-height: 1.6;
         }
 
@@ -342,6 +342,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin: 2rem auto;
             padding: 2rem;
+            font-size: 1.1rem;
         }
 
         .review-container {
@@ -407,7 +408,7 @@
             display: flex;
             justify-content: space-between;
             color: var(--dark-gray);
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid #eee;

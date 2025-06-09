@@ -83,6 +83,7 @@ function MemberListComponent() {
                             }}>
                                 복구
                             </button>
+
                         </td>
                     </tr>
                 );
@@ -210,6 +211,13 @@ function MemberListComponent() {
             <br /><br />
             <div align="center">
                 {pageList}
+            </div>
+            <div>
+                <select id="">
+                    <option value=""></option>
+                    <option value=""></option>
+                    
+                </select>
             </div>
         </div>
     );

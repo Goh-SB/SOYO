@@ -47,5 +47,10 @@ public class NoticeServiceImpl implements NoticeService{
 	public Notice noticeDetail(int noticeNo) {
 		return noticeDao.noticeDatail(sqlSession, noticeNo);
 	}
+
+	@Override
+	public int noticeEnrollForm(Notice n) {
+		return noticeDao.noticeEnrollForm(sqlSession, n);
+	}
 	
 }

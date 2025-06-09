@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,7 +16,15 @@
 
         body {
             margin: 0;
-            background: linear-gradient(135deg, #f5f6fd 0%, #f8f9ff 100%);
+            background: url('<c:url value="/resources/images/login-bg.jpg" />') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        @font-face {
+            font-family: 'ONE-Mobile-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
 
         .wrapper {
@@ -32,10 +41,12 @@
         }
 
         .login-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(3px);
             padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;    
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            font-family: 'ONE-Mobile-Regular';
             width: 100%;
             max-width: 480px;
         }
@@ -44,12 +55,12 @@
             text-align: center;
             color: #333;
             margin-bottom: 1rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 500;
         }
 
         #login-title-p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #666;
             text-align: center;
             margin-bottom: 2rem;
@@ -65,7 +76,7 @@
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
 
@@ -91,7 +102,7 @@
         .form-control:not(:placeholder-shown) + .form-label {
             top: 0;
             font-size: 0.8rem;
-            color: #E3E4FA;
+            color: #9798a8;
         }
 
         .remember-me {
@@ -112,7 +123,7 @@
             border: none;
             border-radius: 6px;
             color: #333;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -131,7 +142,7 @@
         .additional-links a {
             color: #666;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 1.05rem;
             transition: color 0.3s ease;
         }
 
@@ -158,17 +169,23 @@
             <!-- 로그인 전에 보여지는 로그인 폼 -->
             <form action="${pageContext.request.contextPath}/member/login" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="memberId" name="memberId" placeholder=" ">
+                    <input type="text" class="form-control" id="memberId" name="memberId" placeholder=" " required
+                    value="${ cookie.saveId.value }">
                     <label class="form-label" for="memberId">아이디</label>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="memberPwd" name="memberPwd" placeholder=" ">
+                    <input type="password" class="form-control" id="memberPwd" name="memberPwd" placeholder=" " required>
                     <label class="form-label" for="memberPwd">비밀번호</label>
                 </div>
+                
+                <!-- 아이디 저장 체크박스 구성 -->
                 <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">아이디 저장</label>
+                    <input type="checkbox" id="saveId"
+                    	   name="saveId" value="y"
+                    	   <c:if test="${not empty cookie.saveId.value}">checked</c:if>>
+                    <label for="saveId">아이디 저장</label>
                 </div>
+                
                 <button type="submit" class="login-button">로그인</button>
                 <div class="additional-links">
                     <a href="#">회원가입</a>
@@ -184,5 +201,6 @@
     <jsp:include page="../common/footer.jsp" />
 
 </div>
+
 </body>
 </html>

@@ -22,17 +22,15 @@ function NoticeDetailComponent() {
         }).then((response) => {
 
             // selectNotice(response.data);
-            console.log(response.data);
+            // console.log(response.data);
+            // console.log(response.data.noticeType);
 
-
-            document.getElementById("noticeTitle").innerText = data.noticeTitle;
-            document.getElementById("noticeDate").innerText = data.noticeDate;
-            document.getElementById("noticeContent").innerText = data.noticeContent;
-            if (data.noticeImage != null) {
-                document.getElementById("noticeImage").src = data.noticeImage;
-            } else {
-                document.getElementById("noticeImage").style.display = "none";
+            if(response.data.noticeImage == null){
+                document.getElementById("fileImg").remove();
             }
+
+            setDataList(response.data)
+            
 
 
         }).catch(() => {
@@ -41,26 +39,9 @@ function NoticeDetailComponent() {
             console.log("잘되남-catch")
         });
 
+
+
     }, []);
-
-    const selectNotice = (data) => {
-
-        /*
-        console.log("잘되남-selectNotice")
-        console.log(data);
-        document.getElementById("noticeTitle").innerText = data.noticeTitle;
-        document.getElementById("noticeDate").innerText = data.noticeDate;
-        document.getElementById("noticeContent").innerText = data.noticeContent;
-        if(data.noticeImage != null) {
-            document.getElementById("noticeImage").src = data.noticeImage;
-        } else {
-            document.getElementById("noticeImage").style.display = "none";
-        }
-        */
-
-        // state 버전으로 변경
-
-    };
 
     return (
 
@@ -72,14 +53,15 @@ function NoticeDetailComponent() {
             <button onClick={() => { navigate("/notice/list") }}>
                 목록가기
             </button>
+  
             <table id="notice-Detail-Table">
                 <thead>
                     <tr>
                         <td>
                             <div>
-                                <span id="noticeTitle"></span>
+                                <span id="noticeTitle">&#91;{dataList.noticeType}&#93;&nbsp;{dataList.noticeTitle}</span>
                                 <br />
-                                <span id="noticeDate"></span>
+                                <span id="noticeDate">{dataList.newNoticeDate}</span>
                                 <hr />
                             </div>
                         </td>
@@ -89,8 +71,9 @@ function NoticeDetailComponent() {
                 <tbody>
                     <tr>
                         <td>
-                            <img />
-                            <p id="noticeContent">
+                            <img id="fileImg" src={`http://localhost:8100/soyo/resources/notice_upfile/${dataList.noticeImage}`} />
+                            <br /><br />
+                            <p id="noticeContent">{dataList.noticeContent}
 
                             </p>
                         </td>
@@ -99,6 +82,7 @@ function NoticeDetailComponent() {
 
 
             </table>
+            <br /><br />
 
         </div>
 

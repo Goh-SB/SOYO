@@ -22,5 +22,6 @@ public class Notice {
 	private Date noticeDate;
 	private String status;
 	private String noticeImage;
+	private String noticeType;
 	
 }

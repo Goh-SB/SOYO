@@ -1,5 +1,7 @@
 package com.kh.soyo.notice.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,11 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
+import com.kh.soyo.common.template.XssDefencePolicy;
 import com.kh.soyo.notice.model.service.NoticeService;
 import com.kh.soyo.notice.model.vo.Notice;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin(origins="http://localhost:5173")
@@ -66,8 +72,47 @@ public class NoticeController {
 		
 		
 		Notice n = noticeService.noticeDetail(noticeNo);
-		System.out.println(n);
+		// System.out.println(n);
 		return n;
+	}
+	
+	
+	@PostMapping("enrollForm")
+	public String noticeEnrollForm(MultipartFile upfile,
+								Notice n,
+								HttpSession session) {
+		
+		String chageTitle = XssDefencePolicy.defence(n.getNoticeTitle());
+		String chageContent = XssDefencePolicy.defence(n.getNoticeContent());
+		
+		n.setNoticeContent(chageContent);
+		n.setNoticeTitle(chageTitle);
+		
+		
+		if(upfile.getOriginalFilename() != null) {
+			String originName = upfile.getOriginalFilename();
+		
+			String path = "/resources/notice_upfile/"; 
+			
+			String savePath = session.getServletContext().getRealPath(path);
+			
+			
+			
+			try {
+				upfile.transferTo(new File(savePath + originName));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			n.setNoticeImage(originName);
+			
+		}
+		
+		
+		int result = noticeService.noticeEnrollForm(n);
+		
+		return (result > 0) ? "작성성공" : "작성실패";
+		
 	}
 	
 }

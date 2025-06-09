@@ -173,7 +173,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(10px);
       background-color: white;
-      min-width: 150px;
+      min-width: 120px;
       border-radius: 12px;
       box-shadow: 0 0px 10px rgba(0,0,0,0.25);
       z-index: 1000;
@@ -211,6 +211,7 @@
       white-space: nowrap;
       width: 100%;
       border-radius: 0;
+      font-size: 1.2rem;
     }
 
     .user-submenu a:hover {
@@ -248,7 +249,7 @@
     <li class="dropdown">
         <a id="menu">소개</a>
         <ul class="submenu">
-            <li><a href="#">오시는 길</a></li>
+            <li><a href="<c:url value='/location' />">오시는 길</a></li>
             <li><a href="#">쇼핑 가이드</a></li>
             <li><a href="#">브랜드 소개</a></li>
         </ul>
@@ -344,7 +345,7 @@
 	        <ul class="user-submenu">
 	          <li style="cursor : none; margin-bottom: 10px;"><a><b>${ sessionScope.loginUser.memberName }</b>&nbsp;님</a></li>
 	          <li><a href="<c:url value='/member/logout' />">로그아웃</a></li>
-	          <li><a href="#">주문 목록</a></li>
+	          <li><a href="<c:url value='/member/myOrderPage' />">주문 목록</a></li>
 	          <li><a href="#">마이페이지</a></li>
 	          <li><a href="#">최근 본 상품</a></li>
 	        </ul>
