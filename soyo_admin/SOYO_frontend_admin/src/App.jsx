@@ -31,6 +31,7 @@ function App() {
         <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent /> } />
         <Route path="/delivery" element={<DeliveryComponent/>} />
         <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent/>} />
+        <Route path="/product/list" element={ <ProductListComponent/>} />
       </Routes>
       {/* footer? */}
 

@@ -53,7 +53,7 @@
 								resultMap="memberResultSet">
 			SELECT *
 			  FROM MEMBER
-			 WHERE MEMBER_ID =  #{memberId}					
+			 WHERE MEMBER_ID = #{memberId}					
 	
 	</select>
 	
@@ -70,4 +70,47 @@
 		  WHERE MEMBER_ID = #{memberId}
 	
 	</update>
+
+	<select id="searchMemberCount" parameterType="hashmap"
+									resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		 WHERE 
+		 <if  test="searchMenu == 'memberId'">
+		 	MEMBER_ID
+		 </if>
+		 <if test="searchMenu == 'memberName'" >
+		 	MEMBER_NAME
+		 </if>	
+		 LIKE '%' || #{searchText} || '%'
+	</select>
+
+	<select id="searchMember" parameterType="hashmap"
+								resultMap="memberResultSet">
+		SELECT *
+		  FROM(
+			SELECT ROWNUM RNUM, A.*
+			FROM (
+				SELECT MEMBER_ID,
+					   MEMBER_NAME,
+					   ENROLL_DATE,
+					   STATUS
+				  FROM MEMBER
+				 WHERE 
+				 <if test="searchMenu == 'memberId'" >
+				 	MEMBER_ID LIKE '%' || #{searchText} || '%'
+				 </if>
+				 <if test="searchMenu == 'memberName'">
+				 	MEMBER_NAME LIKE '%' || #{searchText} || '%'
+				 </if>
+				  
+				ORDER BY ENROLL_DATE DESC
+				) A
+			)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+		
+	
+	</select>
+
+	
 </mapper>

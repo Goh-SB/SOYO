@@ -1,6 +1,7 @@
 package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,17 @@ public class MemberServiceImpl implements MemberService{
 	public int memberUpdateForm(Member m) {
 		return memberDao.memberUpdateForm(sqlSession, m);
 	}
-	
+
+	@Override
+	public int searchMemberCount(HashMap<String, Object> map) {
+		return memberDao.searchMemberCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Member> searchMember(PageInfo pi, HashMap<String, Object> map) {
+		return memberDao.searchMember(sqlSession, pi, map);
+	}
+
+
 
 }
