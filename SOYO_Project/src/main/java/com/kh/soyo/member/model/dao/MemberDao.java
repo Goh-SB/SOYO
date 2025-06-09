@@ -1,4 +1,4 @@
-package com.kh.soyo.board.model.dao;
+package com.kh.soyo.member.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;

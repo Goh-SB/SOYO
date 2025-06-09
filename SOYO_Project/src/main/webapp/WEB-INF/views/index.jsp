@@ -26,6 +26,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -175,12 +182,14 @@
         .collections {
             padding: 5rem 10%;
             background-color: var(--primary-color);
+            font-family: 'NanumSquareRound', sans-serif;
         }
 
         .collections h2 {
             text-align: center;
             color: var(--color1);
             margin-bottom: 3rem;
+            font-size: 1.8rem;
         }
 
         .collection-grid {
@@ -198,20 +207,88 @@
 
         .collection-card img {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
         }
 
         .collection-card h3 {
             padding: 1rem;
             color: var(--color1);
+            text-align: center;
+            font-size: 1.4rem;
         }
 
         .collection-card p {
             padding: 0 1rem;
             color: var(--color5);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
+        /* 캐러셀 스타일 */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .carousel-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-arrow.prev {
+            left: 20px;
+        }
+
+        .carousel-arrow.next {
+            right: 20px;
+        }
 
     </style>
 </head>
@@ -221,6 +298,29 @@
 	<jsp:include page="common/menubar.jsp" />
 
     <main>
+
+        <br><br>
+
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide">
+                    <img src="${pageContext.request.contextPath}/resources/images/slide-1.jpg" alt="슬라이드 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="${pageContext.request.contextPath}/resources/images/slide-2.jpg" alt="슬라이드 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="${pageContext.request.contextPath}/resources/images/slide-3.jpg" alt="슬라이드 3">
+                </div>
+            </div>
+            <button class="carousel-arrow prev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
         <section class="hero">
             <div class="hero-content">
                 <h2>한복의 새로운 스타일</h2>
@@ -271,17 +371,17 @@
             <h2>컬렉션</h2>
             <div class="collection-grid">
                 <div class="collection-card">
-                    <img src="https://via.placeholder.com/400x300" alt="컬렉션1">
+                    <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card1.png" alt="컬렉션1">
                     <h3>오방색 컬렉션</h3>
                     <p>전통 색상의 현대적 재해석</p>
                 </div>
                 <div class="collection-card">
-                    <img src="https://via.placeholder.com/400x300" alt="컬렉션2">
+                    <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card2.png" alt="컬렉션2">
                     <h3>모던 컬렉션</h3>
                     <p>세련된 현대 스타일</p>
                 </div>
                 <div class="collection-card">
-                    <img src="https://via.placeholder.com/400x300" alt="컬렉션3">
+                    <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card3.png" alt="컬렉션3">
                     <h3>웨딩 컬렉션</h3>
                     <p>전통과 현대의 조화</p>
                 </div>
@@ -291,6 +391,39 @@
 
 	<!-- 항상 모든 페이지 하단에는 푸터가 보여지게끔 include -->
 	<jsp:include page="common/footer.jsp" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const prevBtn = document.querySelector('.carousel-arrow.prev');
+            const nextBtn = document.querySelector('.carousel-arrow.next');
+            let currentIndex = 0;
+
+            // 초기 슬라이드 설정
+            slides[0].classList.add('active');
+
+            function showSlide(index) {
+                // 모든 슬라이드 숨기기
+                slides.forEach(slide => slide.classList.remove('active'));
+                // 현재 슬라이드 보이기
+                slides[index].classList.add('active');
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slides.length;
+                showSlide(currentIndex);
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                showSlide(currentIndex);
+            }
+
+            // 이벤트 리스너 등록
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+        });
+    </script>
 
 </body>
 </html>
