@@ -1,6 +1,7 @@
 package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
@@ -18,5 +19,9 @@ public interface MemberService {
 	Member memberDetail(String memberId);
 
 	int memberUpdateForm(Member m);
+
+	int searchMemberCount(HashMap<String, Object> map);
+
+	ArrayList<Member> searchMember(PageInfo pi, HashMap<String, Object> map);
 
 }

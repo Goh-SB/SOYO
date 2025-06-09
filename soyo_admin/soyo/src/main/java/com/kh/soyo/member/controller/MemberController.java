@@ -81,4 +81,32 @@ public class MemberController {
 		
 	}
 	
+	
+	@GetMapping("searchMember")
+	public HashMap<String, Object> searchMember(String searchMenu,
+							String searchText,
+							@RequestParam(value="cpage") int currentPage) {
+
+		
+		
+		ArrayList<Member> list = new ArrayList<>();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchMenu", searchMenu);
+		map.put("searchText", searchText);
+		
+		int pageLimit = 10;
+		int boardLimit = 10;
+		
+		int listCount = memberService.searchMemberCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		list = memberService.searchMember(pi, map); 
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("list", list);
+		hm.put("pi", pi);
+		return hm;
+	}
 }

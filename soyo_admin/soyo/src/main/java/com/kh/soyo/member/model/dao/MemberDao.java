@@ -1,6 +1,7 @@
 package com.kh.soyo.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -41,6 +42,23 @@ public class MemberDao {
 
 	public int memberUpdateForm(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.memberUpdateForm", m);
+	}
+
+
+	public int searchMemberCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("memberMapper.searchMemberCount", map);
+	}
+
+	public ArrayList<Member> searchMember(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, Object> map) {
+		
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.searchMember", map);
 	}
 
 }
