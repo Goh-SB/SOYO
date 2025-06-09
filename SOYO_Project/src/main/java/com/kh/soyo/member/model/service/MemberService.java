@@ -1,6 +1,7 @@
 package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.soyo.member.model.vo.Member;
 
@@ -20,4 +21,9 @@ public interface MemberService {
 
 	// 로그인 처리
 	Member loginMember(Member m);
+
+	int updatePwd(HashMap<String, String> hm);
+
+	// 비밀번호 변경
+	
 }
