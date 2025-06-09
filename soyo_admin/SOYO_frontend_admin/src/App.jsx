@@ -9,6 +9,7 @@ import MemberDetailComponent from './member/MemberDetailComponent';
 import NoticeDetailComponent from './notice/NoticeDetailComponent';
 import NoticeEnrollFormComponent from './notice/NoticeEnrollFormComponent';
 import DeliveryComponent from './delevery/DeliveryComponent';
+import ProductListComponent from './product/ProductListComponent';
 import DeliveryDetailComponent from './delevery/DeliveryDetailComponent';
 
 
