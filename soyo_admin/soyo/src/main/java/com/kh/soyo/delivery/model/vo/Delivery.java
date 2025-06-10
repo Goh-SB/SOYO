@@ -32,4 +32,8 @@ public class Delivery {
 	private String addressOther;
 	
 	private String memberName;
+	
+	private String productName;
+	private int productCount;
+	private int productPrice;
 }

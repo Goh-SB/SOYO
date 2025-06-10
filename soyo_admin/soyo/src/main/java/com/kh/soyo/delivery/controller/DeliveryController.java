@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.soyo.delivery.model.service.DeliveryService;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.product.model.vo.Product;
 
 @RestController
 @CrossOrigin(origins="http://localhost:5173")
@@ -26,11 +27,17 @@ public class DeliveryController {
 		return deliveryService.deliveryList();
 	}
 	
-	@GetMapping("{orderNo}")
+	@GetMapping("info/{orderNo}")
 	public Delivery deliveryDetail(@PathVariable int orderNo) {
 		
 		Delivery d = deliveryService.deliveryDetail(orderNo);
 		
 		return d;
+	}
+	@GetMapping("product/{orderNo}")
+	public List<Product> deliveryProduct(@PathVariable int orderNo) {
+		
+		return deliveryService.deliveryProduct(orderNo);
+				
 	}
 }
