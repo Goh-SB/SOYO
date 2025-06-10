@@ -178,7 +178,7 @@
   <br><br><br>
     
   <div class="container">
-    <div class="product-category">남성</div>
+    <div class="product-category">남성복</div>
     <span class="product-count">총 <b>10</b> 개의 상품</span>
     <hr>
     <div class="top-bar">
