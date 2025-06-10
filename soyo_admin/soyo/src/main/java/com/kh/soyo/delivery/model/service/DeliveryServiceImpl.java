@@ -23,7 +23,10 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryDao.deliveryList(sqlSession);
 	}
 	
-	
+	@Override
+	public Delivery deliveryDetail(int orderNo) {
+		return deliveryDao.deliveryDetail(sqlSession,orderNo);
+	}
 
 
 }

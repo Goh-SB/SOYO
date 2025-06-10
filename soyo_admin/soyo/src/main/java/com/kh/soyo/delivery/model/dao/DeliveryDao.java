@@ -15,6 +15,9 @@ public class DeliveryDao {
 		return sqlSession.selectList("deliveryMapper.deliveryList");
 
 	}
+	public Delivery deliveryDetail(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("deliveryMapper.deliveryDetail",orderNo);
+	}
 
 
 

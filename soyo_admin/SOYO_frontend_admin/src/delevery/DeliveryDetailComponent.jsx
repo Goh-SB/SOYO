@@ -1,6 +1,11 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
 function DeliveryDetailComponent(){
 
     // 실행할 구문
+        // 실행할 구문
     const [delivery,setDelivery]=useState({
 
         status:''
