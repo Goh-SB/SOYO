@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.soyo.delivery.model.dao.DeliveryDao;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.product.model.vo.Product;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService{
@@ -23,7 +24,15 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryDao.deliveryList(sqlSession);
 	}
 	
-	
+	@Override
+	public Delivery deliveryDetail(int orderNo) {
+		return deliveryDao.deliveryDetail(sqlSession,orderNo);
+	}
+
+	@Override
+	public List<Product> deliveryProduct(int orderNo) {
+		return deliveryDao.deliveryProduct(sqlSession,orderNo);
+	}
 
 
 }

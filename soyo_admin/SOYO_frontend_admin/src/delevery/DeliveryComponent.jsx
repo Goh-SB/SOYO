@@ -35,8 +35,8 @@ function DeliveryComponent() {
                         <th width="150px">이름</th>
                         <th width="200px">전화 번호</th>
                         <th width="200px">결제 날짜</th>
-                        <th width="200px">주문 상태</th>
                         <th width="200px">배송 상태</th>
+                      
 
                     </tr>
                 </thead>
@@ -48,13 +48,7 @@ function DeliveryComponent() {
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.receiverPhone}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderDate}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}><span>{delivery.orderStatus}</span></td>
-                            <td>
-                                <select>
-                                    <option value="">대기</option>
-                                    <option value="">배송중</option>
-                                    <option value="">배송완료</option>
-                                </select>
-                            </td>
+
                         </tr>
                     ))}
                 </tbody>

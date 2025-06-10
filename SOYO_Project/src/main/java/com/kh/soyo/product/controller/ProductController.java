@@ -13,4 +13,9 @@ public class ProductController {
 	    return "product/productDetail";
 	}
 	
+	@GetMapping("productList")
+	public String showProductList() {
+		return "product/productList";
+	}
+	
 }

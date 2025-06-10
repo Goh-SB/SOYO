@@ -207,9 +207,11 @@
 
         .collection-card img {
             width: 100%;
-            height: 350px;
+            aspect-ratio: 3.6 / 3;
             object-fit: cover;
+            display: block;
         }
+
 
         .collection-card h3 {
             padding: 1rem;

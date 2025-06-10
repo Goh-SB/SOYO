@@ -16,9 +16,16 @@
 
         body {
             margin: 0;
-            background: url('<c:url value="/resources/images/login-bg.jpg" />') no-repeat center center fixed;
+            background-image: url('<c:url value="/resources/images/login-bg.jpg" />');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
             background-size: cover;
+
+            /* 모든 디바이스에서 자연스럽게 */
+            min-height: 100vh;
         }
+
         
         @font-face {
             font-family: 'ONE-Mobile-Regular';
