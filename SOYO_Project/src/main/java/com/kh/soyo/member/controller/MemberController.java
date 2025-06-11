@@ -2,7 +2,10 @@ package com.kh.soyo.member.controller;
 
 import java.util.Collections;
 import java.util.HashMap;
+
 import java.util.Map;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
+import com.kh.soyo.product.model.vo.Product;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,11 +51,6 @@ public class MemberController {
 		return "member/memberEnrollForm";
 	}
 	
-	// 주문 목록 조회 페이지 이동 메소드
-	@GetMapping("/myOrderPage")
-	public String myOrderListPage() {
-		return "member/myOrderPage";
-	}
 	
 	// 내 정보 조회 페이지 이동메소드
 	@GetMapping("/myInformation")
@@ -314,6 +313,19 @@ public class MemberController {
 			return "redirect:/member/myInformation";
 		}
 		
+	}
+	
+	@GetMapping("/myOrderPage")
+	public String myOrderListPage(Model model, HttpSession session) {
+
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    
+	    if (loginUser != null) {
+	        List<Product> product = memberService.orderProduct(loginUser.getMemberId());
+	        model.addAttribute("product", product);
+	    }
+
+	    return "member/myOrderPage";
 	}
 	
 }
