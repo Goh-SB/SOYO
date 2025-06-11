@@ -98,12 +98,6 @@ public class PortOneController {
         HttpEntity<String> request = new HttpEntity<String>(jsonBody, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
         
-        
-        System.out.println("imp_uid: " + impUid);
-    
-        System.out.println("reason: " + reason);
-        System.out.println("token: " + token);
-        System.out.println("cancel response: " + response.getBody());
         return response.getBody();
     }
 

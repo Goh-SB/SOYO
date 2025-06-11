@@ -163,6 +163,23 @@
 </style>
 </head>
 <body>
+
+		<script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous">
+	    </script>
+	<!-- 모달 창 -->
+	<div id="refundModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
+	    <div style="background:white; width:400px; padding:20px; border-radius:10px; margin:150px auto; position:relative;">				
+	        <div style="text-align:right; margin-top:20px;">
+	        	<input type="text" id="imp_uid" placeholder="주문번호 입력" required>
+				<input type="text" id="reason" placeholder="취소 사유" required>
+	        	<button onclick="closeModal()">취소</button>
+	            <button onclick="cancelPay()" style="margin-right:10px;">환불하기</button>
+	        </div>
+	    </div>
+	</div>
 	<jsp:include page="../common/menubar.jsp" />
 	<div class="container">
         <div class="" id="myTitle">
@@ -171,7 +188,7 @@
         <div class="" id="content">
             <div class="" id="left-Menu">
                 <ul id="left-MenuList">
-                    <li><<a href="./myOrderPage">주문/배송조회</a></li>
+                    <li><a href="./myOrderPage">주문/배송조회</a></li>
                     <li><a href="">찜한 상품</a></li>
                     <li><a href="myPage-myrivew.html">내 리뷰</a></li>
                     <li><a href="">배송지 관리</a></li>
@@ -185,38 +202,41 @@
                 padding: 15px;">내 주문 목록</div>
                     <div id="order-List">
                         <ul>
-                       	<c:forEach var="p" items="${product}">
-							    <c:forEach var="i" begin="1" end="${p.productCount}">
-							    	<li>
-							        <form action="./orderProduct" method="get">
-							            <table class="order-table">
-							                <tr>
-							                    <th>${p.deliveryDate} 주문</th>
-							                </tr>
-							                <tr></tr>
-							                <tr>
-							                    <td class="product-img">
-							                        <img src="${pageContext.request.contextPath}/resources/images/${p.productChange}" alt="">
-							                    </td>
-							                    <td class="product-name">
-							                        <div>
-							                            ${p.productName} - ${i}번째<br>
-							                            배송날짜 : ${p.deliveryDate }<br>
-							                            가격 : ${p.productPrice}<br>
-							                            주문번호 : ${p.orderImpno }
-							                        </div>
-							                    </td>
-							                    <td class="product-menu">
-							                        <button type="submit">상세조회</button>
-							                        <button type="button">반품 신청</button>
-							                        <button type="button">리뷰 작성</button>
-							                    </td>
-							                </tr>
-							            </table>
-							        </form>
-							        </li>
-							    </c:forEach>
-							</c:forEach>
+                       <c:forEach var="p" items="${product}">
+						    <li>
+						        <form action="./orderProduct" method="get">
+						            <table class="order-table">
+						                <tr>
+						                    <th>${p.deliveryDate} 주문</th>
+						                </tr>
+						                <tr></tr>
+						                <tr>
+						                    <td class="product-img">
+						                        <img src="${pageContext.request.contextPath}/resources/images/${p.productChange}" alt="">
+						                    </td>
+						                    <td class="product-name">
+						                        <div>
+						                            ${p.productName} - 수량 ${p.productCount}개<br>
+						                            배송날짜 : ${p.deliveryDate }<br>
+						                            가격 : ${p.productPrice}<br>
+						                            주문번호 : ${p.orderImpno } 
+						                            <button type="button" onclick="copyImpUid('${p.orderImpno}')">복사</button>
+						                        </div>
+						                    </td>
+						                    <td class="product-menu">
+						                        <button type="submit">상세 조회</button>
+						                        <button type="button">추가 주문</button>
+						                        <button type="button">리뷰 작성</button>
+						                    </td>
+						                </tr>
+						            </table>
+						        </form>
+						    </li>
+						</c:forEach>
+						<button style="float: right; margin-right: 20px;"
+								onclick="openModal()">
+							전체 환불
+						</button>
                         <div id="page">
 		                    <button>&lt;</button>
 		                    <button>1</button>
@@ -229,5 +249,54 @@
     </div>
     <br>
     <jsp:include page="../common/footer.jsp" />
+    <script>
+
+    function copyImpUid(orderNo) {
+        document.getElementById("imp_uid").value = orderNo;
+        alert("주문번호가 복사되었습니다!");
+    }
+
+    function openModal() {
+        document.getElementById("refundModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("refundModal").style.display = "none";
+    }
+
+    function confirmRefund() {
+        closeModal();
+        alert("전체 환불 처리가 진행됩니다.");
+        // 실제 환불 로직을 여기에 추가할 수 있음 (예: fetch, form 제출 등)
+    }
+
+	function cancelPay() {
+		
+		const impUid = document.querySelector("#imp_uid").value;
+		const reason = document.querySelector("#reason").value;
+		
+		  jQuery.ajax({
+			  url: "${pageContext.request.contextPath}/soyo/cancelPayment",
+		    type: "POST",
+		    contentType: "application/json",
+		    data: JSON.stringify({ imp_uid: impUid, reason: reason }),
+		    dataType: "json",
+		    success: function (response) {
+		    	  if (response.success) {
+		    	    alert("✅ 환불 성공!");
+		    	  } else {
+		    	    alert("❌ 환불 실패: " + response.message);
+		    	  }
+		    	},
+		    error: function (xhr, status, error) {
+		    	console.error("에러 상태코드:", xhr.status);
+		    	  console.error("서버 응답:", xhr.responseText);
+		    	  alert("❌ 오류 발생: " + xhr.responseText);
+		    }
+		  });
+		  
+		  console.log("imp_uid:", impUid);
+		}
+	</script>
 </body>
 </html>
