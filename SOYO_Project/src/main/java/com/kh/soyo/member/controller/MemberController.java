@@ -29,7 +29,13 @@ public class MemberController {
 		return "member/loginPage";
 	}
 	
-	// 주문 목록 조회 페이지
+	// 회원가입 페이지 이동 메소드
+	@GetMapping("/memberEnrollForm")
+	public String memberEnrollForm() {
+		return "member/memberEnrollForm";
+	}
+	
+	// 주문 목록 조회 페이지 이동 메소드
 	@GetMapping("/myOrderPage")
 	public String myOrderListPage() {
 		return "member/myOrderPage";
@@ -59,6 +65,7 @@ public class MemberController {
 	public String memberPwdUpdateForm() {
 		return "member/memberPwdUpdateForm";
 	}
+	
 	
 	
 	// 로그인 요청 처리용 메서드

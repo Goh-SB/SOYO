@@ -1,6 +1,12 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import DeliveryProductDetailComponent from "./DeliveryProductDetailComponent";
+
 function DeliveryDetailComponent(){
 
     // 실행할 구문
+        // 실행할 구문
     const [delivery,setDelivery]=useState({
 
         status:''
@@ -14,7 +20,7 @@ function DeliveryDetailComponent(){
 
     const deliveryDetail = ()=>{
 
-       let url = "http://localhost:8100/soyo/delivery/" + orderNo;
+       let url = "http://localhost:8100/soyo/delivery/info/" + orderNo;
 
         axios({
             url,
@@ -84,42 +90,22 @@ function DeliveryDetailComponent(){
             }
             alt="배송 상태 트럭"
             style={{ width: '700px'}}
-            />
-
-           
-       
+            />      
             </div>
 
             <br /><br />
 
             <h2>배송상품</h2>
             <br /><br />
-            <table className="table">
-                <thead>
-                   <tr align="center">
-                        <th width="250px">이미지</th>   
-                        <th width="600px">상품명</th>
-                        <th width="130px">구매수량</th>
-                        <th>가격</th>                       
-                   </tr>
-                </thead>
-                <tbody>
-                   <tr align="center">
-                        <th width="250px">이미지1</th>
-                        <th width="600px">상품명1</th>
-                        <th width="130px"></th>
-                        <th>{delivery.totalPrice}</th>                       
-                   </tr>
-                    <tr align="center">
-                        <th width="250px">이미지1</th>
-                        <th width="600px">상품명1</th>
-                        <th width="130px">구매수량1</th>
-                        <th>가격1</th>                       
-                   </tr>
-                </tbody>
-            </table>
 
+            <DeliveryProductDetailComponent/>
+
+
+                
+            
         </div>
+
+        
     );
 
 }

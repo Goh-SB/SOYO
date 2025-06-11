@@ -257,7 +257,7 @@
       <li class="dropdown">
         <a id="menu">상품</a>
         <ul class="submenu">
-          <li><a href="#">남성복</a></li>
+          <li><a href="<c:url value='/product/productList' />">남성복</a></li>
           <li><a href="#">여성복</a></li>
           <li><a href="#">아동복</a></li>
           <li><a href="#">액세서리</a></li>
@@ -328,7 +328,7 @@
 	        <a href="#user"><i class="fas fa-user"></i></a>
 	        <ul class="user-submenu">
 	          <li><a href="<c:url value='/member/login' />">로그인</a></li>
-	          <li><a href="#">회원가입</a></li>
+	          <li><a href="<c:url value='/member/memberEnrollForm' />"">회원가입</a></li>
 	        </ul>
 	      </div>
 	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
