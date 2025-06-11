@@ -13,8 +13,18 @@
 		<result column="ADDRESS" property="address" />
 		<result column="ENROLL_DATE" property="enrollDate" />
 		<result column="STATUS" property="status" />
-		
-		
+	</resultMap>
+	
+	<resultMap type="product" id="productResultSet">
+		<id column="PRODUCT_NO" property="productNo"/>
+	    <result column="PRODUCT_CHANGE" property="productChange"/>
+	    <result column="PRODUCT_NAME" property="productName"/>
+	    <result column="PRODUCT_PRICE" property="productPrice"/>
+	    
+	    <result column="ORDER_IMPNO" property="orderImpno"/>
+	    <result column="PRODUCT_COUNT" property="productCount"/>
+	    <result column="DELIVERY_DATE" property="deliveryDate"/>
+	    <result column="ORDER_STATUS" property="orderStatus"/>
 	
 	</resultMap>
 	
@@ -108,8 +118,22 @@
 				) A
 			)
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
-		
+	</select>
 	
+	<select id="orderProduct" parameterType="string"
+							  resultMap="productResultSet">
+		SELECT P.PRODUCT_NO,
+			   P.PRODUCT_CHANGE,
+		       O.ORDER_IMPNO,
+		       P.PRODUCT_NAME,
+		       P.PRODUCT_PRICE,
+		       C.PRODUCT_COUNT,
+		       O.DELIVERY_DATE,
+		       O.ORDER_STATUS
+		FROM CART C
+		JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
+		JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
+		WHERE C.MEMBER_ID=#{memberId}
 	</select>
 
 	

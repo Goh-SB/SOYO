@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -169,7 +170,7 @@
         <div class="" id="content">
             <div class="" id="left-Menu">
                 <ul id="left-MenuList">
-                    <li><a href="">주문/배송조회</a></li>
+                    <li><<a href="./myOrderPage">주문/배송조회</a></li>
                     <li><a href="">찜한 상품</a></li>
                     <li><a href="myPage-myrivew.html">내 리뷰</a></li>
                     <li><a href="">배송지 관리</a></li>
@@ -177,76 +178,49 @@
                     <li><a href="">최근 본 상품</a></li>
                 </ul>
             </div>
+
             <div class="" id="myContent">
                 <div style="height: 5%; font-size: 30px;
                 padding: 15px;">내 주문 목록</div>
                     <div id="order-List">
                         <ul>
-                            <li>
-                                <table class="order-table">
-                                    <tr>
-                                        <th>25.06.25 주문</th>
-                                        <td colspan="2">배송중</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-img"><img src="image/coffee.png" alt=""></td>
-                                        <td class="product-name">상품이름</td>
-                                        <td class="product-menu"><button>상세조회</button>
-                                            <button>반품 신청</button>
-                                            <button>리뷰 작성</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </li>
-                            <li>
-                                <table class="order-table">
-                                    <tr>
-                                        <th>25.06.25 주문</th>
-                                        <td colspan="2">배송중</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-img"><img src="image/coffee.png" alt=""></td>
-                                        <td class="product-name">상품이름 + 상품옵션 + 수량</td>
-                                        <td class="product-menu"><button>상세조회</button>
-                                            <button>교환, 반품 신청</button>
-                                            <button>리뷰 작성</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </li>
-                            <li>
-                                <table class="order-table">
-                                    <tr>
-                                        <th>25.06.25 주문</th>
-                                        <td colspan="2">배송중</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-img"><img src="image/coffee.png" alt=""></td>
-                                        <td class="product-name">상품이름</td>
-                                        <td class="product-menu"><button>상세조회</button>
-                                            <button>교환, 반품 신청</button>
-                                            <button>리뷰 작성</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </li>
-                            <li>
-                                <table class="order-table">
-                                    <tr>
-                                        <th>25.06.25 주문</th>
-                                        <td colspan="2">배송중</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-img"><img src="image/coffee.png" alt=""></td>
-                                        <td class="product-name">상품이름</td>
-                                        <td class="product-menu"><button>상세조회</button>
-                                            <button>교환, 반품 신청</button>
-                                            <button>리뷰 작성</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </li>
-                        </ul>
+                       	 <c:forEach var="p" items="${product}">
+						    <li>
+						        <form action="./orderProduct" method="get">
+						            <table class="order-table">
+						                <tr>
+						                    <th>${p.deliveryDate} 주문</th>
+						                   
+						                </tr>
+						                <tr>
+						                
+						                </tr>
+						                <tr>
+						                    <td class="product-img">
+						                        <img src="${pageContext.request.contextPath}/resources/images/${p.productChange}" alt="">
+						                    </td>
+						                    <td class="product-name">
+						                    	<div>
+						                    	 ${p.productName} - 수량 ${p.productCount}개<br>
+						                      		 배송날짜 : ${p.deliveryDate }<br>
+						                      		 가격 : ${p.productPrice}<br>
+						                      		 주문번호 : ${p.orderImpno }
+						                      		  
+						                    	</div>
+						                       
+						                    </td>
+						                    <td class="product-menu">
+						                        <button type="submit">상세조회</button>
+						                        <button type="button">반품 신청</button>
+						                        <button type="button">리뷰 작성</button>
+						                    </td>
+						                </tr>
+						            </table>
+						        </form>
+						    </li>
+						</c:forEach>
+
+
                         <div id="page">
 		                    <button>&lt;</button>
 		                    <button>1</button>
