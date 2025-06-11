@@ -251,7 +251,7 @@
         <ul class="submenu">
             <li><a href="<c:url value='/location' />">오시는 길</a></li>
             <li><a href="#">쇼핑 가이드</a></li>
-            <li><a href="#">브랜드 소개</a></li>
+            <li><a href="<c:url value='/brand' />">브랜드 소개</a></li>
         </ul>
         </li>
       <li class="dropdown">
