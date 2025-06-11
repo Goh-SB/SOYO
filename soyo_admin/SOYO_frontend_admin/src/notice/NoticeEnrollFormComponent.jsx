@@ -69,17 +69,12 @@ function NoticeEnrollFormComponent() {
     }, [count])
 
 
-
-
-
-
     // 이미지 미리보기용 스테이트 변수
     let [imgUrl, setImgUrl] = useState(null);
     //console.log(upfile.files.length);
     const loadImg = (e) => {
         // console.log(e.target.files[0].name)
         // 이미지 미리보기용 src 속성을 만드는 함수
-
 
         if (e.target.files[0] == null) {
             setImgUrl(null);

@@ -1,21 +1,39 @@
-#write-form{
-    width : 1400px;
-    height : 600px;
-    margin : auto;
+#write-form {
+    width: 1400px;
+    height: 600px;
+    margin: auto;
 }
-#quillBtn{
+
+#quillBtn {
     float: right;
-    width : 90%;
+    width: 90%;
 }
-#submitBtn{
-    width : 200px;
-    height : 40px;
+
+#submitBtn {
+    width: 200px;
+    height: 40px;
 }
-#quill-title{
-    width : 800px;
-    height : 50px;
-    margin-bottom : 30px;
-    font-size : 25px;
+
+#quill-title {
+    width: 800px;
+    height: 50px;
+    margin-bottom: 30px;
+    font-size: 25px;
     font-weight: 800;
-    
+
+}
+
+.size-btn {
+    background-color: white;
+    border: 2px solid #E3E4FA;
+    padding: 0.5rem 1.5rem;
+    margin: 0.25rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.size-btn.active {
+    background-color: #E3E4FA;
+    color: #333;
 }

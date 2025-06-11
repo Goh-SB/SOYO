@@ -10,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@xeger/quill-image-actions": "^0.7.2",
+    "@xeger/quill-image-formats": "^0.7.2",
     "axios": "^1.9.0",
     "express": "^5.1.0",
     "gapi-script": "^1.2.0",
     "helmet": "^8.1.0",
     "helmet-csp": "^4.0.0",
     "jquery": "^3.7.1",
+    "quill": "^2.0.3",
     "quill-image-resize": "^3.0.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
