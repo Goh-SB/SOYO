@@ -29,7 +29,7 @@
 	  FROM ORDER_TB O
 	  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID 
 	</select>
-	
+								
 	<select id="deliveryDetail" parameterType="_int"
 								resultMap="deliveryResultSet">
 		SELECT  O.ORDER_NO,
@@ -46,8 +46,21 @@
 	JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
 	JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID  
 	WHERE O.ORDER_NO = #{orderNo}
+	
 	</select>
 
+	<select id="deliveryProduct" parameterType="_int"
+								resultMap="deliveryResultSet">
+								
+		SELECT P.PRODUCT_CHANGE,
+		       P.PRODUCT_NAME,
+		       C.PRODUCT_COUNT,
+		       P.PRODUCT_PRICE
+	  FROM PRODUCT P
+	  JOIN CART C ON C.PRODUCT_NO = P.PRODUCT_NO
+	  JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
+	  WHERE ORDER_NO=#{orderNo}
+	</select>
 	
 </mapper> 
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,43 +185,38 @@
                 padding: 15px;">내 주문 목록</div>
                     <div id="order-List">
                         <ul>
-                       	 <c:forEach var="p" items="${product}">
-						    <li>
-						        <form action="./orderProduct" method="get">
-						            <table class="order-table">
-						                <tr>
-						                    <th>${p.deliveryDate} 주문</th>
-						                   
-						                </tr>
-						                <tr>
-						                
-						                </tr>
-						                <tr>
-						                    <td class="product-img">
-						                        <img src="${pageContext.request.contextPath}/resources/images/${p.productChange}" alt="">
-						                    </td>
-						                    <td class="product-name">
-						                    	<div>
-						                    	 ${p.productName} - 수량 ${p.productCount}개<br>
-						                      		 배송날짜 : ${p.deliveryDate }<br>
-						                      		 가격 : ${p.productPrice}<br>
-						                      		 주문번호 : ${p.orderImpno }
-						                      		  
-						                    	</div>
-						                       
-						                    </td>
-						                    <td class="product-menu">
-						                        <button type="submit">상세조회</button>
-						                        <button type="button">반품 신청</button>
-						                        <button type="button">리뷰 작성</button>
-						                    </td>
-						                </tr>
-						            </table>
-						        </form>
-						    </li>
-						</c:forEach>
-
-
+                       	<c:forEach var="p" items="${product}">
+							    <c:forEach var="i" begin="1" end="${p.productCount}">
+							    	<li>
+							        <form action="./orderProduct" method="get">
+							            <table class="order-table">
+							                <tr>
+							                    <th>${p.deliveryDate} 주문</th>
+							                </tr>
+							                <tr></tr>
+							                <tr>
+							                    <td class="product-img">
+							                        <img src="${pageContext.request.contextPath}/resources/images/${p.productChange}" alt="">
+							                    </td>
+							                    <td class="product-name">
+							                        <div>
+							                            ${p.productName} - ${i}번째<br>
+							                            배송날짜 : ${p.deliveryDate }<br>
+							                            가격 : ${p.productPrice}<br>
+							                            주문번호 : ${p.orderImpno }
+							                        </div>
+							                    </td>
+							                    <td class="product-menu">
+							                        <button type="submit">상세조회</button>
+							                        <button type="button">반품 신청</button>
+							                        <button type="button">리뷰 작성</button>
+							                    </td>
+							                </tr>
+							            </table>
+							        </form>
+							        </li>
+							    </c:forEach>
+							</c:forEach>
                         <div id="page">
 		                    <button>&lt;</button>
 		                    <button>1</button>
