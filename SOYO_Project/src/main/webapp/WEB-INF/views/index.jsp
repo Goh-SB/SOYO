@@ -367,7 +367,7 @@
             <div class="about-content">
                 <p>한복의 아름다움을 감각적으로 재해석한 소요.<br>
 				   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
-                <a href="#about" class="cta-button">더 알아보기</a>
+                <a href="<c:url value='/brand' />" class="cta-button">더 알아보기</a>
             </div>
         </section>
 
