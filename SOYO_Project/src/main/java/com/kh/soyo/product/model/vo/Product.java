@@ -30,5 +30,9 @@ public class Product {
     private Date productRegisteredDate;// 등록일
     private String status;             // 상태 (Y/N)
     private int productSizeNo;         // 사이즈 식별번호 (FK)
+    
+    private String orderImpno;
+    private Date deliveryDate;
+    private String orderStatus;
 	
 }

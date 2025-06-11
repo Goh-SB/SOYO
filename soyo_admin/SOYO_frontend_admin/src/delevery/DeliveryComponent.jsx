@@ -47,7 +47,16 @@ function DeliveryComponent() {
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.memberName}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.receiverPhone}</td>
                             <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderDate}</td>
-                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}><span>{delivery.orderStatus}</span></td>
+                            <td>
+                            <select
+                                value={delivery.orderStatus}
+                                onChange={(e) => handleStatusChange(e, delivery.orderNo)}
+                            >
+                                <option value="배송전">배송전</option>
+                                <option value="배송중">배송중</option>
+                                <option value="배송완료">배송완료</option>
+                            </select>
+                            </td>
 
                         </tr>
                     ))}

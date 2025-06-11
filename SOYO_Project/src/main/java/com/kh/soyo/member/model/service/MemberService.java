@@ -2,8 +2,10 @@ package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.kh.soyo.member.model.vo.Member;
+import com.kh.soyo.product.model.vo.Product;
 
 public interface MemberService {
 
@@ -23,6 +25,8 @@ public interface MemberService {
 	Member loginMember(Member m);
 
 	int updatePwd(HashMap<String, String> hm);
+
+	List<Product> orderProduct(String memberId);
 
 	// 비밀번호 변경
 	

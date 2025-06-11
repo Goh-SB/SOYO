@@ -1,11 +1,13 @@
 package com.kh.soyo.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.member.model.vo.Member;
+import com.kh.soyo.product.model.vo.Product;
 
 @Repository
 public class MemberDao {
@@ -31,6 +33,12 @@ public class MemberDao {
 	public int updatePwd(SqlSessionTemplate sqlSession, HashMap<String, String> hm) {
 		
 		return sqlSession.update("memberMapper.updatePwd", hm);
+	}
+
+	// 회원이 주문한 상품 조회용 메소드
+	public List<Product> orderProduct(SqlSessionTemplate sqlSession, String memberId) {
+		
+		return sqlSession.selectList("memberMapper.orderProduct",memberId);
 	}
 
 }
