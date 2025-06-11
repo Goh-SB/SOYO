@@ -1,6 +1,9 @@
 #member-table>tbody>tr:hover {
     cursor : pointer;
 }
+tbody>tr:hover {
+    cursor : pointer;
+}
 
 #searchBox{
     width : 400px;
