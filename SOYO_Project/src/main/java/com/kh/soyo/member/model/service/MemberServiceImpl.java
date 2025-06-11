@@ -56,4 +56,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updatePwd(sqlSession, hm);
 	}
 
+	@Override
+	public int checkId(String checkId) {
+		
+		return memberDao.checkId(sqlSession, checkId);
+	}
+
 }

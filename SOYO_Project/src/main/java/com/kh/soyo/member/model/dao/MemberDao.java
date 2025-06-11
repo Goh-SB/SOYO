@@ -33,4 +33,10 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updatePwd", hm);
 	}
 
+	// 아이디 중복 체크용 메소드
+	public int checkId(SqlSessionTemplate sqlSession, String checkId) {
+		
+		return sqlSession.selectOne("memberMapper.checkId" ,checkId);
+	}
+
 }

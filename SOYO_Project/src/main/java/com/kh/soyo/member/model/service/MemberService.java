@@ -21,9 +21,13 @@ public interface MemberService {
 
 	// 로그인 처리
 	Member loginMember(Member m);
-
+	
+	// 비밀번호 변경
 	int updatePwd(HashMap<String, String> hm);
 
-	// 비밀번호 변경
+	// 아이디 중복확인
+	int checkId(String checkId);
+
+	
 	
 }

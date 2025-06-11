@@ -1,13 +1,18 @@
 package com.kh.soyo.member.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.soyo.member.model.service.MemberService;
@@ -20,6 +25,13 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	// 인증번호를 담아둘 해시맵 생성 (전역변수)
+	// key : 인증할 email 주소, value : 인증번호
+	private Map<String, String> certNoList = Collections.synchronizedMap(new HashMap<>());
 	
 	@Autowired
 	private MemberService memberService;
@@ -146,6 +158,47 @@ public class MemberController {
 		
 	}
 	
+	// 회원가입 아이디 중복확인용 메소드
+	@ResponseBody
+	@GetMapping("checkId")
+	public String ajaxCheckId(String checkId) {
+		
+		if(checkId.equals("") || !checkId.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")) {
+		// 빈 문자열이거나 정규표현식에 맞지 않을때
+			return "NNNNT";
+		} else {
+			
+			int count = memberService.checkId(checkId);
+		
+			return (count > 0) ? "NNNNN" : "NNNNY";
+		}
+		
+		
+	}
+	
+	// 이메일 인증번호 발급용 메소드
+	@ResponseBody
+	@PostMapping("cert")
+	public String getCertNo(String email) {
+		
+		// 6자리의 랜덤 1회성 인증번호 발급
+		int random = (int)(Math.random() * 900000 + 100000);
+		
+		// 대조용으로 가지고 있기
+		certNoList.put(email, String.valueOf(random));
+		
+		// 해당 이메일로 인증번호 전송하기
+		SimpleMailMessage message = new SimpleMailMessage();
+		
+		// 메세지 정보 담기
+		message.setSubject("[soyo] 이메일 인증 번호입니다");
+		message.setText("본인이 아니시라면 무시하시면 됩니다. \n인증번호 : " + random);
+		message.setTo(email);
+		
+		mailSender.send(message);
+		
+		return "인증번호 발급 완료";
+	}
 	
 	// 내 정보 변경시 실행할 메소드
 	@PostMapping("update")
