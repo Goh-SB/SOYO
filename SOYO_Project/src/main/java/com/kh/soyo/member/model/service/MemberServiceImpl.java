@@ -70,4 +70,10 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Override
+	public int insertMember(Member m) {
+		
+		return memberDao.insertMember(sqlSession, m);
+	}
+
 }

@@ -156,12 +156,8 @@
                             <td><input name="birthDate" type="date" value="${ sessionScope.loginUser.birthDate }" ></td>
                         </tr>
                         <tr>
-                            <th>이메일</th>
-                            <td><input name="email" type="email" value="${ sessionScope.loginUser.email }" ></td>
-                        </tr>
-                        <tr>
                             <th>휴대전화번호</th>
-                            <td><input name="phone" type="text" value="${ sessionScope.loginUser.phone }" ></td>
+                            <td><input name="phone" type="number" value="${ sessionScope.loginUser.phone }" ></td>
                         </tr>
                         <tr>
                             <th>주소</th>

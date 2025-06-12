@@ -48,4 +48,10 @@ public class MemberDao {
 
 	}
 
+	// 회원가입용 메소드
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+
 }

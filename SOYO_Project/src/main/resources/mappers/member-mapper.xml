@@ -44,7 +44,6 @@
 			   SET MEMBER_NAME = #{memberName}
 	             , GENDER = #{gender}
 	             , BIRTH_DATE = #{birthDate}
-	             , EMAIL = #{email}
 			     , PHONE = #{phone}
 			     , ADDRESS = #{address}
 			 WHERE MEMBER_ID = #{memberId}
@@ -89,6 +88,26 @@
 			JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
 			WHERE C.MEMBER_ID=#{memberId}
 			
+	</select>
+	
+	<!-- 회원가입용 쿼리문 -->
+	<select id="insertMember" parameterType="member">
+		INSERT INTO MEMBER(MEMBER_ID
+                 , MEMBER_PWD
+                 , MEMBER_NAME
+                 , GENDER
+                 , BIRTH_DATE
+                 , EMAIL
+                 , PHONE
+                 , ADDRESS)
+        VALUES(#{memberId}
+             , #{memberPwd}
+             , #{memberName}
+             , #{gender}
+             , #{birthDate}
+             , #{email}
+             , #{phone}
+             , #{address})
 	</select>
 		
 </mapper>

@@ -130,13 +130,13 @@ function execDaumPostcode() {
                         </tr>
                         <tr>
                             <th>이메일</th>
-                            <td><input id="email" name="email" type="email" maxlength="30" required></td>
+                            <td><input id="email" name="email" type="email" maxlength="30"></td>
                             <td><button type="button" id="sert" onclick="cert()">인증번호 발급</button></td>
                         </tr>
                         <tr style="display: none;">
                             <th>인증번호</th>
-                            <td><input type="text" id="emailCheck" required></td>
-                            <td><input type="button" style="width: 100px;" value="인증확인"></td>
+                            <td><input type="text" id="emailCheck"></td>
+                            <td><button type="button" id="validate" onclick="valid();">인증</button></td>
                         </tr>
                         <tr>
                             <th>전화번호</th>
@@ -149,7 +149,7 @@ function execDaumPostcode() {
                         </tr>
                         <tr>
                             <th>상세주소</th>
-                            <td><input type="text" id="addrDetail"  maxlength="66"></td>
+                            <td><input type="text" id="addrDetail" name="addrDetail"  maxlength="66"></td>
                         </tr>
                         <tr>
                             <th></th>
@@ -170,7 +170,7 @@ function execDaumPostcode() {
     </div>
 <jsp:include page="../common/footer.jsp" />
 <script>
-
+let goInsert = 0;
 // 비밀번호    
 const memberPwd = document.getElementById("memberPwd");
 
@@ -199,6 +199,11 @@ function cert() {
     const emailCheck = document.getElementById("emailCheck");
     const emailTr = emailCheck.parentElement.parentElement; // tr 태크 지목
 
+    if(email == "" || !email.includes("@")){
+        submitMsg.textContent = "유효한 이메일을 입력해주세요"
+        return false;
+    }
+
     $.ajax({
         url : "../member/cert",
         type : "post",
@@ -210,14 +215,63 @@ function cert() {
             // 숨겨져있던 인증 요소 활성화 및 이메일 입력관련 요소 비활성화
             $("#emailCheck").closest("tr").css("display", "table-row");
 
+            $("#emailCheck").val("").attr("disabled", false);
+            $("#validate").attr("disabled", false);
+
             $("#email").attr("readonly", true);
             $("#sert").attr("disabled", true);
+            submitMsg.textContent = "";
         },
         error : function() {
 
             console.log("인증번호 발급용 ajax 실패");
         }
     });
+}
+
+// 인증 버튼을 눌렀을 때 실행할 함수
+function valid() {
+			
+    // 사용자가 입력했었던 이메일 주소와 인증번호를 변수에 담기
+    let email = $("#email").val();
+    let emailCheck = $("#emailCheck").val();
+
+    $.ajax({
+        url : "../member/validate",
+        type : "post", 
+        data : {
+            email : email,
+            emailCheck : emailCheck
+        },
+        success : function(result) {
+            
+            if(result == "인증성공") {
+                submitMsg.textContent = "";
+                $("#emailCheck").attr("readonly", true);
+                $("#validate").attr("disabled", true);
+                submitMsg.textContent = "인증성공";
+                goInsert = 1;
+                console.log(goInsert);
+                
+            } else {
+                
+                // 재인증을 위해 초기화
+                $("#emailCheck").val("").attr("disabled", true);
+                $("#validate").attr("disabled", true);
+                
+                $("#email").val("").attr("readonly", false);
+                $("#sert").attr("disabled", false);
+                goInsert = 0;
+                submitMsg.textContent = "인증실패";
+            }
+            
+        }, 
+        error : function() {
+            
+            console.log("인증번호 확인용 ajax 통신 실패!");	
+        }
+    });
+			
 }
 
 // 비밀번호칸을 벗어났을때 실행할 이벤트
@@ -329,6 +383,11 @@ function insertMember(){
     if(!pwdCondition.test(memberPwd.value)){
         // 비밀번호가 정규표현식에 맞게 작성되었는지 확인
         submitMsg.textContent = "조건에 맞춰 비밀번호를 입력해주세요."
+        return false;
+    } 
+
+    if(goInsert != 1){
+        submitMsg.textContent = "이메일 인증을 해주세요."
         return false;
     } else {
         return confirm("회원가입 하시겠습니까?")

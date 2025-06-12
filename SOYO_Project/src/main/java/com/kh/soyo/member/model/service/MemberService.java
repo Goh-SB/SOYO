@@ -35,6 +35,8 @@ public interface MemberService {
 
 	List<Product> orderProduct(String memberId);
 
+	int insertMember(Member m);
+
 	// 비밀번호 변경
 
 	

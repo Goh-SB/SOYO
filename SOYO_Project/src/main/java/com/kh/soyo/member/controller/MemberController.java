@@ -10,14 +10,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.soyo.common.template.XssDefencePolicy;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
@@ -29,6 +32,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+
+	@Autowired
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -39,6 +45,10 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+
+    MemberController(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 	
 	@GetMapping("/login")
 	public String showLoginPage() {
@@ -162,6 +172,8 @@ public class MemberController {
 	@GetMapping("checkId")
 	public String ajaxCheckId(String checkId) {
 		
+		checkId = (XssDefencePolicy.defence(checkId)); // 아이디
+		
 		if(checkId.equals("") || !checkId.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")) {
 		// 빈 문자열이거나 정규표현식에 맞지 않을때
 			return "NNNNT";
@@ -179,6 +191,9 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("cert")
 	public String getCertNo(String email) {
+		
+		// XSS 공격 막기
+		email = (XssDefencePolicy.defence(email)); // 이메일
 		
 		// 6자리의 랜덤 1회성 인증번호 발급
 		int random = (int)(Math.random() * 900000 + 100000);
@@ -199,10 +214,87 @@ public class MemberController {
 		return "인증번호 발급 완료";
 	}
 	
+	// 이메일 인증 확인용 메소드
+	@ResponseBody
+	@PostMapping("validate")
+	public String validate(String email, String emailCheck) {
+		
+		// XSS 공격 막기
+		email = (XssDefencePolicy.defence(email)); // 이메일
+		emailCheck = (XssDefencePolicy.defence(emailCheck)); // 인증번호 확인
+		
+		String result = "";
+		// 결과메세지 비워두기
+		
+		if(certNoList.get(email).equals(emailCheck)) {
+			// 인증번호가 맞을 경우
+			
+			result = "인증성공";
+		} else {
+			
+			result = "인증실패";
+		}
+		
+		// 인증하고나면 성공이든 실패든 인증 정보 지우기
+		certNoList.remove(email);
+		
+		return result;
+	}
+	
+	// 회원가입시 실행할 메소드
+	@PostMapping("insert")
+	public String insertMember(Member m, @RequestParam("addrDetail") String addrDetail, Model model, HttpSession session) {
+		
+		// System.out.println(m);
+		// System.out.println(addrDetail);
+		
+		// XXS 공격 막기
+		m.setMemberId(XssDefencePolicy.defence(m.getMemberId())); // 아이디
+		m.setMemberPwd(XssDefencePolicy.defence(m.getMemberPwd())); // 비밀번호
+		m.setMemberName(XssDefencePolicy.defence(m.getMemberName())); // 이름
+		m.setEmail(XssDefencePolicy.defence(m.getEmail())); // 이메일
+		m.setAddress(XssDefencePolicy.defence(m.getAddress())); // 주소
+		addrDetail = (XssDefencePolicy.defence(addrDetail)); // 상세주소
+	
+		// 비밀번호 암호화 하기
+		String encPwd = bCryptPasswordEncoder.encode(m.getMemberPwd());
+		
+		// 암호화 한 비밀번호 넣기
+		m.setMemberPwd(encPwd);
+		
+		// 도로명 주소와 상세주소를 합쳐기
+		String fulladd = m.getAddress() + " "+ addrDetail ;
+		// 합친거 객체에넣기
+		m.setAddress(fulladd);
+		// 회원 db에 넣기
+		int result = memberService.insertMember(m);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "SOYO의 회원이 되신 것을 환영합니다.");
+			
+			return "redirect:/";
+		} else {
+			
+			model.addAttribute("errorMsg", "회원가입에 실패했습니다.");
+			
+			return "common/errorPage";
+			
+		}
+	}
+	
+	
 	// 내 정보 변경시 실행할 메소드
 	@PostMapping("update")
 	public ModelAndView updateMember(Member m, HttpSession session, ModelAndView mv) {
 		// System.out.println(m);
+		
+		// XSS 공격 막기
+		// m.setMemberId(XssDefencePolicy.defence(m.getMemberId())); // 아이디
+		// m.setMemberPwd(XssDefencePolicy.defence(m.getMemberPwd())); // 비밀번호
+		m.setMemberName(XssDefencePolicy.defence(m.getMemberName())); // 이름
+		// m.setEmail(XssDefencePolicy.defence(m.getEmail())); // 이메일
+		m.setAddress(XssDefencePolicy.defence(m.getAddress())); // 주소
 		
 		// 정보 바꾸고 오기
 		int result = memberService.updateMember(m);
@@ -236,17 +328,24 @@ public class MemberController {
 		// 세션에서 현재 접속중인 회원의 아이디 얻어오기
 		String userId = ((Member)session.getAttribute("loginUser")).getMemberId();
 		
+		// XSS 공격 막기
+		originPwd = (XssDefencePolicy.defence(originPwd)); // 기존 비밀번호
+		updatePwd = (XssDefencePolicy.defence(updatePwd)); // 바꿀 비밀번호
+		checkPwd = (XssDefencePolicy.defence(checkPwd)); // 바꿀비밀번호 확인용
+		
 		// 비밀번호 비교를 위해 세션에서 비밀번호 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
 		// 일단 현재 사용중인 비밀번호가 맞는지 확인
-		// 암호화 작업을 안했기 때문에 일단은 단순 문자열 비교로 판단하기
-		if(loginUser.getMemberPwd().equals(originPwd)) { // 같을경우
+		if(bCryptPasswordEncoder.matches(checkPwd, loginUser.getMemberPwd())) { // 같을경우
+			
+			// 바꿀 비밀번호도 암호화
+			String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
 			
 			// 해시맵으로 묶어서 전달값 넘겨주기
 			HashMap<String, String> hm = new HashMap<>();
 			hm.put("memberId", userId);
-			hm.put("updatePwd", updatePwd);
+			hm.put("updatePwd", updateEncPwd);
 			
 			// 비밀번호 변경 진행
 			int result = memberService.updatePwd(hm);
@@ -260,7 +359,7 @@ public class MemberController {
 				
 				
 				Member updateMem = memberService.loginMember(m);
-				System.out.println(updateMem);
+				// System.out.println(updateMem);
 				session.setAttribute("loginUser", updateMem);
 				
 				session.setAttribute("alertMsg", "비밀번호 변경 성공");
@@ -278,17 +377,20 @@ public class MemberController {
 		return "redirect:/member/myInformation";
 	}
 	
-	// 인젝션 공격 막아야함
+	
 	// 회원 탈퇴용 메소드
 	@PostMapping("delete")
 	public String deleteMember(String userPwd, HttpSession session) {
 		
+		// XSS 공격 막기
+		userPwd = (XssDefencePolicy.defence(userPwd));
+		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		//loginUser에 세션값 담기
 		// System.out.println(loginUser);
-		
-		if(loginUser.getMemberPwd().equals(userPwd)) { // 성공시
-			// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가시 변경해야함)
+		if(bCryptPasswordEncoder.matches(userPwd, loginUser.getMemberPwd()))
+		{ // 성공시
+			// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가)
 			
 			int result = memberService.deleteMember(loginUser.getMemberId());
 			// 회원탈퇴 시키고 오기
