@@ -11,7 +11,7 @@
  		<result column="PRODUCT_SUB_CAPTION" property="productSubCaption" />
  		<result column="PRODUCT_ORIGIN" property="productOrigin" />
  		<result column="PRODUCT_CHANGE" property="productChange" />
- 		<result column="PRODUCT_COUNT" property="productCount" />
+ 		<result column="PRODUCT_COUNT" property="productStock" />
  		<result column="PRODUCT_REGISTERED_DATE" property="productRegisteredDate" />
  		<result column="STATUS" property="status" />
  		<result column="PRODUCT_SIZE_NO" property="productSizeNo" />
@@ -32,12 +32,31 @@
  			   PRODUCT_CAPTION,
  			   PRODUCT_ORIGIN,
  			   PRODUCT_CHANGE,
- 			   PRODUCT_COUNT,
- 			   STATUS,
- 			   PRODUCT_SIZE_NO
+ 			   STATUS
  		FROM PRODUCT
  	   ORDER BY PRODUCT_NO DESC
  	</select>
  
- 
+ 	<insert id="enrollForm" parameterType="product">
+ 		INSERT INTO PRODUCT VALUES (SEQ_PRODUCT.NEXTVAL
+                          , #{productName}
+                          , #{productPrice}
+                          , #{productCategory}
+                          , NULL
+                          , #{productSubCaption}
+                          , #{productOrigin}
+                          , #{productChange}
+                          , SYSDATE
+                          , 'Y')
+ 	
+ 	</insert>
+ 	
+ 	<insert id="enrollFormSize" parameterType="product">
+ 		INSERT INTO PRODUCT_SIZE VALUES (SEQ_PRODUCT_SIZE.NEXTVAL
+                                , SEQ_PRODUCT.CURRVAL
+                                , #{productSize}
+                                , #{productStock})
+ 	
+ 	</insert>
+ 	
 </mapper>

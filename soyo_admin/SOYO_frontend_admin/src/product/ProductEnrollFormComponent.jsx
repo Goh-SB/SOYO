@@ -8,6 +8,7 @@ import { ImageActions } from '@xeger/quill-image-actions';
 import { ImageFormats } from '@xeger/quill-image-formats';
 import axios from 'axios';
 import $ from 'jquery';
+import { useNavigate } from 'react-router-dom';
 
 Quill.register('modules/ImageResize', ImageResize);
 Quill.register('modules/imageActions', ImageActions);
@@ -26,8 +27,6 @@ function ProductEnrollFormComponent() {
 
       [{ 'align': [] }, { 'color': [] }, { 'background': [] }],       // dropdown with defaults from theme
 
-
-
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
 
@@ -37,18 +36,26 @@ function ProductEnrollFormComponent() {
     }
   }
 
+  let navigate = useNavigate();
 
   const [productName, setProductName] = useState('');
   const [content, setContent] = useState('');
   const [productPrice, setProductPrice] = useState(0);
-  const [productCategory, setProductCategory] = useState('');
-  const [productCaption, setProductCaption] = useState('');
+  const [productCategory, setProductCategory] = useState('남성');
   const [productStock, setProductStock] = useState(0);
+  const [productSize, setProductSize] = useState('M');
 
+  const sizes = ['S', 'M', 'L'];
+
+  const tagSelector = (e) => {
+    setProductCategory(e.target.value);
+  }
+
+  // console.log(productSize)
+  // console.log(content)
   const onChagecontent = (e) => {
-    console.log(e)
+    // console.log(e)
     setContent(e)
-
 
   }
 
@@ -81,7 +88,6 @@ function ProductEnrollFormComponent() {
         type: "image/jpeg"
       });
       const file = new File([blob], "image.jpg");
-
       const formData = new FormData();
       formData.append("file", file);
       console.log('formData : ', formData);
@@ -102,7 +108,10 @@ function ProductEnrollFormComponent() {
         }
 
       })
+      console.log("최종 formdata : ", formData);
     }
+
+
     let endContent = content;
 
     if (srcArray.length > 0) {
@@ -116,33 +125,64 @@ function ProductEnrollFormComponent() {
     }
     console.log("endContent : ", endContent);
 
-    let writeInform = {
-      productPrice : productPrice,
-      productName : productName,
-      productSubCaption : endContent,
-      imgList : urlArray,
-      productStock : productStock
+
+    const data = new FormData();
+
+    let thumbnail = document.querySelector("#thumbnail");
+    // console.log("이거이거", thumbnail.files.length)
+    // console.log("productPrice", productPrice)
+    // console.log("productName", productName)
+    // console.log("productSubCaption", endContent)
+    // console.log("productStock", productStock)
+    // console.log("productSize", productSize)
+    // console.log("productCategory", productCategory)
+    // console.log("imageList", urlArray)
+
+    data.append("productPrice", productPrice);
+    data.append("productName", productName);
+    data.append("productSubCaption", endContent);
+    data.append("productStock", productStock);
+    data.append("productSize", productSize);
+    data.append("productCategory", productCategory);
+    if (thumbnail.files.length > 0) {
+      data.append("thumbnail", thumbnail.files[0]);
     }
-    console.log(writeInform);
+    urlArray.forEach(url => {
+      data.append("imageList", url);
+    });
 
-    let url = "http://localhost:8100/soyo/product/enrollForm"
-    axios.post(url, writeInform).then((response) => {
-      if (response.data.success) {
-        console.log("업로드 성공");
-        console.log("저장한 데이터 : ", response);
 
-      } else {
-        alert("업로드 실패");
-      }
+    console.log("최종본 : ", data);
+
+
+    let url = "http://localhost:8100/soyo/product/enrollForm";
+    axios({
+      url,
+      method: "post",
+      data: data
+    }).then((response) => {
+      alert(response.data)
+      navigate("/product/list");
+    }).catch(() => {
+      console.log("통신 오류");
     })
 
-  }
+
+
+
+
+
+
+  } // 이미지 태그 반복문 종료
+
+
+
 
   // 이미지 썸네일용 함수(input 요소 가리기)
   useEffect(() => {
-    $("#imgFile").hide();
+    $("#thumbnail").hide();
     $("#product-thumbnail").off("click").on("click", () => {
-      $("#imgFile").click();
+      $("#thumbnail").click();
     });
   }, [])
 
@@ -157,18 +197,11 @@ function ProductEnrollFormComponent() {
       setImgUrl(null);
     } else {
       setImgUrl(URL.createObjectURL(e.target.files[0]));
+
     }
   }
 
 
-  const sizeBtns = document.querySelectorAll('.size-btn');
-  sizeBtns.forEach(btn => {
-    btn.addEventListener('click', function () {
-      sizeBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-    });
-
-  });
 
 
 
@@ -189,7 +222,7 @@ function ProductEnrollFormComponent() {
             <br />
             <input
               type="file"
-              id="imgFile"
+              id="thumbnail"
               required
               onChange={(e) => { loadImg(e) }}>
             </input>
@@ -204,7 +237,9 @@ function ProductEnrollFormComponent() {
                   <img src={imgUrl} width="400" height="400" id="product-thumbnail" border="1px solid lightGray" />
                 </div>
                 <div className="col s12 m6">
-                  <select id="selectTag" style={{ width: "30%", height: "40px" }}>
+                  <select id="selectTag" style={{ width: "30%", height: "40px" }}
+                    value={productCategory}
+                    onChange={(e) => { tagSelector(e) }}>
                     <option value="남성">남성</option>
                     <option value="여성">여성</option>
                     <option value="아동">아동</option>
@@ -248,9 +283,15 @@ function ProductEnrollFormComponent() {
                     <div className="size-selector-row">
                       <h6 style={{ marginBottom: "15px" }}>&nbsp;&nbsp;사이즈 선택</h6>
                     </div>
-                    <button className="size-btn" data-size="S">S</button>
-                    <button className="size-btn" data-size="M">M</button>
-                    <button className="size-btn" data-size="L">L</button>
+                    {sizes.map(size => (
+                      <button
+                        key={size}
+                        className={`size-btn ${productSize === size ? 'active' : ''}`}
+                        onClick={() => { setProductSize(size) }}
+                        data-size={size}>
+                        {size}
+                      </button>
+                    ))}
                   </div>
 
                   <hr />
@@ -266,7 +307,7 @@ function ProductEnrollFormComponent() {
                     required
                     min="0"
                     style={{ padding: '7px', marginBottom: '10px', width: '50%', border: '1px solid lightGray', fontSize: '15px' }}
-                    onChange={(e) => {setProductStock(e.target.value)}}
+                    onChange={(e) => { setProductStock(e.target.value) }}
                   >
                   </input>
 
@@ -294,7 +335,10 @@ function ProductEnrollFormComponent() {
           {/* ======== Button ======== */}
 
           <div style={{ float: 'right' }}>
-            <button style={{ marginRight: '10px' }} >취소</button>
+            <button style={{ marginRight: '10px' }} 
+            onClick={ () => {navigate("/product/list")}} 
+            >취소
+            </button>
             <button
               onClick={() => {
                 SaveBoard()

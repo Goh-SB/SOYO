@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
+import com.kh.soyo.product.model.vo.Product;
 
 @Repository
 public class ProductDao {
@@ -26,6 +27,16 @@ public class ProductDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("productMapper.productList", null, rowBounds); 
+	}
+
+	public int enrollForm(SqlSessionTemplate sqlSession, Product product) {
+
+		return sqlSession.insert("productMapper.enrollForm", product);
+	}
+
+	public int enrollFormSize(SqlSessionTemplate sqlSession, Product product) {
+
+		return sqlSession.insert("productMapper.enrollFormSize", product);
 	}
 
 	

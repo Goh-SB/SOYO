@@ -62,6 +62,12 @@
 	  WHERE ORDER_NO=#{orderNo}
 	</select>
 	
+	<update id="changeStatus" parameterType="Delivery">
+	UPDATE ORDER_TB
+	   SET ORDER_STATUS = #{orderStatus}
+	 WHERE ORDER_NO = #{orderNo}
+	</update>
+	
 </mapper> 
 
 
