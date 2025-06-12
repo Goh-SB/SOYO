@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.soyo.delivery.model.service.DeliveryService;
@@ -34,10 +35,36 @@ public class DeliveryController {
 		
 		return d;
 	}
+	
 	@GetMapping("product/{orderNo}")
 	public List<Product> deliveryProduct(@PathVariable int orderNo) {
 		
-		return deliveryService.deliveryProduct(orderNo);
-				
+		return deliveryService.deliveryProduct(orderNo);		
+	}
+	
+	@GetMapping("changeStatus")
+	public String changeStatus(@RequestParam("orderNo") int orderNo,
+								@RequestParam("orderStatus") String orderStatus) {
+		
+		int result=deliveryService.changeStatus(orderNo,orderStatus);
+		
+		return (result > 0) ? "수정 성공" : "수정 실패" ;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,4 +12,8 @@ public interface DeliveryService {
 	 Delivery deliveryDetail(int orderNo);
 
 	List<Product> deliveryProduct(int orderNo);
+
+	int changeStatus(int orderNo, String orderStatus);
+
+	
 }
