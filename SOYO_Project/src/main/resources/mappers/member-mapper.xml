@@ -68,10 +68,13 @@
 
 	<!-- 아이디 중복 확인용 쿼리문 -->
 	<select id="checkId" parameterType="string" resultType="_int">
+	
 		SELECT COUNT(*) FROM MEMBER
-    WHERE MEMBER_ID = #{checkId}
-
-		<select id="orderProduct" parameterType="string"
+    	WHERE MEMBER_ID = #{checkId}
+    	
+	</select>
+	
+	<select id="orderProduct" parameterType="string"
 								resultMap="deliveryResultSet">
 								
 			SELECT P.PRODUCT_CHANGE,
@@ -85,7 +88,7 @@
 			JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
 			JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
 			WHERE C.MEMBER_ID=#{memberId}
-
+			
 	</select>
-
+		
 </mapper>
