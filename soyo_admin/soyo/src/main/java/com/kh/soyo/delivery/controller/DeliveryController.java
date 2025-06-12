@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.service.DeliveryService;
 import com.kh.soyo.delivery.model.vo.Delivery;
 import com.kh.soyo.product.model.vo.Product;
@@ -50,6 +51,8 @@ public class DeliveryController {
 		
 		return (result > 0) ? "수정 성공" : "수정 실패" ;
 	}
+	
+
 }
 
 

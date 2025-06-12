@@ -44,7 +44,7 @@
 
         return (
             <div>
-                <h2>주문 내역</h2>
+                <h2>배송 정보</h2>
                 <br /><br />
                 <table className="table list-table table-hover">
                     <thead>

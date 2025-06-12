@@ -7,6 +7,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.vo.Delivery;
 import com.kh.soyo.product.model.vo.Product;
 
@@ -30,6 +31,11 @@ public class DeliveryDao {
 	    param.put("orderNo", orderNo);
 	    param.put("orderStatus", orderStatus);
 	    return sqlSession.update("deliveryMapper.changeStatus", param);
+	}
+
+	public List<Payment> paymentList(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("deliveryMapper.paymentList");
 	}
 
 }

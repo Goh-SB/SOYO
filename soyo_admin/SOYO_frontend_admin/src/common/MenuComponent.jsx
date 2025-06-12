@@ -41,8 +41,9 @@ function MenuComponent() {
                         onClick={() => { navigate("/product/list")}}>
                         상품 정보
                     </div>
-                    <div className='side-menu-content'>
-                        문의
+                    <div className='side-menu-content'
+                        onClick={()=>{ navigate("/order/list")}}>
+                        구매내역
                     </div>
                     <div className='side-menu-content link-menu'
                         onClick={() => { navigate("/notice/list") }}>

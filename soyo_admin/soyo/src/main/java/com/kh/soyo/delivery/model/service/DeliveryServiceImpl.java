@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.dao.DeliveryDao;
 import com.kh.soyo.delivery.model.vo.Delivery;
 import com.kh.soyo.product.model.vo.Product;
@@ -39,6 +40,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 	@Override
 	public int changeStatus(int orderNo, String status) {
 		return deliveryDao.changeStatus(sqlSession,orderNo,status);
+	}
+
+	@Override
+	public List<Payment> paymentList() {
+		
+		return deliveryDao.paymentList(sqlSession);
 	}
 	
 
