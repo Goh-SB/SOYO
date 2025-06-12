@@ -67,7 +67,7 @@ function DeliveryDetailComponent(){
                     <tr>
                         <th>배송지</th>
                         <td>
-                            {delivery.addressName}
+                         
                             {delivery.addressOther}
                         </td>
                     </tr>
