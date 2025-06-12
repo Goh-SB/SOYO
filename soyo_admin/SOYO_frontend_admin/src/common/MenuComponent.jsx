@@ -5,7 +5,6 @@ function MenuComponent() {
     let navigate = useNavigate();
     let hideSideMenu = () => {
 
-
         let sideMenu = document.getElementById("side-menu");
 
         if (sideMenu.style.left == "20px") {
@@ -16,11 +15,9 @@ function MenuComponent() {
 
     };
 
-
     let chatAlram = () => {
         location.href = "https://dashboard.tawk.to/#/chat";
     };
-
 
     return (
         <div id="background">
@@ -41,9 +38,6 @@ function MenuComponent() {
                         onClick={() => { navigate("/product/list")}}>
                         상품 정보
                     </div>
-                    <div className='side-menu-content'>
-                        문의
-                    </div>
                     <div className='side-menu-content link-menu'
                         onClick={() => { navigate("/notice/list") }}>
                         공지사항
@@ -59,11 +53,8 @@ function MenuComponent() {
 
             <div id="top-menu">
                 <div id="top-menu-icon">
-                    <span>
-                        <img src="../../resources/soyo-logo.png"
-                            id="mainLogo" onClick={() => { navigate("/") }} />
-
-                        <span className="material-symbols-outlined"
+                     <div className="header_icons">
+                            <span className="material-symbols-outlined"
                             onClick={hideSideMenu}
                             id="hide-side-menu">
                             menu
@@ -73,6 +64,10 @@ function MenuComponent() {
                             id="chat-alram">
                             notifications
                         </span>
+                        </div>
+                    <span>
+                        <img src="../../resources/soyo-logo.png"
+                            id="mainLogo" onClick={() => { navigate("/") }} />
                         <h2>SOYO 관리자 페이지 입니다.</h2>
                     </span>
 
