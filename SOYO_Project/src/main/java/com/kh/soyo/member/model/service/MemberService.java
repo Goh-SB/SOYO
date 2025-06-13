@@ -23,7 +23,7 @@ public interface MemberService {
 
 	// 로그인 처리
 	Member loginMember(Member m);
-	
+
 	// 비밀번호 변경
 	int updatePwd(HashMap<String, String> hm);
 
@@ -37,7 +37,10 @@ public interface MemberService {
 
 	int insertMember(Member m);
 
-	// 비밀번호 변경
+	// 아이디 찾기
+	String findId(Member m);
+
+	
 
 	
 }

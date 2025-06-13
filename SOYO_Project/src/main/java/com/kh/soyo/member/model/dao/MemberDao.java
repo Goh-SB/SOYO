@@ -54,4 +54,9 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
+	public String findId(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findId", m);
+	}
+
 }

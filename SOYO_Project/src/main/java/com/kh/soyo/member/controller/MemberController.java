@@ -1,5 +1,6 @@
 package com.kh.soyo.member.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -61,6 +62,12 @@ public class MemberController {
 		return "member/memberEnrollForm";
 	}
 	
+	// 아이디 찾기 페이지 이동 메소드
+	@GetMapping("/findMemberId")
+	public String fndMemberId() {
+		return "member/findMemberId";
+	}
+	
 	
 	// 내 정보 조회 페이지 이동메소드
 	@GetMapping("/myInformation")
@@ -85,6 +92,12 @@ public class MemberController {
 	@GetMapping("/memberPwdUpdateForm")
 	public String memberPwdUpdateForm() {
 		return "member/memberPwdUpdateForm";
+	}
+	
+	// 새 비밀번호 받기 페이지
+	@GetMapping("/newMemberPwd")
+	public String newMemberPwd() {
+		return "member/newMemberPwd";
 	}
 	
 	
@@ -414,6 +427,27 @@ public class MemberController {
 			
 			return "redirect:/member/myInformation";
 		}
+		
+	}
+	
+	@PostMapping("findId")
+	public String findId(Member m, HttpSession session) {
+		
+		// System.out.println(m);
+		// Date date = m.getBirthDate();
+		
+		// SimpleDateFormat sdf = new SimpleDateFormat("RR/MM/dd");
+		
+		String result = memberService.findId(m);
+		
+		if(result == null) {
+			
+			return "member/findMemberId";
+		} else {
+			session.setAttribute("alertMsg", "조건에 맞는 Id : " + result);
+			return "member/findMemberId";
+		}
+		
 		
 	}
 	

@@ -171,6 +171,7 @@ function execDaumPostcode() {
 <jsp:include page="../common/footer.jsp" />
 <script>
 let goInsert = 0;
+
 // 비밀번호    
 const memberPwd = document.getElementById("memberPwd");
 
