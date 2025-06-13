@@ -1,17 +1,96 @@
-#product-table>tbody>tr{
+#product-table>tbody>tr {
     display: inline-block;
 }
 
 .product-Object {
     text-align: center;
-    width: 300px;
-    height: 300px;
+    width: 270px;
+    height: 330px;
+    border : 1px solid lightGray;
+    border-radius : 10px;
+    margin : 30px;
+    box-shadow: 3px 3px 3px 3px lightgray;
+    transition: 0.2s ease;
+    font-size : 20px;
+    font-weight : 600;
+}
+.product-Object:hover{
+    transform: scale(1.05); 
 }
 
 .product-img {
     margin: auto;
 }
-#product-Write{
-    text-align : right;
-    width : 95%;
+#product-writeBtn{
+    border-radius : 10px;
+    width : 80px;
+    height : 40px;
+    background-color: #E3E4FA;
+    font-weight : 600;
+}
+
+#product-Write {
+    text-align: right;
+    width: 95%;
+}
+
+#product-searchArea {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* 왼쪽, 가운데, 오른쪽 */
+  align-items: center;
+  height: 70px;       /* 기존 높이 유지 */
+  margin: auto;
+  gap: 8px;
+}
+
+#product-searchText {
+    padding: 7px;
+    width : 300px;
+    height: 50px;
+    flex: auto;
+    border-radius : 10px;
+}
+
+#product-searchBtn {
+    width: 80px;
+    height: 50px;
+    flex: auto;
+    border-radius : 10px;
+    background-color: #A8C5DA;
+    font-size : 20px;
+}
+
+#product-categoryArea{
+   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  margin-left: auto;
+
+
+}
+#search-area{
+ grid-column: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+
+}
+.product-categoryBtn{
+ grid-column: 3;
+  justify-self: end;  /* 오른쪽 정렬 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  border : none;
+  background-color: white;
+  font-size : 22px;
+
+}
+.product-categoryBtn:hover{
+    background-color : #E3E4FA;
+    border-radius: 10px;
 }

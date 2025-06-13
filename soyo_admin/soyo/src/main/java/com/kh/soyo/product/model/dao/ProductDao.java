@@ -1,6 +1,7 @@
 package com.kh.soyo.product.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -38,6 +39,49 @@ public class ProductDao {
 
 		return sqlSession.insert("productMapper.enrollFormSize", product);
 	}
+
+	public int searchCount(SqlSessionTemplate sqlSession, String keyword) {
+
+		return sqlSession.selectOne("productMapper.searchCount", keyword);
+	}
+
+	public ArrayList<Member> search(SqlSessionTemplate sqlSession, String keyword, PageInfo pi) {
+
+		
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		hm.put("keyword", keyword);
+		
+		return (ArrayList)sqlSession.selectList("productMapper.search", hm);
+	}
+
+	public int filterCount(SqlSessionTemplate sqlSession, String cate) {
+
+		return sqlSession.selectOne("productMapper.filterCount", cate);
+	}
+
+	public ArrayList<Member> filter(SqlSessionTemplate sqlSession, String cate, PageInfo pi) {
+
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		hm.put("cate", cate);
+		
+		return (ArrayList)sqlSession.selectList("productMapper.filter", hm);
+	}
+
+	public Product detail(SqlSessionTemplate sqlSession, Product p) {
+
+		return sqlSession.selectOne("productMapper.detail", p);
+	}
+
 
 	
 }
