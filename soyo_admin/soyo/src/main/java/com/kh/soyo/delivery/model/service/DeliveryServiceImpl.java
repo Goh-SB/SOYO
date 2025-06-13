@@ -47,6 +47,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 		
 		return deliveryDao.paymentList(sqlSession);
 	}
+
+	@Override
+	public List<Payment> searchMember(String memberName) {
+
+		return deliveryDao.searchMember(sqlSession,memberName);
+	}
 	
 
 

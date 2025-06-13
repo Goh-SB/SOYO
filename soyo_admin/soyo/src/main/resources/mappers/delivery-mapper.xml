@@ -23,6 +23,14 @@
     <result property="productCount" column="PRODUCT_COUNT" />
     <result property="productPrice" column="PRODUCT_PRICE" />
 	</resultMap>
+	
+	<resultMap id="paymentResultSet" type="Payment">
+		 <result property="orderDate" column="ORDER_DATE"/>
+		  <result property="memberName" column="MEMBER_NAME"/>
+		  <result property="productName" column="PRODUCT_NAME"/>
+		  <result property="productPrice" column="PRODUCT_PRICE"/>
+		  <result property="cancelStatus" column="CANCEL_STATUS"/>
+	</resultMap>
 	<select id="deliveryList" resultMap="deliveryResultSet">
 	SELECT O.*,
 	       M.MEMBER_NAME
@@ -67,6 +75,33 @@
 	   SET ORDER_STATUS = #{orderStatus}
 	 WHERE ORDER_NO = #{orderNo}
 	</update>
+	
+	<select id="paymentList" resultMap="paymentResultSet">
+	SELECT O.ORDER_DATE,
+	       M.MEMBER_NAME,
+	       PD.PRODUCT_NAME,
+	       PD.PRODUCT_PRICE,
+	       P.CANCEL_STATUS
+	FROM PAYMENT P
+	JOIN ORDER_TB O ON O.MEMBER_ID = P.MEMBER_ID
+	JOIN MEMBER M ON M.MEMBER_ID = P.MEMBER_ID
+	JOIN PRODUCT PD ON PD.PRODUCT_NO = P.PRODUCT_NO
+	ORDER BY O.ORDER_DATE DESC		
+	</select>
+	
+	<select id="searchMember" resultMap="paymentResultSet">
+	SELECT O.ORDER_DATE,
+	       M.MEMBER_NAME,
+	       PD.PRODUCT_NAME,
+	       PD.PRODUCT_PRICE,
+	       P.CANCEL_STATUS
+	FROM PAYMENT P
+	JOIN ORDER_TB O ON O.MEMBER_ID = P.MEMBER_ID
+	JOIN MEMBER M ON M.MEMBER_ID = P.MEMBER_ID
+	JOIN PRODUCT PD ON PD.PRODUCT_NO = P.PRODUCT_NO
+	WHERE M.MEMBER_NAME LIKE '%' || #{memberName} || '%'
+	ORDER BY O.ORDER_DATE DESC		
+	</select>
 	
 </mapper> 
 

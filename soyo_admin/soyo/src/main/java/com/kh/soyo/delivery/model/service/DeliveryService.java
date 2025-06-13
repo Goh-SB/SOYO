@@ -18,5 +18,7 @@ public interface DeliveryService {
 
 	List<Payment> paymentList();
 
+	List<Payment> searchMember(String memberName);
+
 	
 }

@@ -38,4 +38,9 @@ public class DeliveryDao {
 		return sqlSession.selectList("deliveryMapper.paymentList");
 	}
 
+	public List<Payment> searchMember(SqlSessionTemplate sqlSession, String memberName) {
+		
+		return sqlSession.selectList("deliveryMapper.searchMember",memberName);
+	}
+
 }
