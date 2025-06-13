@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
 public interface DeliveryService {
@@ -19,6 +20,8 @@ public interface DeliveryService {
 	List<Payment> paymentList();
 
 	List<Payment> searchMember(String memberName);
+
+	Member memberInfo(String memberId);
 
 	
 }

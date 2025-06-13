@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
 @Repository
@@ -43,4 +44,20 @@ public class DeliveryDao {
 		return sqlSession.selectList("deliveryMapper.searchMember",memberName);
 	}
 
+	public Member memberInfo(SqlSessionTemplate sqlSession, String memberId) {
+		
+		return sqlSession.selectOne("deliveryMapper.memberInfo",memberId);
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+

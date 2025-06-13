@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.service.DeliveryService;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
 @RestController
@@ -65,7 +66,12 @@ public class DeliveryController {
 		
 		return deliveryService.searchMember(memberName);
 	}
-
+	
+	@GetMapping("memberInfo/{memberId}")
+	public Member memberInfo(@PathVariable String memberId) {
+		
+		return deliveryService.memberInfo(memberId);
+	}
 }
 
 

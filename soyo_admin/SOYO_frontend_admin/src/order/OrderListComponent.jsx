@@ -48,10 +48,17 @@ function OrderListComponent(){
            <div style={{ display: "flex", 
                         justifyContent: "center",
                         }}>
-            <input type="text" 
-            id="searchInput"
-            style={{ width: "600px", padding: "8px", fontSize: "16px" }} 
-             placeholder="이름을 검색하세요" /> &nbsp;
+           <input
+                type="text"
+                id="searchInput"
+                placeholder="이름을 검색하세요"
+                style={{ width: "600px", padding: "8px", fontSize: "16px" }}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                    searchMember();
+                    }
+                }}
+                /> &nbsp;
             <button 
             style={{ width: "60px", padding: "8px", fontSize: "16px" }}
             onClick={searchMember}>
@@ -73,7 +80,9 @@ function OrderListComponent(){
                 </thead>
                 <tbody>
                     {dataList.map((item, index) => (
-                        <tr key={index} align="center">
+                        <tr 
+                        onClick={()=> navigate("/order/"+item.memberId)}
+                        key={index} align="center">
                             <td>{item.orderDate}</td>
                             <td>{item.memberName}</td>
                             <td>{item.productName}</td>

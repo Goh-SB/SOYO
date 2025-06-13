@@ -6,7 +6,6 @@ import DeliveryProductDetailComponent from "./DeliveryProductDetailComponent";
 function DeliveryDetailComponent(){
 
     // 실행할 구문
-        // 실행할 구문
     const [delivery,setDelivery]=useState({
 
         status:''
@@ -18,7 +17,7 @@ function DeliveryDetailComponent(){
     deliveryDetail(); // 딱 한 번만 실행
     }, []); 
 
-    const deliveryDetail = ()=>{
+    const deliveryDetail = ()=> {
 
        let url = "http://localhost:8100/soyo/delivery/info/" + orderNo;
 
