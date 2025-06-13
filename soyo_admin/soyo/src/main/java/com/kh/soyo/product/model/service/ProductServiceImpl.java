@@ -1,6 +1,7 @@
 package com.kh.soyo.product.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,38 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return result1 * result2;
 	}
+
+	@Override
+	public int searchCount(String keyword) {
+
+		return productDao.searchCount(sqlSession,keyword);
+	}
+
+	@Override
+	public ArrayList<Member> search(String keyword, PageInfo pi) {
+
+		return productDao.search(sqlSession, keyword, pi);
+	}
+
+	@Override
+	public int filterCount(String cate) {
+
+		return productDao.filterCount(sqlSession, cate);
+	}
+
+	@Override
+	public ArrayList<Member> filter(String cate, PageInfo pi) {
+
+		return productDao.filter(sqlSession, cate, pi);
+	}
+
+
+	@Override
+	public Product detail(Product p) {
+
+		return productDao.detail(sqlSession, p);
+	}
+
+
 	
 }
