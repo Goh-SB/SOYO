@@ -282,7 +282,7 @@
         <a id="menu">공지사항</a>
         <ul class="submenu">
           <li><a href="#">이벤트</a></li>
-          <li><a href="#">공지사항</a></li>
+          <li><a href="<c:url value='/notice/noticeList'/>">공지사항</a></li>
         </ul>
       </li>
       <li class="dropdown">
