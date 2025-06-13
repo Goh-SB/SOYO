@@ -160,3 +160,53 @@ SELECT NOTICE_NO
   FROM NOTICE
  WHERE NOTICE_NO = 1 
  
+INSERT INTO PRODUCT VALUES (SEQ_PRODUCT.NEXTVAL
+                          , ?
+                          , ?
+                          , ?
+                          , NULL
+                          , ?
+                          , ?
+                          , ?
+                          , SYSDATE
+                          , 'Y')
+ 
+INSERT INTO PRODUCT_SIZE VALUES (SEQ_PRODUCT_SIZE.NEXTVAL
+                                , SEQ_PRODUCT.CURRVAL
+                                , ?
+                                , ?)
+                                
+                                
+ 		SELECT COUNT(*)
+ 		  FROM PRODUCT
+ 		 WHERE PRODUCT_NAME LIKE '%상품%'
+
+	SELECT PRODUCT_NO,
+ 			   PRODUCT_NAME,
+ 			   PRODUCT_PRICE,
+ 			   PRODUCT_CATEGORY,
+ 			   PRODUCT_CAPTION,
+ 			   PRODUCT_ORIGIN,
+ 			   PRODUCT_CHANGE,
+ 			   STATUS
+ 		FROM PRODUCT
+ 	   WHERE PRODUCT_NAME LIKE '%3%'
+ 	   ORDER BY PRODUCT_NO DESC 
+
+
+
+SELECT 
+    P.PRODUCT_NO,
+    P.PRODUCT_NAME,
+    P.PRODUCT_PRICE,
+    P.PRODUCT_CATEGORY,
+    P.PRODUCT_CAPTION,
+    P.PRODUCT_ORIGIN,
+    P.PRODUCT_CHANGE,
+    P.STATUS,
+    P.PRODUCT_SUB_CAPTION,
+    PS.STOCK_COUNT
+FROM PRODUCT P
+JOIN PRODUCT_SIZE PS ON P.PRODUCT_NO = PS.PRODUCT_NO
+WHERE P.PRODUCT_NO = 2
+  AND PS.PRODUCT_SIZE = 'L';

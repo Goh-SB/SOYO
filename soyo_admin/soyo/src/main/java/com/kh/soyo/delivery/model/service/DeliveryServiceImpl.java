@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.dao.DeliveryDao;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
 @Service
@@ -46,6 +47,24 @@ public class DeliveryServiceImpl implements DeliveryService{
 	public List<Payment> paymentList() {
 		
 		return deliveryDao.paymentList(sqlSession);
+	}
+
+	@Override
+	public List<Payment> searchMember(String memberName) {
+
+		return deliveryDao.searchMember(sqlSession,memberName);
+	}
+
+	@Override
+	public Member memberInfo(String memberId) {
+
+		return deliveryDao.memberInfo(sqlSession,memberId);
+	}
+
+	@Override
+	public List<Payment> orderInfo(String memberId) {
+		
+		return deliveryDao.orderInfo(sqlSession,memberId);
 	}
 	
 
