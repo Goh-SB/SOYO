@@ -72,6 +72,12 @@ public class DeliveryController {
 		
 		return deliveryService.memberInfo(memberId);
 	}
+	
+	@GetMapping("orderInfo/{memberId}")
+	public List<Payment> orderInfo(@PathVariable String memberId){
+		
+		return deliveryService.orderInfo(memberId);
+	}
 }
 
 

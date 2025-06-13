@@ -60,6 +60,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 
 		return deliveryDao.memberInfo(sqlSession,memberId);
 	}
+
+	@Override
+	public List<Payment> orderInfo(String memberId) {
+		
+		return deliveryDao.orderInfo(sqlSession,memberId);
+	}
 	
 
 

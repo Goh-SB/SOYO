@@ -1,18 +1,80 @@
+import axios from "axios";
 import OrderDetailCancelComponent from "./OrderDetailCancelComponent";
 import OrderDetailMemberComponent from "./OrderDetailMemberComponent";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-function OrderDetailComponent(){
+function OrderDetailComponent() {
 
-    return(
+    const [order,setOrder]=useState([]);
+    const memberId=useParams.memberId;
+    const orderInfo = () =>{
+        
+        let url = "http://localhost:8100/soyo/delivery/orderInfo/"+memberId;
+
+        axios({
+            url,
+            method : "get"
+        }).then((response)=>{
+            console.log(response);
+        }).catch(()=>{
+            console.log("ajax 통신 실패");
+        });
+    }
+
+    useEffect(()=>{
+        orderInfo();
+    },[]);
+
+    return (
         <div>
             <h2>결제내역 상세정보</h2>
-
             <br /><br />
 
-            <OrderDetailMemberComponent/>    
-            <h3>결제 정보</h3>
-            <OrderDetailCancelComponent/>
+            {/* 수평 정렬을 위한 Flexbox wrapper */}
+            <div style={{ display: "flex", gap: "50px" }}>
+                {/* 구매자 정보 */}
+                <div style={{ marginLeft: "100px" }}>
+                    <OrderDetailMemberComponent />
+                </div>
+
+                {/* 결제 정보 */}
+                <div>
+                    <h3>결제 정보</h3>
+                    <table className="table"
+                        style={{
+                            width: "500px",
+                            border: "1px solid black",
+                            borderCollapse: "collapse",
+                            marginTop: "30px"
+                        }}
+                    >
+                        <tbody align="center">
+                            <tr>
+                                <th>주문 번호</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>상품 이름</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>가격</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>결제 날짜</th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br /><br />
+            <OrderDetailCancelComponent />
         </div>
     );
 }
+
 export default OrderDetailComponent;
