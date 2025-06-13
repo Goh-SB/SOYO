@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.service.DeliveryService;
 import com.kh.soyo.delivery.model.vo.Delivery;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
 @RestController
@@ -52,7 +54,24 @@ public class DeliveryController {
 		return (result > 0) ? "수정 성공" : "수정 실패" ;
 	}
 	
-
+	@GetMapping("payment")
+	public List<Payment> paymentList(){
+		
+		return deliveryService.paymentList();
+	}
+	
+	@GetMapping("searchMember")
+	@ResponseBody
+	public List<Payment> searchMember(@RequestParam("memberName") String memberName){
+		
+		return deliveryService.searchMember(memberName);
+	}
+	
+	@GetMapping("memberInfo/{memberId}")
+	public Member memberInfo(@PathVariable String memberId) {
+		
+		return deliveryService.memberInfo(memberId);
+	}
 }
 
 

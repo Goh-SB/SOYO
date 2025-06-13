@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Alias("payment")
+@Alias("Payment")
 @NoArgsConstructor
 @Setter
 @Getter
@@ -21,4 +21,10 @@ public class Payment {
 	private int productNo;
 	private String cancelStatus;
 	private String cancelReason;
+	
+	private Date orderDate;
+	private String memberName;
+	private String productName;
+	private int productPrice;
+	
 }

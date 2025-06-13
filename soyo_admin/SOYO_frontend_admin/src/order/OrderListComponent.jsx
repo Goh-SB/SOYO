@@ -14,15 +14,57 @@ function OrderListComponent(){
             url,
             method : "get"
         }).then((response)=>{
-            console.log(response);
             setDataList(response.data);
         }).catch(()=>{
             console.log("ajax 통신 실패");
         });
     }
+    const searchMember =()=>{
+        let url = "http://localhost:8100/soyo/delivery/searchMember";
+
+        const memberName = document.getElementById("searchInput").value;
+        axios({
+            url,
+            method : "get",
+            params : {
+                memberName
+            }
+        }).then((response)=>{
+            setDataList(response.data);
+        }).catch(()=>{
+            console.log("ajax 통신 실패");
+        });
+    }
+
+    useEffect(() => {
+        selectPayment(); 
+    }, []);
     return(
         <div>
             <h2>구매내역</h2>
+
+            <br /><br />
+
+           <div style={{ display: "flex", 
+                        justifyContent: "center",
+                        }}>
+           <input
+                type="text"
+                id="searchInput"
+                placeholder="이름을 검색하세요"
+                style={{ width: "600px", padding: "8px", fontSize: "16px" }}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                    searchMember();
+                    }
+                }}
+                /> &nbsp;
+            <button 
+            style={{ width: "60px", padding: "8px", fontSize: "16px" }}
+            onClick={searchMember}>
+                검색
+            </button>
+            </div>
 
             <br /><br />
 
@@ -37,13 +79,17 @@ function OrderListComponent(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr align="center">
-                        <td>2025-06-12</td>
-                        <td>홍길동</td>
-                        <td>화이트 반팔 티셔츠</td>
-                        <td>12900</td>
-                        <td>환불처리</td>
-                    </tr>
+                    {dataList.map((item, index) => (
+                        <tr 
+                        onClick={()=> navigate("/order/"+item.memberId)}
+                        key={index} align="center">
+                            <td>{item.orderDate}</td>
+                            <td>{item.memberName}</td>
+                            <td>{item.productName}</td>
+                            <td>{item.productPrice.toLocaleString()}원</td>
+                            <td>{item.cancelStatus}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
 

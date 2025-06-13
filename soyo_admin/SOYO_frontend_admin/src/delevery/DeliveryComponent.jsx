@@ -13,7 +13,6 @@
                 url,
                 method: "get"
             }).then((response) => {
-                console.log(response);
                 setDataList(response.data); // 화면에 출력할 데이터 저장
             }).catch(() => {
                 console.log("❌ 주문내역 통신 실패");
