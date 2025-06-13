@@ -13,6 +13,7 @@ import ProductListComponent from './product/ProductListComponent';
 import ProductEnrollFormComponent from './product/ProductEnrollFormComponent';
 import DeliveryDetailComponent from './delevery/DeliveryDetailComponent';
 import OrderListComponent from './order/OrderListComponent';
+import OrderDetailComponent from './order/OrderDetailComponent';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent/>} />
         <Route path="/product/enrollForm" element={ <ProductEnrollFormComponent /> }/>
         <Route path="/order/list" element={<OrderListComponent/>}/>
+        <Route path="/order/:memberId" element={ <OrderDetailComponent/>}/>
       </Routes>
       {/* footer? */}
 

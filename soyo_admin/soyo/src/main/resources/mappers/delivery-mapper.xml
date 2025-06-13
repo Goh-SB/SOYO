@@ -19,17 +19,25 @@
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	    
 	    <result property="memberName" column="MEMBER_NAME" />
-	        <result property="productName" column="PRODUCT_NAME" />
-    <result property="productCount" column="PRODUCT_COUNT" />
-    <result property="productPrice" column="PRODUCT_PRICE" />
+	    <result property="productName" column="PRODUCT_NAME" />
+	    <result property="productCount" column="PRODUCT_COUNT" />
+	    <result property="productPrice" column="PRODUCT_PRICE" />
 	</resultMap>
 	
 	<resultMap id="paymentResultSet" type="Payment">
 		 <result property="orderDate" column="ORDER_DATE"/>
 		  <result property="memberName" column="MEMBER_NAME"/>
 		  <result property="productName" column="PRODUCT_NAME"/>
+		  <result property="memberId" column="MEMBER_ID"/>
 		  <result property="productPrice" column="PRODUCT_PRICE"/>
 		  <result property="cancelStatus" column="CANCEL_STATUS"/>
+	</resultMap>
+	
+	<resultMap id="memberResultSet" type="Member">
+	    <result property="memberName" column="MEMBER_NAME"/>
+	    <result property="email" column="EMAIL"/>
+	    <result property="phone" column="PHONE"/>
+	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	</resultMap>
 	<select id="deliveryList" resultMap="deliveryResultSet">
 	SELECT O.*,
@@ -81,7 +89,8 @@
 	       M.MEMBER_NAME,
 	       PD.PRODUCT_NAME,
 	       PD.PRODUCT_PRICE,
-	       P.CANCEL_STATUS
+	       P.CANCEL_STATUS,
+	       M.MEMBER_ID
 	FROM PAYMENT P
 	JOIN ORDER_TB O ON O.MEMBER_ID = P.MEMBER_ID
 	JOIN MEMBER M ON M.MEMBER_ID = P.MEMBER_ID
@@ -103,6 +112,16 @@
 	ORDER BY O.ORDER_DATE DESC		
 	</select>
 	
+	<select id="memberInfo" parameterType="string"
+							resultMap="memberResultSet">
+	SELECT M.MEMBER_NAME,
+	       M.EMAIL,
+	       M.PHONE,
+	       D.ADDRESS_OTHER
+  FROM MEMBER M
+  JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID= M.MEMBER_ID
+  WHERE M.MEMBER_ID = #{memberId}
+	</select>
 </mapper> 
 
 
