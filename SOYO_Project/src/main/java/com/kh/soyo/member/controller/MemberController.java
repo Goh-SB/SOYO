@@ -101,7 +101,6 @@ public class MemberController {
 	}
 	
 	
-	
 	// 로그인 요청 처리용 메서드
 	@PostMapping("/login")
 	public String loginMember(Member m, Model model,
@@ -139,32 +138,32 @@ public class MemberController {
 		
 		
 		// VO 객체를 서비스로 전달하면서 요청 후 결과 받기
-		Member loginUser = memberService.loginMember(m);
+		Member loginUser = memberService.selectMember(m.getMemberId());
 		
-		// System.out.println(loginUser);
-		
-		if(loginUser == null) { // 로그인 실패
-			
-			// 에러문구 담아서 에러페이지 보여지게끔
-			model.addAttribute("errorMsg", "로그인에 실패했습니다. (디자인 바꿀 겁니다.. ㅋㅋ)");
-			
-			// 응답페이지 보여지게끔 문자열 리턴
-			return "common/errorPage";
-			
-		} else { // 성공
-			
+		// 로그인 성공 조건: 아이디가 존재하고 비밀번호가 일치하면
+		if(loginUser != null && bCryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) { // 성공
+
 			// 응답데이터로 방금 로그인 성공한 회원의 정보 담기
 			// > 단, 로그인한 회원의 정보를 로그아웃 전까지
 			//   전역에서 꺼내다 쓸 수 있도록 담아둬야 한다.
 			// > 브라우저 창이 닫히면 담긴 값도 날아가는 session 객체에 담기
 			session.setAttribute("loginUser", loginUser);
-			
+
 			session.setAttribute("alertMsg", "로그인에 성공하였습니다.");
-			
+
 			// 응답화면이 보여지게끔 처리 (리다이렉트)
 			return "redirect:/";
 			// > / 는 /soyo 뒤의 /를 나타냄.
+
+		} else { // 로그인 실패
+
+			// 에러문구 담아서 에러페이지 보여지게끔
+			model.addAttribute("errorMsg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+
+			// 응답페이지 보여지게끔 문자열 리턴
+			return "common/errorPage";
 		}
+
 		
 	} // loginMember 메서드 끝
 	
