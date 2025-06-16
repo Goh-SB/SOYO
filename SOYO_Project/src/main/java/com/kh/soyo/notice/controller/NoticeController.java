@@ -19,19 +19,19 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	// 공지사항 목록 조회용 컨트롤러
-	@GetMapping("list")
+	@GetMapping("noticeList")
 	public ArrayList<Notice> noticeList(PageInfo pi) {
 		return noticeService.noticeList(pi);
 	}
 	
 	// 공지사항 상세 조회용 컨트롤러
-	@GetMapping("detail/{noticeNo}")
+	@GetMapping("noticeDetail/{noticeNo}")
 	public Notice noticeDetail(@PathVariable int noticeNo) {
 		return noticeService.noticeDetail(noticeNo);
 	}
 	
 	// 공지사항 수정용 컨트롤러
-	@PostMapping("update")
+	@PostMapping("noticeUpdate")
 	public String updateNotice(@RequestBody Notice n) {
 		int result = noticeService.updateNotice(n);
 		
@@ -39,7 +39,7 @@ public class NoticeController {
 	}
 	
 	// 공지사항 삭제용 컨트롤러
-	@PostMapping("delete")
+	@PostMapping("noticeDelete")
 	public String deleteNotice(@RequestBody Notice n) {
 		int result = noticeService.deleteNotice(n.getNoticeNo());
 		
