@@ -17,7 +17,11 @@ function Home (props) {
         let memberPwd = document.getElementById("memberPwd").value;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         let url = "http://localhost:8888/soyo/auth/login";
+=======
+        let url = "http://localhost:8100/soyo/auth/login";
+>>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
 =======
         let url = "http://localhost:8100/soyo/auth/login";
 >>>>>>> 861fbee448b688c267d12bebd33a604b619a2552

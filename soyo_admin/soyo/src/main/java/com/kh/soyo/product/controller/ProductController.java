@@ -209,8 +209,13 @@ public class ProductController {
 		}
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		System.out.println(p);
 		System.out.println(thumbnail);
+=======
+		// System.out.println(p);
+		// System.out.println(thumbnail);
+>>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
 =======
 		// System.out.println(p);
 		// System.out.println(thumbnail);
