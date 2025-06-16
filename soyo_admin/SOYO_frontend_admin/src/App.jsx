@@ -19,7 +19,13 @@ import OrderDetailComponent from './order/OrderDetailComponent';
 
 function App() {
 
+  // 실행 구문
 
+  // sessionStorage 에 있던 값을 뽑아서 state 변수로 셋팅
+  let [loginUser, setLoginUser]
+      = useState(sessionStorage.getItem("loginUser"));
+
+  // return 구문
   return (
     <div id="main">
      
@@ -28,7 +34,7 @@ function App() {
       {/* content */}
       <br />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home loginUser={ loginUser } setLoginUser={ setLoginUser } />} />
         <Route path="/member/list" element={<MemberListComponent />} />
         <Route path="/notice/list" element={<NoticeListComponent />} />
         <Route path="/member/detail/:memberId" element={<MemberDetailComponent />} /> 
