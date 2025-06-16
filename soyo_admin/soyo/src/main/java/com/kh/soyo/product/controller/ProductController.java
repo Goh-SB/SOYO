@@ -208,19 +208,6 @@ public class ProductController {
 			// > 재고가 없다면 수정 시 재고 먼저 insert
 		}
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-		System.out.println(p);
-		System.out.println(thumbnail);
-=======
-		// System.out.println(p);
-		// System.out.println(thumbnail);
->>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
-=======
-		// System.out.println(p);
-		// System.out.println(thumbnail);
->>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
-		
 		if(thumbnail != null) {
 			
 			String filePath = "C:/SOYO/soyo_admin/soyo/src/main/webapp/resources/product_upfile/";
