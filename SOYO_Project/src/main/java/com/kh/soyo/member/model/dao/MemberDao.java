@@ -63,4 +63,9 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectMember", memberId);
 	}
 
+	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.newRandomPwd", m);
+	}
+
 }

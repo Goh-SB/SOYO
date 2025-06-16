@@ -40,6 +40,8 @@ public interface MemberService {
 	// 아이디 찾기
 	String findId(Member m);
 
+	int changePwd(Member m);
+
 	
 
 	

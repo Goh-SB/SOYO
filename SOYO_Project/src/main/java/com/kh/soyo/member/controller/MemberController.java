@@ -1,5 +1,6 @@
 package com.kh.soyo.member.controller;
 
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
@@ -429,6 +430,7 @@ public class MemberController {
 		
 	}
 	
+	// 아이디 찾기용 메소드
 	@PostMapping("findId")
 	public String findId(Member m, HttpSession session) {
 		
@@ -437,10 +439,15 @@ public class MemberController {
 		
 		// SimpleDateFormat sdf = new SimpleDateFormat("RR/MM/dd");
 		
+		// XSS 공격 막기
+		m.setMemberName(XssDefencePolicy.defence(m.getMemberName()));
+		m.setEmail(XssDefencePolicy.defence(m.getEmail()));
+		m.setPhone(XssDefencePolicy.defence(m.getPhone()));
+		
 		String result = memberService.findId(m);
 		
 		if(result == null) {
-			
+			session.setAttribute("alertMsg", "조건에 맞는 아이디가 없습니다.");
 			return "member/findMemberId";
 		} else {
 			session.setAttribute("alertMsg", "조건에 맞는 Id : " + result);
@@ -449,6 +456,62 @@ public class MemberController {
 		
 		
 	}
+	
+	
+	
+	// 비밀번호 재발급 기능
+	@PostMapping("changePwd")
+	public String changePwd(Member m, HttpSession session) {
+		
+		// 랜덤비밀번호 생성을 위한 선언
+		final String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        final String NUM = "0123456789";
+        final String UQ = "!@#$%^&*()_";
+		
+        // XSS 공격 막기
+        m.setMemberId(XssDefencePolicy.defence(m.getMemberId()));
+        m.setEmail(XssDefencePolicy.defence(m.getEmail()));
+        
+        // 일단 랜덤한 비밀번호 발급을 위한 구문 작성
+        // 기존 랜덤보다 중복성이 적은 시큐랜덤
+        SecureRandom random = new SecureRandom();
+		
+        // 문자열을 합치기 위한 String빌더
+        StringBuilder sb = new StringBuilder();
+        
+        // 영문 6개
+        // 반복을 돌려서 원하는 갯수만큼 뽑아오기
+        for (int i = 0; i < 6; i++) {
+            sb.append(ABC.charAt(random.nextInt(ABC.length())));
+        }
+
+        // 특수문자 1개
+        sb.append(UQ.charAt(random.nextInt(UQ.length())));
+        
+        // 숫자 2개
+        for (int i = 0; i < 2; i++) {
+            sb.append(NUM.charAt(random.nextInt(NUM.length())));
+        }
+        
+        // 암호화 시키기
+        String newEncPwd = bCryptPasswordEncoder.encode(sb);
+        
+        // member 객체에의 비밀번호에 저장
+        m.setMemberPwd(newEncPwd);
+        
+        // 변경된 비밀번호로 바꾸고 오기
+		int result = memberService.changePwd(m);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "현재 알림창을 닫으면 변경된 비밀번호를 다시 확인할 수 없습니다. 로그인 후 마이페이지에서 비밀번호를 변경해주세요. 변경된 임시비밀번호 : " + sb);
+			return "member/newMemberPwd";
+		} else {
+			session.setAttribute("alertMsg", "비밀번호 재발급 실패 다시 시도해주세요");
+			return "member/newMemberPwd";
+		}
+		
+	}
+	
 	
 	@GetMapping("/myOrderPage")
 	public String myOrderListPage(Model model, HttpSession session) {

@@ -5,9 +5,45 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 새로 받기</title>
+<!-- jquery 스크립트 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 도로명주소 스크립트 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- 이메일 인증 스크립트 -->
+
 <style>
-        body {
+
+    body {
         padding-top: 70px;
+        background-image: url('/soyo/resources/images/findId.png');
+    }
+
+    input{
+        width: 400px;
+        height: 50px;
+        padding: 10px;
+        margin-top: 20px;
+        border-radius: 8px;
+        font-size: 19px;
+        border: none;
+    }
+
+    button{
+        width: 170px;
+        height: 50px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    span{
+        font-size: 25px;
+        color: #546E7A;
+    }
+
+    a{
+        font-size: 25px;
+        text-decoration: none;
+        color: inherit; 
     }
 
     .container{
@@ -17,10 +53,11 @@
     }
 
     #findIdContent {
-        width: 800px;
+        width: 600px;
         margin: auto;
         text-align: center;
         margin-top: 80px;
+
     }
 
     #findIdform {
@@ -37,40 +74,129 @@
 
     .enrollform{
         clear: both;
+        width: 100%;
+        height: 600px;
+        border: 3px solid #B0BEC5;
+        background-color: #C3AED6;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    
+    }
+
+
+    .formTable{
+        width: 100%;
+        font-size: 20px;
+        padding: 10px;
+        height: 550px;
+        padding-top: 50px;
+    }
+
+    .findId{
+        width: 50%;
+        border-top-left-radius: 9px;
+        border-top: 3px solid #C3AED6;
+        border-left: 3px solid #C3AED6;        
+        height: 70px;
+    }
+    .findId a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding-top: 10px;
+    }
+
+    .findId a:hover{
+        background-color: #901dca45;
+        border-top-left-radius: 8px;
+    }
+
+    .findPwd{
+        width: 50%;
+        border-top-right-radius: 8px;
+        border: 3px solid #C3AED6;
+        height: 70px;
+        padding-top: 10px;
+        background-color: #EADCF1;
+    }
+
+    /* 이메일 인증 버튼 */
+    .validateBtn{
+        width: 70%;
+        height: 50px;
+        font-size: 20px;
+        margin-top: 20px;
+        background-color: #6C5B7B;
+        border-color: #901dca45;
+        color: #F8F1FF;
+    }
+
+    /* 인증번호 발급버튼 */
+    #sert{
+        width: 70%;
+        height: 50px;
+        font-size: 20px;
+        background-color: #6C5B7B;
+        border-color: #901dca45;
+        color: #F8F1FF;
+    }
+
+    .submitBtnTr{
+        padding-top: 20px;
+        
+    }
+
+    /* 찾기버튼 */
+    .submitBtn{
+        width: 70%;
+        font-size: 20px;
+        background-color: #6C5B7B;
+        border-color: #901dca45;
+        color: #F8F1FF;
+    }
+
+    #submitMsg{
+        font-size: 19px;
     }
 
 </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
+<br><br>
 <div class="container">
 	<div id="findIdContent">
-        비밀번호 재설정
+        
         <div id="findIdform">
-            <div><a href="../member/findMemberId">이동을해요</a></div>
-            <div>이동을할가요</div>
+            <div class="findId"><a href="../member/findMemberId">ID 찾기</a></div>
+            <div class="findPwd"><span>비밀번호 찾기</span></div>
             <div class="enrollform">
-                <form action="../member/findId" method="post">
-                    <table>
+                <form action="../member/changePwd" method="post" onsubmit="return changeMemberPwd()">
+                    <table class="formTable">
                         <tr>
-                            <th>아이디</th>
-                            <td><input name="memberName" type="text"></td>
-                            <td></td>
+                            <td><span>비밀번호 찾기</span></td>
                         </tr>
                         <tr>
-                            <th>이메일</th>
-                            <td><input id="email" name="email" type="email" maxlength="30"></td>
+                            <td><input name="memberId" type="text" placeholder="아이디" required></td>
+                        </tr>
+                        <tr>
+
+                            <td><input id="email" name="email" type="email" maxlength="30" placeholder="이메일" required></td>
+                            
+                        </tr>
+                        <tr>
                             <td><button type="button" id="sert" onclick="cert()">인증번호 발급</button></td>
                         </tr>
+
+                        <!-- style="display: none;" -->
                         <tr style="display: none;">
-                            <th>인증번호</th>
-                            <td><input type="text" id="emailCheck"></td>
-                            <td><button type="button" id="validate" onclick="valid();">인증</button></td>
+                            <td><input type="text" id="emailCheck" placeholder="인증번호"><br><button type="button" class="validateBtn" id="validate" onclick="valid();">인증</button></td>
                         </tr>
-                        
                         <tr>
-                            <th></th>
-                            <td><button type="submit">찾기</button></td>
+                            <td colspan="3"><span id="submitMsg"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="submitBtnTr" colspan="3"><button class="submitBtn" type="submit">찾기</button></td>
                         </tr>
                     </table>
                 </form>
@@ -81,20 +207,6 @@
 <jsp:include page="../common/footer.jsp" />
 <script>
 let goInsert = 0;
-
-// 비밀번호    
-const memberPwd = document.getElementById("memberPwd");
-
-// 비밀번호 확인
-const memberPwdCheck = document.getElementById("memberPwdCheck");
-
-// 비밀번호 메세지
-const pwdMsg = document.getElementById("pwdMsg");
-const pwdMsgTd = pwdMsg.parentElement; // td 태그 선택
-
-// 비밀번호 확인 메세지
-const checkPwdMsg = document.getElementById("checkPwdMsg");
-const checkPwdMsgTd = checkPwdMsg.parentElement; // td태그 선택
 
 // 이메일 인증번호 발급을 위한 함수
 function cert() {
@@ -178,6 +290,19 @@ function valid() {
 			
 }
 
+function changeMemberPwd(){
+    
+    if(goInsert != 1){
+        submitMsg.textContent = "이메일 인증을 해주세요."
+        return false;
+    } else {
+        return confirm("비밀번호가 임의로 재설정됩니다. 변경하시겠습니까?")
+    }
+
+    // 나머지는 존재여부만 체크하기 vs reqiurd로 때우기인데..흠
+
+
+}
 
 </script>
 </body>

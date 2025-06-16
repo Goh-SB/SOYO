@@ -110,7 +110,7 @@
              , #{address})
 	</select>
 	
-	<!-- 아이디 찾기용 메소드 -->
+	<!-- 아이디 찾기용 쿼리문 -->
 	<select id="findId" parameterType="member" resultType="string">
 		SELECT MEMBER_ID FROM MEMBER
 		    WHERE MEMBER_NAME = #{memberName}
@@ -125,6 +125,12 @@
 	  SELECT * FROM MEMBER
 	  WHERE MEMBER_ID = #{memberId} AND STATUS = 'Y'
 	</select>
-
+	
+	<!-- 비밀번호 재발급및 변경(기존에 있던 비번변경은 해시맵 타입이라 재활용 불가(바꾸기엔 늦었다)) -->
+	<update id="newRandomPwd" parameterType="member">
+		UPDATE MEMBER SET MEMBER_PWD = #{memberPwd}
+		    WHERE MEMBER_ID = #{memberId}
+		    AND STATUS = 'Y'
+	</update>
 		
 </mapper>

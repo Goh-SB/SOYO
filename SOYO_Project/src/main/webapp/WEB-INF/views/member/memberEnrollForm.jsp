@@ -139,6 +139,10 @@ function execDaumPostcode() {
                             <td><button type="button" id="validate" onclick="valid();">인증</button></td>
                         </tr>
                         <tr>
+                            <th></th>
+                            <td><span id="emailMsg"></span></td>
+                        </tr>
+                        <tr>
                             <th>전화번호</th>
                             <td><input name="phone" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required></td>
                         </tr>
@@ -193,6 +197,10 @@ const pwdCondition = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^
 const submitMsg = document.getElementById("submitMsg");
 submitMsg.textContent = "";
 
+// 이메일 안내문구 출력용
+const emailMsg = document.getElementById("emailMsg");
+emailMsg.textContent = "";
+
 // 이메일 인증번호 발급을 위한 함수
 function cert() {
     let email = $("#email").val();
@@ -201,7 +209,8 @@ function cert() {
     const emailTr = emailCheck.parentElement.parentElement; // tr 태크 지목
 
     if(email == "" || !email.includes("@")){
-        submitMsg.textContent = "유효한 이메일을 입력해주세요"
+        emailMsg.textContent = "유효한 이메일을 입력해주세요";
+        emailMsg.style.color = "red";
         return false;
     }
 
@@ -221,7 +230,7 @@ function cert() {
 
             $("#email").attr("readonly", true);
             $("#sert").attr("disabled", true);
-            submitMsg.textContent = "";
+            emailMsg.textContent = "";
         },
         error : function() {
 
@@ -247,12 +256,13 @@ function valid() {
         success : function(result) {
             
             if(result == "인증성공") {
-                submitMsg.textContent = "";
+                emailMsg.textContent = "";
                 $("#emailCheck").attr("readonly", true);
                 $("#validate").attr("disabled", true);
-                submitMsg.textContent = "인증성공";
+                emailMsg.textContent = "인증성공";
+                emailMsg.style.color = "green";
                 goInsert = 1;
-                console.log(goInsert);
+                
                 
             } else {
                 
@@ -263,7 +273,8 @@ function valid() {
                 $("#email").val("").attr("readonly", false);
                 $("#sert").attr("disabled", false);
                 goInsert = 0;
-                submitMsg.textContent = "인증실패";
+                emailMsg.textContent = "인증실패";
+                emailMsg.style.color = "red";
             }
             
         }, 

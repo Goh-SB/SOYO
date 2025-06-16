@@ -70,6 +70,7 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Transactional
 	@Override
 	public int insertMember(Member m) {
 		
@@ -80,6 +81,14 @@ public class MemberServiceImpl implements MemberService {
 	public String findId(Member m) {
 		
 		return memberDao.findId(sqlSession, m);
+	}
+
+	// 비밀번호 재발급을 위한 메소드
+	@Transactional
+	@Override
+	public int changePwd(Member m) {
+		
+		return memberDao.changePwd(sqlSession ,m);
 	}
 
 }
