@@ -95,8 +95,8 @@ function Home (props) {
     // 로그인 전에 보여질 화면
     return (
             <div>
-                <h4 style={{ color: 'gray', fontWeight: 'bold' }}>
-                    - 관리자 로그인
+                <h4 style={{ color: 'gray', fontWeight: 'bold', marginLeft: '300px' }}>
+                    ● 관리자 로그인
                 </h4>
                 <br /><br />
 
@@ -129,6 +129,10 @@ function Home (props) {
                                 className="btn btn-primary btn-bg">
                             로그인
                         </button>
+
+                        <br /><br /><br />
+
+                        <h5>디자인은 추후 다듬을 예정입니다.</h5>
 
                     </div>
 
