@@ -15,20 +15,18 @@ function MemberListComponent() {
 
     let [keyword, setKeyword] = useState("");
 
+    let [statusFilter, setStatusFilter] = useState('ALL');
+
     let navigate = useNavigate();
 
 
     useEffect(() => {
-
         if (keyword == "") {
             selectMember();
-
         } else {
             searchMember();
         }
-
-
-    }, [cpage, keyword]);
+    }, [cpage, keyword, statusFilter]);
 
     const selectMember = () => {
         let url = "http://localhost:8100/soyo/member/list";
@@ -49,9 +47,12 @@ function MemberListComponent() {
     };
 
     const setMember = (data) => {
+        let filteredList = data.list.filter(item => {
+            if (statusFilter === 'ALL') return true;
+            return item.status === statusFilter;
+        });
 
-
-        let trArr = data.list.map((item, index) => {
+        let trArr = filteredList.map((item, index) => {
             if (item.status == 'Y') {
                 return (
                     <tr key={index} onClick={() => { navigate("/member/detail/" + item.memberId); }}>
@@ -223,6 +224,26 @@ function MemberListComponent() {
         <div>
 
             <h2>회원 관리</h2>
+            <div className="filter-container">
+                <p>회원 상태별 필터링</p>
+                <div className="filter-buttons">
+                    <button 
+                        className={`filter-btn ${statusFilter === 'ALL' ? 'active' : ''}`}
+                        onClick={() => setStatusFilter('ALL')}>
+                        모든 회원
+                    </button>
+                    <button 
+                        className={`filter-btn ${statusFilter === 'Y' ? 'active' : ''}`}
+                        onClick={() => setStatusFilter('Y')}>
+                        활성화
+                    </button>
+                    <button 
+                        className={`filter-btn ${statusFilter === 'N' ? 'active' : ''}`}
+                        onClick={() => setStatusFilter('N')}>
+                        비활성화
+                    </button>
+                </div>
+            </div>
             <br /><br />
             <table className="table list-table table-hover member-table">
                 <thead>

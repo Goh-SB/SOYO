@@ -1,11 +1,11 @@
 package com.kh.soyo.product.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
@@ -32,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public int enrollForm(Product product) {
 
 		int result1 = productDao.enrollForm(sqlSession, product);
@@ -72,6 +73,47 @@ public class ProductServiceImpl implements ProductService {
 
 		return productDao.detail(sqlSession, p);
 	}
+
+	@Override
+	public Product detailSize(Product p) {
+
+		return productDao.datailSize(sqlSession, p);
+	}
+
+	@Override
+	@Transactional
+	public int updateInsert(Product p) {
+
+		return productDao.updateInsert(sqlSession, p);
+		
+	}
+
+	@Override
+	public int updateThumbnail(Product p) {
+
+		int result1 =productDao.updateThumbnailProduct(sqlSession, p);
+		
+		int result2 = productDao.updateThumbnailSize(sqlSession, p);
+		
+		return (result1 * result2);
+	}
+
+	@Override
+	public int update(Product p) {
+
+		int result1 = productDao.updateProduct(sqlSession, p);
+		
+		int result2 = productDao.updateSize(sqlSession, p);
+		
+		return (result1 * result2);
+	}
+
+	@Override
+	public int productStock(Product p) {
+
+		return productDao.productStock(sqlSession, p);
+	}
+
 
 
 	
