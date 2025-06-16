@@ -57,7 +57,7 @@ public class AuthController {
 						     .signWith(key, SignatureAlgorithm.HS256) // 서명 시 필요한 키, 서명 방법 지정
 						     .compact();
 			
-			System.out.println(jwt);
+			// System.out.println(jwt);
 
 			return jwt;
 			
