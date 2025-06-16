@@ -8,8 +8,47 @@
 		<title>공지사항</title>
 	</head>
 
+	<style>
+		body {
+			width: 1920px;
+			min-height: 100vh;			/* 최소 세로 크기 : 100% */
+		}
+
+		div {
+			box-sizing: border-box;		/* 테두리와 안쪽 여백의 크기도 요소의 크기로 고려 */
+		}
+
+		.list_form {
+			width : 1400px;
+			margin : auto;
+			margin-top : 50px;
+		}
+
+		.paging-area {
+			text-align: center;
+		}
+
+		.pagination {
+			margin: 0px;
+		}
+
+		/*
+		.page-link {
+			background-color: gainsboro;
+			color: black;
+			font-family: "Noto Sans", sans-serif;
+			font-weight: 800;
+			border: none;
+			gap: 10px;
+		}
+		*/
+	</style>
+
 	<body>
-		<jsp:include page="../common/header.jsp" />
+		<!-- jquery 연동 구문 -->
+		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+		<jsp:include page="../common/menubar.jsp" /><br>
 		<br class="list_wrap">
 			<div class="list_form">
 				<h2 align="center"></h2>
@@ -31,11 +70,11 @@
 								</tr>
 							</c:when>
 							<c:otherwise>
-								<c:forEach var="i" items="${list}">
+								<c:forEach var="i" items="${ requestScope.list }">
 									<tr>
-										<td>${i.noticeNo}</td>
-										<td>${i.noticeTitle}</td>
-										<td>${i.noticeDate}</td>
+										<td>${ i.noticeNo }</td>
+										<td>${ i.noticeTitle }</td>
+										<td>${ i.noticeDate }</td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -110,10 +149,13 @@
 		</div>
 		<script>
 			$(function() {
-				$(".list_area>tbody>tr").click(function() {
+				// 게시글 하나를 나타내는 tr 요소에 클릭 이벤트 걸기
+				$(".list-area>tbody>tr").click(function() {
+					// 클릭된 공지사항의 글 번호(primary key) 추출 
 					let nno = $(this).children().eq(0).text();
 					
-					location.href="/soyo/notice/noticeDetail/"+nno;
+					// 공지사항 상세 조회 요청 시 http://localhost:8006/spring/notice/detail?nno=~로 요청
+					location.href="/soyo/notice/noticeDetail/" + nno;
 				});
 			});
 		</script>

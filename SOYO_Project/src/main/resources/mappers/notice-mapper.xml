@@ -5,7 +5,6 @@
 	<resultMap id="noticeResultSet" type="notice">
 		<id column="NOTICE_NO" property="noticeNo" />
 		<result column="NOTICE_TITLE" property="noticeTitle" />
-		<result column="NOTICE_WRITER" property="noticeWriter" />
 		<result column="NOTICE_CONTENT" property="noticeContent" />
 		<result column="NOTICE_DATE" property="noticeDate" />
 	</resultMap>
@@ -14,7 +13,6 @@
 	<select id="noticeList" resultMap="noticeResultSet">
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,
-			NOTICE_WRITER,
 			NOTICE_DATE
 		FROM NOTICE
 		WHERE STATUS = 'Y'
@@ -26,7 +24,6 @@
 		resultMap="noticeResultSet">
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,
-			NOTICE_WRITER,
 			NOTICE_CONTENT,
 			NOTICE_DATE
 		FROM NOTICE
