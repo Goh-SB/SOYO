@@ -69,38 +69,44 @@ function ProductDetailComponent() {
 
   const gainSource = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g
 
-  let [ originContent, setOriginContent ] = useState('');
-
   async function SaveBoard() {
 
-    while (gainSource.test(content)) {
-      console.log("이미지 있을때");
-      let result = RegExp.$2;
-      srcArray.push(result)
-      console.log("srcArray 추가 : ", srcArray);
+while (gainSource.test(content)) {
+  console.log("이미지 발견");
+  let result = RegExp.$2;
+  srcArray.push(result);
+  console.log("srcArray 추가 : ", srcArray);
 
-      const byteString = atob(result.split(",")[1]);
+  // 새로 추가된 이미지(이미 base64 인코딩된 경우)
+  if (result.startsWith("data:") && result.indexOf(",") !== -1) {
+    const base64Str = result.split(",")[1];
+    let byteString;
+    try {
+      byteString = atob(base64Str);
+    } catch (e) {
+      console.error("Base64 디코딩 오류: ", e);
+      continue;
+    }
 
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
 
-      const blob = new Blob([ia], {
-        type: "image/jpeg"
-      });
-      const file = new File([blob], "image.jpg");
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log('formData : ', formData);
+    const blob = new Blob([ia], { type: "image/jpeg" });
+    const file = new File([blob], "image.jpg");
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log("formData: ", formData);
 
-      let url = "http://localhost:8100/soyo/product/fileUpload";
+    let uploadUrl = "http://localhost:8100/soyo/product/fileUpload";
 
-      await axios.post(
-        url, formData,
-        { headers: { 'content-type': 'multipart/form-data' } }
-      ).then((response) => {
+    await axios
+      .post(uploadUrl, formData, {
+        headers: { "content-type": "multipart/form-data" },
+      })
+      .then((response) => {
         if (response.data.success) {
           console.log("이미지 업로드 성공", response.data);
           urlArray.push(response.data.url);
@@ -109,10 +115,14 @@ function ProductDetailComponent() {
           console.log(response);
           alert("이미지 저장 실패");
         }
-
-      })
-      console.log("최종 formdata : ", formData);
-    }
+      });
+    console.log("최종 formdata: ", formData);
+  } else {
+    // 기존 이미지인 경우, 그대로 urlArray에 추가
+    console.log("기존 이미지 발견, 그대로 유지:", result);
+    urlArray.push(result);
+  }
+}
 
 
     let endContent = content;
@@ -132,15 +142,16 @@ function ProductDetailComponent() {
     const data = new FormData();
 
     let thumbnail = document.querySelector("#thumbnail");
-    // console.log("이거이거", thumbnail.files.length)
-    // console.log("productPrice", productPrice)
-    // console.log("productName", productName)
-    // console.log("productSubCaption", endContent)
-    // console.log("productStock", productStock)
-    // console.log("productSize", productSize)
-    // console.log("productCategory", productCategory)
-    // console.log("imageList", urlArray)
+    console.log("이거이거", thumbnail.files.length)
+    console.log("productPrice", productPrice)
+    console.log("productName", productName)
+    console.log("productSubCaption", endContent)
+    console.log("productStock", productStock)
+    console.log("productSize", productSize)
+    console.log("productCategory", productCategory)
+    console.log("imageList", urlArray)
 
+    data.append("productNo", productNo);
     data.append("productPrice", productPrice);
     data.append("productName", productName);
     data.append("productSubCaption", endContent);
@@ -157,7 +168,16 @@ function ProductDetailComponent() {
 
     console.log("최종본 : ", data);
 
-
+    let url = "http://localhost:8100/soyo/product/update";
+    axios({
+      url,
+      method : "post",
+      data : data
+    }).then((response) => {
+      console.log(response.data);
+      alert(response.data);
+      navigate("/product/list");
+    }).catch()
 
 
 
@@ -174,22 +194,37 @@ function ProductDetailComponent() {
       $("#thumbnail").click();
     });
 
+    // 상품 정보 불러오기 함수
     let url = "http://localhost:8100/soyo/product/detail/" + productNo;
     axios({
         url,
-        method : "get",
-        params : {
-            productSize
-        }
-
+        method : "get"
     }).then((response) => {
 
-        console.log(response.data)
-        if(response.data.productSize != null){
-            setOriginContent(response.data.prodcutSubCaption);
-            console.log(response.data.productSize);
-            document.querySelector("#quill-area").innerHTML = response.data.productSubCaption;
-        }
+         // console.log(response.data)
+            setContent(response.data.productSubCaption);
+            document.querySelector("#product-thumbnail").src = `http://localhost:8100/soyo/resources/product_upfile/${response.data.productChange}`;
+            setProductName(response.data.productName);
+            setProductPrice(response.data.productPrice);
+            setProductCategory(response.data.productCategory);
+
+            // 사이즈별 재고를 불러오는 함수
+            url = "http://localhost:8100/soyo/product/detail/size";
+            axios({
+              url,
+              method : "get",
+              params : {
+                productNo,
+                productSize
+
+              } 
+            }).then((response) => {
+              // console.log(response.data.productStock);
+              document.querySelector("#productStock").value = response.data.productStock;
+            }).catch(() => {
+              console.log("재고 수량 통신 실패");
+            })
+        
     }).catch();
 
 
@@ -263,6 +298,8 @@ function ProductDetailComponent() {
                     placeholder="상품명을 입력해 주세요"
                     style={{ padding: '7px', marginBottom: '10px', width: '100%', height: "60px", border: '1px solid lightGray', fontSize: '24px' }}
                     required
+                    id="productName"
+                    value={productName}
                     onChange={(e) => { setProductName(e.target.value) }}
                   ></input>
 
@@ -273,6 +310,8 @@ function ProductDetailComponent() {
                     style={{ padding: '7px', marginBottom: '10px', width: '50%', heigth: "50px", border: '1px solid lightGray', fontSize: '15px' }}
                     onChange={(e) => { setProductPrice(e.target.value) }}
                     required
+                    value={productPrice}
+                    id="productPrice"
                     type="number"
                     min="0"
                     step="100"
@@ -312,9 +351,10 @@ function ProductDetailComponent() {
                   <input
                     type="number"
                     className="count"
-                    placeholder="재고 수량을 입력해주세요"
+                    placeholder="재고가 없습니다."
                     required
                     min="0"
+                    id="productStock"
                     style={{ padding: '7px', marginBottom: '10px', width: '50%', border: '1px solid lightGray', fontSize: '15px' }}
                     onChange={(e) => { setProductStock(e.target.value) }}
                   >
@@ -335,11 +375,10 @@ function ProductDetailComponent() {
 
             <ReactQuill
               modules={modules}
+              value={content}
               placeholder='상품 상세 설명을 입력하세요'
               onChange={onChagecontent}
               style={{ height: "600px" }}
-              id="quill-area"
-              dangerouslySetInnerHTML={{ __html: originContent }}
   
             />
           </div>

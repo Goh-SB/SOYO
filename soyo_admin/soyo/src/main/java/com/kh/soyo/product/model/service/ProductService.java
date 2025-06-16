@@ -25,5 +25,16 @@ public interface ProductService {
 
 	Product detail(Product p);
 
+	Product detailSize(Product p);
+
+	int updateInsert(Product p);
+
+	int update(Product p);
+
+	int updateThumbnail(Product p);
+
+	int productStock(Product p);
+
+
 
 }
