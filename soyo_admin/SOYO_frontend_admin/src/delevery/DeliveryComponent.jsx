@@ -1,87 +1,129 @@
-    import { useNavigate } from "react-router-dom";
-    import { useState, useEffect } from "react";
-    import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import "./DeliveryComponent.css";
 
-    function DeliveryComponent() {
+function DeliveryComponent() {
+    let navigate = useNavigate();
+    let [dataList, setDataList] = useState([]);
+    let [filteredList, setFilteredList] = useState([]);
+    let [currentFilter, setCurrentFilter] = useState("모든 상태");
 
-        let navigate = useNavigate();
-        let [dataList, setDataList] = useState([]);
+    const selectDelivery = () => {
+        let url = "http://localhost:8100/soyo/delivery/list";
+        axios({
+            url,
+            method: "get"
+        }).then((response) => {
+            console.log(response.data);
+            setDataList(response.data);
+            setFilteredList(response.data);
+        }).catch(() => {
+            console.log("❌ 주문내역 통신 실패");
+        });
+    };
 
-        const selectDelivery = () => {
-            let url = "http://localhost:8100/soyo/delivery/list";
-            axios({
-                url,
-                method: "get"
-            }).then((response) => {
+    const filterDelivery = (status) => {
+        setCurrentFilter(status);
+        if (status === "모든 상태") {
+            setFilteredList(dataList);
+        } else {
+            const filtered = dataList.filter(item => item.orderStatus === status);
+            setFilteredList(filtered);
+        }
+    };
 
-                console.log(response.data);
-                setDataList(response.data); // 화면에 출력할 데이터 저장
-            }).catch(() => {
-                console.log("❌ 주문내역 통신 실패");
-            });
-        };
-        const changeStatus =(orderNo,orderStatus)=>{
-            let url="http://localhost:8100/soyo/delivery/changeStatus";
-            axios({
-                url,
-                method:"get",
-                params : {
-                    orderNo,
-                    orderStatus
-                }
-            }).then((response)=>{
-                console.log(response);
-              
-                selectDelivery();
-            }).catch(()=>{
-                console.log("ajax 통신실패");
-            })
-        };
+    const changeStatus =(orderNo,orderStatus)=>{
+        let url="http://localhost:8100/soyo/delivery/changeStatus";
+        axios({
+            url,
+            method:"get",
+            params : {
+                orderNo,
+                orderStatus
+            }
+        }).then((response)=>{
+            console.log(response);
+          
+            selectDelivery();
+        }).catch(()=>{
+            console.log("ajax 통신실패");
+        })
+    };
 
-        useEffect(() => {
-            selectDelivery(); 
-        }, []);
-        
+    useEffect(() => {
+        selectDelivery(); 
+    }, []);
+    
 
-        return (
-            <div>
-                <h2>배송 정보</h2>
-                <br /><br />
-                <table className="table list-table table-hover">
-                    <thead>
-                        <tr align="center">
-                            <th width="100px">주문번호</th>
-                            <th width="150px">이름</th>
-                            <th width="200px">전화 번호</th>
-                            <th width="200px">결제 날짜</th>
-                            <th width="200px">배송 상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {dataList.map((delivery, index) => (
-                            <tr align="center" key={index} >
-                                <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderNo}</td>
-                                <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.memberName}</td>
-                                <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.receiverPhone}</td>
-                                <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderDate}</td>
-                                <td>
-                                <select
-                                value={delivery.orderStatus}
-                                onChange={(e) => {
-                                    const newStatus = e.target.value;
-                                    changeStatus(delivery.orderNo, newStatus);
-                                }}
-                                >
-                                    <option value="배송전">배송전</option>
-                                    <option value="배송중">배송중</option>
-                                    <option value="배송완료">배송완료</option>
-                                </select>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+    return (
+        <div>
+            <h2>배송 정보</h2>
+            <div className="filter-container">
+                <h4>배송 상태별 필터링</h4>
+                <div className="filter-buttons">
+                    <button 
+                        className={`filter-btn ${currentFilter === "모든 상태" ? "active" : ""}`}
+                        onClick={() => filterDelivery("모든 상태")}
+                    >
+                        모든 상태
+                    </button>
+                    <button 
+                        className={`filter-btn ${currentFilter === "배송전" ? "active" : ""}`}
+                        onClick={() => filterDelivery("배송전")}
+                    >
+                        배송전
+                    </button>
+                    <button 
+                        className={`filter-btn ${currentFilter === "배송중" ? "active" : ""}`}
+                        onClick={() => filterDelivery("배송중")}
+                    >
+                        배송중
+                    </button>
+                    <button 
+                        className={`filter-btn ${currentFilter === "배송완료" ? "active" : ""}`}
+                        onClick={() => filterDelivery("배송완료")}
+                    >
+                        배송완료
+                    </button>
+                </div>
             </div>
-        );
-    }
-    export default DeliveryComponent;
+            <br />
+            <table className="table list-table table-hover">
+                <thead>
+                    <tr align="center">
+                        <th width="100px">주문번호</th>
+                        <th width="150px">이름</th>
+                        <th width="200px">전화 번호</th>
+                        <th width="200px">결제 날짜</th>
+                        <th width="200px">배송 상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredList.map((delivery, index) => (
+                        <tr align="center" key={index} >
+                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderNo}</td>
+                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.memberName}</td>
+                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.receiverPhone}</td>
+                            <td onClick={() => navigate("/delivery/" + delivery.orderNo)}>{delivery.orderDate}</td>
+                            <td>
+                            <select
+                            value={delivery.orderStatus}
+                            onChange={(e) => {
+                                const newStatus = e.target.value;
+                                changeStatus(delivery.orderNo, newStatus);
+                            }}
+                            >
+                                <option value="배송전">배송전</option>
+                                <option value="배송중">배송중</option>
+                                <option value="배송완료">배송완료</option>
+                            </select>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+export default DeliveryComponent;
