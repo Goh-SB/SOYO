@@ -13,13 +13,13 @@
     transition: 0.2s ease;
     font-size : 20px;
     font-weight : 600;
+    position : relative;
 }
 .product-Object:hover{
     transform: scale(1.05); 
 }
-
 .product-img {
-    margin: auto;
+    margin-top : 10px;
 }
 #product-writeBtn{
     border-radius : 10px;

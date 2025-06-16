@@ -115,4 +115,14 @@ public class NoticeController {
 		
 	}
 	
+	@GetMapping("filter")
+	public void filter (String item) {
+		
+		// System.out.println(item);
+		int listCount = noticeService.noticeListCount();
+		
+		
+	}
+	
+	
 }

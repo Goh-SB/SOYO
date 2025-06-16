@@ -14,12 +14,17 @@ import ProductEnrollFormComponent from './product/ProductEnrollFormComponent';
 import DeliveryDetailComponent from './delevery/DeliveryDetailComponent';
 import OrderListComponent from './order/OrderListComponent';
 import ProductDetailComponent from './product/ProductDetailComponent';
-
 import OrderDetailComponent from './order/OrderDetailComponent';
 
 function App() {
 
+  // 실행 구문
 
+  // sessionStorage 에 있던 값을 뽑아서 state 변수로 셋팅
+  let [loginUser, setLoginUser]
+      = useState(sessionStorage.getItem("loginUser"));
+
+  // return 구문
   return (
     <div id="main">
      
@@ -28,7 +33,7 @@ function App() {
       {/* content */}
       <br />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home loginUser={ loginUser } setLoginUser={ setLoginUser } />} />
         <Route path="/member/list" element={<MemberListComponent />} />
         <Route path="/notice/list" element={<NoticeListComponent />} />
         <Route path="/member/detail/:memberId" element={<MemberDetailComponent />} /> 
@@ -39,8 +44,12 @@ function App() {
         <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent/>} />
         <Route path="/product/enrollForm" element={ <ProductEnrollFormComponent /> }/>
         <Route path="/order/list" element={<OrderListComponent/>}/>
+
+        <Route path="/product/detail" element={<ProductDetailComponent />} />
+
         <Route path="/product/detail/:productNo" element={<ProductDetailComponent />} />
-        <Route path="/order/:memberId" element={ <OrderDetailComponent/>}/>
+
+        <Route path="/order/:memberId/:productNo" element={<OrderDetailComponent />} />
       </Routes>
       {/* footer? */}
 

@@ -15,11 +15,16 @@ public class NoticeDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
+		// select문(여러 행 조회)
 		return (ArrayList)sqlSession.selectList("noticeMapper.noticeList", null, rowBounds);
 	}
 	
-	public Notice noticeDatail(SqlSessionTemplate sqlSession, int noticeNo) {
-		return sqlSession.selectOne("noticeMapper.noticeDetail", noticeNo);
+	public int noticeListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("noticeMapper.noticeListCount");
+	}
+	
+	public Notice noticeDatail(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
 	}
 	
 	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {

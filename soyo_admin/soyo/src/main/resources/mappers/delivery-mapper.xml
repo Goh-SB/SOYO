@@ -22,16 +22,22 @@
 	    <result property="productName" column="PRODUCT_NAME" />
 	    <result property="productCount" column="PRODUCT_COUNT" />
 	    <result property="productPrice" column="PRODUCT_PRICE" />
+	    <result property="phone" column="PHONE" />
 	</resultMap>
 	
 	<resultMap id="paymentResultSet" type="Payment">
-		 <result property="orderDate" column="ORDER_DATE"/>
-		  <result property="memberName" column="MEMBER_NAME"/>
-		  <result property="productName" column="PRODUCT_NAME"/>
-		  <result property="memberId" column="MEMBER_ID"/>
-		  <result property="productPrice" column="PRODUCT_PRICE"/>
-		  <result property="cancelStatus" column="CANCEL_STATUS"/>
-	</resultMap>
+    <result property="orderDate" column="ORDER_DATE"/>
+    <result property="memberName" column="MEMBER_NAME"/>
+    <result property="memberId" column="MEMBER_ID"/>
+    <result property="productName" column="PRODUCT_NAME"/>
+    <result property="productPrice" column="PRODUCT_PRICE"/>
+    <result property="cancelStatus" column="CANCEL_STATUS"/>
+    <result property="cancelDate" column="CANCEL_DATE"/>
+    <result property="cancelReason" column="CANCEL_REASON"/>
+     <result property="productNo" column="PRODUCT_NO"/>
+     <result property="orderImpNo" column="ORDER_IMPNO" />
+     
+</resultMap>
 	
 	<resultMap id="memberResultSet" type="Member">
 	    <result property="memberName" column="MEMBER_NAME"/>
@@ -40,10 +46,28 @@
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	</resultMap>
 	<select id="deliveryList" resultMap="deliveryResultSet">
-	SELECT O.*,
-	       M.MEMBER_NAME
-	  FROM ORDER_TB O
-	  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID 
+
+	SELECT O.ORDER_DATE,
+       MEMBER_NAME,
+       PD.PRODUCT_NAME,
+       PD.PRODUCT_PRICE,
+       P.CANCEL_STATUS,
+       PD.PRODUCT_NO
+FROM CART C
+JOIN PRODUCT PD ON PD.PRODUCT_NO = C.PRODUCT_NO
+JOIN MEMBER M ON M.MEMBER_ID = C.MEMBER_ID
+JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
+LEFT JOIN PAYMENT P ON P.MEMBER_ID = C.MEMBER_ID AND P.PRODUCT_NO = C.PRODUCT_NO
+
+	   SELECT O.ORDER_NO,
+          M.MEMBER_NAME,
+          D.RECEIVER_PHONE,
+          O.ORDER_DATE,
+          O.ORDER_STATUS
+    FROM ORDER_TB O
+    JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
+    JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
+
 	</select>
 								
 	<select id="deliveryDetail" parameterType="_int"
@@ -89,6 +113,7 @@
 	       M.MEMBER_NAME,
 	       PD.PRODUCT_NAME,
 	       PD.PRODUCT_PRICE,
+	       PD.PRODUCT_NO,
 	       P.CANCEL_STATUS,
 	       M.MEMBER_ID
 	FROM PAYMENT P
@@ -122,6 +147,24 @@
   JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID= M.MEMBER_ID
   WHERE M.MEMBER_ID = #{memberId}
 	</select>
+	
+	<select id="orderInfo" parameterType="map"
+							resultMap="paymentResultSet">
+	SELECT O.ORDER_IMPNO,
+       PD.PRODUCT_NAME,
+       PD.PRODUCT_PRICE,
+       O.ORDER_DATE,
+       O.CANCEL_DATE,
+       P.CANCEL_REASON,
+       P.CANCEL_STATUS
+  FROM ORDER_TB O
+  JOIN PAYMENT P ON P.ORDER_IMPNO = O.ORDER_IMPNO
+  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
+	WHERE O.MEMBER_ID = #{memberId} 
+	  AND P.PRODUCT_NO = #{productNo}
+	</select>
+	
+
 </mapper> 
 
 

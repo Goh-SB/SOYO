@@ -28,6 +28,7 @@ public class DeliveryController {
 	@GetMapping("/list")
 	public List<Delivery> deliveryList(){
 		
+		System.out.println(deliveryService.deliveryList());
 		return deliveryService.deliveryList();
 	}
 	
@@ -73,12 +74,14 @@ public class DeliveryController {
 		return deliveryService.memberInfo(memberId);
 	}
 	
-	@GetMapping("orderInfo/{memberId}")
-	public List<Payment> orderInfo(@PathVariable String memberId){
+	@GetMapping("orderInfo/{memberId}/{productNo}")
+	public List<Payment> orderInfo(@PathVariable String memberId,
+								   @PathVariable int productNo){
 		
-		return deliveryService.orderInfo(memberId);
+		return deliveryService.orderInfo(memberId,productNo);
 	}
-}
+}	
+
 
 
 

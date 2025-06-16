@@ -23,11 +23,16 @@ function MenuComponent() {
         <div id="background">
             <div id="wrap">
                 <div id="side-menu" style={{ left: "-400px" }}>
-                    <img id="logo" width="60" height="60" src="../../resources/soyo-logo.png"
+                    <br />
+                    <img id="logo" width="130" height="130" src="../../resources/side_menu-logo.png"
                         onClick={() => { navigate("/") }} />
+
+                    <hr />
+                    <br />
+                    
                     <div className='side-menu-content link-menu'
                         onClick={() => { navigate("/") }}>
-                        HOME
+                        메인화면
 
                     </div>
                     <div className='side-menu-content link-menu'
@@ -36,7 +41,7 @@ function MenuComponent() {
                     </div>
                     <div className='side-menu-content'
                         onClick={() => { navigate("/product/list")}}>
-                        상품 정보
+                        상품정보
                     </div>
                     <div className='side-menu-content link-menu'
                         onClick={() => { navigate("/notice/list") }}>
