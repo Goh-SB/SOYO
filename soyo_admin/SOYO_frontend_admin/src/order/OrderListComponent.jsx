@@ -14,7 +14,7 @@ function OrderListComponent(){
             url,
             method : "get"
         }).then((response)=>{
-            console.log(response);
+ 
             setDataList(response.data);
         }).catch(()=>{
             console.log("ajax 통신 실패");
