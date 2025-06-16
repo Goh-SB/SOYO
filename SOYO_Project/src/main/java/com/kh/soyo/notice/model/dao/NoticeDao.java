@@ -19,8 +19,12 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.noticeList", null, rowBounds);
 	}
 	
-	public Notice noticeDatail(SqlSessionTemplate sqlSession, int noticeNo) {
-		return sqlSession.selectOne("noticeMapper.noticeDetail", noticeNo);
+	public int noticeListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("noticeMapper.noticeListCount");
+	}
+	
+	public Notice noticeDatail(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
 	}
 	
 	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {

@@ -22,12 +22,18 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public ArrayList<Notice> noticeList(PageInfo pi) {
+		
 		return noticeDao.noticeList(sqlSession, pi);
 	}
 	
 	@Override
-	public Notice noticeDetail(int noticeNo) {
-		return noticeDao.noticeDatail(sqlSession, noticeNo);
+	public int noticeListCount() {
+		return noticeDao.noticeListCount(sqlSession);
+	}
+	
+	@Override
+	public Notice noticeDetail(int nno) {
+		return noticeDao.noticeDatail(sqlSession, nno);
 	}
 	
 	@Override

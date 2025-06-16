@@ -54,14 +54,15 @@ function ProductListComponent() {
                     onClick={() => { navigate("/product/detail/" + item.productNo); }}>
                     <td>
                         <div className="product-Object">
-                            <br />
                             <img src={`http://localhost:8100/soyo/resources/product_upfile/${item.productChange}`} className="product-img" width="200" height="250"
                             />
                             <br />
                             <div align="center">
                                 {item.productName}
+                                <br />
+
                             </div>
-                            
+
                         </div>
                     </td>
                 </tr>
@@ -161,13 +162,13 @@ function ProductListComponent() {
         axios({
             url,
             method: "get",
-            params : {
+            params: {
                 cate,
                 cpage
             }
-        }).then((response)=>{
+        }).then((response) => {
             setState(response.data);
-        }).catch(()=>{
+        }).catch(() => {
             console.log("카테고리 필터링 통신 실패");
         })
     }
@@ -190,19 +191,19 @@ function ProductListComponent() {
                     </button>
                 </div>
                 <div id="product-categoryArea">
-                {category.map((item, index) => (
-                    <button
-                        key={index}
-                        onClick={(e) => { categoryFilter(e) }}
-                        className="product-categoryBtn"
-                        value={item}
-                    >
-                        {item}
-                    </button>
-                ))}
+                    {category.map((item, index) => (
+                        <button
+                            key={index}
+                            onClick={(e) => { categoryFilter(e) }}
+                            className="product-categoryBtn"
+                            value={item}
+                        >
+                            {item}
+                        </button>
+                    ))}
+                </div>
             </div>
-            </div>
-            
+
             <div id="product-Write">
                 <button onClick={() => { navigate("/product/enrollForm") }}
                     id="product-writeBtn">

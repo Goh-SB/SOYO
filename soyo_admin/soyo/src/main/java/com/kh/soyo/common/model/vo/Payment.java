@@ -26,5 +26,6 @@ public class Payment {
 	private String memberName;
 	private String productName;
 	private int productPrice;
+	private Date cancelDate;
 	
 }

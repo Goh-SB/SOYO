@@ -23,7 +23,9 @@ public interface DeliveryService {
 
 	Member memberInfo(String memberId);
 
-	List<Payment> orderInfo(String memberId);
+	List<Payment> orderInfo(String memberId,int productNo);
+
+	
 
 	
 }

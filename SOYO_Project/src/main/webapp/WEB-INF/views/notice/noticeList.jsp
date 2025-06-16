@@ -58,6 +58,7 @@
 							<th>번호</th>
 							<th>제목</th>
 							<th>작성일</th>
+							<th>이미지</th>
 						</tr>
 					</thead>
 					<tbody align="center">
@@ -72,9 +73,22 @@
 							<c:otherwise>
 								<c:forEach var="i" items="${ requestScope.list }">
 									<tr>
+										<!-- 번호/제목/날짜 -->
 										<td>${ i.noticeNo }</td>
 										<td>${ i.noticeTitle }</td>
 										<td>${ i.noticeDate }</td>
+										
+										<c:choose>
+											<!-- 첨부 이미지가 존재하지 않을 경우 -->
+											<c:when test="${ empty i.noticeImage }">
+												<td></td>
+											</c:when>
+
+											<!-- 첨부 이미지가 존재할 경우 -->
+											<c:otherwise>
+												<td>*</td>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -150,11 +164,11 @@
 		<script>
 			$(function() {
 				// 게시글 하나를 나타내는 tr 요소에 클릭 이벤트 걸기
-				$(".list-area>tbody>tr").click(function() {
+				$(".list_area>tbody>tr").click(function() {
 					// 클릭된 공지사항의 글 번호(primary key) 추출 
 					let nno = $(this).children().eq(0).text();
-					
-					// 공지사항 상세 조회 요청 시 http://localhost:8006/spring/notice/detail?nno=~로 요청
+
+					// 공지사항 상세 조회 요청 시 아래 주소로 요청
 					location.href="/soyo/notice/noticeDetail/" + nno;
 				});
 			});

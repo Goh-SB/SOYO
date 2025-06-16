@@ -7,20 +7,29 @@
 		<result column="NOTICE_TITLE" property="noticeTitle" />
 		<result column="NOTICE_CONTENT" property="noticeContent" />
 		<result column="NOTICE_DATE" property="noticeDate" />
+		<result column="NOTICE_IMAGE" property="noticeImage" />
 	</resultMap>
 	
 	<!-- 공지사항 목록 조회용 쿼리문 -->
 	<select id="noticeList" resultMap="noticeResultSet">
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,
-			NOTICE_DATE
+			NOTICE_DATE,
+			NOTICE_IMAGE
 		FROM NOTICE
 		WHERE STATUS = 'Y'
 		ORDER BY NOTICE_NO DESC
 	</select>
 	
+	<!-- 페이징 처리용 쿼리문 -->
+	<select id="noticeListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+	</select>
+	
 	<!-- 공지사항 상세 조회용 쿼리문 -->
-	<select id="noticeDatail" parameterType="_int" 
+	<select id="noticeDetail" parameterType="_int" 
 		resultMap="noticeResultSet">
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,

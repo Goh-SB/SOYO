@@ -189,14 +189,46 @@ function NoticeListComponent() {
         });
     }
 
+    const filter = [ '공지사항', '이벤트', '모든사항'];
 
+    const [ selected, setSelected ] = useState('filter-btn');
 
+    const filtering = () => {
+        return filter.map((item, index) => {
+            const active = item === selected ? 'filter-btn active' : 'filter-btn';
+            return(
+                    <button key={index}
+                        className={active} value={item}
+                        onClick={ () => { filt(item) }}>
+                            {item}
+                    </button>
+            );
+        })
+    };
+
+    const filt = (item) => {
+
+        setSelected(item);
+
+        let url = "http://localhost:8100/soyo/notice/filter";
+        axios({
+            url,
+            method : "get",
+            params : {
+                item
+            }
+        }).then(() => {}).catch(() => {})
+    }
 
     return (
         <div>
             <h2>공지사항 목록</h2>
 
             <br /><br />
+            <div className="filter-buttons">
+                {filtering()}
+            </div>
+           
             <div id="notice-write-btn">
                 <button onClick={() => { navigate("/notice/enrollForm"); }}>
                     작성하기

@@ -82,6 +82,44 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.detail", p);
 	}
 
+	public Product datailSize(SqlSessionTemplate sqlSession, Product p) {
+
+
+		return sqlSession.selectOne("productMapper.detailSize", p);
+	}
+
+	public int updateInsert(SqlSessionTemplate sqlSession, Product p) {
+
+		return sqlSession.insert("productMapper.updateInsert", p);
+	}
+
+	public int updateThumbnailProduct(SqlSessionTemplate sqlSession, Product p) {
+		
+		return sqlSession.update("productMapper.updateThumbnailProduct", p);
+	}
+
+	public int updateThumbnailSize(SqlSessionTemplate sqlSession, Product p) {
+
+		return sqlSession.update("productMapper.updateThumbnailSize", p);
+	}
+
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+
+		return sqlSession.update("productMapper.updateProduct", p);
+	}
+
+	public int updateSize(SqlSessionTemplate sqlSession, Product p) {
+		
+		return sqlSession.update("productMapper.updateSize", p);
+	}
+
+	public int productStock(SqlSessionTemplate sqlSession, Product p) {
+
+		return sqlSession.selectOne("productMapper.productStock", p);
+	}
+
+
+
 
 	
 }

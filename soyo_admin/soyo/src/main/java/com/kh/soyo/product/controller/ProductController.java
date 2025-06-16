@@ -22,6 +22,7 @@ import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.FileRenamePolicy;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.member.model.vo.Member;
+import com.kh.soyo.notice.model.service.NoticeServiceImpl;
 import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 
@@ -34,8 +35,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProductController {
 
+    private final NoticeServiceImpl noticeServiceImpl;
+
 	@Autowired
 	private ProductService productService;
+
+    ProductController(NoticeServiceImpl noticeServiceImpl) {
+        this.noticeServiceImpl = noticeServiceImpl;
+    }
 	
 	@GetMapping("list")
 	public HashMap<String, Object> productList(@RequestParam(value="cpage") int currentPage) {
@@ -99,7 +106,7 @@ public class ProductController {
 		product.setProductOrigin(originName);
 		product.setProductChange(changeName);
 		
-		System.out.println(product);
+		// System.out.println(product);
 		result = productService.enrollForm(product);
 	  }
 	  
@@ -156,11 +163,79 @@ public class ProductController {
 		
 		Product p = new Product();
 		p.setProductNo(productNo);
-		p.setProductSize(productSize);
-		
+	
 		Product result = productService.detail(p);
 		
 		// System.out.println(result);
 		return result;
+	}
+	
+	
+	@GetMapping("detail/size")
+	public Product detailSize(int productNo,
+							String productSize) {
+		// System.out.println(productSize);
+		// System.out.println(productNo);
+		
+		Product p = new Product();
+		p.setProductNo(productNo);
+		p.setProductSize(productSize);
+		
+		Product result = productService.detailSize(p);
+		return result;
+	}
+	
+	/**
+	 * 상품 수정용 메소드
+	 * @param p 기존의 상품정보
+	 * @param thumbnail 기존의 썸네일 (null 이면 썸네일 수정 x)
+	 * @param imageList 이미지 업로드 리스트
+	 */
+	@PostMapping("update")
+	public String update (@ModelAttribute Product p,
+						@RequestParam(value="thumbnail", required = false) MultipartFile thumbnail,
+						@RequestParam(value="imageList", required = false) List<String> imageList) {
+		// System.out.println(p);
+		// System.out.println(thumbnail);
+		
+		int result = 0;
+		
+		int StockCount = productService.productStock(p);
+		// > 상품에 해당하는 사이즈의 재고 여부 파악
+		
+		if(StockCount == 0) {
+			result = productService.updateInsert(p);
+			// > 재고가 없다면 수정 시 재고 먼저 insert
+		}
+		
+<<<<<<< HEAD
+		System.out.println(p);
+		System.out.println(thumbnail);
+=======
+		// System.out.println(p);
+		// System.out.println(thumbnail);
+>>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
+		
+		if(thumbnail != null) {
+			
+			String filePath = "C:/SOYO/soyo_admin/soyo/src/main/webapp/resources/product_upfile/";
+			String originName = thumbnail.getOriginalFilename();
+			String changeName = FileRenamePolicy.saveFile(thumbnail, filePath);
+			  
+			// String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
+			p.setProductOrigin(originName);
+			p.setProductChange(changeName);
+			
+			result = productService.updateThumbnail(p);
+			// > 썸네일 있을떄 수정폼
+			
+			return (result > 0) ? "상품 수정 성공" : "상품 수정 실패";
+			
+		} else {
+			result = productService.update(p);
+			// > 썸네일 없을떄 수정 폼
+			
+			return (result > 0) ? "상품 수정 성공" : "상품 수정 실패";
+		}
 	}
 }
