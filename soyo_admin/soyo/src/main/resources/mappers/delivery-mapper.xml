@@ -22,6 +22,7 @@
 	    <result property="productName" column="PRODUCT_NAME" />
 	    <result property="productCount" column="PRODUCT_COUNT" />
 	    <result property="productPrice" column="PRODUCT_PRICE" />
+	    <result property="phone" column="PHONE" />
 	</resultMap>
 	
 	<resultMap id="paymentResultSet" type="Payment">
@@ -45,17 +46,14 @@
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	</resultMap>
 	<select id="deliveryList" resultMap="deliveryResultSet">
-	SELECT O.ORDER_DATE,
-       MEMBER_NAME,
-       PD.PRODUCT_NAME,
-       PD.PRODUCT_PRICE,
-       P.CANCEL_STATUS,
-       PD.PRODUCT_NO
-FROM CART C
-JOIN PRODUCT PD ON PD.PRODUCT_NO = C.PRODUCT_NO
-JOIN MEMBER M ON M.MEMBER_ID = C.MEMBER_ID
-JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
-LEFT JOIN PAYMENT P ON P.MEMBER_ID = C.MEMBER_ID AND P.PRODUCT_NO = C.PRODUCT_NO
+	   SELECT O.ORDER_NO,
+          M.MEMBER_NAME,
+          D.RECEIVER_PHONE,
+          O.ORDER_DATE,
+          O.ORDER_STATUS
+    FROM ORDER_TB O
+    JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
+    JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
 	</select>
 								
 	<select id="deliveryDetail" parameterType="_int"
