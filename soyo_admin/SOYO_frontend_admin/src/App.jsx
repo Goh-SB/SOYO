@@ -44,14 +44,11 @@ function App() {
         <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent/>} />
         <Route path="/product/enrollForm" element={ <ProductEnrollFormComponent /> }/>
         <Route path="/order/list" element={<OrderListComponent/>}/>
-<<<<<<< HEAD
+
         <Route path="/product/detail" element={<ProductDetailComponent />} />
-=======
+
         <Route path="/product/detail/:productNo" element={<ProductDetailComponent />} />
-<<<<<<< HEAD
->>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
-=======
->>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
+
         <Route path="/order/:memberId/:productNo" element={<OrderDetailComponent />} />
       </Routes>
       {/* footer? */}

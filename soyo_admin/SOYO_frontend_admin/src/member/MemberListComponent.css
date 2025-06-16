@@ -18,14 +18,10 @@ tbody>tr:hover {
 .filter-buttons {
     display: flex;
     justify-content: flex-end;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
     width : 95%;
->>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
-=======
+
     width : 95%;
->>>>>>> 861fbee448b688c267d12bebd33a604b619a2552
     gap: 10px;
 }
 
