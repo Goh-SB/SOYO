@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>내 정보 변경</title>
 <style>
-    	        .container{
+    	.container{
             width: 1200px;
             margin: auto;
         }

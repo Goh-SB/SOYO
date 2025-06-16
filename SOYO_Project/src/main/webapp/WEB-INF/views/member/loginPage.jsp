@@ -195,8 +195,8 @@
                 
                 <button type="submit" class="login-button">로그인</button>
                 <div class="additional-links">
-                    <a href="#">회원가입</a>
-                    <a href="#">아이디/비밀번호 찾기</a>
+                    <a href="<c:url value='/member/memberEnrollForm' />">회원가입</a>
+                    <a href="<c:url value='/member/findMemberId' />">아이디/비밀번호 찾기</a>
                 </div>
             </form>
         </div>

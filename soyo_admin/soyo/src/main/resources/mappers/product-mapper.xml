@@ -11,11 +11,11 @@
  		<result column="PRODUCT_SUB_CAPTION" property="productSubCaption" />
  		<result column="PRODUCT_ORIGIN" property="productOrigin" />
  		<result column="PRODUCT_CHANGE" property="productChange" />
- 		<result column="PRODUCT_COUNT" property="productStock" />
  		<result column="PRODUCT_REGISTERED_DATE" property="productRegisteredDate" />
  		<result column="STATUS" property="status" />
  		<result column="PRODUCT_SIZE_NO" property="productSizeNo" />
- 	
+ 		<result column="PRODUCT_SIZE" property="productSize"/>
+ 	 	<result column="STOCK_COUNT" property="productStock" />
  	</resultMap>
  
  
@@ -58,5 +58,84 @@
                                 , #{productStock})
  	
  	</insert>
+ 	
+ 	<select id="searchCount" parameterType="string"
+ 								resultType="_int">
+ 		SELECT COUNT(*)
+ 		  FROM PRODUCT
+ 		 WHERE PRODUCT_NAME LIKE '%' || #{keyword} || '%' 
+ 	</select>
+ 	
+ 	<select id="search" parameterType="hashmap"
+ 						resultMap="productResultSet">
+ 		SELECT *
+ 		  FROM
+	 	(SELECT ROWNUM RNUM, A.*
+	 	 FROM
+	 		(SELECT PRODUCT_NO,
+	 			   PRODUCT_NAME,
+	 			   PRODUCT_PRICE,
+	 			   PRODUCT_CATEGORY,
+	 			   PRODUCT_CAPTION,
+	 			   PRODUCT_ORIGIN,
+	 			   PRODUCT_CHANGE,
+	 			   STATUS
+	 		FROM PRODUCT
+	 	   WHERE PRODUCT_NAME LIKE '%' || #{keyword} || '%'	
+	 	   ORDER BY PRODUCT_NO DESC ) A
+	 	   )
+	 	   WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+ 	
+ 	</select>
+ 	
+ 	<select id="filterCount" parameterType="string"
+ 							resultType="_int">
+ 	
+ 		SELECT COUNT(*)
+ 		  FROM PRODUCT
+ 		 WHERE PRODUCT_CATEGORY = #{cate} 
+ 	
+ 	</select>
+ 	
+ 	<select id="filter" parameterType="hashmap"
+ 						resultMap="productResultSet">
+ 		SELECT *
+ 		  FROM
+	 	(SELECT ROWNUM RNUM, A.*
+	 	 FROM
+	 		(SELECT PRODUCT_NO,
+	 			   PRODUCT_NAME,
+	 			   PRODUCT_PRICE,
+	 			   PRODUCT_CATEGORY,
+	 			   PRODUCT_CAPTION,
+	 			   PRODUCT_ORIGIN,
+	 			   PRODUCT_CHANGE,
+	 			   STATUS
+	 		FROM PRODUCT
+	 	   WHERE PRODUCT_CATEGORY = #{cate}	
+	 	   ORDER BY PRODUCT_NO DESC ) A
+	 	   )
+	 	   WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+ 	
+ 	</select>
+ 	
+ 	<select id="detail" parameterType="product"
+ 						resultMap="productResultSet">
+ 		SELECT 
+			    P.PRODUCT_NO,
+			    P.PRODUCT_NAME,
+			    P.PRODUCT_PRICE,
+			    P.PRODUCT_CATEGORY,
+			    P.PRODUCT_ORIGIN,
+			    P.PRODUCT_CHANGE,
+			    P.STATUS,
+			    P.PRODUCT_SUB_CAPTION,
+			    PS.STOCK_COUNT,
+			    PS.PRODUCT_SIZE
+			FROM PRODUCT P
+			JOIN PRODUCT_SIZE PS ON P.PRODUCT_NO = PS.PRODUCT_NO
+			WHERE P.PRODUCT_NO = #{productNo}
+			  AND PS.PRODUCT_SIZE = #{productSize}
+ 	</select>
  	
 </mapper>

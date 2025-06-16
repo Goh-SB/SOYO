@@ -14,7 +14,6 @@ function OrderDetailMemberComponent(){
             url,
             method : "get"
         }).then((response)=>{
-            console.log(response);
             setOrder(response.data);
         }).catch(()=>{
             console.log("ajax 요청 실패");

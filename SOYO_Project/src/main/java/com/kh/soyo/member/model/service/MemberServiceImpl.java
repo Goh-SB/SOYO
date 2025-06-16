@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member selectMember(String memberId) {
-		return null;
+		return memberDao.selectMember(sqlSession, memberId);
 	}
 
 	@Transactional
@@ -74,6 +74,12 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member m) {
 		
 		return memberDao.insertMember(sqlSession, m);
+	}
+
+	@Override
+	public String findId(Member m) {
+		
+		return memberDao.findId(sqlSession, m);
 	}
 
 }

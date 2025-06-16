@@ -8,10 +8,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +26,6 @@ import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -69,7 +68,7 @@ public class ProductController {
 			String originName = file.getOriginalFilename();
 			String changeName = FileRenamePolicy.saveFile(file, filePath);
 			
-			String fileUrl = "http://localhost:8100/resources/product_upfile/" + changeName;
+			String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
 					
 			result.put("success", true);
 			result.put("url", fileUrl);
@@ -96,7 +95,7 @@ public class ProductController {
 		  String originName = thumbnail.getOriginalFilename();
 		  String changeName = FileRenamePolicy.saveFile(thumbnail, filePath);
 		  
-		  String fileUrl = "http://localhost:8100/resources/product_upfile/" + changeName;
+		  String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
 		product.setProductOrigin(originName);
 		product.setProductChange(changeName);
 		
@@ -108,5 +107,60 @@ public class ProductController {
 	    	
 	}
 	
+	@GetMapping("search")
+	public HashMap<String, Object> search(@RequestParam(value="cpage") int currentPage,
+						String keyword) {
+		
+		// System.out.println(currentPage);
+		// System.out.println(keyword);
+		int listCount = productService.searchCount(keyword);
+		int pageLimit = 12;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Member> list = productService.search(keyword, pi);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("list", list);
+		hm.put("pi", pi);
+		
+		return hm;
+		
+	}
 	
+	@GetMapping("filtering")
+	public  HashMap<String, Object> filter(String cate,
+						@RequestParam(value="cpage") int currentPage) {
+		
+		int listCount = productService.filterCount(cate);
+		int pageLimit = 12;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Member> list = productService.filter(cate, pi);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		return map;
+		
+	}
+	
+	@GetMapping("detail/{productNo}")
+	public Product detail(@PathVariable int productNo,
+						String productSize) {
+		// System.out.println(productNo);
+		// System.out.println(productSize);
+		
+		Product p = new Product();
+		p.setProductNo(productNo);
+		p.setProductSize(productSize);
+		
+		Product result = productService.detail(p);
+		
+		// System.out.println(result);
+		return result;
+	}
 }

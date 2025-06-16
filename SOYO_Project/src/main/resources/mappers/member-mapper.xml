@@ -109,5 +109,22 @@
              , #{phone}
              , #{address})
 	</select>
+	
+	<!-- 아이디 찾기용 메소드 -->
+	<select id="findId" parameterType="member" resultType="string">
+		SELECT MEMBER_ID FROM MEMBER
+		    WHERE MEMBER_NAME = #{memberName}
+		      AND BIRTH_DATE = #{birthDate}
+		      AND EMAIL = #{email}
+		      AND PHONE = #{phone}
+		      AND STATUS = 'Y'
+	</select>
+	
+	<!-- 아이디로 유저 찾기 -->
+	<select id="selectMember" resultMap="memberResultSet">
+	  SELECT * FROM MEMBER
+	  WHERE MEMBER_ID = #{memberId} AND STATUS = 'Y'
+	</select>
+
 		
 </mapper>
