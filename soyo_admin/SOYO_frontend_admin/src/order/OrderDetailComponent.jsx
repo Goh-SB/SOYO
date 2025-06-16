@@ -28,6 +28,17 @@ function OrderDetailComponent() {
         orderInfo();
     },[]);
 
+    let refundComponent = null;
+        if (order.cancelStatus === "환불완료") {
+        refundComponent = (
+            <OrderDetailCancelComponent
+            refundDate={order.cancelDate}
+            refundReason={order.cancelReason}
+            />
+        );
+        }
+
+
     return (
         <div>
             <h2>결제내역 상세정보</h2>
@@ -74,7 +85,10 @@ function OrderDetailComponent() {
             </div>
 
             <br /><br />
-            <OrderDetailCancelComponent />
+      
+           <div style={{ marginLeft: "100px" }}>
+            {refundComponent}
+            </div>
         </div>
     );
 }

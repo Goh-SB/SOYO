@@ -26,4 +26,6 @@ public interface DeliveryService {
 	List<Payment> orderInfo(String memberId,int productNo);
 
 	
+
+	
 }

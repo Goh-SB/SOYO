@@ -54,6 +54,8 @@ public class DeliveryDao {
 	    return sqlSession.selectList("deliveryMapper.orderInfo", param);
 	}
 
+
+
 }
 
 

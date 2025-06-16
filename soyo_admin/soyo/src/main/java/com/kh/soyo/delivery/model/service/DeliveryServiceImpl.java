@@ -70,9 +70,6 @@ public class DeliveryServiceImpl implements DeliveryService{
 	    param.put("productNo", productNo);
 	    return deliveryDao.orderInfo(sqlSession, param);
 	}
-	
-
-
 
 
 }

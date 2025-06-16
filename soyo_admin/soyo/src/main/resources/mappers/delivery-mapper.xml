@@ -22,6 +22,7 @@
 	    <result property="productName" column="PRODUCT_NAME" />
 	    <result property="productCount" column="PRODUCT_COUNT" />
 	    <result property="productPrice" column="PRODUCT_PRICE" />
+	    <result property="phone" column="PHONE" />
 	</resultMap>
 	
 	<resultMap id="paymentResultSet" type="Payment">
@@ -31,6 +32,8 @@
     <result property="productName" column="PRODUCT_NAME"/>
     <result property="productPrice" column="PRODUCT_PRICE"/>
     <result property="cancelStatus" column="CANCEL_STATUS"/>
+    <result property="cancelDate" column="CANCEL_DATE"/>
+    <result property="cancelReason" column="CANCEL_REASON"/>
      <result property="productNo" column="PRODUCT_NO"/>
      <result property="orderImpNo" column="ORDER_IMPNO" />
      
@@ -43,10 +46,14 @@
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	</resultMap>
 	<select id="deliveryList" resultMap="deliveryResultSet">
-	SELECT O.*,
-	       M.MEMBER_NAME
-	  FROM ORDER_TB O
-	  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID 
+	   SELECT O.ORDER_NO,
+          M.MEMBER_NAME,
+          D.RECEIVER_PHONE,
+          O.ORDER_DATE,
+          O.ORDER_STATUS
+    FROM ORDER_TB O
+    JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
+    JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
 	</select>
 								
 	<select id="deliveryDetail" parameterType="_int"
@@ -129,17 +136,21 @@
 	
 	<select id="orderInfo" parameterType="map"
 							resultMap="paymentResultSet">
-	SELECT O.ORDER_IMPNO ,
-		   P.PRODUCT_NAME ,
-		   P.PRODUCT_PRICE ,
-		   O.ORDER_DATE 
-	  FROM ORDER_TB O
-	JOIN CART C ON O.MEMBER_ID = C.MEMBER_ID
-	JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
+	SELECT O.ORDER_IMPNO,
+       PD.PRODUCT_NAME,
+       PD.PRODUCT_PRICE,
+       O.ORDER_DATE,
+       O.CANCEL_DATE,
+       P.CANCEL_REASON,
+       P.CANCEL_STATUS
+  FROM ORDER_TB O
+  JOIN PAYMENT P ON P.ORDER_IMPNO = O.ORDER_IMPNO
+  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
 	WHERE O.MEMBER_ID = #{memberId} 
 	  AND P.PRODUCT_NO = #{productNo}
-	ORDER BY O.ORDER_DATE DESC
 	</select>
+	
+
 </mapper> 
 
 

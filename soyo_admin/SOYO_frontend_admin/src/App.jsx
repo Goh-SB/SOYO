@@ -14,7 +14,6 @@ import ProductEnrollFormComponent from './product/ProductEnrollFormComponent';
 import DeliveryDetailComponent from './delevery/DeliveryDetailComponent';
 import OrderListComponent from './order/OrderListComponent';
 import ProductDetailComponent from './product/ProductDetailComponent';
-
 import OrderDetailComponent from './order/OrderDetailComponent';
 
 function App() {

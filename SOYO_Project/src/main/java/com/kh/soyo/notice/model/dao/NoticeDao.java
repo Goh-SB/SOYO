@@ -15,6 +15,7 @@ public class NoticeDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
+		// select문(여러 행 조회)
 		return (ArrayList)sqlSession.selectList("noticeMapper.noticeList", null, rowBounds);
 	}
 	

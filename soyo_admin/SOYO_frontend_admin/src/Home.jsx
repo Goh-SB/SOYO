@@ -16,7 +16,7 @@ function Home (props) {
         let memberId = document.getElementById("memberId").value;
         let memberPwd = document.getElementById("memberPwd").value;
 
-        let url = "http://localhost:8888/soyo/auth/login";
+        let url = "http://localhost:8100/soyo/auth/login";
 
         axios({
             url,
