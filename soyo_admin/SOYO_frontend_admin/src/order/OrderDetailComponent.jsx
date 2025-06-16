@@ -6,17 +6,19 @@ import { useEffect, useState } from "react";
 
 function OrderDetailComponent() {
 
-    const [order,setOrder]=useState([]);
-    const memberId=useParams.memberId;
+    const [order,setOrder]=useState({});
+    const memberId=useParams().memberId;
+    const productNo = useParams().productNo;
     const orderInfo = () =>{
         
-        let url = "http://localhost:8100/soyo/delivery/orderInfo/"+memberId;
+        let url = "http://localhost:8100/soyo/delivery/orderInfo/"+memberId+"/"+productNo;
 
         axios({
             url,
             method : "get"
         }).then((response)=>{
             console.log(response);
+            setOrder(response.data[0]);
         }).catch(()=>{
             console.log("ajax 통신 실패");
         });
@@ -25,6 +27,17 @@ function OrderDetailComponent() {
     useEffect(()=>{
         orderInfo();
     },[]);
+
+    let refundComponent = null;
+        if (order.cancelStatus === "환불완료") {
+        refundComponent = (
+            <OrderDetailCancelComponent
+            refundDate={order.cancelDate}
+            refundReason={order.cancelReason}
+            />
+        );
+        }
+
 
     return (
         <div>
@@ -52,19 +65,19 @@ function OrderDetailComponent() {
                         <tbody align="center">
                             <tr>
                                 <th>주문 번호</th>
-                                <td></td>
+                                <td>{order.orderImpNo}</td>
                             </tr>
                             <tr>
                                 <th>상품 이름</th>
-                                <td></td>
+                                <td>{order.productName}</td>
                             </tr>
                             <tr>
                                 <th>가격</th>
-                                <td></td>
+                                <td>{order.productPrice}</td>
                             </tr>
                             <tr>
                                 <th>결제 날짜</th>
-                                <td></td>
+                                <td>{order.orderDate}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -72,7 +85,10 @@ function OrderDetailComponent() {
             </div>
 
             <br /><br />
-            <OrderDetailCancelComponent />
+      
+           <div style={{ marginLeft: "100px" }}>
+            {refundComponent}
+            </div>
         </div>
     );
 }

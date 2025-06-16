@@ -49,10 +49,12 @@ public class DeliveryDao {
 		return sqlSession.selectOne("deliveryMapper.memberInfo",memberId);
 	}
 
-	public List<Payment> orderInfo(SqlSessionTemplate sqlSession, String memberId) {
+	public List<Payment> orderInfo(SqlSessionTemplate sqlSession, Map<String, Object> param) {
 		
-		return sqlSession.selectOne("deliveryMapper.orderInfo",memberId);
+	    return sqlSession.selectList("deliveryMapper.orderInfo", param);
 	}
+
+
 
 }
 
