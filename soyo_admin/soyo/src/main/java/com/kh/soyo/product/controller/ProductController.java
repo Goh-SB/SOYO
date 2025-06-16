@@ -208,8 +208,8 @@ public class ProductController {
 			// > 재고가 없다면 수정 시 재고 먼저 insert
 		}
 		
-		System.out.println(p);
-		System.out.println(thumbnail);
+		// System.out.println(p);
+		// System.out.println(thumbnail);
 		
 		if(thumbnail != null) {
 			
