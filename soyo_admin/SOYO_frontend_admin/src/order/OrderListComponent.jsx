@@ -14,6 +14,7 @@ function OrderListComponent(){
             url,
             method : "get"
         }).then((response)=>{
+            console.log(response);
             setDataList(response.data);
         }).catch(()=>{
             console.log("ajax 통신 실패");
@@ -39,6 +40,8 @@ function OrderListComponent(){
     useEffect(() => {
         selectPayment(); 
     }, []);
+
+    
     return(
         <div>
             <h2>구매내역</h2>
@@ -81,7 +84,7 @@ function OrderListComponent(){
                 <tbody>
                     {dataList.map((item, index) => (
                         <tr 
-                        onClick={()=> navigate("/order/"+item.memberId)}
+                        onClick={()=> navigate("/order/"+item.memberId+"/"+item.productNo)}
                         key={index} align="center">
                             <td>{item.orderDate}</td>
                             <td>{item.memberName}</td>

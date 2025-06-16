@@ -1,6 +1,8 @@
 package com.kh.soyo.delivery.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +64,11 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public List<Payment> orderInfo(String memberId) {
-		
-		return deliveryDao.orderInfo(sqlSession,memberId);
+	public List<Payment> orderInfo(String memberId, int productNo) {
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("memberId", memberId);
+	    param.put("productNo", productNo);
+	    return deliveryDao.orderInfo(sqlSession, param);
 	}
 	
 
