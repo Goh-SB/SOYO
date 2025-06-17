@@ -18,10 +18,6 @@ function Home (props) {
 
         let url = "http://localhost:8888/soyo/auth/login";
 
-        let url = "http://localhost:8100/soyo/auth/login";
-
-        let url = "http://localhost:8100/soyo/auth/login";
-
         axios({
             url,
             method : "post",
