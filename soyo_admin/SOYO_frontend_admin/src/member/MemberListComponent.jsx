@@ -15,7 +15,7 @@ function MemberListComponent() {
 
     let [keyword, setKeyword] = useState("");
 
-    let [statusFilter, setStatusFilter] = useState('ALL');
+    let [statusFilter, setStatusFilter] = useState('모든사항');
 
     let navigate = useNavigate();
 
@@ -27,7 +27,7 @@ function MemberListComponent() {
             searchMember();
         }
 
-    }, [cpage, keyword, statusFilter]);
+    }, [cpage, keyword]);
 
     const selectMember = () => {
         let url = "http://localhost:8100/soyo/member/list";
@@ -48,12 +48,8 @@ function MemberListComponent() {
     };
 
     const setMember = (data) => {
-        let filteredList = data.list.filter(item => {
-            if (statusFilter === 'ALL') return true;
-            return item.status === statusFilter;
-        });
 
-        let trArr = filteredList.map((item, index) => {
+        let trArr = data.list.map((item, index) => {
             if (item.status == 'Y') {
                 return (
                     <tr key={index} onClick={() => { navigate("/member/detail/" + item.memberId); }}>
@@ -63,14 +59,14 @@ function MemberListComponent() {
                         <td>
                             {item.status} &nbsp;
                             {item.memberId !== 'admin' && (
-                            <button onClick={(e) => {
-                                e.stopPropagation();
-                                deleteBtn(item.memberId); 
-                            }}>
-                                탈퇴
-                            </button>
+                                <button onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteBtn(item.memberId);
+                                }}>
+                                    탈퇴
+                                </button>
                             )}
-        
+
                         </td>
                     </tr>
                 );
@@ -130,7 +126,6 @@ function MemberListComponent() {
                     </Link>
                 );
             }
-
         }
 
         if (cpage == data.pi.maxPage) {
@@ -149,11 +144,11 @@ function MemberListComponent() {
             );
         }
 
-
         setPageList(linkArr);
 
-
     };
+
+
     const deleteBtn = (memberId) => {
         let url = "http://localhost:8100/soyo/member/delete";
 
@@ -163,15 +158,16 @@ function MemberListComponent() {
             params: {
                 memberId
             }
-
         }).then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
+
             selectMember();
+            alert(response.data);
+            setStatusFilter('모든사항');
         }).catch(() => {
             console.log("삭제 실패")
         });
     };
-
 
     const repairBtn = (memberId) => {
 
@@ -185,7 +181,11 @@ function MemberListComponent() {
             }
         }).then((response) => {
             // console.log(response.data);
-            selectMember();
+
+                selectMember();
+                alert(response.data);
+                setStatusFilter('모든사항');
+
         }).catch(() => {
             console.log("복구 실패");
         });
@@ -200,28 +200,66 @@ function MemberListComponent() {
 
         axios({
             url,
-            method : "get",
-            params : {
-             searchMenu,
-             searchText,
-             cpage
+            method: "get",
+            params: {
+                searchMenu,
+                searchText,
+                cpage
             }
-        }).then((response) => { 
+        }).then((response) => {
             // console.log(response.data)
             setMember(response.data);
-        }).catch(() => { 
+        }).catch(() => {
             console.log("검색 통신 실패");
         })
     };
 
-
     const searchClick = (e) => {
         e.preventDefault();
-        let searchText = document.getElementById("searchText").value;
+        let searchText = document.getElementById("member-searchText").value;
         setKeyword(searchText);
         setCpage(1);
 
     };
+
+    const status = ['활성화', '비활성화', '모든사항']
+
+    const statusBtn = () => {
+        return status.map((item, index) => {
+            let active = item === statusFilter ? "filter-btn active" : "filter-btn"
+            return (
+                <button key={index}
+                    className={active}
+                    onClick={() => { filt(item) }}>
+                    {item}
+                </button>
+            );
+
+        });
+
+    }
+
+    const filt = (item) => {
+        setStatusFilter(item);
+        setCpage(1)
+
+        document.getElementById("member-searchText").value = '';
+
+        let url = "http://localhost:8100/soyo/member/filter";
+        axios({
+            url,
+            method: "get",
+            params: {
+                cpage: 1,
+                item
+            }
+        }).then((response) => {
+            // console.log(response.data);
+            setMember(response.data);
+        }).catch(() => { });
+
+    }
+
 
     return (
 
@@ -231,21 +269,7 @@ function MemberListComponent() {
             <div className="filter-container">
                 <p>회원 상태별 필터링</p>
                 <div className="filter-buttons">
-                    <button 
-                        className={`filter-btn ${statusFilter === 'ALL' ? 'active' : ''}`}
-                        onClick={() => setStatusFilter('ALL')}>
-                        모든 회원
-                    </button>
-                    <button 
-                        className={`filter-btn ${statusFilter === 'Y' ? 'active' : ''}`}
-                        onClick={() => setStatusFilter('Y')}>
-                        활성화
-                    </button>
-                    <button 
-                        className={`filter-btn ${statusFilter === 'N' ? 'active' : ''}`}
-                        onClick={() => setStatusFilter('N')}>
-                        비활성화
-                    </button>
+                    {statusBtn()}
                 </div>
             </div>
             <br /><br />

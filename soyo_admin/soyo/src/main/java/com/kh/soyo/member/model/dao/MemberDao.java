@@ -61,4 +61,22 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.searchMember", map);
 	}
 
+	public int filterCount(SqlSessionTemplate sqlSession, String item) {
+
+		return sqlSession.selectOne("memberMapper.filterCount", item);
+	}
+
+	public ArrayList<Member> filter(SqlSessionTemplate sqlSession, PageInfo pi, String item) {
+
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("item", item);
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.filter", hm);
+	}
+
 }
