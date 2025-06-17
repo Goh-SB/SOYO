@@ -7,28 +7,63 @@
 		<title>공지 상세보기</title>
 	</head>
 
+	<style>
+		body {
+			width: 1920px;
+			min-height: 100vh;			/* 최소 세로 크기 : 100% */
+		}
+
+		div {
+			box-sizing: border-box;		/* 테두리와 안쪽 여백의 크기도 요소의 크기로 고려 */
+		}
+
+		#notice-table{
+			width : 80%;
+			margin : auto;
+			margin-top : 80px;
+		}
+	</style>
+
+	<!-- Bootstrap 연동 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
 	<body>
 		<jsp:include page="../common/menubar.jsp" />
 		<div class="list_view">
-			<table class="table" align="center">
-				<tr>
-					<th width="70">제목</th>
-					<td>${requestScope.n.noticeTitle}</td>
+			<br>
+			<h2>공지사항 상세보기</h2>
+        	<br>
 
-					<th width="80">작성일</th>
-					<td width="140">${requestScope.n.noticeDate}</td>
-				</tr>
-				<tr>
-					<th width="70">내용</th>
-					<td height="500" colspan="7">${requestScope.n.noticeContent}</td>
-				</tr>
-				<tr>
-					<td colspan="8" align="center">
-						<button type="button" class="btn btn-secondary" onclick="list();">목록가기</button>
-					</td>
-				</tr>
-			</table>
-		</div>
+            <button>
+                목록가기
+            </button>
+  
+            <table id="notice-Detail-Table">
+                <thead>
+                    <tr>
+                        <td>
+                            <div>
+                                <span id="noticeTitle">&#91;${ requestScope.n.noticeType }&#93;&nbsp;${requestScope.n.noticeTitle}</span>
+                                <br>
+                                <span id="noticeDate">${requestScope.n.noticeDate}</span>
+                                <hr/>
+                            </div>
+                        </td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <img id="fileImg"/>
+                            <br>
+                            <p id="noticeContent">${requestScope.n.noticeContent}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+           	<br>
+        </div>
 		<script>
 			function list() {
 				location.href="/soyo/notice/noticeList"

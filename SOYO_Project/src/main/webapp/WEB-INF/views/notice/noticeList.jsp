@@ -6,6 +6,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>공지사항</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=image" />
 	</head>
 
 	<style>
@@ -32,21 +34,23 @@
 			margin: 0px;
 		}
 
-		/*
+		
 		.page-link {
-			background-color: gainsboro;
 			color: black;
-			font-family: "Noto Sans", sans-serif;
-			font-weight: 800;
-			border: none;
-			gap: 10px;
+			font-weight: 700;
 		}
-		*/
 	</style>
 
 	<body>
 		<!-- jquery 연동 구문 -->
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+		<!-- Bootstrap 연동 -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+		<!-- Bootstrap에서 필요로 하는 기타 js 파일들 -->
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 		<jsp:include page="../common/menubar.jsp" /><br>
 		<br class="list_wrap">
@@ -58,7 +62,6 @@
 							<th>번호</th>
 							<th>제목</th>
 							<th>작성일</th>
-							<th>이미지</th>
 						</tr>
 					</thead>
 					<tbody align="center">
@@ -75,20 +78,21 @@
 									<tr>
 										<!-- 번호/제목/날짜 -->
 										<td>${ i.noticeNo }</td>
-										<td>${ i.noticeTitle }</td>
-										<td>${ i.noticeDate }</td>
-										
+
 										<c:choose>
-											<!-- 첨부 이미지가 존재하지 않을 경우 -->
 											<c:when test="${ empty i.noticeImage }">
-												<td></td>
+												<td>${ i.noticeType } ${ i.noticeTitle }</td>
 											</c:when>
 
-											<!-- 첨부 이미지가 존재할 경우 -->
 											<c:otherwise>
-												<td>*</td>
+												<td>
+													&#91;${ i.noticeType }&#93; ${ i.noticeTitle }
+													<span class="material-symbols-outlined">image</span>
+												</td>
 											</c:otherwise>
 										</c:choose>
+
+										<td>${ i.noticeDate }</td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>

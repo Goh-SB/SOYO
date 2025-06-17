@@ -1,7 +1,6 @@
 package com.kh.soyo.notice.controller;
 
 import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.notice.model.service.NoticeService;
@@ -25,8 +25,8 @@ public class NoticeController {
 	
 	// 공지사항 목록 조회용 컨트롤러
 	@GetMapping("noticeList")
-	public String noticeList(@RequestParam(value="cpage", defaultValue="1")
-							int currentPage, Model model) {
+	public ModelAndView noticeList(@RequestParam(value="nPage", defaultValue="1")
+							int currentPage, ModelAndView mv) {
 		// 공지사항 목록 조회 페이지에서 필요로 하는 응답 데이터 구하기
 		int listCount = noticeService.noticeListCount();
 		int pageLimit = 10;
@@ -35,18 +35,21 @@ public class NoticeController {
 		ArrayList<Notice> list = noticeService.noticeList(pi);
 		
 		// model(request)에 응답 데이터 담기
-		model.addAttribute("list", list);
-		
+		mv.addObject("list", list)
+			.addObject("pi", pi)
+			.setViewName("notice/noticeList");
+		System.out.println(pi);
 		// 공지사항 목록 조회 화면 포워딩
-		return "notice/noticeList";
+		return mv;
 	}
 	
 	// 공지사항 상세 조회용 컨트롤러
 	@GetMapping("noticeDetail/{nno}")
 	public String noticeDetail(@PathVariable int nno, Model model) {
 		Notice notice =  noticeService.noticeDetail(nno);
-		model.addAttribute("notice", notice);
+		model.addAttribute("n", notice);
 		
+		System.out.println(notice);
 		return "notice/noticeDetail";
 	}
 	
