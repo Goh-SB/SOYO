@@ -60,6 +60,18 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.searchMember(sqlSession, pi, map);
 	}
 
+	@Override
+	public int filterCount(String item) {
+
+		return memberDao.filterCount(sqlSession, item);
+	}
+
+	@Override
+	public ArrayList<Member> filter(PageInfo pi, String item) {
+
+		return memberDao.filter(sqlSession, pi, item);
+	}
+
 
 
 }

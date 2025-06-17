@@ -116,13 +116,58 @@ public class NoticeController {
 	}
 	
 	@GetMapping("filter")
-	public void filter (String item) {
+	public HashMap<String, Object> filter (String item,
+						@RequestParam (value="cpage") int currentPage) {
 		
 		// System.out.println(item);
-		int listCount = noticeService.noticeListCount();
+		// System.out.println(currentPage);
 		
+		int listCount = noticeService.noticeFilterCount(item);
+		int pageLimit = 10;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,
+											pageLimit, boardLimit);
+				
+		ArrayList<Notice> list = noticeService.noticeFilter(item, pi);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("pi", pi);
+		hm.put("list", list);
+		
+		return hm;
 		
 	}
+	
+	@GetMapping("search")
+	public HashMap<String, Object> search (String keyword,
+						String noticeMenu,
+						@RequestParam(value="cpage")int currentPage) {
+		
+		// System.out.println(keyword);
+		// System.out.println(noticeMenu);
+		// System.out.println(currentPage);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("noticeMenu", noticeMenu);
+		
+		int listCount = noticeService.noticeSearchCount(map);
+		int pageLimit = 10;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,
+											pageLimit, boardLimit);
+				
+		ArrayList<Notice> list = noticeService.noticeSearchList(map,pi);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("pi", pi);
+		hm.put("list", list);
+		
+		return hm;
+		
+	}	
 	
 	
 }

@@ -41,7 +41,7 @@ public class MemberController {
 		
 		hm.put("list", list);
 		hm.put("pi", pi);
-		
+	
 		return hm;
 		
 	}
@@ -109,4 +109,28 @@ public class MemberController {
 		hm.put("pi", pi);
 		return hm;
 	}
+	
+	@GetMapping("filter")
+	public HashMap<String, Object> filter (@RequestParam(value="cpage") int currentPage,
+													String item) {
+		
+		int listCount = memberService.filterCount(item);
+		
+		int pageLimit = 10;
+		int boardLimit = 10;
+				
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Member> list = memberService.filter(pi, item); 
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("list", list);
+		hm.put("pi", pi);
+		return hm;
+		
+	}
+	
+	
+	
 }

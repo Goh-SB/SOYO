@@ -250,7 +250,7 @@
         <a id="menu">소개</a>
         <ul class="submenu">
             <li><a href="<c:url value='/location' />">오시는 길</a></li>
-            <li><a href="#">쇼핑 가이드</a></li>
+            <li><a href="<c:url value='/guide' />">쇼핑 가이드</a></li>
             <li><a href="<c:url value='/brand' />">브랜드 소개</a></li>
         </ul>
         </li>
@@ -275,7 +275,7 @@
         <a id="menu">갤러리</a>
         <ul class="submenu">
           <li><a href="#">룩북</a></li>
-          <li><a href="#">셀러브리티</a></li>
+          <li><a href="<c:url value='/celeb' />">셀러브리티</a></li>
         </ul>
       </li>
       <li class="dropdown">
@@ -332,7 +332,7 @@
 	        </ul>
 	      </div>
 	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
-	      <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+	      <a href="${pageContext.request.contextPath}/cart/cart"><i class="fas fa-shopping-cart"></i></a>
 	    </div>
 	</c:when>
 	
@@ -351,7 +351,7 @@
 	        </ul>
 	      </div>
 	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
-	      <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+	      <a href="<c:url value='/cart/cart' />"><i class="fas fa-shopping-cart"></i></a> 
 	    </div>
     </c:otherwise>
     </c:choose>

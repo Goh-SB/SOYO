@@ -311,11 +311,9 @@
                 <div class="carousel-slide">
                     <img src="${pageContext.request.contextPath}/resources/images/slide-2.jpg" alt="슬라이드 2">
                 </div>
-                <!--
                 <div class="carousel-slide">
                     <img src="${pageContext.request.contextPath}/resources/images/slide-3.jpg" alt="슬라이드 3">
                 </div>
-                -->
             </div>
             <button class="carousel-arrow prev">
                 <i class="fas fa-chevron-left"></i>

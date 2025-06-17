@@ -21,4 +21,14 @@ public class CommonController {
 		return "guide/brand";
 	}
 	
+	@GetMapping("/celeb")
+	public String showCelebPage() {
+		return "guide/celeb";
+	}
+	
+	@GetMapping("/guide")
+	public String showGuidePage() {
+		return "guide/guide";
+	}
+	
 }

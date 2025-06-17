@@ -16,10 +16,6 @@ function Home (props) {
         let memberId = document.getElementById("memberId").value;
         let memberPwd = document.getElementById("memberPwd").value;
 
-        let url = "http://localhost:8888/soyo/auth/login";
-
-        let url = "http://localhost:8100/soyo/auth/login";
-
         let url = "http://localhost:8100/soyo/auth/login";
 
         axios({
@@ -49,7 +45,6 @@ function Home (props) {
 
                 // 로그인 후의 화면이 보여져야 함. (비동기식 렌더링)
                 setLoginUser(response.data);
-                props.loginUser = response.data;
             }
 
         }).catch(() => {
