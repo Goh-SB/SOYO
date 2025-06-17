@@ -24,4 +24,8 @@ public interface MemberService {
 
 	ArrayList<Member> searchMember(PageInfo pi, HashMap<String, Object> map);
 
+	int filterCount(String item);
+
+	ArrayList<Member> filter(PageInfo pi, String item);
+
 }

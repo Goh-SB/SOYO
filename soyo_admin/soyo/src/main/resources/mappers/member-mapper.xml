@@ -136,5 +136,40 @@
 		WHERE C.MEMBER_ID=#{memberId}
 	</select>
 
+
+	<select id="filterCount" parameterType="string"
+							resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		  <if test="item == '활성화'" >
+		  WHERE STATUS = 'Y' 
+		  </if>
+		  <if test="itme == '비활성화'">
+		  WHERE STATUS = 'N'
+		  </if>
+		  
+	
+	</select>
+	
+	<select id="filter" parameterType="hashmap"
+						resultMap="memberResultSet">
+		SELECT *
+		  FROM (
+			SELECT ROWNUM RNUM, A.*
+			  FROM (
+				SELECT *
+				  FROM MEMBER
+				 <if test="item == '활성화'">
+				 WHERE STATUS = 'Y'
+				 </if>
+				 <if test="item == '비활성화'">
+				 WHERE STATUS = 'N'
+				 </if>
+				 
+				 ORDER BY ENROLL_DATE DESC
+				 ) A
+			) 
+		 WHERE RNUM BETWEEN #{startRow}	AND #{endRow}	
+	</select>
 	
 </mapper>
