@@ -332,7 +332,7 @@
 	        </ul>
 	      </div>
 	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
-	      <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+	      <a href="${pageContext.request.contextPath}/cart/cart"><i class="fas fa-shopping-cart"></i></a>
 	    </div>
 	</c:when>
 	
@@ -351,7 +351,7 @@
 	        </ul>
 	      </div>
 	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
-	      <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+	      <a href="<c:url value='/cart/cart' />"><i class="fas fa-shopping-cart"></i></a> 
 	    </div>
     </c:otherwise>
     </c:choose>

@@ -18,4 +18,8 @@ public class Cart {
 	private int productCount;		// 상품 수량
 	private String memberId;		// 회원 아이디
 	private Date cartEnrollDate;	// 장바구니에 담은 날짜
+	
+	private String productName;       // 상품명
+    private int productPrice;         // 상품 가격
+    private String productChange;     // 상품 사진
 }
