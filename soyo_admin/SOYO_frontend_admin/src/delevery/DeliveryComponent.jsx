@@ -60,7 +60,7 @@ function DeliveryComponent() {
         <div>
             <h2>배송 정보</h2>
             <div className="filter-container">
-                <h4>배송 상태별 필터링</h4>
+                <h5>배송 상태별 필터링</h5>
                 <div className="filter-buttons">
                     <button 
                         className={`filter-btn ${currentFilter === "모든 상태" ? "active" : ""}`}

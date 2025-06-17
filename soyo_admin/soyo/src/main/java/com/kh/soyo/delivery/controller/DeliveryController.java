@@ -28,7 +28,6 @@ public class DeliveryController {
 	@GetMapping("/list")
 	public List<Delivery> deliveryList(){
 		
-		System.out.println(deliveryService.deliveryList());
 		return deliveryService.deliveryList();
 	}
 	
