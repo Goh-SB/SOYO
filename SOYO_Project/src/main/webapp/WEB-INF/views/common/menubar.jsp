@@ -275,7 +275,7 @@
         <a id="menu">갤러리</a>
         <ul class="submenu">
           <li><a href="#">룩북</a></li>
-          <li><a href="#">셀러브리티</a></li>
+          <li><a href="<c:url value='/celeb' />">셀러브리티</a></li>
         </ul>
       </li>
       <li class="dropdown">
