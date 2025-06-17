@@ -52,7 +52,7 @@ function NoticeListComponent() {
             if (item.status == 'Y') {
                 return (
                     <tr key={index} onClick={() => { navigate("/notice/detail/" + item.noticeNo); }}>
-                        
+
                         <td>{item.noticeNo}</td>
                         <td>&#91;{item.noticeType}&#93;&nbsp;{item.noticeTitle}</td>
                         <td>{item.noticeDate}</td>
@@ -67,7 +67,7 @@ function NoticeListComponent() {
                         <td>{(item.noticeImage == null) ? "" : <span className="material-symbols-outlined">
                             imagesmode
                         </span>}</td>
-                        
+
 
                     </tr>
                 );
@@ -189,19 +189,19 @@ function NoticeListComponent() {
         });
     }
 
-    const filter = [ '공지사항', '이벤트', '모든사항'];
+    const filter = ['공지사항', '이벤트', '모든사항'];
 
-    const [ selected, setSelected ] = useState('filter-btn');
+    const [selected, setSelected] = useState('모든사항');
 
     const filtering = () => {
         return filter.map((item, index) => {
             const active = item === selected ? 'filter-btn active' : 'filter-btn';
-            return(
-                    <button key={index}
-                        className={active} value={item}
-                        onClick={ () => { filt(item) }}>
-                            {item}
-                    </button>
+            return (
+                <button key={index}
+                    className={active} value={item}
+                    onClick={() => { filt(item) }}>
+                    {item}
+                </button>
             );
         })
     };
@@ -209,16 +209,39 @@ function NoticeListComponent() {
     const filt = (item) => {
 
         setSelected(item);
+        setCpage(1);
 
         let url = "http://localhost:8100/soyo/notice/filter";
         axios({
             url,
+            method: "get",
+            params: {
+                item,
+                cpage
+            }
+        }).then((response) => { 
+            setState(response.data);
+        }).catch(() => { })
+    }
+
+    const searchList = () => {
+        setKeyword(document.querySelector("#notice-search-text").value);
+        let noticeMenu = document.querySelector("#notice-search-menu").value;
+        let url = "http://localhost:8100/soyo/notice/search";
+        setCpage(1);
+        axios({
+            url,
             method : "get",
             params : {
-                item
+                keyword,
+                noticeMenu,
+                cpage
             }
-        }).then(() => {}).catch(() => {})
-    }
+        }).then((response) => {
+            // console.log(response.data);
+            setState(response.data);
+        }).catch(()=> {});
+    };
 
     return (
         <div>
@@ -228,9 +251,10 @@ function NoticeListComponent() {
             <div className="filter-buttons">
                 {filtering()}
             </div>
-           
-            <div id="notice-write-btn">
-                <button onClick={() => { navigate("/notice/enrollForm"); }}>
+            <br />
+            <div id="notice-write-btn-area">
+                <button onClick={() => { navigate("/notice/enrollForm"); }}
+                    id="notice-write-btn">
                     작성하기
                 </button>
 
@@ -256,6 +280,23 @@ function NoticeListComponent() {
             <br />
             <div align="center">
                 {pageList}
+            </div>
+            <br />
+            <div id="notice-search-area">
+                <select id="notice-search-menu">
+                    <option value="noticeTitle">제목</option>
+                    <option value="noticeContent">내용</option>
+                </select>
+                &nbsp;
+                <input type="text"
+                    id="notice-search-text">
+                </input>
+                <button type="button"
+                    id="notice-search-btn"
+                    onClick={searchList}>
+                    검색
+                </button>
+
             </div>
 
         </div>

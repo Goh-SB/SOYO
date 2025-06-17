@@ -26,6 +26,7 @@ function MemberListComponent() {
         } else {
             searchMember();
         }
+
     }, [cpage, keyword, statusFilter]);
 
     const selectMember = () => {
@@ -61,12 +62,15 @@ function MemberListComponent() {
                         <td>{item.enrollDate}</td>
                         <td>
                             {item.status} &nbsp;
+                            {item.memberId !== 'admin' && (
                             <button onClick={(e) => {
                                 e.stopPropagation();
-                                deleteBtn(item.memberId);
+                                deleteBtn(item.memberId); 
                             }}>
                                 탈퇴
                             </button>
+                            )}
+        
                         </td>
                     </tr>
                 );
@@ -189,8 +193,8 @@ function MemberListComponent() {
 
     const searchMember = (e) => {
 
-        let searchMenu = document.getElementById("searchMenu").value;
-        let searchText = document.getElementById("searchText").value;
+        let searchMenu = document.getElementById("member-searchMenu").value;
+        let searchText = document.getElementById("member-searchText").value;
         let url = "http://localhost:8100/soyo/member/searchMember";
         // console.log(searchMenu, searchText);
 
@@ -265,15 +269,15 @@ function MemberListComponent() {
                 {pageList}
             </div>
             <form>
-                <div id="searchBox">
+                <div id="member-searchBox">
                     <br />
-                    <select id="searchMenu">
+                    <select id="member-searchMenu">
                         <option value="memberId">아이디</option>
                         <option value="memberName">이름</option>
                     </select>
                     &nbsp;
-                    <input type="search" id="searchText" />
-                    <button type="submit" id="searchBtn"
+                    <input type="search" id="member-searchText" />
+                    <button type="submit" id="member-searchBtn"
                         onClick={searchClick}>
                         검색
                     </button>

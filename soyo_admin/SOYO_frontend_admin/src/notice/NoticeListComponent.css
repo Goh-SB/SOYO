@@ -1,9 +1,42 @@
 #noticeTable{
     width : 1200px;
     margin : auto;
-
 }
-#notice-write-btn{
+#notice-write-btn-area{
     width : 95%;
     text-align: right;
+}
+
+#notice-write-btn{
+    border-radius : 10px;
+    width : 100px;
+    height : 40px;
+    background-color: #E3E4FA;
+    font-weight : 600;
+    font-size : 20px;
+}
+#notice-search-area{
+    width : 500px;
+    margin : auto;
+    position : relative;
+}
+#notice-search-text, #notice-search-btn, #notice-search-menu{
+    height : 50px;
+    padding : 5px;
+    border-radius : 10px;
+}
+#notice-search-text{
+    width : 80%;
+    padding : 10px;
+}
+#notice-search-btn{
+    background-color: white;
+    justify-content: center;
+    height : 40px;
+    float : right;
+    position : absolute;
+    right : 40px;
+    border-radius : 10px;
+    bottom : 5px;
+    border : none;
 }
