@@ -250,7 +250,7 @@
         <a id="menu">소개</a>
         <ul class="submenu">
             <li><a href="<c:url value='/location' />">오시는 길</a></li>
-            <li><a href="#">쇼핑 가이드</a></li>
+            <li><a href="<c:url value='/guide' />">쇼핑 가이드</a></li>
             <li><a href="<c:url value='/brand' />">브랜드 소개</a></li>
         </ul>
         </li>
