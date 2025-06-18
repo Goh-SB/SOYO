@@ -275,7 +275,7 @@
                     
                        <tbody>
                             <c:forEach var="cart" items="${cartList}">
-                                <tr>
+                                <tr class="cart-item">
                                 
                                 <!-- 체크박스 -->
                                 <td><input type="checkbox" name="productId" value="${cart.productNo}" /></td>
@@ -293,16 +293,15 @@
 	                            </td>
 
                                 <!-- 옵션 -->
-                                <td> ${cart.productPrice}  원</td>
+                                <td>${cart.productPrice }원</td>
 
                                 <!-- 상품금액 = 수량 * 단가 -->
-                                <td>
- 								${requestScope.c.productCount }원
-                                </td>
+								
                                 </tr>
                             </c:forEach>
                          </tbody>
                       </table>
+                      <span class="totalPrice" name="totalPrice">0원</span>
     
                 <div class="xans-element- xans-order xans-order-selectorder">
                     <ul>
@@ -341,7 +340,7 @@
                                         </p>
                                         <strong>
                                             <span id="total_order_price_front" class="sp--font" scale="3xl">
-                                            	 원
+                                             원
                                             </span>
                                         </strong>
                                     </div>
@@ -380,8 +379,10 @@
 	    // 수량 증감
 	    if (type === 'plus') {
 	        currentCount++;
+	        updateSelectedTotal();
 	    } else {
 	        if (currentCount > 1) currentCount--;
+	        updateSelectedTotal();
 	    }
 	
 	    $input.val(currentCount); // input에 새 값 반영
@@ -433,16 +434,30 @@
         
         function updateSelectedTotal() {
             let total = 0;
-
+            let details = "";
+			
+		
             $('input[name="productId"]:checked').each(function () {
                 const $row = $(this).closest("tr");
-                const priceText = $row.find("td").eq(5).text();
+                const priceText = $row.find("td").eq(4).text();
+                //console.log(priceText);
+                const cartCount = parseInt($row.find("td>div input").val());
                 const numericPrice = parseInt(priceText.replace(/[^0-9]/g, ""));
-                total += numericPrice;
+                //console.log(numericPrice);
+                
+                let itemTotal = numericPrice * cartCount;
+                total += itemTotal;
+                
+                // 가격 상세 항목
+              	details += "<p>"+ itemTotal.toLocaleString('ko-KR') + "원" + "</p>"
+                $(".totalPrice").html(details);
+                
             });
 
             $('#total_order_price_front').text(total.toLocaleString('ko-KR') + ' 원');
+                       
         }
-             
+        
+
     </script>
 </html>
