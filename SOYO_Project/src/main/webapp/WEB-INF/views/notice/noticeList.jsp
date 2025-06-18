@@ -45,8 +45,9 @@
 		<!-- jquery 연동 구문 -->
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-		<!-- Bootstrap 연동 -->
+		<!-- Bootstrap 연동
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+		-->
 
 		<!-- Bootstrap에서 필요로 하는 기타 js 파일들 -->
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
