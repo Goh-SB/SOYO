@@ -36,10 +36,8 @@ public class AuthController {
 	
 	@PostMapping("login")
 	public String loginAdmin(@RequestBody Member m) {
-		
 		// 아이디 일치 검사
 		Member loginUser = authService.loginAdmin(m.getMemberId());
-		
 		if(
 			(loginUser != null)
 			&& (loginUser.getMemberId().equals("admin"))
@@ -58,7 +56,6 @@ public class AuthController {
 						     .compact();
 			
 			// System.out.println(jwt);
-
 			return jwt;
 			
 		} else {

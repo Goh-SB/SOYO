@@ -207,7 +207,7 @@ function ProductListComponent() {
             <div id="product-Write">
                 <button onClick={() => { navigate("/product/enrollForm") }}
                     id="product-writeBtn">
-                    상품 등록
+                    상품등록
                 </button>
             </div>
             <br /><br />

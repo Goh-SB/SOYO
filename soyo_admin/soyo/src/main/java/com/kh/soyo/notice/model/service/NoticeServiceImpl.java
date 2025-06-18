@@ -1,6 +1,7 @@
 package com.kh.soyo.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,31 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public int noticeEnrollForm(Notice n) {
 		return noticeDao.noticeEnrollForm(sqlSession, n);
+	}
+
+	@Override
+	public int noticeSearchCount(HashMap<String, Object> map) {
+
+		return noticeDao.noticeSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Notice> noticeSearchList(HashMap<String, Object> map, PageInfo pi) {
+		
+		return noticeDao.noticeSearchList(sqlSession, map, pi);
+		
+	}
+
+	@Override
+	public int noticeFilterCount(String item) {
+
+		return noticeDao.noticeFilterCount(sqlSession,item);
+	}
+
+	@Override
+	public ArrayList<Notice> noticeFilter(String item, PageInfo pi) {
+
+		return noticeDao.noticeFilter(sqlSession, item, pi);
 	}
 	
 }

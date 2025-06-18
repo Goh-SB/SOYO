@@ -8,6 +8,7 @@
 		<result column="NOTICE_CONTENT" property="noticeContent" />
 		<result column="NOTICE_DATE" property="noticeDate" />
 		<result column="NOTICE_IMAGE" property="noticeImage" />
+		<result column="NOTICE_TYPE" property="noticeType" />
 	</resultMap>
 	
 	<!-- 공지사항 목록 조회용 쿼리문 -->
@@ -15,7 +16,8 @@
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,
 			NOTICE_DATE,
-			NOTICE_IMAGE
+			NOTICE_IMAGE,
+			NOTICE_TYPE
 		FROM NOTICE
 		WHERE STATUS = 'Y'
 		ORDER BY NOTICE_NO DESC
@@ -34,7 +36,9 @@
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,
 			NOTICE_CONTENT,
-			NOTICE_DATE
+			NOTICE_DATE,
+			NOTICE_IMAGE,
+			NOTICE_TYPE
 		FROM NOTICE
 		WHERE NOTICE_NO = #{noticeNo}
 			AND STATUS = 'Y'

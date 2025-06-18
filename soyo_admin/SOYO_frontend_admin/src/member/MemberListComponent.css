@@ -44,29 +44,28 @@ tbody>tr:hover {
     border-color: #007bff;
 }
 
-#searchBox{
-    width : 400px;
+#member-searchBox{
+    width : 500px;
     margin : auto;
-    text-align: center;
     position : relative;
 }
-#searchMenu, #searchText{
+#member-searchMenu, #member-searchText{
     height : 50px;
     padding : 5px;
     border-radius : 10px;
     
 }
-#searchText{
+#member-searchText{
     width : 80%;
     padding : 10px;
 }
-#searchBtn{
+#member-searchBtn{
     background-color: white;
     justify-content: center;
     height : 40px;
     float : right;
     position : absolute;
-    right : 5px;
+    right : 20px;
     border-radius : 10px;
     bottom : 5px;
     border : none;

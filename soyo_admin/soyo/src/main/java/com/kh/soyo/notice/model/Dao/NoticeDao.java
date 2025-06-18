@@ -1,6 +1,7 @@
 package com.kh.soyo.notice.model.Dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -40,6 +41,40 @@ public class NoticeDao {
 
 	public int noticeEnrollForm(SqlSessionTemplate sqlSession, Notice n) {
 		return sqlSession.insert("noticeMapper.noticeEnrollForm", n);
+	}
+
+	public int noticeSearchCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+
+		return sqlSession.selectOne("noticeMapper.noticeSearchCount", map);
+	}
+
+	public ArrayList<Notice> noticeSearchList(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
+
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
+		map.put("startRow", startRow);
+		map.put("endRow",endRow);
+		map.put("pi", pi);
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.noticeSearchList", map);
+	}
+
+	public int noticeFilterCount(SqlSessionTemplate sqlSession, String item) {
+
+		return sqlSession.selectOne("noticeMapper.noticeFilterCount", item);
+	}
+
+	public ArrayList<Notice> noticeFilter(SqlSessionTemplate sqlSession, String item, PageInfo pi) {
+
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("item", item);
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.noticeFilter", hm);
 	}
 
 	

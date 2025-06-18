@@ -13,37 +13,40 @@
 
 <style>
 
+    @font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    /* 고운 바탕 이동용버튼과 제목 */
+    @font-face {
+    font-family: 'GowunBatang-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+
     body {
         padding-top: 70px;
         background-image: url('/soyo/resources/images/findId.png');
     }
 
-    input{
-        width: 400px;
-        height: 50px;
-        padding: 10px;
-        margin-top: 20px;
-        border-radius: 8px;
-        font-size: 19px;
-        border: none;
-    }
 
-    button{
+    #findIdContent > button{
         width: 170px;
         height: 50px;
         border-radius: 8px;
         margin-top: 20px;
+        cursor: pointer;
+        
     }
 
-    span{
+    #findIdContent > span{
         font-size: 25px;
         color: #546E7A;
-    }
-
-    a{
-        font-size: 25px;
-        text-decoration: none;
-        color: inherit; 
+        
     }
 
     .container{
@@ -77,7 +80,7 @@
         width: 100%;
         height: 600px;
         border: 3px solid #B0BEC5;
-        background-color: #C3AED6;
+        background-color: rgba(255, 255, 255, 0.851);
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
     
@@ -93,31 +96,37 @@
     }
 
     .findId{
-        width: 50%;
-        border-top-left-radius: 9px;
-        border-top: 3px solid #C3AED6;
-        border-left: 3px solid #C3AED6;        
+        width: 30%;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 9px;
+        border-top: 3px solid lightgray;
+        border-left: 3px solid lightgray;        
         height: 70px;
+        background-color: rgba(113, 141, 150, 0.377);
+        color: aliceblue;
     }
     .findId a{
         display: block;
         width: 100%;
         height: 100%;
         padding-top: 10px;
+        color: lightcyan;
     }
 
     .findId a:hover{
-        background-color: #901dca45;
-        border-top-left-radius: 8px;
+        background-color: gray;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 8px;
     }
 
     .findPwd{
-        width: 50%;
-        border-top-right-radius: 8px;
-        border: 3px solid #C3AED6;
+        width: 70%;
+        border-top-right-radius: 20px;
+        border-top-left-radius: 8px;
+        border: 3px solid lightgray;
         height: 70px;
         padding-top: 10px;
-        background-color: #EADCF1;
+        background-color: rgb(245, 255, 254);
     }
 
     /* 이메일 인증 버튼 */
@@ -126,9 +135,10 @@
         height: 50px;
         font-size: 20px;
         margin-top: 20px;
-        background-color: #6C5B7B;
-        border-color: #901dca45;
-        color: #F8F1FF;
+        background-color: lightcyan;
+        color: #546E7A;
+        border: 3px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     /* 인증번호 발급버튼 */
@@ -136,9 +146,10 @@
         width: 70%;
         height: 50px;
         font-size: 20px;
-        background-color: #6C5B7B;
-        border-color: #901dca45;
-        color: #F8F1FF;
+        background-color: lightcyan;
+        color: #546E7A;
+        border: 3px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .submitBtnTr{
@@ -150,13 +161,33 @@
     .submitBtn{
         width: 70%;
         font-size: 20px;
-        background-color: #6C5B7B;
-        border-color: #901dca45;
-        color: #F8F1FF;
+        background-color: lightcyan;
+        color: #546E7A;
+        border: 3px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     #submitMsg{
+        font-size: 25px;
+    }
+
+    .fontGowunB{
+        font-family: 'GowunDodum-Regular';
+        width: 400px;
+        height: 50px;
+        padding: 10px;
+        margin-top: 20px;
+        border-radius: 8px;
         font-size: 19px;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .fontGowunD{
+        font-family: 'GowunBatang-Regular';
+        font-size: 25px;
+        color: #546E7A;
+        text-decoration: none;
     }
 
 </style>
@@ -168,35 +199,35 @@
 	<div id="findIdContent">
         
         <div id="findIdform">
-            <div class="findId"><a href="../member/findMemberId">ID 찾기</a></div>
-            <div class="findPwd"><span>비밀번호 찾기</span></div>
+            <div class="findId"><a href="../member/findMemberId" class="fontGowunD">ID 찾기</a></div>
+            <div class="findPwd"><span class="fontGowunD">비밀번호 찾기</span></div>
             <div class="enrollform">
                 <form action="../member/changePwd" method="post" onsubmit="return changeMemberPwd()">
                     <table class="formTable">
                         <tr>
-                            <td><span>비밀번호 찾기</span></td>
+                            <td><span style="font-size: 30px;" class="fontGowunD">비밀번호 찾기</span></td>
                         </tr>
                         <tr>
-                            <td><input name="memberId" type="text" placeholder="아이디" required></td>
+                            <td><input name="memberId" type="text" class="fontGowunB" placeholder="아이디" required></td>
                         </tr>
                         <tr>
 
-                            <td><input id="email" name="email" type="email" maxlength="30" placeholder="이메일" required></td>
+                            <td><input id="email" name="email" class="fontGowunB" type="email" maxlength="30" placeholder="이메일" required></td>
                             
                         </tr>
                         <tr>
-                            <td><button type="button" id="sert" onclick="cert()">인증번호 발급</button></td>
+                            <td><button style="cursor: pointer;" type="button" id="sert" class="fontGowunB" onclick="cert()">인증번호 발급</button></td>
                         </tr>
 
                         <!-- style="display: none;" -->
                         <tr style="display: none;">
-                            <td><input type="text" id="emailCheck" placeholder="인증번호"><br><button type="button" class="validateBtn" id="validate" onclick="valid();">인증</button></td>
+                            <td><input type="text" id="emailCheck" class="fontGowunB" placeholder="인증번호"><br><button type="button" style="cursor: pointer;" class="validateBtn fontGowunB" id="validate" onclick="valid();">인증</button></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><span id="submitMsg"></span></td>
+                            <td colspan="3"><span style="box-shadow: none;" id="submitMsg" class="fontGowunB"></span></td>
                         </tr>
                         <tr>
-                            <td class="submitBtnTr" colspan="3"><button class="submitBtn" type="submit">찾기</button></td>
+                            <td class="submitBtnTr" colspan="3"><button style="cursor: pointer;" class="submitBtn fontGowunB" type="submit">찾기</button></td>
                         </tr>
                     </table>
                 </form>

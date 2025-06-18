@@ -67,8 +67,92 @@
                         , #{noticeImage}
                         , #{noticeType}
                         , 'Y')
-	
 	</insert>
+	
+	<select id="noticeSearchCount" parameterType="hashmap"
+									resultType="_int">
+		SELECT COUNT(*)
+		  FROM NOTICE
+		 WHERE 
+		 <if test="noticeMenu == 'noticeTitle'">
+		 NOTICE_TITLE 
+		 </if>
+		 <if test="noticeMenu == 'noticeContent'">
+		 NOTICE_CONTENT 
+		 </if>
+		LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="noticeSearchList" parameterType="hashmap"
+									resultMap="noticeResultSet">
+		
+		SELECT *
+		FROM
+		(
+		SELECT ROWNUM RNUM, A.*					
+			FROM(					
+			SELECT NOTICE_NO
+			     , NOTICE_TITLE
+			     , NOTICE_DATE
+			     , NOTICE_TYPE
+			     , STATUS
+			     , NOTICE_IMAGE
+			  FROM NOTICE
+			 WHERE 
+			 <if test="noticeMenu == 'noticeTitle'">
+			 NOTICE_TITLE
+			 </if>
+			 <if test="noticeMenu == 'noticeContent'">
+			 NOTICE_CONTENT
+			 </if>
+			 LIKE '%' || #{keyword} || '%'
+			 ORDER BY NOTICE_NO DESC
+			 ) A
+		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}					
+	
+	</select>
+	
+
+	<select id="noticeFilterCount" parameterType="string"
+									resultType="_int">
+		SELECT COUNT(*)
+		  FROM NOTICE
+		 <if test="item == '공지사항'">
+		 WHERE	NOTICE_TYPE = #{item}
+		 </if>
+		 <if test="item == '이벤트'">
+		 WHERE	NOTICE_TYPE = #{item}
+		 </if>
+		 
+	</select>
+	
+	<select id="noticeFilter" parameterType="hashmap"
+								resultMap="noticeResultSet">
+		
+		SELECT *
+		  FROM 
+		(SELECT ROWNUM RNUM, A.*		
+			FROM(	
+			SELECT NOTICE_NO
+			     , NOTICE_TITLE
+			     , NOTICE_DATE
+			     , NOTICE_TYPE
+			     , STATUS
+			     , NOTICE_IMAGE
+			  FROM NOTICE
+			 <if test="item == '공지사항'" >
+			 WHERE NOTICE_TYPE = #{item}
+			 </if>
+			 <if test="item == '이벤트'">
+			 WHERE NOTICE_TYPE = #{item}
+			 </if>
+			 ) A
+			)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	
+	</select>
+	
 	
 	
 </mapper>

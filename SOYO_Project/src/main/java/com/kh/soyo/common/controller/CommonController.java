@@ -26,4 +26,9 @@ public class CommonController {
 		return "guide/celeb";
 	}
 	
+	@GetMapping("/guide")
+	public String showGuidePage() {
+		return "guide/guide";
+	}
+	
 }

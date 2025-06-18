@@ -23,10 +23,11 @@
 }
 #product-writeBtn{
     border-radius : 10px;
-    width : 80px;
+    width : 100px;
     height : 40px;
     background-color: #E3E4FA;
     font-weight : 600;
+    font-size : 20px;
 }
 
 #product-Write {
