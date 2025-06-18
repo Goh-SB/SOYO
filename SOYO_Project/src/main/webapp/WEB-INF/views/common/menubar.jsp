@@ -279,11 +279,7 @@
         </ul>
       </li>
       <li class="dropdown">
-        <a id="menu">공지사항</a>
-        <ul class="submenu">
-          <li><a href="#">이벤트</a></li>
-          <li><a href="<c:url value='/notice/noticeList'/>">공지사항</a></li>
-        </ul>
+        <a id="menu" style="cursor: pointer;" href="<c:url value='/notice/noticeList'/>">공지사항</a>
       </li>
       <li class="dropdown">
         <a id="menu">문의</a>

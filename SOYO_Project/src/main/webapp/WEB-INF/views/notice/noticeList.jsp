@@ -15,13 +15,13 @@
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
-			font-family: 'Noto Sans KR', sans-serif;
 		}
 
 		body {
 			width: 100%;
 			min-height: 100vh;
 			background-color: #f8f9fa;
+			font-family: 'Noto Sans KR', sans-serif;
 		}
 
 		@font-face {
