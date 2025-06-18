@@ -25,6 +25,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'BMJUA';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -84,6 +91,7 @@
             display: flex;
             gap: 30px;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .review-card:hover {
@@ -143,6 +151,72 @@
             vertical-align: middle;
         }
 
+        .like-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border: 2px solid #b0b8c1;
+            border-radius: 22px;
+            width: 112px;
+            height: 48px;
+            box-sizing: border-box;
+            gap: 13px;
+            font-size: 1.7rem;
+            box-shadow: 0 2px 10px rgba(176, 184, 193, 0.10);
+            position: absolute;
+            right: 32px;
+            bottom: 24px;
+            z-index: 2;
+            padding: 0 16px;
+            transition: box-shadow 0.18s, border-color 0.18s;
+            cursor: pointer;
+            user-select: none;
+            font-family: 'BMJUA', sans-serif !important;
+        }
+        .like-box:hover {
+            box-shadow: 0 4px 18px rgba(176, 184, 193, 0.18);
+            border-color: #7b8794;
+        }
+        .heart-icon2 {
+            color: #ff8ab9d8;
+            font-size: 2.1rem;
+            display: flex;
+            align-items: center;
+            transition: transform 0.16s, filter 0.16s;
+            filter: drop-shadow(0 0 4px #ffd1e6aa);
+            animation: heart-pulse 1.8s ease-in-out infinite;
+        }
+        .like-box:hover .heart-icon2 {
+            animation: heart-beat 0.35s cubic-bezier(.4,2,.6,1) 1;
+            filter: drop-shadow(0 0 8px #ffd1e6cc);
+        }
+        @keyframes heart-pulse {
+            0%   { transform: scale(1);}
+            20%  { transform: scale(1.08);}
+            40%  { transform: scale(1);}
+            60%  { transform: scale(1.08);}
+            80%  { transform: scale(1);}
+            100% { transform: scale(1);}
+        }
+        @keyframes heart-beat {
+            0%   { transform: scale(1)    translateY(0); }
+            20%  { transform: scale(1.18) translateY(-3px);}
+            40%  { transform: scale(0.95) translateY(2px);}
+            60%  { transform: scale(1.10) translateY(-2px);}
+            80%  { transform: scale(0.98) translateY(1px);}
+            100% { transform: scale(1)    translateY(0);}
+        }
+        .like-count {
+            color: #444e6d;
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Noto Sans KR', sans-serif;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.2px;
+        }
+
         @media (max-width: 768px) {
             .review-card {
                 flex-direction: column;
@@ -185,6 +259,10 @@
                     </div>
                     <h2 class="review-title">정말 만족스러운 서비스였습니다</h2>
                     <p class="review-text">직원분들의 친절한 응대와 깔끔한 시설이 인상적이었어요. 특히 서비스 품질이 정말 좋았습니다.</p>
+                    <div class="like-box">
+                        <span class="material-icons heart-icon2">favorite</span>
+                        <span class="like-count">25</span>
+                    </div>
                 </div>
             </div>
             <div class="review-card">
@@ -205,6 +283,10 @@
                     </div>
                     <h2 class="review-title">정말 만족스러운 서비스였습니다</h2>
                     <p class="review-text">직원분들의 친절한 응대와 깔끔한 시설이 인상적이었어요. 특히 서비스 품질이 정말 좋았습니다.</p>
+                    <div class="like-box">
+                        <span class="material-icons heart-icon2">favorite</span>
+                        <span class="like-count">25</span>
+                    </div>
                 </div>
             </div>
             <div class="review-card">
@@ -225,6 +307,10 @@
                     </div>
                     <h2 class="review-title">정말 만족스러운 서비스였습니다</h2>
                     <p class="review-text">직원분들의 친절한 응대와 깔끔한 시설이 인상적이었어요. 특히 서비스 품질이 정말 좋았습니다.</p>
+                    <div class="like-box">
+                        <span class="material-icons heart-icon2">favorite</span>
+                        <span class="like-count">25</span>
+                    </div>
                 </div>
             </div>
             <div class="review-card">
@@ -245,6 +331,10 @@
                     </div>
                     <h2 class="review-title">정말 만족스러운 서비스였습니다</h2>
                     <p class="review-text">직원분들의 친절한 응대와 깔끔한 시설이 인상적이었어요. 특히 서비스 품질이 정말 좋았습니다.</p>
+                    <div class="like-box">
+                        <span class="material-icons heart-icon2">favorite</span>
+                        <span class="like-count">25</span>
+                    </div>
                 </div>
             </div>
             <div class="review-card">
@@ -265,6 +355,10 @@
                     </div>
                     <h2 class="review-title">정말 만족스러운 서비스였습니다</h2>
                     <p class="review-text">직원분들의 친절한 응대와 깔끔한 시설이 인상적이었어요. 특히 서비스 품질이 정말 좋았습니다.</p>
+                    <div class="like-box">
+                        <span class="material-icons heart-icon2">favorite</span>
+                        <span class="like-count">25</span>
+                    </div>
                 </div>
             </div>
 
