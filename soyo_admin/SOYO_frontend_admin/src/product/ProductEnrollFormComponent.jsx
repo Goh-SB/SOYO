@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Quill from 'quill';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
@@ -44,8 +44,13 @@ function ProductEnrollFormComponent() {
   const [productCategory, setProductCategory] = useState('남성');
   const [productStock, setProductStock] = useState(0);
   const [productSize, setProductSize] = useState('M');
+  const [tag, setTag] = useState([]);
+  const [productCaption, setProductCaption] = useState('');
 
   const sizes = ['S', 'M', 'L'];
+  const subtag = ['자켓', '셔츠', '조끼', '도포', '저고리', '드레스', '원피스', '악세사리', '크롭티', '시스루', '맨투맨'
+    , '후드', '코트', '치마', '바지', '댕기', '부채', '키링', '그립톡', '목걸이', '팔찌', '반지'
+    , '허리띠', '모던한복', '남녀공용', '데일리한복', '스트릿한복', '여름한복', '겨울한복', '사계절용'];
 
   const tagSelector = (e) => {
     setProductCategory(e.target.value);
@@ -129,6 +134,7 @@ function ProductEnrollFormComponent() {
     const data = new FormData();
 
     let thumbnail = document.querySelector("#thumbnail");
+    let subThumbnail = document.querySelector("#subThumbnail");
     // console.log("이거이거", thumbnail.files.length)
     // console.log("productPrice", productPrice)
     // console.log("productName", productName)
@@ -137,16 +143,18 @@ function ProductEnrollFormComponent() {
     // console.log("productSize", productSize)
     // console.log("productCategory", productCategory)
     // console.log("imageList", urlArray)
-
+    data.append("productCaption", productCaption);
     data.append("productPrice", productPrice);
     data.append("productName", productName);
     data.append("productSubCaption", endContent);
     data.append("productStock", productStock);
     data.append("productSize", productSize);
     data.append("productCategory", productCategory);
-    if (thumbnail.files.length > 0) {
+    if (thumbnail.files.length > 0 && subThumbnail.files.length > 0) {
       data.append("thumbnail", thumbnail.files[0]);
+      data.append("subThumbnail", subThumbnail.files[0]);
     }
+    
     urlArray.forEach(url => {
       data.append("imageList", url);
     });
@@ -167,12 +175,6 @@ function ProductEnrollFormComponent() {
       console.log("통신 오류");
     })
 
-
-
-
-
-
-
   } // 이미지 태그 반복문 종료
 
 
@@ -181,13 +183,21 @@ function ProductEnrollFormComponent() {
   // 이미지 썸네일용 함수(input 요소 가리기)
   useEffect(() => {
     $("#thumbnail").hide();
+    $("#subThumbnail").hide();
+
     $("#product-thumbnail").off("click").on("click", () => {
       $("#thumbnail").click();
     });
+
+    $("#product-subThumbnail").off("click").on("click", () => {
+      $("#subThumbnail").click();
+    }) 
+    tagfunc();
   }, [])
 
   // 이미지 미리보기용 스테이트 변수
   let [imgUrl, setImgUrl] = useState(null);
+  let [subUrl, setSubUrl] = useState(null);
   //console.log(upfile.files.length);
   const loadImg = (e) => {
     // console.log(e.target.files[0].name)
@@ -197,11 +207,33 @@ function ProductEnrollFormComponent() {
       setImgUrl(null);
     } else {
       setImgUrl(URL.createObjectURL(e.target.files[0]));
-
     }
   }
 
+  
+  const loadSubImg = (e) => {
+    // console.log(e.target.files[0].name)
+    // 이미지 미리보기용 src 속성을 만드는 함수
 
+    if (e.target.files[0] == null) {
+      setSubUrl(null);
+    } else {
+      setSubUrl(URL.createObjectURL(e.target.files[0]));
+    }
+  }
+
+  const tagfunc = () => {
+    const tagLib = subtag.map((item, index) => {
+
+      return (
+        <label className="form-check-label" key={index}>
+          <input type="checkbox" className="form-check-input" value={item} />
+          {item}
+        </label>
+      );
+    })
+    setTag(tagLib);
+  };
 
 
 
@@ -210,15 +242,17 @@ function ProductEnrollFormComponent() {
     <div>
       <div>
         <div style={{ width: '100%', height: '90vh' }}>
-          <div style={{ width: '1000px', margin: 'auto', borderRadius: '19px' }}>
+          <div style={{ width: '1400px', margin: 'auto', borderRadius: '19px' }}>
 
             <h2>상품 등록</h2>
 
             {/* ======== Subject ======== */}
 
-            <div style={{ marginBottom: '20px', marginTop: '50px', fontSize: '20px', fontWeight: 'bold' }} >상품 썸네일</div>
-            <div>
-            </div>
+            <div style={{ marginBottom: '20px', marginTop: '50px', fontSize: '20px', fontWeight: 'bold', display: 'flex', gap : '260px', marginLeft : '50px'}} >
+              
+              <span>상품 썸네일</span>
+              <span>상품 서브썸네일</span>
+              </div>
             <br />
             <input
               type="file"
@@ -226,15 +260,21 @@ function ProductEnrollFormComponent() {
               required
               onChange={(e) => { loadImg(e) }}>
             </input>
+
+            <input
+              type="file"
+              id="subThumbnail"
+              required
+              onChange={(e) => { loadSubImg(e) }}>
+            </input>
           </div>
 
-
-
-          <div className="container">
+          <div>
             <div className="product-container" style={{ position: "relative" }}>
-              <div className="row">
-                <div className="col s12 m6">
-                  <img src={imgUrl} width="400" height="400" id="product-thumbnail" border="1px solid lightGray" />
+              <div className="row" id="product-form">
+                <div id="product-img-form">
+                  <img src={imgUrl} width="300" height="400" id="product-thumbnail" border="1px solid lightGray" />
+                  <img src={subUrl} width="300" height="400" id="product-subThumbnail" border="1px solid lightGray" />
                 </div>
                 <div className="col s12 m6">
                   <select id="selectTag" style={{ width: "30%", height: "40px" }}
@@ -252,7 +292,7 @@ function ProductEnrollFormComponent() {
                   <input
                     className="Subject"
                     placeholder="상품명을 입력해 주세요"
-                    style={{ padding: '7px', marginBottom: '10px', width: '100%', height: "60px", border: '1px solid lightGray', fontSize: '24px' }}
+                    style={{ padding: '7px', marginBottom: '10px', width: '70%', height: "60px", border: '1px solid lightGray', fontSize: '24px' }}
                     required
                     onChange={(e) => { setProductName(e.target.value) }}
                   ></input>
@@ -270,12 +310,21 @@ function ProductEnrollFormComponent() {
                   >
                   </input>
 
-                  <div>
-                    <select id="">
-                      <option value=""></option>
-                    </select>
-                  </div>
+                  <div id="tag-area">
+                    <div id="tag-01-area">
+                      <select id="tag-01">
+                        <option value="outer">외투</option>
+                        <option value="top">상의</option>
+                        <option value="bottom">하의</option>
+                        <option value="acc">패션잡화</option>
+                      </select>
+                    </div>
 
+                    <div id="tag-02-area">
+                      {tag}
+
+                    </div>
+                  </div>
 
                   <hr />
 
@@ -318,8 +367,11 @@ function ProductEnrollFormComponent() {
 
           <br />
 
-
-
+          <div align="center">
+            <input id="product-caption" type="text" placeholder="주 내용을 입력하세요" 
+            onChange={(e) => { setProductCaption(e.target.value) }}/>
+          </div>
+          <br />
           <div style={{ height: '650px' }}>
 
             {/* ======== Quill ======== */}
@@ -335,8 +387,8 @@ function ProductEnrollFormComponent() {
           {/* ======== Button ======== */}
 
           <div style={{ float: 'right' }}>
-            <button style={{ marginRight: '10px' }} 
-            onClick={ () => {navigate("/product/list")}} 
+            <button style={{ marginRight: '10px' }}
+              onClick={() => { navigate("/product/list") }}
             >취소
             </button>
             <button
