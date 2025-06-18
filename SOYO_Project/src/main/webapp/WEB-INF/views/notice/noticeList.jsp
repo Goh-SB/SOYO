@@ -6,62 +6,222 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>공지사항</title>
-
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=image" />
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 	</head>
 
 	<style>
-		body {
-			width: 1920px;
-			min-height: 100vh;			/* 최소 세로 크기 : 100% */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Noto Sans KR', sans-serif;
 		}
 
-		div {
-			box-sizing: border-box;		/* 테두리와 안쪽 여백의 크기도 요소의 크기로 고려 */
+		body {
+			width: 100%;
+			min-height: 100vh;
+			background-color: #f8f9fa;
+		}
+
+		@font-face {
+			font-family: 'SBAggroB';
+			src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		#top-title {
+			text-align: right;
+			width: 88%;
+			font-size: 30px;
+			font-family: 'SBAggroB', Arial, sans-serif;
+			color: #666;
 		}
 
 		.list_form {
-			width : 1400px;
-			margin : auto;
-			margin-top : 50px;
+			width: 1500px;
+			margin: 20px auto;
+			background: white;
+			border-radius: 12px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+			padding: 60px 30px 35px 30px;
+			position: relative;
+		}
+
+		.filter-btn-group {
+			display: flex;
+			gap: 12px;
+			position: absolute;
+			top: 20px;
+			left: 30px;
+		}
+
+		.filter-btn {
+			background: #f5f5f5a6;
+			color: #495057;
+			border: none;
+			border-radius: 24px;
+			border: 1px groove #acacac33;
+			padding: 8px 28px;
+			font-size: 15px;
+			font-weight: 500;
+			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+			cursor: pointer;
+			transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+			outline: none;
+		}
+		.filter-btn:hover, .filter-btn.active {
+			background: #a4c0d4;
+			color: #fff;
+			box-shadow: 0 4px 12px rgba(25,118,210,0.12);
+		}
+
+		.search-bar-area {
+			margin: 40px auto 0 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 0;
+			width: 100%;
+			max-width: 600px;
+		}
+		.search-select {
+			padding: 10px 16px;
+			border: none;
+			border-radius: 10px 0 0 10px;
+			background: #b9bace;
+			font-size: 16px;
+			color: #fff;
+			outline: none;
+			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+		}
+		.search-input {
+			padding: 10px 16px;
+			border: none;
+			background: #ffffff;
+			font-size: 16px;
+			color: #495057;
+			outline: none;
+			width: 260px;
+			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+		}
+		.search-btn {
+			padding: 10px 28px;
+			border: none;
+			border-radius: 0 10px 10px 0;
+			background: #b9bace;
+			color: #fff;
+			font-size: 16px;
+			font-weight: 500;
+			cursor: pointer;
+			transition: background 0.2s, box-shadow 0.2s;
+			box-shadow: 0 2px 6px rgba(25,118,210,0.12);
+		}
+		.search-btn:hover {
+			background: #9b84c0b6;
+		}
+
+		.list_area {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+
+		.list_area th {
+			background-color: #f8f9fa;
+			padding: 15px;
+			font-weight: 500;
+			color: #495057;
+			border-bottom: 2px solid #e9ecef;
+		}
+
+		.list_area td {
+			padding: 15px;
+			border-bottom: 1px solid #e9ecef;
+			color: #495057;
+		}
+
+		.list_area tr:hover {
+			background-color: #f8f9fa;
+			cursor: pointer;
+			transition: background-color 0.2s ease;
+		}
+
+		.material-symbols-outlined {
+			font-size: 16px;
+			vertical-align: middle;
+			color: #6c757d;
 		}
 
 		.paging-area {
+			margin-top: 30px;
 			text-align: center;
 		}
 
 		.pagination {
-			margin: 0px;
+			display: inline-flex;
+			list-style: none;
+			gap: 5px;
 		}
 
-		
+		.page-item {
+			display: inline-block;
+		}
+
 		.page-link {
-			color: black;
-			font-weight: 700;
+			display: block;
+			padding: 8px 12px;
+			text-decoration: none;
+			color: #495057;
+			border: 1px solid #dee2e6;
+			border-radius: 4px;
+			transition: all 0.2s ease;
+		}
+
+		.page-link:hover {
+			background-color: #e9ecef;
+		}
+
+		.page-item.active .page-link {
+			background-color: #495057;
+			color: white;
+			border-color: #495057;
+		}
+
+		.page-item.disabled .page-link {
+			color: #adb5bd;
+			pointer-events: none;
+			background-color: #f8f9fa;
+		}
+
+		.list_area th.title-col, .list_area td.title-col {
+			text-align: left !important;
+			padding-left: 50px;
 		}
 	</style>
 
 	<body>
-		<!-- jquery 연동 구문 -->
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<jsp:include page="../common/menubar.jsp" />
 
-		<!-- Bootstrap 연동
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-		-->
+		<br><br><br><br>
 
-		<!-- Bootstrap에서 필요로 하는 기타 js 파일들 -->
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+		<p id="top-title">.Notice / Event</p>
 
-		<jsp:include page="../common/menubar.jsp" /><br>
-		<br class="list_wrap">
+		<div class="list_wrap">
 			<div class="list_form">
+				<div class="filter-btn-group">
+					<button class="filter-btn active">ALL</button>
+					<button class="filter-btn">공지사항</button>
+					<button class="filter-btn">이벤트</button>
+				</div>
 				<h2 align="center"></h2>
-				<table class="list_area table table-hover" align="center">
+				<table class="list_area">
 					<thead align="center">
 						<tr>
 							<th>번호</th>
-							<th>제목</th>
+							<th class="title-col">제목</th>
 							<th>작성일</th>
 						</tr>
 					</thead>
@@ -82,11 +242,11 @@
 
 										<c:choose>
 											<c:when test="${ empty i.noticeImage }">
-												<td>${ i.noticeType } ${ i.noticeTitle }</td>
+												<td class="title-col">${ i.noticeType } ${ i.noticeTitle }</td>
 											</c:when>
 
 											<c:otherwise>
-												<td>
+												<td class="title-col">
 													&#91;${ i.noticeType }&#93; ${ i.noticeTitle }
 													<span class="material-symbols-outlined">image</span>
 												</td>
@@ -100,6 +260,14 @@
 						</c:choose>
 					</tbody>
 				</table>
+			</div>
+			<div class="search-bar-area">
+				<select class="search-select">
+					<option>제목</option>
+					<option>내용</option>
+				</select>
+				<input class="search-input" type="text" placeholder="검색어를 입력하세요" />
+				<button class="search-btn">검색</button>
 			</div>
 			<div class="paging-area">
 				<ul class="pagination justify-content-center">
