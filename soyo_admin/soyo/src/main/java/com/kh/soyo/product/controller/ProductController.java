@@ -88,26 +88,35 @@ public class ProductController {
 	public String enrollForm(
 	       @ModelAttribute Product product,
 	        @RequestParam(value="thumbnail") MultipartFile thumbnail,
+	        @RequestParam(value="subThumbnail") MultipartFile subThumbnail,
 	        @RequestParam(value="imageList") List<String> imageList,
 	        HttpSession session) {
 
-	  System.out.println(product);
-	  System.out.println(thumbnail);
-	  System.out.println(imageList);
+	  // System.out.println(product);
+	  // System.out.println(thumbnail);
+	  // System.out.println(subThumbnail);
+	  // System.out.println(imageList);
 	  
 	  int result = 0;
 	  
-	  if(thumbnail != null) {
+	  if(thumbnail != null && subThumbnail != null) {
 		  String filePath = "C:/SOYO/soyo_admin/soyo/src/main/webapp/resources/product_upfile/";
 		  String originName = thumbnail.getOriginalFilename();
 		  String changeName = FileRenamePolicy.saveFile(thumbnail, filePath);
 		  
-		  String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
+		  String subOrinName = subThumbnail.getOriginalFilename();
+		  String subChangeName = FileRenamePolicy.saveFile(subThumbnail, filePath);
+		//  String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
 		product.setProductOrigin(originName);
 		product.setProductChange(changeName);
+		product.setProductSubOrigin(subOrinName);
+		product.setProductSubChange(subChangeName);
 		
 		// System.out.println(product);
 		result = productService.enrollForm(product);
+		
+		
+		
 	  }
 	  
 	    return (result > 0) ? "상품 등록에 성공했습니다." : "상품 등록에 실패했습니다." ;  

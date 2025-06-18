@@ -13,22 +13,31 @@
     
     <style>
         :root {
-            --pastel-purple: #F8F2FF;
-            --pastel-mint: #F2F8FF;
-            --dark-purple: #9370DB;
-            --dark-mint: #3EB489;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --card-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Noto Sans KR', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, var(--pastel-purple) 0%, var(--pastel-mint) 100%);
+            background-color: var(--background-color);
             min-height: 100vh;
+            font-family: 'Noto Sans KR', sans-serif;
         }
         
         .container {
@@ -36,29 +45,27 @@
             margin: 0 auto;
             padding: 2rem;
         }
+
         
         .location-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
+            background: var(--card-background);
+            border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            margin: 2rem 0;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 0.6s ease forwards;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            animation: fadeIn 0.6s ease forwards;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         
         .header h1 {
-            color: #333;
+            color: #5a5a5a;
             font-size: 2.5rem;
-            margin-bottom: 1rem;
             position: relative;
             display: inline-block;
+            font-family: 'GmarketSansMedium', sans-serif;
         }
         
         .header h1::after {
@@ -357,7 +364,7 @@
         .map-info {
             position: absolute;
             bottom: 20px;
-            right: 20px;
+            left: 20px;
             background: white;
             padding: 15px 20px;
             border-radius: 10px;
@@ -516,72 +523,58 @@
         <div class="header">
             <h1>오시는 길</h1>
         </div>
-        
+
         <div class="location-card">
             <div class="info-section">
                 <div class="info-item">
-                    <span class="material-icons">location_on</span>
+                    <i class="fas fa-map-marker-alt icon"></i>
                     <div class="info-content">
-                        <h3>주소</h3>
-                        <p>서울특별시 영등포구 당산동<br>소요빌딩 19F</p>
+                        <h3>&nbsp;주소</h3>
+                        <p>서울특별시 강남구 테헤란로 123 소요빌딩</p>
+                        <p>(우) 06123</p>
                     </div>
                 </div>
-                
                 <div class="info-item">
-                    <span class="material-icons">phone</span>
+                    <i class="fas fa-phone icon"></i>
                     <div class="info-content">
-                        <h3>연락처</h3>
-                        <p>02-1234-5678</p>
+                        <h3>&nbsp;문의처</h3>
+                        <p>총무팀: 02-123-4567</p>
+                        <p>예약팀: 02-123-4568</p>
                     </div>
                 </div>
-                
                 <div class="info-item">
-                    <span class="material-icons">access_time</span>
+                    <i class="fas fa-clock icon"></i>
                     <div class="info-content">
-                        <h3>영업시간</h3>
-                        <p>평일 09:00 - 18:00<br>주말 및 공휴일 휴무</p>
+                        <h3>&nbsp;운영시간</h3>
+                        <p>평일: 09:00 - 18:00</p>
+                        <p>주말 및 공휴일: 휴무</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="map-container">
-                <div class="virtual-map">
-                    <div class="road horizontal"></div>
-                    <div class="road vertical"></div>
-                    <div class="road diagonal-1"></div>
-                    <div class="road diagonal-2"></div>
-                    <div class="building surrounding surrounding-1"></div>
-                    <div class="building surrounding surrounding-2"></div>
-                    <div class="building surrounding surrounding-3"></div>
-                    <div class="building surrounding surrounding-4"></div>
-                    <div class="building surrounding surrounding-5"></div>
-                    <div class="building surrounding surrounding-6"></div>
-                    <div class="building surrounding surrounding-7"></div>
-                    <div class="building surrounding surrounding-8"></div>
-                    <div class="building soyo"></div>
-                    <div class="building station"></div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.354287357832!2d127.02426521532505!3d37.51030417976912!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca438b2086409%3A0x7f432f3f9f2f3f2f!2z7ISc7Jq47Yq56rWt7J20!5e0!3m2!1sko!2skr!4v1687087384297!5m2!1sko!2skr" 
+                        width="1072" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     <div class="building-label soyo">소요빌딩</div>
-                    <div class="building-label station">당산역</div>
                     <div class="location-marker"></div>
-                    <div class="map-info">
-                        <h4>소요</h4>
-                        <p>서울특별시 영등포구 당산동<br>소요빌딩 19F</p>
-                    </div>
                 </div>
             </div>
             
             <div class="transportation">
                 <h3>교통편</h3>
                 <ul>
-                    <li><strong>지하철</strong>: 2호선, 9호선 당산역 13번 출구에서 도보 5분</li>
+                    <li><strong>지하철</strong>: 2호선, 9호선 강남역 11번 출구에서 도보 5분</li>
                     <li><strong>버스</strong>: 
-                        <br>- 간선버스: 602, 760, N62
-                        <br>- 지선버스: 5620, 5714, 6514, 6623, 6631
-                        <br>- 광역버스: 108
+                        <br>- 간선버스: 440, 441, 442, 443, 444, 445, 446, 447, 448, 449
+                        <br>- 지선버스: 107, 108, 109, 110, 111, 112, 113, 114, 115, 116
+                        <br>- 광역버스: 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009
                     </li>
                     <li><strong>주차</strong>: 건물 내 지하주차장 이용 가능</li>
                 </ul>
             </div>
+
+            <br>
+
         </div>
     </div>
 

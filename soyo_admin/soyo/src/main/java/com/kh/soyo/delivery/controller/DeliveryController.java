@@ -1,5 +1,7 @@
 package com.kh.soyo.delivery.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,24 +13,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.model.vo.Payment;
+import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.delivery.model.service.DeliveryService;
 import com.kh.soyo.delivery.model.vo.Delivery;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
+
+
 @RestController
 @CrossOrigin(origins="http://localhost:5173")
-@RequestMapping("/delivery")
+@RequestMapping("delivery")
 public class DeliveryController {
 	
 	@Autowired
     private DeliveryService deliveryService;
 
-	@GetMapping("/list")
-	public List<Delivery> deliveryList(){
+	@GetMapping("list")
+	public HashMap<String, Object> deliveryList(@RequestParam(value="cpage") int currentPage){
 		
-		return deliveryService.deliveryList();
+		int listCount = deliveryService.deliveryListCount();
+
+		int pageLimit = 10;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		
+		ArrayList<Delivery> list = deliveryService.deliveryList(pi);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("list", list);
+		hm.put("pi", pi);
+	
+		
+		return hm;
 	}
 	
 	@GetMapping("info/{orderNo}")

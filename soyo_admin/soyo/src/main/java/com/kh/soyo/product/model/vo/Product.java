@@ -22,14 +22,15 @@ public class Product {
 	private String productName;//	PRODUCT_NAME
 	private int productPrice;  //	PRODUCT_PRICE
 	private String productCategory;  //	PRODUCT_CATEGORY
-	// private String productCaption;  //	PRODUCT_CATION
+	private String productCaption;  //	PRODUCT_CATION
 	private String productSubCaption;//	PRODUCT_SUB_CAPTION
 	private String productOrigin;//	PRODUCT_ORIGIN
 	private String productChange;//	PRODUCT_CHANGE
 	private int productStock; //	PRODUCT_COUNT
 	private Date productRegisteredDate;//	PRODUCT_REGISTERED_DATE
 	private String status;//	STATUS
-	
+	private String productSubOrigin;
+	private String productSubChange;
 	
 	private String productSize; //	PRODUCT_SIZE_NO
 }

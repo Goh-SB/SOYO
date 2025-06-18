@@ -1,5 +1,6 @@
 package com.kh.soyo.delivery.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.dao.DeliveryDao;
 import com.kh.soyo.delivery.model.vo.Delivery;
@@ -25,8 +27,8 @@ public class DeliveryServiceImpl implements DeliveryService{
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Delivery> deliveryList() {
-		return deliveryDao.deliveryList(sqlSession);
+	public ArrayList<Delivery> deliveryList(PageInfo pi) {
+		return deliveryDao.deliveryList(sqlSession, pi);
 	}
 	
 	@Override
@@ -69,6 +71,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 	    param.put("memberId", memberId);
 	    param.put("productNo", productNo);
 	    return deliveryDao.orderInfo(sqlSession, param);
+	}
+
+	@Override
+	public int deliveryListCount() {
+		
+		return deliveryDao.deliveryListCount(sqlSession);
 	}
 
 

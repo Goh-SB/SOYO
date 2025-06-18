@@ -1,6 +1,7 @@
 package com.kh.soyo.notice.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,21 +26,48 @@ public class NoticeController {
 	
 	// 공지사항 목록 조회용 컨트롤러
 	@GetMapping("noticeList")
-	public ModelAndView noticeList(@RequestParam(value="nPage", defaultValue="1")
-							int currentPage, ModelAndView mv) {
+	public ModelAndView noticeList(@RequestParam(value="nPage", defaultValue="1") int currentPage,
+								ModelAndView mv) {
 		// 공지사항 목록 조회 페이지에서 필요로 하는 응답 데이터 구하기
 		int listCount = noticeService.noticeListCount();
 		int pageLimit = 10;
 		int boardLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		// pi를 전달하면서 Service로 요청 후 결과 받기
 		ArrayList<Notice> list = noticeService.noticeList(pi);
 		
-		// model(request)에 응답 데이터 담기
-		mv.addObject("list", list)
-			.addObject("pi", pi)
+		// list와 pi를 응답 데이터로 보내고 화면 포워딩
+		mv.addObject("list", list)	// tbody 영역에 출력
+			.addObject("pi", pi)	// paging-area에 출력
 			.setViewName("notice/noticeList");
-		// System.out.println(pi);
-		// 공지사항 목록 조회 화면 포워딩
+
+		return mv;
+	}
+	
+	// 공지사항 검색용 컨트롤러
+	@GetMapping("searchNoticeList")
+	public ModelAndView searchNoticeList(@RequestParam(value="nPage", defaultValue="1") int currentPage,
+										ModelAndView mv, String condition, String keyword) {
+		// 검색 조건과 검색어를 DAO로 넘기기 위해 하나의 HashMap으로 가공
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+			
+		int searchCount = noticeService.searchNoticeListCount(map);
+		int pageLimit = 10;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage,
+											pageLimit, boardLimit);
+			
+		// pi를 전달하면서 Service로 요청 후 결과 받기
+		ArrayList<Notice> list = noticeService.searchNoticeList(pi, map);
+			
+		// list와 pi를 응답 데이터로 보내고 화면 포워딩(기존의 게시글 목록 페이지 재활용)
+		mv.addObject("list", list)	// tbody 영역에 출력
+			.addObject("pi", pi)	// paging-area에 출력
+			.setViewName("notice/noticeList");
+		
 		return mv;
 	}
 	
@@ -49,7 +77,6 @@ public class NoticeController {
 		Notice notice =  noticeService.noticeDetail(nno);
 		model.addAttribute("n", notice);
 		
-		// System.out.println(notice);
 		return "notice/noticeDetail";
 	}
 	
