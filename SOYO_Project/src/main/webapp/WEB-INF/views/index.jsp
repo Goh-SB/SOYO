@@ -295,8 +295,8 @@
         /* 캐러셀 컨트롤 버튼 스타일 */
         .carousel-controls {
             position: absolute;
-            bottom: 45px;
-            left: 60px;
+            bottom: 50px;
+            left: 80px;
             display: flex;
             gap: 10px;
             z-index: 10;
