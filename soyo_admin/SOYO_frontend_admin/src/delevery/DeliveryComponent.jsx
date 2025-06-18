@@ -55,7 +55,6 @@ function DeliveryComponent() {
         selectDelivery(); 
     }, []);
     
-
     return (
         <div>
             <h2>배송 정보</h2>
