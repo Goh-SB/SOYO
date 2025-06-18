@@ -261,14 +261,30 @@
 					</tbody>
 				</table>
 			</div>
+
+			<!-- 검색창이 들어갈 자리 -->
 			<div class="search-bar-area">
-				<select class="search-select">
-					<option>제목</option>
-					<option>내용</option>
-				</select>
-				<input class="search-input" type="text" placeholder="검색어를 입력하세요" />
-				<button class="search-btn">검색</button>
+				<form action="/soyo/notice/searchNoticeList" method="get">
+					<select class="search-select" name="condition">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+					</select>
+					<input class="search-input" type="text" name="keyword"
+						placeholder="검색어를 입력하세요" value="${ requestScope.keyword }">
+					<button class="search-btn">검색</button>
+				</form>
+
+				<!-- condition이라는 응답 데이터가 넘어온 경우에만 검색 조건 유지 -->
+				<c:if test="${ not empty requestScope.condition }">
+					<script>
+						$(function() {
+							// 해당 condition 값과 일치하는 option 태그를 찾아 selected 속성 부여
+							$(".search-bar-area option[value=${ requestScope.condition }]").attr("selected", true);
+						});
+					</script>
+				</c:if>
 			</div>
+
 			<div class="paging-area">
 				<ul class="pagination justify-content-center">
 					<!-- currentPage가 1번 페이지일 경우 Previous 비활성화 -->

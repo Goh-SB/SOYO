@@ -11,7 +11,7 @@
 		<result column="NOTICE_TYPE" property="noticeType" />
 	</resultMap>
 	
-	<!-- 공지사항 목록 조회용 쿼리문 -->
+	<!-- 공지사항 목록 조회용 쿼리문(페이징 처리 포함) -->
 	<select id="noticeList" resultMap="noticeResultSet">
 		SELECT NOTICE_NO,
 			NOTICE_TITLE,
@@ -23,11 +23,46 @@
 		ORDER BY NOTICE_NO DESC
 	</select>
 	
-	<!-- 페이징 처리용 쿼리문 -->
 	<select id="noticeListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM NOTICE
 		WHERE STATUS = 'Y'
+	</select>
+	
+	<!-- 공지사항 검색용 쿼리문(페이징 처리 포함) -->
+	<select id="searchNoticeList" parameterType="hashmap" resultMap="noticeResultSet">
+		SELECT NOTICE_NO,
+			NOTICE_TITLE,
+			NOTICE_DATE,
+			NOTICE_IMAGE,
+			NOTICE_TYPE
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+		AND
+		    <choose>
+		    	<when test="condition == 'title'">
+		    		NOTICE_TITLE
+		    	</when>
+		    	<otherwise>
+		    		NOTICE_CONTENT
+		    	</otherwise>
+		    </choose>
+	    LIKE '%' || #{keyword} || '%'
+		ORDER BY NOTICE_NO DESC
+	</select>
+	
+	<select id="searchNoticeListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+		AND
+	    	<if test="condition == 'title'">
+	    		NOTICE_TITLE
+	    	</if>
+	    	<if test="condition == 'content'">
+	    		NOTICE_CONTENT
+	    	</if>
+	    LIKE '%' || #{keyword} || '%'
 	</select>
 	
 	<!-- 공지사항 상세 조회용 쿼리문 -->
