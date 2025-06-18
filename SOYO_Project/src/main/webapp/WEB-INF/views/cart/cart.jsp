@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -232,6 +234,9 @@
     </style>
 
     <body>
+    	<script>
+    		
+    	</script>
         
         <jsp:include page="../common/menubar.jsp" />
         
@@ -263,31 +268,36 @@
                             <input type="checkbox" name='animal' onclick="selectAll(this)">전체선택
                             <th scope="col" direction="left">상품명</th>
                             <th scope="col">수량</th>
-                            <th scope="col">배송비</th>
-                            <th scope="col">상품금액</th>
+                            <th scope="col">상품가격</th>
+                            <th scope="col">총 가격</th>
                         </tr>
                     </thead>
                     
                        <tbody>
                             <c:forEach var="cart" items="${cartList}">
                                 <tr>
+                                
                                 <!-- 체크박스 -->
                                 <td><input type="checkbox" name="productId" value="${cart.productNo}" /></td>
-
+								<td>${cart.productChange}</td>
                                 <!-- 상품명 -->
                                 <td>${cart.productName}</td>
 
                                 <!-- 수량 -->
-                                <td>${cart.productCount}</td>
+                               <td>
+                                	<div class="ec-base-qty">
+	                                    <button type="button" onclick="count('minus', this)">－</button>
+	                                 	   <input type="number" name="pop_out" class="pop_out" value="1"/>
+	                                    <button type="button" onclick="count('plus', this)">＋</button>
+	                                </div>
+	                            </td>
 
                                 <!-- 옵션 -->
-                                <td>${cart.productChange}</td>
+                                <td> ${cart.productPrice}  원</td>
 
                                 <!-- 상품금액 = 수량 * 단가 -->
                                 <td>
-                                    <strong>
-                                    <fmt:formatNumber value="${cart.productCount * cart.productPrice}" type="number" /> 원
-                                    </strong>
+ 								${requestScope.c.productCount }원
                                 </td>
                                 </tr>
                             </c:forEach>
@@ -303,34 +313,19 @@
                         </li>
                     </ul>
                 </div>
-                <br>
-                    
+                <br>                    
                 <!-- 결제 예정 금액 표시 -->
                 <div class="xans-element- xans-order xans-order-totalsummary">
                     <table class="sp--table">
-                        <thead>
+                        <thead>                       
                             <tr>
                                 <th scope="col" colspan="4" class="xans-element- xans-order xans-order-normtitle">
-                                    결제예정 총 <span>1</span>건
+                                    결제예정 총 <span>${fn:length(cartList)}</span>건
                                 </th>
-                            </tr>
+                            </tr>                        
                         </thead>
-
                         <tbody>
                             <tr>
-                                <td>
-                                    <div class="sp--font" scale="xl">
-                                        <p>
-                                            상품금액
-                                        </p>
-                                        <strong>
-                                            <span class="sp--font" scale="3xl">
-                                                <span class="total_product_price_display_front"></span> 원
-                                            </span>
-                                        </strong>
-                                    </div>
-                                </td>
-
                                 <td>
                                     <div class="box shipping txt16">
                                         <strong>
@@ -339,14 +334,15 @@
                                         </strong>
                                     </div>
                                 </td>
-
                                 <td>
                                     <div class="sp--font">
                                         <p>
                                             결제예정금액
                                         </p>
                                         <strong>
-                                            <span id="total_order_price_front" class="sp--font" scale="3xl">199,000 원</span>
+                                            <span id="total_order_price_front" class="sp--font" scale="3xl">
+                                            	 원
+                                            </span>
                                         </strong>
                                     </div>
                                 </td>
@@ -377,27 +373,76 @@
 
     <script>
         /* 상품 수량 증감용 함수 */
-        function count(type, ths){      // 'this'라는 이름을 쓸 수 없어서 살짝 변경
-            var $input = $(ths).parents("td").find("input[name='pop_out']");
-            var tCount = Number($input.val());
-            
-            // 증가
-            if(type=='plus') {
-                $input.val(Number(tCount) + 1);
+		function count(type, ths) {
+	    const $input = $(ths).closest("td").find(".pop_out");
+	    let currentCount = $input.val();
 
-            // 감소
-            } else {
-                if(tCount > 0) $input.val(Number(tCount) - 1);
-            }
-        }
+	    // 수량 증감
+	    if (type === 'plus') {
+	        currentCount++;
+	    } else {
+	        if (currentCount > 1) currentCount--;
+	    }
+	
+	    $input.val(currentCount); // input에 새 값 반영
+	
+	    const $row = $(ths).closest("tr");
+	    const productNo = parseInt($row.find("input[name='productId']").val());
+	
+	    
+	    // AJAX로 수량만 업데이트 (가격은 반영 안 함)
+	    $.ajax({
+	        type: "POST",
+	        url: "/soyo/cart/update",
+	        data: {
+	            productNo: productNo,
+	            productCount: currentCount
+	        },
+
+	        success: function (result) {
+	        	
+	        	updateSelectedTotal();
+
+	        },
+	        error: function () {
+	            console.log("ajax통신실패");
+	        }
+	    });
+	
+	    // 선택된 상품 총합 갱신
+	    updateSelectedTotal();
+	}
+		
 
         /* 전체 체크용 함수 */
         function selectAll(selectAll)  {
-            const checkboxes = document.getElementsByName('checkbox');
+        	 const checkboxes = document.querySelectorAll('input[name="productId"]');
             
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = selectAll.checked;
             })
+            
+            updateSelectedTotal();
         }
+        
+        $(document).ready(function () {
+            $('input[name="productId"]').on('change', function () {
+                updateSelectedTotal();
+            });
+        });
+        
+        function updateSelectedTotal() {
+            let total = 0;
+
+            $('input[name="productId"]:checked').each(function () {
+                const $row = $(this).closest("tr");
+                const priceText = $row.find("td").eq(5).text();
+                const numericPrice = parseInt(priceText.replace(/[^0-9]/g, ""));
+                total += numericPrice;
+            });
+
+            $('#total_order_price_front').text(total.toLocaleString('ko-KR') + ' 원');
+        }
+             
     </script>
 </html>

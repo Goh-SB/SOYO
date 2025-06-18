@@ -292,6 +292,61 @@
             right: 20px;
         }
 
+        /* 캐러셀 컨트롤 버튼 스타일 */
+        .carousel-controls {
+            position: absolute;
+            bottom: 50px;
+            left: 80px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carousel-control-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control-btn.active {
+            background: white;
+        }
+
+        .carousel-control-btn.play-pause {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control-btn.play-pause:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .carousel-control-btn.play-pause i {
+            color: rgb(107, 107, 107);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-control-btn.play-pause i.fa-play {
+            padding-left: 2px;
+        }
+
     </style>
 </head>
 <body>
@@ -321,6 +376,14 @@
             <button class="carousel-arrow next">
                 <i class="fas fa-chevron-right"></i>
             </button>
+            <div class="carousel-controls">
+                <button class="carousel-control-btn" data-slide="0"></button>
+                <button class="carousel-control-btn" data-slide="1"></button>
+                <button class="carousel-control-btn" data-slide="2"></button>
+                <button class="carousel-control-btn play-pause">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
         </div>
 
         <section class="hero">
@@ -399,16 +462,23 @@
             const slides = document.querySelectorAll('.carousel-slide');
             const prevBtn = document.querySelector('.carousel-arrow.prev');
             const nextBtn = document.querySelector('.carousel-arrow.next');
+            const controlBtns = document.querySelectorAll('.carousel-control-btn:not(.play-pause)');
+            const playPauseBtn = document.querySelector('.carousel-control-btn.play-pause');
             let currentIndex = 0;
+            let slideInterval;
+            let isPlaying = true;
 
             // 초기 슬라이드 설정
             slides[0].classList.add('active');
+            controlBtns[0].classList.add('active');
 
             function showSlide(index) {
                 // 모든 슬라이드 숨기기
                 slides.forEach(slide => slide.classList.remove('active'));
+                controlBtns.forEach(btn => btn.classList.remove('active'));
                 // 현재 슬라이드 보이기
                 slides[index].classList.add('active');
+                controlBtns[index].classList.add('active');
             }
 
             function nextSlide() {
@@ -421,9 +491,51 @@
                 showSlide(currentIndex);
             }
 
+            function startSlideShow() {
+                if (slideInterval) clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 4000);
+            }
+
+            function togglePlayPause() {
+                isPlaying = !isPlaying;
+                if (isPlaying) {
+                    startSlideShow();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    clearInterval(slideInterval);
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            }
+
             // 이벤트 리스너 등록
-            prevBtn.addEventListener('click', prevSlide);
-            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                if (isPlaying) {
+                    startSlideShow();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                if (isPlaying) {
+                    startSlideShow();
+                }
+            });
+
+            controlBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    currentIndex = index;
+                    showSlide(currentIndex);
+                    if (isPlaying) {
+                        startSlideShow();
+                    }
+                });
+            });
+
+            playPauseBtn.addEventListener('click', togglePlayPause);
+
+            // 자동 슬라이드 시작
+            startSlideShow();
         });
     </script>
 

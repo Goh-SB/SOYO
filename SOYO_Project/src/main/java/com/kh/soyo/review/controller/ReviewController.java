@@ -13,4 +13,9 @@ public class ReviewController {
 		return "review/review_best";
 	}
 	
+	@GetMapping("/review")
+	public String showReviewList() {
+		return "review/review";
+	}
+	
 }

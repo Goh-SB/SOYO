@@ -19,4 +19,5 @@ public class Notice {
 	private Date noticeDate;		// 공지 작성일
 	private String status;			// 공지 삭제 여부
 	private String noticeImage;		// 첨부파일
+	private String noticeType;		// 이벤트/공지 구분
 }

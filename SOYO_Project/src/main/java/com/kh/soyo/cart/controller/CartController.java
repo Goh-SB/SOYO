@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.soyo.cart.model.service.CartService;
 import com.kh.soyo.cart.model.vo.Cart;
@@ -34,10 +35,48 @@ public class CartController {
 	    String memberId = loginUser.getMemberId();
 	    List<Cart> cartList = cartService.cartList(memberId);
 
-	    System.out.println("cartList size: " + cartList.size());
-
 	    model.addAttribute("cartList", cartList);
 	    return "cart/cart";
 	}
+	
+	@ResponseBody
+	@PostMapping("/update")
+	public String updateCart(Cart cart,
+			
+						  HttpSession session,
+						  Model model) {
 		
+		
+		 Member loginUser = (Member) session.getAttribute("loginUser");
+		    if (loginUser == null) {
+		    	model.addAttribute("fail","로그인 후 이용바랍니다");
+		        return "로그인후 이용바랍니다."; // 로그인 안 된 경우
+		    }
+
+		    String memberId = loginUser.getMemberId();
+
+		    // 장바구니 수량 업데이트
+		    int result=  cartService.updateCartCount(loginUser.getMemberId(),cart.getProductNo(),cart.getProductCount());
+		    
+		    Cart c = cartService.updateCart(memberId,cart.getProductNo(),cart.getProductCount());
+
+		    model.addAttribute("c",c);
+		    System.out.println(c);
+		    return (result > 0) ? "성공" : "실패";
+		   
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
