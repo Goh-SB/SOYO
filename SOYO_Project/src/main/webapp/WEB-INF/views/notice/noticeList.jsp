@@ -107,7 +107,8 @@
 			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
 		}
 		.search-btn {
-			padding: 10px 28px;
+			height: 40px;
+			padding: 0 28px;
 			border: none;
 			border-radius: 0 10px 10px 0;
 			background: #b9bace;
@@ -117,6 +118,10 @@
 			cursor: pointer;
 			transition: background 0.2s, box-shadow 0.2s;
 			box-shadow: 0 2px 6px rgba(25,118,210,0.12);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
 		}
 		.search-btn:hover {
 			background: #9b84c0b6;
@@ -263,8 +268,9 @@
 			</div>
 
 			<!-- 검색창이 들어갈 자리 -->
-			<div class="search-bar-area">
-				<form action="/soyo/notice/searchNoticeList" method="get">
+			<form action="/soyo/notice/searchNoticeList" method="get">
+				<div class="search-bar-area">
+
 					<select class="search-select" name="condition">
 						<option value="title">제목</option>
 						<option value="content">내용</option>
@@ -272,8 +278,9 @@
 					<input class="search-input" type="text" name="keyword"
 						placeholder="검색어를 입력하세요" value="${ requestScope.keyword }">
 					<button class="search-btn">검색</button>
-				</form>
 
+					
+				</form>
 				<!-- condition이라는 응답 데이터가 넘어온 경우에만 검색 조건 유지 -->
 				<c:if test="${ not empty requestScope.condition }">
 					<script>

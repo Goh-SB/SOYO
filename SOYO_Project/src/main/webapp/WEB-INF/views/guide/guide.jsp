@@ -19,7 +19,7 @@
 		text-align: center;
 		color: gray;
 		font-family: 'YUniverse-B';
-		font-size: 35px;
+		font-size: 40px;
 	}
 	
 	#image {
@@ -36,7 +36,6 @@
 	
 	<h1 id="title">SHOPPING GUIDE</h1>
 	
-	<br>
 	
 	<div id="image">
 		<img src="${pageContext.request.contextPath}/resources/images/size_guide.jpg" alt="셀러브리티 이미지" class="celeb-image">
