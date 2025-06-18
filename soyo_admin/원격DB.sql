@@ -100,6 +100,55 @@ INSERT INTO MEMBER VALUES ('user28', 'pwh456', '김소현', 'F', TO_DATE('1999-0
 INSERT INTO MEMBER VALUES ('user29', 'pwi789', '도경수', 'M', TO_DATE('1993-10-20', 'YYYY-MM-DD'), 'user29@site.com', '01000002222', '목포시 상동', TO_DATE('2023-01-29', 'YYYY-MM-DD'), 'Y');
 INSERT INTO MEMBER VALUES ('user30', 'pwj000', '강소라', 'F', TO_DATE('1990-12-21', 'YYYY-MM-DD'), 'user30@site.com', '01011113333', '창원시 성산구', TO_DATE('2023-01-30', 'YYYY-MM-DD'), 'Y');
 
+INSERT INTO MEMBER VALUES ('user31', 'pwaaaa', '김해진', 'M', TO_DATE('1994-03-12', 'YYYY-MM-DD'), 'user31@site.com', '01011113344', '서울시 강동구', TO_DATE('2023-01-20', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user32', 'pwbbbb', '박민지', 'F', TO_DATE('1995-05-24', 'YYYY-MM-DD'), 'user32@site.com', '01022224455', '대구시 북구', TO_DATE('2023-03-15', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user33', 'pwcccc', '이건우', 'M', TO_DATE('1992-09-18', 'YYYY-MM-DD'), 'user33@site.com', '01033335566', '부산시 해운대구', TO_DATE('2023-03-28', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user34', 'pwdddd', '최서윤', 'F', TO_DATE('1996-02-05', 'YYYY-MM-DD'), 'user34@site.com', '01044446677', '광주시 북구', TO_DATE('2023-04-10', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user35', 'pweeee', '정우석', 'M', TO_DATE('1991-08-14', 'YYYY-MM-DD'), 'user35@site.com', '01055557788', '인천시 부평구', TO_DATE('2023-05-12', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user36', 'pwffff', '오지현', 'F', TO_DATE('1993-12-01', 'YYYY-MM-DD'), 'user36@site.com', '01066668899', '전주시 덕진구', TO_DATE('2023-06-22', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user37', 'pwg000', '장민호', 'M', TO_DATE('1990-04-30', 'YYYY-MM-DD'), 'user37@site.com', '01077779900', '원주시 태장동', TO_DATE('2023-07-05', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user38', 'pwh111', '신예림', 'F', TO_DATE('1998-06-11', 'YYYY-MM-DD'), 'user38@site.com', '01088880011', '포항시 북구', TO_DATE('2023-07-19', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user39', 'pwi222', '배승우', 'M', TO_DATE('1995-11-25', 'YYYY-MM-DD'), 'user39@site.com', '01099991122', '창원시 의창구', TO_DATE('2023-08-09', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user40', 'pwj333', '홍채은', 'F', TO_DATE('1999-01-17', 'YYYY-MM-DD'), 'user40@site.com', '01000002233', '용인시 수지구', TO_DATE('2023-09-14', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user41', 'pwk444', '서재원', 'M', TO_DATE('1989-07-22', 'YYYY-MM-DD'), 'user41@site.com', '01011113355', '청주시 상당구', TO_DATE('2023-10-07', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user42', 'pwl555', '이주희', 'F', TO_DATE('1996-10-02', 'YYYY-MM-DD'), 'user42@site.com', '01022224466', '고양시 일산동구', TO_DATE('2023-10-21', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user43', 'pwm666', '남도현', 'M', TO_DATE('1992-03-13', 'YYYY-MM-DD'), 'user43@site.com', '01033335577', '수원시 영통구', TO_DATE('2023-11-03', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user44', 'pwn777', '유다연', 'F', TO_DATE('1988-05-30', 'YYYY-MM-DD'), 'user44@site.com', '01044446688', '안산시 단원구', TO_DATE('2023-11-28', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user45', 'pwo888', '황건희', 'M', TO_DATE('1997-09-09', 'YYYY-MM-DD'), 'user45@site.com', '01055557799', '세종시 반곡동', TO_DATE('2023-12-10', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user46', 'pwp999', '방시윤', 'F', TO_DATE('1993-03-03', 'YYYY-MM-DD'), 'user46@site.com', '01066668800', '김포시 고촌읍', TO_DATE('2023-12-21', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user47', 'pwq000', '임현수', 'M', TO_DATE('1994-06-06', 'YYYY-MM-DD'), 'user47@site.com', '01077779911', '평택시 동삭동', TO_DATE('2024-01-08', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user48', 'pwr111', '정수지', 'F', TO_DATE('1992-02-27', 'YYYY-MM-DD'), 'user48@site.com', '01088880022', '의정부시 민락동', TO_DATE('2024-01-29', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user49', 'pws222', '김재민', 'M', TO_DATE('1991-11-11', 'YYYY-MM-DD'), 'user49@site.com', '01099991133', '하남시 덕풍동', TO_DATE('2024-03-05', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user50', 'pwt333', '조다인', 'F', TO_DATE('1999-08-07', 'YYYY-MM-DD'), 'user50@site.com', '01000002244', '군포시 금정동', TO_DATE('2024-03-22', 'YYYY-MM-DD'), 'Y');
+
+INSERT INTO MEMBER VALUES ('user51', 'pwu444', '정태우', 'M', TO_DATE('1990-05-23', 'YYYY-MM-DD'), 'user51@site.com', '01011114455', '성남시 중원구', TO_DATE('2024-04-03', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user52', 'pwv555', '박서연', 'F', TO_DATE('1997-10-01', 'YYYY-MM-DD'), 'user52@site.com', '01022225566', '천안시 동남구', TO_DATE('2024-04-19', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user53', 'pww666', '강수현', 'M', TO_DATE('1996-07-04', 'YYYY-MM-DD'), 'user53@site.com', '01033336677', '이천시 중리동', TO_DATE('2024-05-22', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user54', 'pwx777', '윤나리', 'F', TO_DATE('1993-03-29', 'YYYY-MM-DD'), 'user54@site.com', '01044447788', '광명시 하안동', TO_DATE('2024-06-10', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user55', 'pwy888', '홍민준', 'M', TO_DATE('1989-06-26', 'YYYY-MM-DD'), 'user55@site.com', '01055558899', '제주시 노형동', TO_DATE('2024-06-28', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user56', 'pwz999', '김다솜', 'F', TO_DATE('1994-12-13', 'YYYY-MM-DD'), 'user56@site.com', '01066669900', '서귀포시 중문동', TO_DATE('2024-07-01', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user57', 'pwaa00', '이현우', 'M', TO_DATE('1995-11-04', 'YYYY-MM-DD'), 'user57@site.com', '01077770011', '춘천시 석사동', TO_DATE('2024-07-19', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user58', 'pwbb11', '전유진', 'F', TO_DATE('1992-02-11', 'YYYY-MM-DD'), 'user58@site.com', '01088881122', '경산시 정평동', TO_DATE('2024-08-05', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user59', 'pwcc22', '노하늘', 'M', TO_DATE('1997-01-08', 'YYYY-MM-DD'), 'user59@site.com', '01099992233', '울산시 중구', TO_DATE('2024-08-17', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user60', 'pwdd33', '차지은', 'F', TO_DATE('1988-04-15', 'YYYY-MM-DD'), 'user60@site.com', '01000003344', '안양시 만안구', TO_DATE('2024-09-03', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user61', 'pwee44', '오세훈', 'M', TO_DATE('1996-08-20', 'YYYY-MM-DD'), 'user61@site.com', '01011114466', '천안시 성환읍', TO_DATE('2024-09-18', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user62', 'pwff55', '조민아', 'F', TO_DATE('1994-05-10', 'YYYY-MM-DD'), 'user62@site.com', '01022225577', '서울시 중랑구', TO_DATE('2024-10-05', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user63', 'pwgf66', '이승재', 'M', TO_DATE('1987-09-28', 'YYYY-MM-DD'), 'user63@site.com', '01033336688', '대전시 유성구', TO_DATE('2024-10-21', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user64', 'pwhh77', '한지호', 'F', TO_DATE('1999-11-12', 'YYYY-MM-DD'), 'user64@site.com', '01044447799', '성남시 분당구', TO_DATE('2024-11-03', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user65', 'pwij88', '윤주성', 'M', TO_DATE('1992-01-25', 'YYYY-MM-DD'), 'user65@site.com', '01055558800', '서울시 마포구', TO_DATE('2024-11-18', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user66', 'pwkk99', '백하린', 'F', TO_DATE('1993-10-06', 'YYYY-MM-DD'), 'user66@site.com', '01066669911', '광주시 남구', TO_DATE('2024-12-01', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user67', 'pwll00', '민지후', 'M', TO_DATE('1991-07-19', 'YYYY-MM-DD'), 'user67@site.com', '01077770022', '서울시 동작구', TO_DATE('2024-12-23', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user68', 'pwmn11', '장예슬', 'F', TO_DATE('1989-12-30', 'YYYY-MM-DD'), 'user68@site.com', '01088881133', '구미시 도량동', TO_DATE('2025-01-08', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user69', 'pwnp22', '고은우', 'M', TO_DATE('1998-09-07', 'YYYY-MM-DD'), 'user69@site.com', '01099992244', '서울시 은평구', TO_DATE('2025-01-22', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user70', 'pwoq33', '유민아', 'F', TO_DATE('1997-03-01', 'YYYY-MM-DD'), 'user70@site.com', '01000003355', '제주시 구좌읍', TO_DATE('2025-03-04', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user71', 'pwrq44', '신태영', 'M', TO_DATE('1994-01-18', 'YYYY-MM-DD'), 'user71@site.com', '01011114477', '경주시 용강동', TO_DATE('2025-04-02', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user72', 'pwsr55', '남보라', 'F', TO_DATE('1993-06-30', 'YYYY-MM-DD'), 'user72@site.com', '01022225588', '목포시 하당동', TO_DATE('2025-04-17', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user73', 'pwst66', '윤동하', 'M', TO_DATE('1996-10-03', 'YYYY-MM-DD'), 'user73@site.com', '01033336699', '서울시 관악구', TO_DATE('2025-05-01', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user74', 'pwsu77', '심예원', 'F', TO_DATE('1990-08-22', 'YYYY-MM-DD'), 'user74@site.com', '01044447700', '수원시 권선구', TO_DATE('2025-05-19', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user75', 'pwsz88', '하현우', 'M', TO_DATE('1988-12-15', 'YYYY-MM-DD'), 'user75@site.com', '01055558811', '김천시 율곡동', TO_DATE('2025-06-04', 'YYYY-MM-DD'), 'Y');
+INSERT INTO MEMBER VALUES ('user76', 'pwsz99', '안혜민', 'F', TO_DATE('1995-04-14', 'YYYY-MM-DD'), 'user76@site.com', '01066669922', '남양주시 별내동', TO_DATE('2025-06-07', 'YYYY-MM-DD'), 'Y');
+
+
 COMMIT
 
 DROP TABLE MEMBER
@@ -254,3 +303,8 @@ SELECT COUNT(*)
   FROM PRODUCT_SIZE
  WHERE PRODUCT_NO = 7
    AND PRODUCT_SIZE = 'M'
+
+SELECT COUNT(*)
+  FROM NOTICE
+ WHERE NOTICE_TITLE = 
+
