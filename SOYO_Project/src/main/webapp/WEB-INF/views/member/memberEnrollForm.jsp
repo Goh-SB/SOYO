@@ -13,58 +13,127 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <style>
-        .container{
-            width: 1200px;
-            margin: auto;
-        }
 
-        #myTitle{
-            width: 1200px;
-            height: 200px;
-            font-size: 40px;
-            text-align: center;
-            vertical-align: middle;
-        }
+    @font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
 
-        #content{
-            width: 1200px;
-            height: 1000px; /* 여기 조절하기 */
-        }
+    /* 고운 바탕 이동용버튼과 제목 */
+    @font-face {
+    font-family: 'GowunBatang-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
 
-        #content>div{
-            float: left;
-            display: block;
-        }
+    body{
+        background-image: url('/soyo/resources/images/memberEnrollForm.jpg');
+        background-size: cover;
+    }
+
+    .container{
+        width: 900px;
+        margin: auto;
+    }
+
+    #myTitle{
+        width: 900px;
+        height: 200px;
+        font-size: 40px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    #content{
+        width: 900px;
+        height: 1400px; /* 여기 조절하기 */
+    }
+
+    #content>div{
+        float: left;
+        display: block;
+    }
 
 
-        #myContent{
-            width: 1200px;
-             /*border: 2px solid rgb(122, 64, 126);*/
-            box-sizing: border-box;
-            box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            vertical-align: middle;
-        }
+    #myContent{
+        width: 900px;
+            /*border: 2px solid rgb(122, 64, 126);*/
+        box-sizing: border-box;
+        box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 50px;
+        vertical-align: middle;
+        background-color: rgba(246, 250, 255, 0.905);
+    }
 
-        .btndivform{
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
+    .btndivform{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
 
-        table{
-            text-align: left;
-            margin: auto;
-        }
+    table{
+        text-align: left;
+        margin: auto;
+    }
 
-        td>input {
-            width: 400px;
-            height: 40px;
-            margin-top: 15px;
-            font-size: 15px;
-            padding: 5px;
-            cursor: default;
-        }
+    td>input {
+        width: 400px;
+        height: 40px;
+        margin-bottom: 15px;
+        font-size: 15px;
+        padding: 5px;
+        cursor: default;
+        
+    }
+
+    .inputText{
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border: none;
+        cursor: text;
+        width: 490px;
+        height: 50px;
+        border-radius: 9px;
+        font-size: 17px;
+    }
+
+    /* 바탕용 폰트 */
+    .fontGowunD{
+    font-family: 'GowunBatang-Regular';
+    font-size: 25px;
+    color: #546E7A;
+    text-decoration: none;
+    }
+
+    .fontGowunB{
+        font-family: 'GowunDodum-Regular';
+    }
+
+    .buttonStyle{
+        border: none;
+        width: 150px;
+        height: 40px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 18px;
+        text-align: center;
+        background-color: #E3E4FA;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .inputGender{
+        cursor: pointer;
+    }
+
+    .textsize20{
+        font-size: 20px;
+    }
+
+    .textsize25{
+        font-size: 25px;
+    }
 
 </style>
 <script>
@@ -82,88 +151,110 @@ function execDaumPostcode() {
 <body>
 <jsp:include page="../common/menubar.jsp" />
 <div class="container">
-        <div class="" id="myTitle">
+        <div class="fontGowunD" id="myTitle">
             회원가입
         </div>
         <div class="" id="content">
             <div class="" id="myContent">
-                <div style="height: 5%; font-size: 30px; text-align: center; margin: auto;
-                padding: 15px;">회원가입</div>
-                <div style="text-align: center; color: thistle;">모두 필수로 입력해주세요</div>
+                <div style="height: 5%; font-size: 40px; text-align: center; margin: auto;
+                padding: 15px;" class="fontGowunD">회원가입</div>
+                <div class="fontGowunD" style="text-align: center; color: rgb(183, 148, 183);">모두 필수로 입력해주세요</div>
                 <form id="myinsertForm" action="../member/insert" align="center" method="post" onsubmit="return insertMember()">
-                    <table>
+                    <table class="fontGowunB">
                         <tr>
-                            <th width="200px">아이디</th>
-                            <td width="500px"><input type="text" name="memberId" maxlength="20" placeholder="영문, 숫자를 포함한 6~20 글자" required></td>
-                            <td width="100px"><input type="button" onclick="checkId();" style="width: 100px;" value="중복확인"></td>
+                            <td colspan="2"><span class="textsize20">아이디</span></td>
                         </tr>
                         <tr>
-                            <th>비밀번호</th>
-                            <td><input type="password" id="memberPwd" name="memberPwd" placeholder="영문, 숫자, 특수기호를 포함한 8 ~ 20글자" maxlength="20" required></td>
+                            <td width="500px"><input type="text" class="fontGowunB inputText" name="memberId" maxlength="20" placeholder="영문, 숫자를 포함한 6~20 글자" required></td>
+                            <td width="100px"><input type="button" class="fontGowunB buttonStyle" onclick="checkId();" value="중복확인"></td>
                         </tr>
                         <tr>
-                            <th></th>
-                            <td colspan="2" style="display: none;"><span id="pwdMsg">올바른 비밀번호를 입력해주세요.</span></td>
+                            <td colspan="3"><span class="textsize20">비밀번호</span></td>
                         </tr>
                         <tr>
-                            <th>비밀번호 확인</th>
-                            <td><input type="password" id="memberPwdCheck" name="memberPwdCheck" maxlength="20" required></td>
+                            <td><input type="password" class="fontGowunB inputText" id="memberPwd" name="memberPwd" placeholder="영문, 숫자, 특수기호를 포함한 8 ~ 20글자" maxlength="20" required></td>
                         </tr>
                         <tr>
                             <th></th>
-                            <td style="display: none;"><span id="checkPwdMsg">비밀번호가 다릅니다.</span></td>
+                            <td colspan="2" style="display: none;"><span id="pwdMsg" class="fontGowunB textsize20">올바른 비밀번호를 입력해주세요.</span></td>
                         </tr>
                         <tr>
-                            <th>이름</th>
-                            <td><input type="text" name="memberName" maxlength="9" required></td>
+                            <td><span class="textsize20">비밀번호 확인</span></td>
                         </tr>
                         <tr>
-                            <th>성별</th>
+                            <td><input type="password" class="fontGowunB inputText" id="memberPwdCheck" name="memberPwdCheck" maxlength="20" required></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td style="display: none;"><span id="checkPwdMsg" style="color: red;" class="fontGowunB textsize20">비밀번호가 다릅니다.</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="textsize20">이름</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="memberName" class="fontGowunB inputText" maxlength="9" required></td>
+                        </tr>
+                        <tr>
+                            <td><span class="textsize20">성별</span></td>
+                        </tr>
+                        <tr>
                             <td style="padding: 10px; font-size: 17px;">
-                        		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M" required>&nbsp;남
-                                <input id="genderF" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F" required>&nbsp;여
+                        		<input id="genderM" name="gender" class="fontGowunB inputGender" type="radio" style="width: 20px; height: 20px;" value="M" required>&nbsp;남
+                                <input id="genderF" name="gender" class="fontGowunB inputGender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F" required>&nbsp;여
                         	</td>
                         </tr>
                         <tr>
-                            <th>생년월일</th>
-                            <td><input name="birthDate" type="date" required>
+                            <td><span class="textsize20">생년월일</span></td>
                         </tr>
                         <tr>
-                            <th>이메일</th>
-                            <td><input id="email" name="email" type="email" maxlength="30"></td>
-                            <td><button type="button" id="sert" onclick="cert()">인증번호 발급</button></td>
+                            <td><input name="birthDate" class="fontGowunB inputText" type="date" required>
+                        </tr>
+                        <tr>
+                            <td><span class="textsize20">이메일</span></td>
+                        </tr>
+                        <tr>
+                            <td><input id="email" class="fontGowunB inputText" name="email" type="email" maxlength="30"></td>
+                            <td style="padding-bottom: 15px;"><button type="button" class="fontGowunB buttonStyle" id="sert" onclick="cert()">인증번호 발급</button></td>
+                        </tr>
+                        <tr>
+                            <td><span class="textsize20">인증번호</span></td>
                         </tr>
                         <tr style="display: none;">
-                            <th>인증번호</th>
-                            <td><input type="text" id="emailCheck"></td>
-                            <td><button type="button" id="validate" onclick="valid();">인증</button></td>
+                            <td><input type="text" class="fontGowunB inputText" id="emailCheck"></td>
+                            <td style="padding-bottom: 15px;"><button type="button" class="fontGowunB buttonStyle" id="validate" onclick="valid();">인증</button></td>
                         </tr>
                         <tr>
                             <th></th>
-                            <td><span id="emailMsg"></span></td>
+                            <td><span id="emailMsg" class="fontGowunB textsize20"></span></td>
                         </tr>
                         <tr>
-                            <th>전화번호</th>
-                            <td><input name="phone" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required></td>
+                            <td><span class="textsize20">전화번호</span></td>
                         </tr>
                         <tr>
-                            <th>주소</th>
-                            <td><input type="text" id="address"  name="address" maxlength="66" required></td>
-                            <td><input type="button" style="width: 100px;" onClick="execDaumPostcode()" value="주소검색"></td>
+                            <td><input name="phone" class="fontGowunB inputText" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required></td>
                         </tr>
                         <tr>
-                            <th>상세주소</th>
-                            <td><input type="text" id="addrDetail" name="addrDetail"  maxlength="66"></td>
+                            <td><span class="textsize20">주소</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="address" class="fontGowunB inputText"  name="address" maxlength="66" required></td>
+                            <td><input type="button" class="fontGowunB buttonStyle" onClick="execDaumPostcode()" value="주소검색"></td>
+                        </tr>
+                        <tr>
+                            <td><span class="textsize20">상세주소</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="addrDetail" class="fontGowunB inputText" name="addrDetail"  maxlength="66"></td>
                         </tr>
                         <tr>
                             <th></th>
-                            <td><span id="submitMsg"></span></td>
+                            <td><span id="submitMsg" class="fontGowunB textsize20"></span></td>
                         </tr>
                     </table>
 
                     <div class="btndivform">
-                        <button type="submit" disabled>가입하기</button>
-                        <button type="button" onclick="history.back();">취소</button>
+                        <button type="submit" class="fontGowunB buttonStyle" disabled>가입하기</button>
+                        <button type="button" class="fontGowunB buttonStyle" onclick="history.back();">취소</button>
                     </div>
                     
                 </form>
@@ -172,6 +263,9 @@ function execDaumPostcode() {
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    
 <jsp:include page="../common/footer.jsp" />
 <script>
 let goInsert = 0;
