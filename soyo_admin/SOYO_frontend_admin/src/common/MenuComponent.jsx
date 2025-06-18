@@ -29,7 +29,7 @@ function MenuComponent() {
 
                     <hr />
                     <br />
-                    
+
                     <div className='side-menu-content link-menu'
                         onClick={() => { navigate("/") }}>
                         메인화면
@@ -40,15 +40,19 @@ function MenuComponent() {
                         회원정보
                     </div>
                     <div className='side-menu-content'
-                        onClick={() => { navigate("/product/list")}}>
+                        onClick={() => { navigate("/product/list") }}>
                         상품정보
+                    </div>
+                    <div className='side-menu-content'
+                        onClick={() => { navigate("/review/list") }}>
+                        리뷰 관리
                     </div>
                     <div className='side-menu-content link-menu'
                         onClick={() => { navigate("/notice/list") }}>
                         공지사항
                     </div>
                     <div className='side-menu-content'
-                        onClick={()=>{ navigate("/order/list")}}>
+                        onClick={() => { navigate("/order/list") }}>
                         구매내역
                     </div>
                     <div className='side-menu-content'
@@ -62,8 +66,8 @@ function MenuComponent() {
 
             <div id="top-menu">
                 <div id="top-menu-icon">
-                     <div className="header_icons">
-                            <span className="material-symbols-outlined"
+                    <div className="header_icons">
+                        <span className="material-symbols-outlined"
                             onClick={hideSideMenu}
                             id="hide-side-menu">
                             menu
@@ -73,7 +77,7 @@ function MenuComponent() {
                             id="chat-alram">
                             notifications
                         </span>
-                        </div>
+                    </div>
                     <span>
                         <img src="../../resources/soyo-logo.png"
                             id="mainLogo" onClick={() => { navigate("/") }} />

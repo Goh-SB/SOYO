@@ -107,7 +107,8 @@
 			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
 		}
 		.search-btn {
-			padding: 10px 28px;
+			height: 40px;
+			padding: 0 28px;
 			border: none;
 			border-radius: 0 10px 10px 0;
 			background: #b9bace;
@@ -117,6 +118,10 @@
 			cursor: pointer;
 			transition: background 0.2s, box-shadow 0.2s;
 			box-shadow: 0 2px 6px rgba(25,118,210,0.12);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
 		}
 		.search-btn:hover {
 			background: #9b84c0b6;
@@ -261,14 +266,32 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="search-bar-area">
-				<select class="search-select">
-					<option>제목</option>
-					<option>내용</option>
-				</select>
-				<input class="search-input" type="text" placeholder="검색어를 입력하세요" />
-				<button class="search-btn">검색</button>
+
+			<!-- 검색창이 들어갈 자리 -->
+			<form action="/soyo/notice/searchNoticeList" method="get">
+				<div class="search-bar-area">
+
+					<select class="search-select" name="condition">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+					</select>
+					<input class="search-input" type="text" name="keyword"
+						placeholder="검색어를 입력하세요" value="${ requestScope.keyword }">
+					<button class="search-btn">검색</button>
+
+					
+				</form>
+				<!-- condition이라는 응답 데이터가 넘어온 경우에만 검색 조건 유지 -->
+				<c:if test="${ not empty requestScope.condition }">
+					<script>
+						$(function() {
+							// 해당 condition 값과 일치하는 option 태그를 찾아 selected 속성 부여
+							$(".search-bar-area option[value=${ requestScope.condition }]").attr("selected", true);
+						});
+					</script>
+				</c:if>
 			</div>
+
 			<div class="paging-area">
 				<ul class="pagination justify-content-center">
 					<!-- currentPage가 1번 페이지일 경우 Previous 비활성화 -->

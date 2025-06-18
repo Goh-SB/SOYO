@@ -68,4 +68,10 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.newRandomPwd", m);
 	}
 
+	// 이메일 가져오기
+	public String findEmail(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findEmail", m);
+	}
+
 }

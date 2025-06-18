@@ -1,15 +1,18 @@
 package com.kh.soyo.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.notice.model.vo.Notice;
 
 public interface NoticeService {
-	// 공지사항 목록 조회용 서비스
+	// 공지사항 목록 조회용 서비스(페이징 처리 포함)
 	ArrayList<Notice> noticeList(PageInfo pi);
-	
-	// 페이징 처리용 서비스
 	int noticeListCount();
+	
+	// 공지사항 검색용 서비스(페이징 처리 포함)
+	ArrayList<Notice> searchNoticeList(PageInfo pi, HashMap<String, String> map);
+	int searchNoticeListCount(HashMap<String, String> map);
 	
 	// 공지사항 상세 조회용 서비스
 	Notice noticeDetail(int nno);

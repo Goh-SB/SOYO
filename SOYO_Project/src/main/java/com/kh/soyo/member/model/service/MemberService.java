@@ -42,6 +42,8 @@ public interface MemberService {
 
 	int changePwd(Member m);
 
+	String findEmail(Member m);
+
 	
 
 	

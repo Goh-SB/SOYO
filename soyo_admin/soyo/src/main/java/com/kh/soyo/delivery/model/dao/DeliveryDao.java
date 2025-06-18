@@ -1,12 +1,15 @@
 package com.kh.soyo.delivery.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.delivery.model.vo.Delivery;
 import com.kh.soyo.member.model.vo.Member;
@@ -15,8 +18,14 @@ import com.kh.soyo.product.model.vo.Product;
 @Repository
 public class DeliveryDao {
 
-	public List<Delivery> deliveryList(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectList("deliveryMapper.deliveryList");
+	public ArrayList<Delivery> deliveryList(SqlSessionTemplate sqlSession,PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1 ) * limit;
+	
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("deliveryMapper.deliveryList", null, rowBounds);
 	}
 	
 	public Delivery deliveryDetail(SqlSessionTemplate sqlSession, int orderNo) {
@@ -52,6 +61,11 @@ public class DeliveryDao {
 	public List<Payment> orderInfo(SqlSessionTemplate sqlSession, Map<String, Object> param) {
 		
 	    return sqlSession.selectList("deliveryMapper.orderInfo", param);
+	}
+
+	public int deliveryListCount(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectOne("deliveryMapper.deliveryListCount");	
 	}
 
 

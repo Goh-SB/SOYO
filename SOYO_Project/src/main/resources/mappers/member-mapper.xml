@@ -132,5 +132,11 @@
 		    WHERE MEMBER_ID = #{memberId}
 		    AND STATUS = 'Y'
 	</update>
+	
+	<select id="findEmail" parameterType="member" resultType="string">
+		SELECT EMAIL FROM MEMBER
+		    WHERE MEMBER_ID = #{memberId}
+		    AND STATUS = 'Y'
+	</select>
 		
 </mapper>
