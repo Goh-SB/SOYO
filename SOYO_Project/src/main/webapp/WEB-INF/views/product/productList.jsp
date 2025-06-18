@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -178,7 +179,27 @@
   <br><br><br>
     
   <div class="container">
-    <div class="product-category">남성복</div>
+  
+  
+    <c:choose>
+	  <c:when test="${param.type eq 'mens'}">
+	    <div class="product-category">남성복</div>
+	  </c:when>
+	  <c:when test="${param.type eq 'womens'}">
+	    <div class="product-category">여성복</div>
+	  </c:when>
+	  <c:when test="${param.type eq 'kids'}">
+	    <div class="product-category">아동복</div>
+	  </c:when>
+	  <c:when test="${param.type eq 'accessory'}">
+	    <div class="product-category">액세서리</div>
+	  </c:when>
+	  <c:otherwise>
+	    <div class="product-category">전체 상품</div>
+	  </c:otherwise>
+	</c:choose>
+
+    
     <span class="product-count">총 <b>10</b> 개의 상품</span>
     <hr>
     <div class="top-bar">
