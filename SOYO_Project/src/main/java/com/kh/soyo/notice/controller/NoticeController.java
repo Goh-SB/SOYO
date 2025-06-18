@@ -38,7 +38,7 @@ public class NoticeController {
 		mv.addObject("list", list)
 			.addObject("pi", pi)
 			.setViewName("notice/noticeList");
-		System.out.println(pi);
+		// System.out.println(pi);
 		// 공지사항 목록 조회 화면 포워딩
 		return mv;
 	}
@@ -49,7 +49,7 @@ public class NoticeController {
 		Notice notice =  noticeService.noticeDetail(nno);
 		model.addAttribute("n", notice);
 		
-		System.out.println(notice);
+		// System.out.println(notice);
 		return "notice/noticeDetail";
 	}
 	

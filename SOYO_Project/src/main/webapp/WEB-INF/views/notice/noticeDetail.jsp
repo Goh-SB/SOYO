@@ -17,7 +17,7 @@
 			box-sizing: border-box;		/* 테두리와 안쪽 여백의 크기도 요소의 크기로 고려 */
 		}
 
-		#notice-table{
+		#notice-Detail-Table {
 			width : 80%;
 			margin : auto;
 			margin-top : 80px;
@@ -34,18 +34,20 @@
 			<h2>공지사항 상세보기</h2>
         	<br>
 
-            <button>
-                목록가기
-            </button>
+			<button type="button" class="btn btn-secondary" onclick="list();" style="margin-left : 1600px;">목록가기</button>
   
             <table id="notice-Detail-Table">
                 <thead>
                     <tr>
                         <td>
                             <div>
-                                <span id="noticeTitle">&#91;${ requestScope.n.noticeType }&#93;&nbsp;${requestScope.n.noticeTitle}</span>
+                                <span id="noticeTitle" style="font-size : 26px;">
+									&#91;${ requestScope.n.noticeType }&#93;&nbsp;${requestScope.n.noticeTitle}
+								</span>
                                 <br>
-                                <span id="noticeDate">${requestScope.n.noticeDate}</span>
+                                <span id="noticeDate" style="color : grey;">
+									${requestScope.n.noticeDate}
+								</span>
                                 <hr/>
                             </div>
                         </td>
@@ -55,15 +57,16 @@
                 <tbody>
                     <tr>
                         <td>
-                            <img id="fileImg"/>
-                            <br>
-                            <p id="noticeContent">${requestScope.n.noticeContent}</p>
+                            <img id="fileImg" src="http://localhost:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
+                            <br><br>
+                            <p id="noticeContent" style="font-size : 20px;">${requestScope.n.noticeContent}</p>
                         </td>
                     </tr>
                 </tbody>
             </table>
            	<br>
         </div>
+
 		<script>
 			function list() {
 				location.href="/soyo/notice/noticeList"
