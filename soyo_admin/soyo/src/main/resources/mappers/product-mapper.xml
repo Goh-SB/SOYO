@@ -42,7 +42,7 @@
                           , #{productName}
                           , #{productPrice}
                           , #{productCategory}
-                          , NULL
+                          , #{productCaption}
                           , #{productSubCaption}
                           , #{productOrigin}
                           , #{productChange}

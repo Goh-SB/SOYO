@@ -27,5 +27,18 @@
         WHERE C.MEMBER_ID = #{memberId}
     </select>
 	
-
+	<update id="updateCartCount" parameterType="map">
+    UPDATE CART
+  	  SET PRODUCT_COUNT = #{count}
+    WHERE PRODUCT_NO = #{productNo}
+      AND MEMBER_ID = #{memberId}
+	</update>
+	
+	<select id="updateCart" parameterType="map"
+							resultMap="cartResultMap">
+		SELECT *
+		 FROM CART
+		WHERE MEMBER_ID = #{memberId}
+		  AND PRODUCT_NO = #{productNo}		
+	</select>
 </mapper>
