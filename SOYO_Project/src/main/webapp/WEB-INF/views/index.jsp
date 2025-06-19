@@ -394,11 +394,6 @@
             </div>
         </section>
 
-		<!-- 테스트용 코드. 테스트 완료 후 지우기 -->
-		<form action="<c:url value='/product/productDetail' />" method="get">
-		  <button type="submit" style="padding: 20px; margin-left: 820px">상품 상세보기 테스트 페이지 - 삭제 예정</button>
-		</form>
-
         <section class="featured-products">
             <h2>추천 상품</h2>
             <div class="product-grid">

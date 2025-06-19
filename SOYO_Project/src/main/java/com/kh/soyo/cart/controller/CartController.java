@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.soyo.cart.model.service.CartService;
@@ -41,8 +42,7 @@ public class CartController {
 	
 	@ResponseBody
 	@PostMapping("/update")
-	public String updateCart(Cart cart,
-			
+	public int updateCart(Cart cart,			
 						  HttpSession session,
 						  Model model) {
 		
@@ -50,7 +50,7 @@ public class CartController {
 		 Member loginUser = (Member) session.getAttribute("loginUser");
 		    if (loginUser == null) {
 		    	model.addAttribute("fail","로그인 후 이용바랍니다");
-		        return "로그인후 이용바랍니다."; // 로그인 안 된 경우
+		        // return "로그인후 이용바랍니다."; // 로그인 안 된 경우
 		    }
 
 		    String memberId = loginUser.getMemberId();
@@ -60,10 +60,26 @@ public class CartController {
 		    
 		    Cart c = cartService.updateCart(memberId,cart.getProductNo(),cart.getProductCount());
 
+		    
+		    
 		    model.addAttribute("c",c);
-		    System.out.println(c);
-		    return (result > 0) ? "성공" : "실패";
+		    System.out.println(c.getProductCount());
+		    return c.getProductCount();
 		   
+	}
+	
+	@ResponseBody
+	@PostMapping("/delete")
+	public String deleteselected(@RequestParam List<Integer> productNoList,
+							  HttpSession session) {
+		  Member loginUser = (Member) session.getAttribute("loginUser");
+		    if (loginUser == null) return "실패";
+
+	    String memberId = loginUser.getMemberId();
+	    int result = cartService.deleteSelected(memberId, productNoList);
+
+	    return result > 0 ? "성공" : "실패";
+		
 	}
 }
 

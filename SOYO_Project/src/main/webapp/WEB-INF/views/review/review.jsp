@@ -22,14 +22,14 @@
 
     #top-title {
         text-align: right;
-        width: 88%;
+        width: 90%;
         font-size: 30px;
         font-family: 'SBAggroB', Arial, sans-serif;
         color: #666;
     }
 
     .review-container {
-        max-width: 1700px;
+        max-width: 1585px;
         margin: 40px auto;
         background: #fff;
         padding: 0 24px 24px 24px;
@@ -123,7 +123,7 @@
         <table class="review-table">
             <thead>
                 <tr>
-                    <th>Product</th>
+                    <th>&nbsp;Product</th>
                     <th>Subject</th>
                     <th class="review-no">Date</th>
                     <th class="review-writer">Writer</th>

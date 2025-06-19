@@ -1,6 +1,7 @@
 package com.kh.soyo.cart.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class CartServiceImpl implements CartService {
 	public Cart updateCart(String memberId, int productNo, int productCount) {
 		
 		return cartDao.updateCart(sqlSession, memberId, productNo, productCount);
+	}
+
+	@Override
+	public int deleteSelected(String memberId, List<Integer> productNoList) {
+		
+		return cartDao.deleteSelected(sqlSession,memberId,productNoList);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.kh.soyo.cart.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -36,6 +37,17 @@ public class CartDao {
 	    
 	    return sqlSession.selectOne("cartMapper.updateCart",param);
 	}
+
+	public int deleteSelected(SqlSessionTemplate sqlSession, String memberId, List<Integer> productNoList) {
+		
+		Map<String, Object> param = new HashMap<>();
+	    param.put("memberId", memberId);
+	    param.put("productNoList", productNoList);
+	    
+	    return sqlSession.delete("cartMapper.deleteSelected",param);
+	}
+
+
 
 
 }

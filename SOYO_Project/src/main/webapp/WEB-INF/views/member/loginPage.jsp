@@ -22,8 +22,6 @@
             background-attachment: fixed;
             background-size: cover;
 
-            /* 모든 디바이스에서 자연스럽게 */
-            min-height: 100vh;
         }
 
         
@@ -55,19 +53,21 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.06);
             font-family: 'ONE-Mobile-Regular';
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
+            margin-top: 60px;
+            margin-bottom: 60px;
         }
 
         .login-title {
             text-align: center;
             color: #333;
             margin-bottom: 1rem;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 500;
         }
 
         #login-title-p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #666;
             text-align: center;
             margin-bottom: 2rem;

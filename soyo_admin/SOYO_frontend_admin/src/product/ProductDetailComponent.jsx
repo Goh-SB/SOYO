@@ -142,14 +142,14 @@ while (gainSource.test(content)) {
     const data = new FormData();
 
     let thumbnail = document.querySelector("#thumbnail");
-    console.log("이거이거", thumbnail.files.length)
-    console.log("productPrice", productPrice)
-    console.log("productName", productName)
-    console.log("productSubCaption", endContent)
-    console.log("productStock", productStock)
-    console.log("productSize", productSize)
-    console.log("productCategory", productCategory)
-    console.log("imageList", urlArray)
+    // console.log("이거이거", thumbnail.files.length)
+    // console.log("productPrice", productPrice)
+    // console.log("productName", productName)
+    // console.log("productSubCaption", endContent)
+    // console.log("productStock", productStock)
+    // console.log("productSize", productSize)
+    // console.log("productCategory", productCategory)
+    // console.log("imageList", urlArray)
 
     data.append("productNo", productNo);
     data.append("productPrice", productPrice);
