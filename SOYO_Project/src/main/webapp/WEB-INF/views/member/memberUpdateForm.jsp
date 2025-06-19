@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>내 정보 변경</title>
+<!-- 도로명주소 스크립트 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
     	.container{
             width: 1200px;
@@ -68,11 +70,12 @@
         }
 
         #myContent{
-            width: 900px;
+            width: 800px;
              /*border: 2px solid rgb(122, 64, 126);*/
             box-sizing: border-box;
             box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
+            background-color: rgba(255, 242, 253, 0.663);
         }
 
 
@@ -88,28 +91,42 @@
             border-radius: 5px;
             margin: 20px;
         }
-        
-        #buttondiv button{
-        	width: 100px;
-        	height: 30px;
-        	margin-top: 30px;
-        	margin-bottom: 30px;
-            
-        }
 
         table{
             text-align: left;
             margin: auto;
         }
 
-        td>input {
-            width: 300px;
-            height: 40px;
-            margin-top: 15px;
-            font-size: 15px;
-            padding: 5px;
+
+        .fontsize20{
+            font-size: 20px;
+            color: rgb(43, 62, 115);
         }
+
+        .updateInput{
+            width: 400px;
+            height: 50px;
+            padding: 5px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btnSubmit{
+            width: 100px;
+            height: 40px;
+            padding: 5px;
+            margin: 30px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: aliceblue;
+            border-radius: 8px;
+        }
+
 </style>
+
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
@@ -119,6 +136,7 @@
         </div>
         <div class="" id="content">
             <div class="" id="left-Menu">
+                <img width="150px" src="/soyo/resources/images/real-soyo-logo.png" alt="">
                 <ul id="left-MenuList">
                     <li><a href="../member/myOrderPage">주문/배송조회</a></li>
                     <li><a href="">찜한 상품</a></li>
@@ -135,40 +153,49 @@
                     <table>
                         
                         <tr>
-                        	<td colspan="3"><input type="hidden" name="memberId" value="${ sessionScope.loginUser.memberId }" ></td>
+                        	<td colspan="3"><input type="hidden" class="fontsize20 updateInput" name="memberId" value="${ sessionScope.loginUser.memberId }" ></td>
                         </tr>
                         <tr>
-                            <th width="200px">이름</th>
-                            <td width="400px"><input name="memberName" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
+                            <th width="200px"><span class="fontsize20">이름</span></th>
+                            <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
                         </tr>
                         <tr>
-                            <td><input type="password" name="memberPwd" value="${ sessionScope.loginUser.memberPwd }" style="display: none;"></td>
+                            <td><input type="password" name="memberPwd" class="fontsize20 updateInput" value="${ sessionScope.loginUser.memberPwd }" style="display: none;"></td>
                         </tr>
                         <tr>
-                        	<th>성별</th>
+                        	<th><span class="fontsize20">성별</span></th>
                         	<td style="padding: 10px; font-size: 17px;">
-                        		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M">&nbsp;남
-                                <input id="genderF" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F">&nbsp;여
+                        		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M"><span class="fontsize20">&nbsp;남</span>
+                                <input id="genderF" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F"><span class="fontsize20">&nbsp;여</span>
                         	</td>
                         </tr>
                         <tr>
-                            <th>생년월일</th>
-                            <td><input name="birthDate" type="date" value="${ sessionScope.loginUser.birthDate }" ></td>
+                            <th><span class="fontsize20">생년월일</span></th>
+                            <td><input name="birthDate" type="date" class="fontsize20 updateInput" value="${ sessionScope.loginUser.birthDate }" ></td>
                         </tr>
                         <tr>
-                            <th>휴대전화번호</th>
-                            <td><input name="phone" type="number" value="${ sessionScope.loginUser.phone }" ></td>
+                            <th><span class="fontsize20">휴대전화번호</span></th>
+                            <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ></td>
                         </tr>
                         <tr>
-                            <th>주소</th>
-                            <td><input name="address" type="text" value="${ sessionScope.loginUser.address }" ></td>
+                            <th><span class="fontsize20">주소</span></th>
+                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="button" style="margin: 5px;" class="btnSubmit" onClick="execDaumPostcode()" value="주소검색"></td>
+                        </tr>
+                        <tr>
+                            <th><span>상세주소</span></th>
+                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required></td>
+                            
                         </tr>
                     
                     </table>
 
                     <div id="buttondiv">
-                        <button type="submit">수정완료</button>
-                        <button type="button" onclick="history.back();">취소</button>
+                        <button type="submit" class="btnSubmit">수정완료</button>
+                        <button type="button" class="btnSubmit" onclick="history.back();">취소</button>
                     </div>
                     
                 </form>
@@ -180,6 +207,15 @@
     <jsp:include page="../common/footer.jsp" />
 </body>
 <script>
+
+
+    function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById("address").value = data.roadAddress;
+        }
+    }).open();
+}
 
     // 라디오버튼 성별 체크표시를 위한 스크립트
     if("${sessionScope.loginUser.gender}" == 'M') {

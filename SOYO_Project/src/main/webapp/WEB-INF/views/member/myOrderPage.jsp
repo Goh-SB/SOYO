@@ -187,6 +187,7 @@
         </div>
         <div class="" id="content">
             <div class="" id="left-Menu">
+                <img width="150px" src="/soyo/resources/images/real-soyo-logo.png" alt="">
                 <ul id="left-MenuList">
                     <li><a href="./myOrderPage">주문/배송조회</a></li>
                     <li><a href="">찜한 상품</a></li>
