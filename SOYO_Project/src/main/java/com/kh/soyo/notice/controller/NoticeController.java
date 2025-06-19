@@ -2,6 +2,7 @@ package com.kh.soyo.notice.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,6 +69,41 @@ public class NoticeController {
 			.addObject("pi", pi)	// paging-area에 출력
 			.setViewName("notice/noticeList");
 		
+		return mv;
+	}
+	
+	// 공지사항 필터링용 컨트롤러
+	@GetMapping("noticeFilter")
+	public ModelAndView noticeFilter(@RequestParam List<String> noticeType,
+									@RequestParam(value="nPage", defaultValue="1") int currentPage,
+									ModelAndView mv) {
+		// 페이징 설정
+		int listCount;
+	    int pageLimit = 10;
+	    int boardLimit = 10;
+	    ArrayList<Notice> list;
+	    
+	    if (noticeType == null || noticeType.isEmpty()) {
+	        // noticeType이 없으면 전체 조회
+	        listCount = noticeService.noticeListCount();
+	        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+	        list = noticeService.noticeList(pi);
+
+	        mv.addObject("list", list)
+	          .addObject("pi", pi)
+	          .setViewName("notice/noticeList");
+	    } else {
+	        // 필터 조건이 있는 경우
+	        listCount = noticeService.noticeFilterCount(noticeType);
+	        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+	        list = noticeService.noticeFilter(noticeType, pi);
+
+	        mv.addObject("list", list)
+	          .addObject("pi", pi)
+	          .addObject("selectedTypes", noticeType)
+	          .setViewName("notice/noticeList");
+	    }
+
 		return mv;
 	}
 	
