@@ -228,7 +228,7 @@
     </div>
     <!-- 상품 리스트 영역이 여기에 들어감 -->
     <div class="product-list">
-      <a href="/product/detail?id=1" class="product-card">
+      <a href="/soyo/product/productDetail?" class="product-card">
         <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/adult-1868750_1280.jpg" alt="샘플 상품" />
         <div class="product-card-title">한글 반팔 셔츠 저고리 [베이지]</div>
         <div class="product-card-price">₩169,000</div>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
 
 	@GetMapping("/productDetail")
-	public String showTestPage() {
+	public String showProductDetail() {
 	    return "product/productDetail";
 	}
 	
