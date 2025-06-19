@@ -782,59 +782,48 @@
         <h5>상품 리뷰</h5>
         <div class="divider"></div>
         
-        <div class="review-list">
-            <div class="review-card">
-                <div class="review-content-wrapper">
-                    <div class="review-info">
-                        <h6 class="review-title">정말 만족스러운 구매였어요!</h6>
-                        <div class="review-rating">
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                        </div>
-                        <div class="review-text">
-                            <p>개량 한복을 처음 입어봤는데 생각보다 훨씬 편안하고 예쁘네요. 
-                            사이즈도 딱 맞고 소재도 좋습니다.<br>이쿠조 화이팅!</p>
-                        </div>
-                        <div class="review-footer">
-                            <span class="review-author">김말똥</span>
-                            <span class="review-date">2025.04.15</span>
-                        </div>
-                    </div>
-                    <div class="review-thumbnail">
-                        <img src="https://via.placeholder.com/400x300" alt="리뷰 이미지">
-                    </div>
-                </div>
-            </div>
+        
 
-            <div class="review-card">
-                <div class="review-content-wrapper">
-                    <div class="review-info">
-                        <h6 class="review-title">데일리로 입기 좋은 한복</h6>
-                        <div class="review-rating">
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star</span>
-                            <span class="material-icons">star_half</span>
-                        </div>
-                        <div class="review-text">
-                            <p>일상에서도 부담없이 입을 수 있어서 좋아요. 
-                            디자인이 모던하면서도 한복의 멋을 잘 살렸네요.<br>소요 흥해라</p>
-                        </div>
-                        <div class="review-footer">
-                            <span class="review-author">박말순</span>
-                            <span class="review-date">2025.06.05</span>
-                        </div>
-                    </div>
-                    <div class="review-thumbnail">
-                        <img src="https://via.placeholder.com/400x300" alt="리뷰 이미지">
-                    </div>
-                </div>
-            </div>
-        </div>
+	<div class="review-list">
+	    <c:forEach var="review" items="${reviewList}">
+	        <div class="review-card">
+	            <div class="review-content-wrapper">
+	                <div class="review-info">
+	                    <h6 class="review-title">${review.reviewTitle}</h6>
+	                    <div class="review-rating">
+	                        <c:forEach var="i" begin="1" end="5">
+	                            <c:choose>
+	                                <c:when test="${i <= review.rating}">
+	                                    <span class="material-icons">star</span>
+	                                </c:when>
+	                                <c:when test="${i - 0.5 == review.rating}">
+	                                    <span class="material-icons">star_half</span>
+	                                </c:when>
+	                                <c:otherwise>
+	                                    <span class="material-icons">star_border</span>
+	                                </c:otherwise>
+	                            </c:choose>
+	                        </c:forEach>
+	                    </div>
+	                    <div class="review-text">
+	                        <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
+	                    </div>
+	                    <div class="review-footer">
+	                        <span class="review-author">${review.memberId}</span>
+	                        <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
+	                    </div>
+	                </div>
+	                <div class="review-thumbnail">
+	                    <img src="${pageContext.request.contextPath}/resources/review_upfile/${review.reviewThumbnailChange}" alt="리뷰 이미지">
+	                </div>
+	            </div>
+	        </div>
+	    </c:forEach>
+	</div>
+
+
+        
+        
     </div>
 </div>
 <br>
