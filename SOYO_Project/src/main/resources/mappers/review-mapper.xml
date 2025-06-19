@@ -13,25 +13,29 @@
 	    <result property="status" column="STATUS"/>
 	    <result property="productNo" column="PRODUCT_NO"/>
 	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="memberName" column="MEMBER_NAME"/>
 	</resultMap>
 	
 	<select id="selectReviewList" parameterType="_int" resultMap="reviewResultMap">
 	    SELECT
-	        REVIEW_NO,
-	        REVIEW_TITLE,
-	        REVIEW_CONTENT,
-	        RATING,
-	        REVIEW_THUMBNAIL_ORIGIN,
-	        REVIEW_THUMBNAIL_CHANGE,
-	        REVIEW_DATE,
-	        STATUS,
-	        PRODUCT_NO,
-	        MEMBER_ID
-	    FROM REVIEW
-	    WHERE PRODUCT_NO = #{productNo}
-	      AND STATUS = 'Y'
-	    ORDER BY REVIEW_DATE DESC
+	        R.REVIEW_NO,
+	        R.REVIEW_TITLE,
+	        R.REVIEW_CONTENT,
+	        R.RATING,
+	        R.REVIEW_THUMBNAIL_ORIGIN,
+	        R.REVIEW_THUMBNAIL_CHANGE,
+	        R.REVIEW_DATE,
+	        R.STATUS,
+	        R.PRODUCT_NO,
+	        R.MEMBER_ID,
+	        M.MEMBER_NAME
+	    FROM REVIEW R
+	    JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	    WHERE R.PRODUCT_NO = #{productNo}
+	      AND R.STATUS = 'Y'
+	    ORDER BY R.REVIEW_DATE DESC
 	</select>
+
 
 
 

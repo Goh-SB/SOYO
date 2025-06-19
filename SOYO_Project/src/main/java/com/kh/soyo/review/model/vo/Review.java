@@ -26,4 +26,6 @@ public class Review {
     private int productNo;                      // PRODUCT_NO
     private String memberId;                    // MEMBER_ID (FK)
 	
+    private String memberName;
+    
 }

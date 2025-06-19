@@ -809,7 +809,7 @@
 	                        <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
 	                    </div>
 	                    <div class="review-footer">
-	                        <span class="review-author">${review.memberId}</span>
+	                        <span class="review-author">${review.memberName}</span>
 	                        <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
 	                    </div>
 	                </div>
