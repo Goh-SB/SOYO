@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.FileRenamePolicy;
 import com.kh.soyo.common.template.Pagination;
+import com.kh.soyo.common.template.XssDefencePolicy;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.notice.model.service.NoticeServiceImpl;
 import com.kh.soyo.product.model.service.ProductService;
@@ -165,7 +166,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("detail/{productNo}")
-	public Product detail(@PathVariable int productNo,
+	public HashMap<String, Object> detail(@PathVariable int productNo,
 						String productSize) {
 		// System.out.println(productNo);
 		// System.out.println(productSize);
@@ -174,9 +175,14 @@ public class ProductController {
 		p.setProductNo(productNo);
 	
 		Product result = productService.detail(p);
+		List<String> list = productService.detailSubTag(p);
 		
-		// System.out.println(result);
-		return result;
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("result", result);
+		hm.put("list", list);
+		// System.out.println(hm);
+		return hm;
 	}
 	
 	
@@ -202,10 +208,15 @@ public class ProductController {
 	 */
 	@PostMapping("update")
 	public String update (@ModelAttribute Product p,
-						@RequestParam(value="thumbnail", required = false) MultipartFile thumbnail,
-						@RequestParam(value="imageList", required = false) List<String> imageList) {
+						@RequestParam(value="productSubTag", required=false) List<String> productSubTag,
+						@RequestParam(value="thumbnail", required=false) MultipartFile thumbnail,
+						@RequestParam(value="subThumbnail", required=false) MultipartFile subThumbnail) {
+		
 		// System.out.println(p);
 		// System.out.println(thumbnail);
+		// System.out.println(subThumbnail);
+		System.out.println(productSubTag);
+		
 		
 		int result = 0;
 		
@@ -217,9 +228,11 @@ public class ProductController {
 			// > 재고가 없다면 수정 시 재고 먼저 insert
 		}
 		
+		String filePath = "C:/SOYO/soyo_admin/soyo/src/main/webapp/resources/product_upfile/";
+		
 		if(thumbnail != null) {
 			
-			String filePath = "C:/SOYO/soyo_admin/soyo/src/main/webapp/resources/product_upfile/";
+			
 			String originName = thumbnail.getOriginalFilename();
 			String changeName = FileRenamePolicy.saveFile(thumbnail, filePath);
 			  
@@ -227,16 +240,49 @@ public class ProductController {
 			p.setProductOrigin(originName);
 			p.setProductChange(changeName);
 			
-			result = productService.updateThumbnail(p);
+			if(subThumbnail != null) {
+				// 썸네일도 있고 서브 썸네일 있을떄
+				String subOriginName = subThumbnail.getOriginalFilename(); 
+				String subChangeName = FileRenamePolicy.saveFile(subThumbnail, filePath);
+				
+				p.setProductSubOrigin(subOriginName);
+				p.setProductSubChange(subChangeName);
+				result = productService.updateThumbnail(p);
+			} else {
+				// 썸네일은 있고 서브 썸네일 없을때
+				result = productService.updateThumbnailNoSub(p);
+				
+			}
 			// > 썸네일 있을떄 수정폼
 			
-			return (result > 0) ? "상품 수정 성공" : "상품 수정 실패";
-			
 		} else {
-			result = productService.update(p);
-			// > 썸네일 없을떄 수정 폼
 			
-			return (result > 0) ? "상품 수정 성공" : "상품 수정 실패";
+			if(subThumbnail != null) {
+				// 썸네일은 없고 서브 썸네일만 있을떄
+				String subOriginName = subThumbnail.getOriginalFilename(); 
+				String subChangeName = FileRenamePolicy.saveFile(subThumbnail, filePath);
+				
+				p.setProductSubOrigin(subOriginName);
+				p.setProductSubChange(subChangeName);
+				result = productService.updateSubTumbnail(p);
+			} else {
+				// 썸네일도 없고 서브 썸네일도 없을떄
+				result = productService.updateProduct(p);
+				// > 썸네일 없을떄 수정 폼
+			}
+			
+			result *= productService.updateSize(p);
+			if(productSubTag != null && !productSubTag.isEmpty() ) {
+				result *= productService.updateSubTag(p, productSubTag);
+			}
+			
+			
+			
 		}
+		
+		return (result > 0) ? "상품 수정 성공" : "상품 수정 실패";
+		
+		
+		
 	}
 }

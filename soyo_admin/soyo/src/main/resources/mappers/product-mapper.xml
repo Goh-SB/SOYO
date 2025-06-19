@@ -18,6 +18,8 @@
  	 	<result column="STOCK_COUNT" property="productStock" />
  	 	<result column="PRODUCT_SUB_ORIGIN" property="productSubOrigin" />
  	 	<result column="PRODUCT_SUB_CHANGE" property="productSubChange" />
+ 	 	<result column="PRODUCT_TAG" property="productTag" />
+ 	 	<result column="PRODUCT_SUB_TAG" property="productSubTag" />
  	</resultMap>
  
  
@@ -140,11 +142,24 @@
 			    PRODUCT_ORIGIN,
 			    PRODUCT_CHANGE,
 			    STATUS,
-			    PRODUCT_SUB_CAPTION
+			    PRODUCT_SUB_CAPTION,
+			    PRODUCT_CAPTION,
+			    PRODUCT_SUB_ORIGIN,
+			    PRODUCT_SUB_CHANGE,
+			    PRODUCT_TAG
 			FROM PRODUCT 
 			WHERE PRODUCT_NO = #{productNo}
 
  	</select>
+ 	
+ 	<select id="detailSubTag" parameterType="product"
+ 								resultType="string">
+ 			SELECT TAG_NAME
+ 			  FROM PRODUCT_TAG
+ 			 WHERE PRODUCT_NO = #{productNo} 
+ 	
+ 	</select>
+ 	
  	
  	<select id="detailSize" parameterType="product"
  							resultMap="productResultSet">
@@ -174,31 +189,32 @@
 		     , PRODUCT_SUB_CAPTION = #{productSubCaption}
 		     , PRODUCT_ORIGIN = #{productOrigin}
 		     , PRODUCT_CHANGE = #{productChange}
+		     , PRODUCT_SUB_ORIGIN = #{productSubOrigin}
+		     , PRODUCT_SUB_CHANGE = #{productSubChange}
+		     , PRODUCT_TAG = #{productTag}
+		     , PRODUCT_CAPTION = #{productCaption}
 		 WHERE PRODUCT_NO = #{productNo}
  	
  	</update>
  	
- 	<update id="updateThumbnailSize" parameterType="product">
- 		UPDATE PRODUCT_SIZE
-		   SET STOCK_COUNT = #{productStock}
-		 WHERE PRODUCT_NO = #{productNo}
-		   AND PRODUCT_SIZE = #{productSize}
- 	</update>
- 	
- 	<update id="updateProduct">
+ 	<update id="updateProduct" parameterType="product">
  			UPDATE PRODUCT
 			   SET PRODUCT_NAME = #{productName}
 			     , PRODUCT_PRICE = #{productPrice}
 			     , PRODUCT_CATEGORY = #{productCategory}
 			     , PRODUCT_SUB_CAPTION = #{productSubCaption}
+			     , PRODUCT_CAPTION = #{productCaption}
+			     , PRODUCT_TAG = #{productTag}
 			 WHERE PRODUCT_NO = #{productNo}
  	</update>
  	
- 	<update id="updateSize">
+ 	<update id="updateSize" parameterType="product">
  		UPDATE PRODUCT_SIZE
 		   SET STOCK_COUNT = #{productStock}
 		 WHERE PRODUCT_NO = #{productNo}
 		   AND PRODUCT_SIZE = #{productSize}
+		   
+		   
  	</update>
  	
  	<select id="productStock" parameterType="product"
@@ -211,5 +227,51 @@
  	
  	</select>
  	
+ 	<delete id="deleteSubTag" parameterType="product">
+ 		DELETE 
+		  FROM PRODUCT_TAG
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND TAG_NAME = #{productSubTag}
+ 	
+ 	</delete>
+ 	
+ 	<insert id="updateSubTag" parameterType="product">
+ 		INSERT INTO PRODUCT_TAG VALUES(#{productNo}, #{productSubTag})
+ 	</insert>
+ 	
+ 	<update id="updateThumbnailNoSub" parameterType="product">
+ 		UPDATE PRODUCT
+			   SET PRODUCT_NAME = #{productName}
+			     , PRODUCT_PRICE = #{productPrice}
+			     , PRODUCT_CATEGORY = #{productCategory}
+			     , PRODUCT_SUB_CAPTION = #{productSubCaption}
+			     , PRODUCT_CAPTION = #{productCaption}
+			     , PRODUCT_TAG = #{productTag}
+			     , PRODUCT_ORIGIN = #{productOrigin}
+			     , PRODUCT_CHANGE = #{productChange}
+			 WHERE PRODUCT_NO = #{productNo}
+ 	</update>
+ 	
+ 	<update id="updateSubThumbnail" parameterType="product">
+ 		UPDATE PRODUCT
+		   SET PRODUCT_NAME = #{productName}
+		     , PRODUCT_PRICE = #{productPrice}
+		     , PRODUCT_CATEGORY = #{productCategory}
+		     , PRODUCT_SUB_CAPTION = #{productSubCaption}
+		     , PRODUCT_CAPTION = #{productCaption}
+		     , PRODUCT_TAG = #{productTag}
+		     , PRODUCT_SUB_ORIGIN = #{productSubOrigin}
+		     , PRODUCT_SUB_CHANGE = #{productSubChange}
+		 WHERE PRODUCT_NO = #{productNo}
+ 	
+ 	</update>
+ 	
+ 	<select id="originTag" parameterType="product"
+ 							resultType="string">
+		SELECT TAG_NAME
+		  FROM PRODUCT_TAG
+		  WHERE PRODUCT_NO = #{productNo}
+ 	
+ 	</select>
  	
 </mapper>

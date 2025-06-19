@@ -98,21 +98,41 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int updateThumbnail(Product p) {
 
-		int result1 =productDao.updateThumbnailProduct(sqlSession, p);
+		return productDao.updateThumbnailProduct(sqlSession, p);
 		
-		int result2 = productDao.updateThumbnailSize(sqlSession, p);
+	}
+	
+	@Override
+	public int updateThumbnailNoSub(Product p) {
+
+		return productDao.updateThumbnailNoSub(sqlSession, p);
 		
-		return (result1 * result2);
+	}
+	
+	@Override
+	public int updateSubTumbnail(Product p) {
+
+		return productDao.updateSubThumbnail(sqlSession, p);
 	}
 
-	@Override
-	public int update(Product p) {
 
-		int result1 = productDao.updateProduct(sqlSession, p);
+	@Override
+	public int updateProduct(Product p) {
+
+		return productDao.updateProduct(sqlSession, p);
 		
-		int result2 = productDao.updateSize(sqlSession, p);
+	}
+	
+	@Override
+	public int updateSize(Product p) {
 		
-		return (result1 * result2);
+		return productDao.updateSize(sqlSession, p);
+	}
+	
+	@Override
+	public int updateSubTag(Product p,  List<String> productSubTag) {
+		
+		return productDao.updateSubTag(sqlSession, p, productSubTag);
 	}
 
 	@Override
@@ -120,6 +140,14 @@ public class ProductServiceImpl implements ProductService {
 
 		return productDao.productStock(sqlSession, p);
 	}
+
+	@Override
+	public List<String> detailSubTag(Product p) {
+		
+		return productDao.detailSubTag(sqlSession, p);
+	}
+
+
 
 
 
