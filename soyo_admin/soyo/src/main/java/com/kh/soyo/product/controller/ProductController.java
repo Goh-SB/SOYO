@@ -89,13 +89,13 @@ public class ProductController {
 	       @ModelAttribute Product product,
 	        @RequestParam(value="thumbnail") MultipartFile thumbnail,
 	        @RequestParam(value="subThumbnail") MultipartFile subThumbnail,
-	        @RequestParam(value="imageList") List<String> imageList,
+	        @RequestParam(value="productSubTag") List<String> productSubTag,
 	        HttpSession session) {
 
-	  // System.out.println(product);
-	  // System.out.println(thumbnail);
-	  // System.out.println(subThumbnail);
-	  // System.out.println(imageList);
+//	  System.out.println(product);
+//	  System.out.println(thumbnail);
+//	  System.out.println(subThumbnail);
+//	  System.out.println(productSubTag);
 	  
 	  int result = 0;
 	  
@@ -111,9 +111,9 @@ public class ProductController {
 		product.setProductChange(changeName);
 		product.setProductSubOrigin(subOrinName);
 		product.setProductSubChange(subChangeName);
-		
+
 		// System.out.println(product);
-		result = productService.enrollForm(product);
+		result = productService.enrollForm(product, productSubTag);
 		
 		
 		

@@ -2,6 +2,7 @@ package com.kh.soyo.product.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
@@ -13,7 +14,7 @@ public interface ProductService {
 
 	ArrayList<Member> productList(PageInfo pi);
 
-	int enrollForm(Product product);
+	int enrollForm(Product product, List<String> productSubTag);
 
 	int searchCount(String keyword);
 

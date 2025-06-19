@@ -1,6 +1,7 @@
 package com.kh.soyo.product.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -31,6 +32,8 @@ public class Product {
 	private String status;//	STATUS
 	private String productSubOrigin;
 	private String productSubChange;
+	private String productSubTag;
+	private String productTag;
 	
 	private String productSize; //	PRODUCT_SIZE_NO
 }

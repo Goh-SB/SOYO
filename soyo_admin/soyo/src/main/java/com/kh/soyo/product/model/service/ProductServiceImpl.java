@@ -1,6 +1,7 @@
 package com.kh.soyo.product.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,16 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public int enrollForm(Product product) {
+	public int enrollForm(Product product, List<String> productSubTag) {
 
 		int result1 = productDao.enrollForm(sqlSession, product);
 		int result2 = 0;
+		int result3 = 1;
+		for(int i = 0; i < productSubTag.size(); i++ ) {
+			product.setProductSubTag(productSubTag.get(i));
+			result3 *= productDao.enrollFormTag(sqlSession, product);
+		}
+		
 		if(result1 > 0) {
 			 result2 = productDao.enrollFormSize(sqlSession, product);
 		}
