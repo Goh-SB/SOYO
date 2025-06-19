@@ -16,8 +16,15 @@
         font-style: normal;
     }
 
+    @font-face {
+        font-family: 'NanumSquareRound';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
   body {
-    background: #f8f4fc;
+    background: #f8f4fcc5;
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
@@ -65,6 +72,9 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    background: #f5effad7;
+    border: 1px groove #92929260;
+    font-family: 'NanumSquareRound', sans-serif;
   }
   .sort-tab.active, .sort-tab:hover {
     background: #EADCF1;
@@ -74,17 +84,19 @@
   .search-box {
     display: flex;
     align-items: center;
-    background: #F5EFFA;
     border-radius: 16px;
     padding: 6px 16px;
+    background: #f5effad7;
+    border: 1px groove #92929260;
   }
   .search-box input {
     border: none;
     background: transparent;
     outline: none;
     font-size: 1rem;
-    width: 180px;
+    width: 160px;
     color: #3B2A5A;
+    font-family: 'NanumSquareRound', sans-serif;
   }
   .search-box button {
     display: flex;
@@ -101,7 +113,7 @@
     padding: 0;
   }
   .search-box .material-icons {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     line-height: 1;
   }
 
@@ -133,6 +145,7 @@
     transition: box-shadow 0.2s, transform 0.2s;
     text-decoration: none;
     display: block;
+    border: 1px groove #92929260;
   }
   .product-card:hover {
     box-shadow: 0 4px 16px rgba(123,95,161,0.13);
