@@ -11,11 +11,6 @@ public class CommonController {
 		return "/faq";
 	}
 	
-	@GetMapping("/location")
-	public String showLocationPage() {
-		return "guide/location";
-	}
-	
 	@GetMapping("/brand")
 	public String showBrandPage() {
 		return "guide/brand";
