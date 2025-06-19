@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +16,15 @@
         font-style: normal;
     }
 
+    @font-face {
+        font-family: 'NanumSquareRound';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
   body {
-    background: #f8f4fc;
+    background: #f8f4fcc5;
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
@@ -64,6 +72,9 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    background: #f5effad7;
+    border: 1px groove #92929260;
+    font-family: 'NanumSquareRound', sans-serif;
   }
   .sort-tab.active, .sort-tab:hover {
     background: #EADCF1;
@@ -73,17 +84,19 @@
   .search-box {
     display: flex;
     align-items: center;
-    background: #F5EFFA;
     border-radius: 16px;
     padding: 6px 16px;
+    background: #f5effad7;
+    border: 1px groove #92929260;
   }
   .search-box input {
     border: none;
     background: transparent;
     outline: none;
     font-size: 1rem;
-    width: 180px;
+    width: 160px;
     color: #3B2A5A;
+    font-family: 'NanumSquareRound', sans-serif;
   }
   .search-box button {
     display: flex;
@@ -100,7 +113,7 @@
     padding: 0;
   }
   .search-box .material-icons {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     line-height: 1;
   }
 
@@ -132,6 +145,7 @@
     transition: box-shadow 0.2s, transform 0.2s;
     text-decoration: none;
     display: block;
+    border: 1px groove #92929260;
   }
   .product-card:hover {
     box-shadow: 0 4px 16px rgba(123,95,161,0.13);
@@ -178,7 +192,27 @@
   <br><br><br>
     
   <div class="container">
-    <div class="product-category">남성복</div>
+  
+  
+    <c:choose>
+	  <c:when test="${param.type eq 'mens'}">
+	    <div class="product-category">남성복</div>
+	  </c:when>
+	  <c:when test="${param.type eq 'womens'}">
+	    <div class="product-category">여성복</div>
+	  </c:when>
+	  <c:when test="${param.type eq 'kids'}">
+	    <div class="product-category">아동복</div>
+	  </c:when>
+	  <c:when test="${param.type eq 'accessory'}">
+	    <div class="product-category">액세서리</div>
+	  </c:when>
+	  <c:otherwise>
+	    <div class="product-category">전체 상품</div>
+	  </c:otherwise>
+	</c:choose>
+
+    
     <span class="product-count">총 <b>10</b> 개의 상품</span>
     <hr>
     <div class="top-bar">
@@ -194,7 +228,7 @@
     </div>
     <!-- 상품 리스트 영역이 여기에 들어감 -->
     <div class="product-list">
-      <a href="/product/detail?id=1" class="product-card">
+      <a href="/soyo/product/productDetail?" class="product-card">
         <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/adult-1868750_1280.jpg" alt="샘플 상품" />
         <div class="product-card-title">한글 반팔 셔츠 저고리 [베이지]</div>
         <div class="product-card-price">₩169,000</div>

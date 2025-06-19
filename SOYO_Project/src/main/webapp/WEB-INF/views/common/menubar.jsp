@@ -257,10 +257,11 @@
       <li class="dropdown">
         <a id="menu">상품</a>
         <ul class="submenu">
-          <li><a href="<c:url value='/product/productList' />">남성복</a></li>
-          <li><a href="#">여성복</a></li>
-          <li><a href="#">아동복</a></li>
-          <li><a href="#">액세서리</a></li>
+        	<li><a href="<c:url value='/product/productList?type=all' />">ALL</a></li>
+		    <li><a href="<c:url value='/product/productList?type=mens' />">남성복</a></li>
+		    <li><a href="<c:url value='/product/productList?type=womens' />">여성복</a></li>
+		    <li><a href="<c:url value='/product/productList?type=kids' />">아동복</a></li>
+		    <li><a href="<c:url value='/product/productList?type=accessory' />">액세서리</a></li>
           <li><a href="#">맞춤 제작</a></li>
         </ul>
       </li>

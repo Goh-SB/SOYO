@@ -118,6 +118,11 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.productStock", p);
 	}
 
+	public int enrollFormTag(SqlSessionTemplate sqlSession, Product product) {
+
+		return sqlSession.insert("productMapper.enrollFormTag", product);
+	}
+
 
 
 

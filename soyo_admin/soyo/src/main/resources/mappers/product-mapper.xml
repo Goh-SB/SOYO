@@ -16,6 +16,8 @@
  		<result column="PRODUCT_SIZE_NO" property="productSizeNo" />
  		<result column="PRODUCT_SIZE" property="productSize"/>
  	 	<result column="STOCK_COUNT" property="productStock" />
+ 	 	<result column="PRODUCT_SUB_ORIGIN" property="productSubOrigin" />
+ 	 	<result column="PRODUCT_SUB_CHANGE" property="productSubChange" />
  	</resultMap>
  
  
@@ -47,15 +49,24 @@
                           , #{productOrigin}
                           , #{productChange}
                           , SYSDATE
-                          , 'Y')
+                          , 'Y'
+                          , #{productSubOrigin}
+                          , #{productSubChange}
+                          , #{productTag}
+                           )
  	
  	</insert>
  	
  	<insert id="enrollFormSize" parameterType="product">
- 		INSERT INTO PRODUCT_SIZE VALUES (SEQ_PRODUCT_SIZE.NEXTVAL
-                                , SEQ_PRODUCT.CURRVAL
+ 		INSERT INTO PRODUCT_SIZE VALUES (SEQ_PRODUCT.CURRVAL
                                 , #{productSize}
                                 , #{productStock})
+ 	
+ 	</insert>
+ 	
+ 	<insert id="enrollFormTag" parameterType="product">
+ 		INSERT INTO PRODUCT_TAG VALUES (SEQ_PRODUCT.CURRVAL,
+ 										#{productSubTag})
  	
  	</insert>
  	

@@ -46,9 +46,11 @@ function ProductEnrollFormComponent() {
   const [productSize, setProductSize] = useState('M');
   const [tag, setTag] = useState([]);
   const [productCaption, setProductCaption] = useState('');
+  const [productSubTag, setProductSubTag] = useState([]);
+  const [productTag, setProductTag] = useState('');
 
   const sizes = ['S', 'M', 'L'];
-  const subtag = ['자켓', '셔츠', '조끼', '도포', '저고리', '드레스', '원피스', '악세사리', '크롭티', '시스루', '맨투맨'
+  const subTag = ['자켓', '셔츠', '조끼', '도포', '저고리', '드레스', '원피스', '악세사리', '크롭티', '시스루', '맨투맨'
     , '후드', '코트', '치마', '바지', '댕기', '부채', '키링', '그립톡', '목걸이', '팔찌', '반지'
     , '허리띠', '모던한복', '남녀공용', '데일리한복', '스트릿한복', '여름한복', '겨울한복', '사계절용'];
 
@@ -130,6 +132,9 @@ function ProductEnrollFormComponent() {
     }
     console.log("endContent : ", endContent);
 
+    // subTag
+    // console.log(productSubTag);
+    // console.log(productTag);
 
     const data = new FormData();
 
@@ -150,18 +155,21 @@ function ProductEnrollFormComponent() {
     data.append("productStock", productStock);
     data.append("productSize", productSize);
     data.append("productCategory", productCategory);
+    data.append("productTag", productTag)
+    productSubTag.forEach((tag) => {
+      data.append("productSubTag", tag);
+    });
+
     if (thumbnail.files.length > 0 && subThumbnail.files.length > 0) {
       data.append("thumbnail", thumbnail.files[0]);
       data.append("subThumbnail", subThumbnail.files[0]);
     }
-    
+
     urlArray.forEach(url => {
       data.append("imageList", url);
     });
 
-
     console.log("최종본 : ", data);
-
 
     let url = "http://localhost:8100/soyo/product/enrollForm";
     axios({
@@ -191,7 +199,7 @@ function ProductEnrollFormComponent() {
 
     $("#product-subThumbnail").off("click").on("click", () => {
       $("#subThumbnail").click();
-    }) 
+    })
     tagfunc();
   }, [])
 
@@ -210,7 +218,7 @@ function ProductEnrollFormComponent() {
     }
   }
 
-  
+
   const loadSubImg = (e) => {
     // console.log(e.target.files[0].name)
     // 이미지 미리보기용 src 속성을 만드는 함수
@@ -223,11 +231,12 @@ function ProductEnrollFormComponent() {
   }
 
   const tagfunc = () => {
-    const tagLib = subtag.map((item, index) => {
+    const tagLib = subTag.map((item, index) => {
 
       return (
         <label className="form-check-label" key={index}>
-          <input type="checkbox" className="form-check-input" value={item} />
+          <input type="checkbox" className="form-check-input" value={item}
+            onChange={subTagChange} />
           {item}
         </label>
       );
@@ -235,6 +244,14 @@ function ProductEnrollFormComponent() {
     setTag(tagLib);
   };
 
+  const subTagChange = (e) => {
+    const val = e.target.value;
+    if (e.target.checked == true) {
+      setProductSubTag((pro) => [...pro, val]);
+    } else {
+      setProductSubTag((pro) => pro.filter((tag) => tag !== val))
+    }
+  }
 
 
   // ------------------------UI------------------------
@@ -248,11 +265,11 @@ function ProductEnrollFormComponent() {
 
             {/* ======== Subject ======== */}
 
-            <div style={{ marginBottom: '20px', marginTop: '50px', fontSize: '20px', fontWeight: 'bold', display: 'flex', gap : '260px', marginLeft : '50px'}} >
-              
+            <div style={{ marginBottom: '20px', marginTop: '50px', fontSize: '20px', fontWeight: 'bold', display: 'flex', gap: '260px', marginLeft: '50px' }} >
+
               <span>상품 썸네일</span>
               <span>상품 서브썸네일</span>
-              </div>
+            </div>
             <br />
             <input
               type="file"
@@ -312,7 +329,7 @@ function ProductEnrollFormComponent() {
 
                   <div id="tag-area">
                     <div id="tag-01-area">
-                      <select id="tag-01">
+                      <select id="tag-01" onChange={(e) => { setProductTag(e.target.value) }}>
                         <option value="outer">외투</option>
                         <option value="top">상의</option>
                         <option value="bottom">하의</option>
@@ -368,8 +385,8 @@ function ProductEnrollFormComponent() {
           <br />
 
           <div align="center">
-            <input id="product-caption" type="text" placeholder="주 내용을 입력하세요" 
-            onChange={(e) => { setProductCaption(e.target.value) }}/>
+            <input id="product-caption" type="text" placeholder="주 내용을 입력하세요"
+              onChange={(e) => { setProductCaption(e.target.value) }} />
           </div>
           <br />
           <div style={{ height: '650px' }}>
