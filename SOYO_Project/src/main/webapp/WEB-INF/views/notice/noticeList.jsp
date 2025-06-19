@@ -71,6 +71,7 @@
 			transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 			outline: none;
 		}
+
 		.filter-btn:hover, .filter-btn.active {
 			background: #a4c0d4;
 			color: #fff;
@@ -86,6 +87,7 @@
 			width: 100%;
 			max-width: 600px;
 		}
+
 		.search-select {
 			padding: 10px 16px;
 			border: none;
@@ -96,6 +98,7 @@
 			outline: none;
 			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
 		}
+
 		.search-input {
 			padding: 10px 16px;
 			border: none;
@@ -106,6 +109,7 @@
 			width: 260px;
 			box-shadow: 0 2px 6px rgba(0,0,0,0.07);
 		}
+
 		.search-btn {
 			height: 40px;
 			padding: 0 28px;
@@ -123,6 +127,7 @@
 			justify-content: center;
 			line-height: 1;
 		}
+		
 		.search-btn:hover {
 			background: #9b84c0b6;
 		}
@@ -216,11 +221,32 @@
 
 		<div class="list_wrap">
 			<div class="list_form">
+				<!-- 필터링 버튼 -->
 				<div class="filter-btn-group">
-					<button class="filter-btn active">ALL</button>
-					<button class="filter-btn">공지사항</button>
-					<button class="filter-btn">이벤트</button>
+					<button class="filter-btn active" onclick="filter([], this)">ALL</button>
+					<button class="filter-btn" onclick="filter(['notice'], this)">공지사항</button>
+					<button class="filter-btn" onclick="filter(['event'], this)">이벤트</button>
 				</div>
+
+				<script>
+					function filter(noticeType) {
+						// 이동할 url 결정
+						let url;
+
+						if (!noticeType || noticeType.length === 0) {
+							// ALL 버튼
+							url = "/soyo/notice/noticeList";
+						} else {
+							// 나머지 버튼(noticeType 파라미터를 쿼리스트링으로 변환)
+							const queryString = noticeType.map(type => "noticeType=" + encodeURIComponent(type)).join("&");
+							url = "/soyo/notice/noticeFilter" + (queryString ? "?" + queryString : "");
+						}
+
+						// 페이지 이동
+						window.location.href = url;
+					}
+				</script>
+
 				<h2 align="center"></h2>
 				<table class="list_area">
 					<thead align="center">
@@ -267,30 +293,19 @@
 				</table>
 			</div>
 
-			<!-- 검색창이 들어갈 자리 -->
-			<form action="/soyo/notice/searchNoticeList" method="get">
-				<div class="search-bar-area">
-
+			<form id="searchForm" action="/soyo/notice/searchNoticeList" method="get">
+				<!-- 검색창이 들어갈 자리 -->
+				<div class="search-bar-area" id="search-area">
 					<select class="search-select" name="condition">
 						<option value="title">제목</option>
 						<option value="content">내용</option>
 					</select>
-					<input class="search-input" type="text" name="keyword"
-						placeholder="검색어를 입력하세요" value="${ requestScope.keyword }">
-					<button class="search-btn">검색</button>
-
 					
-				</form>
-				<!-- condition이라는 응답 데이터가 넘어온 경우에만 검색 조건 유지 -->
-				<c:if test="${ not empty requestScope.condition }">
-					<script>
-						$(function() {
-							// 해당 condition 값과 일치하는 option 태그를 찾아 selected 속성 부여
-							$(".search-bar-area option[value=${ requestScope.condition }]").attr("selected", true);
-						});
-					</script>
-				</c:if>
-			</div>
+					<input class="search-input" type="search" name="keyword" required
+						placeholder="검색어를 입력하세요" value="${ requestScope.keyword }">
+					<button type="submit" class="search-btn">검색</button>
+				</div>
+			</form>
 
 			<div class="paging-area">
 				<ul class="pagination justify-content-center">
@@ -303,13 +318,28 @@
 								</a>
 							</li>
 						</c:when>
+
 						<c:otherwise>
-							<li class="page-item">
-								<a class="page-link" 
-								href="/soyo/notice/noticeList?nPage=${ requestScope.pi.currentPage - 1 }">
-									&lt;
-								</a>
-							</li>
+							<c:choose>
+								<c:when test="${ empty requestScope.condition }">
+									<li class="page-item">
+										<a class="page-link" 
+											href="/soyo/notice/noticeList?nPage=${ requestScope.pi.currentPage - 1 }">
+											&lt;
+										</a>
+									</li>
+								</c:when>
+
+								<c:otherwise>
+									<!-- 검색이 유지되도록 설정 -->
+									<li class="page-item">
+										<a class="page-link" 
+											href="/soyo/notice/searchNoticeList?condition=${ requestScope.condition }&keyword=${ requestScope.keyword}&nPage=${ requestScope.pi.currentPage - 1 }">
+											&lt;
+										</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 					
@@ -326,12 +356,27 @@
 									</a>
 								</li>
 							</c:when>
+
 							<c:otherwise>
-								<li class="page-item">
-									<a class="page-link" href="/soyo/notice/noticeList?nPage=${ p }">
-										${ p }
-									</a>
-								</li>
+								<c:choose>
+									<c:when test="${ empty requestScope.condition }">
+										<!-- 일반 목록 조회(condition이 없을 경우) -->
+										<li class="page-item">
+											<a class="page-link" href="/soyo/notice/noticeList?nPage=${ p }">
+												${ p }
+											</a>
+										</li>
+									</c:when>
+
+									<c:otherwise>
+										<!-- 검색 목록 조회(condition 이 있을 경우) -->
+										<li class="page-item">
+											<a class="page-link" href="/soyo/notice/searchNoticeList?condition=${ requestScope.condition }&keyword=${ requestScope.keyword }&nPage=${ p }">
+												${ p }
+											</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -345,13 +390,26 @@
 								</a>
 							</li>
 						</c:when>
+
 						<c:otherwise>
-							<li class="page-item">
-								<a class="page-link" 
-								href="/soyo/notice/noticeList?nPage=${ requestScope.pi.currentPage + 1 }">
-									&gt;
-								</a>
-							</li>
+							<c:choose>
+								<c:when test="${ empty requestScope.condition }">
+									<li class="page-item">
+										<a class="page-link" href="/soyo/notice/noticeList?nPage=${ requestScope.pi.currentPage + 1 }">
+											&gt;
+										</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<!-- 검색이 유지되도록 설정 -->
+									<li class="page-item">
+										<a class="page-link" 
+											href="/soyo/notice/searchNoticeList?condition=${ requestScope.condition }&keyword=${ requestScope.keyword }&nPage=${ requestScope.pi.currentPage + 1 }">
+											&gt;
+										</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</ul>

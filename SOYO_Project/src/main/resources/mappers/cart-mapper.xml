@@ -41,4 +41,13 @@
 		WHERE MEMBER_ID = #{memberId}
 		  AND PRODUCT_NO = #{productNo}		
 	</select>
+	
+	<delete id="deleteSelected" parameterType="map">
+    DELETE FROM cart
+     WHERE MEMBER_ID = #{memberId}
+       AND PRODUCT_NO IN
+    <foreach item="no" collection="productNoList" open="(" separator="," close=")">
+        #{no}
+    </foreach>
+</delete>
 </mapper>

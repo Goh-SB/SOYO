@@ -79,8 +79,41 @@ public class MemberController {
 	
 	// 내 정보 수정페이지 이동메소드
 	@GetMapping("/memberUpdateForm")
-	public String memberUpdateForm(){
-		return "member/memberUpdateForm";
+	public String memberUpdateForm(HttpSession session){
+		
+		if(session.getAttribute("loginUser") != null) {
+			
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			// 로그인한 유저 세션값 가져오기
+			
+			// 주소값 뽑기
+		    String address = loginUser.getAddress();
+
+		    // 주소값 분리할 변수 생성
+		    String baseAddress = "";
+		    String detailAddress = "";
+
+		    // + 가 있으면 +를 기준으로 문자열 나누기
+		    if (address != null && address.contains("+")) {
+		    	
+		        String[] parts = address.split("\\+");
+		        baseAddress = parts.length > 0 ? parts[0] : "";
+		        detailAddress = parts.length > 1 ? parts[1] : "";
+		        
+		    } else {
+		    	
+		    	// 없으면 그냥 하나로
+		        baseAddress = address;
+		    }
+
+		    // 세션에 따로 담기
+		    session.setAttribute("baseAddress", baseAddress);
+		    session.setAttribute("detailAddress", detailAddress);
+			
+			
+			return "member/memberUpdateForm";
+		}
+		return "member/myInformation";
 	}
 	
 	// 회원 탈퇴페이지 이동메소드
@@ -268,6 +301,7 @@ public class MemberController {
 		m.setEmail(XssDefencePolicy.defence(m.getEmail())); // 이메일
 		m.setAddress(XssDefencePolicy.defence(m.getAddress())); // 주소
 		addrDetail = (XssDefencePolicy.defence(addrDetail)); // 상세주소
+		m.setPhone(XssDefencePolicy.defence(m.getPhone())); // 전화번호
 	
 		// 비밀번호 암호화 하기
 		String encPwd = bCryptPasswordEncoder.encode(m.getMemberPwd());
@@ -276,7 +310,7 @@ public class MemberController {
 		m.setMemberPwd(encPwd);
 		
 		// 도로명 주소와 상세주소를 합쳐기
-		String fulladd = m.getAddress() + " "+ addrDetail ;
+		String fulladd = m.getAddress() + " + "+ addrDetail ;
 		// 합친거 객체에넣기
 		m.setAddress(fulladd);
 		// 회원 db에 넣기
@@ -299,7 +333,7 @@ public class MemberController {
 	
 	// 내 정보 변경시 실행할 메소드
 	@PostMapping("update")
-	public ModelAndView updateMember(Member m, HttpSession session, ModelAndView mv) {
+	public ModelAndView updateMember(Member m, @RequestParam("addrDetail")String addrDetail , HttpSession session, ModelAndView mv) {
 		// System.out.println(m);
 		
 		// XSS 공격 막기
@@ -308,6 +342,12 @@ public class MemberController {
 		m.setMemberName(XssDefencePolicy.defence(m.getMemberName())); // 이름
 		// m.setEmail(XssDefencePolicy.defence(m.getEmail())); // 이메일
 		m.setAddress(XssDefencePolicy.defence(m.getAddress())); // 주소
+		addrDetail = (XssDefencePolicy.defence(addrDetail)); // 상세주소
+		
+		// 도로명 주소와 상세주소를 합쳐기
+		String fulladd = m.getAddress() + " + "+ addrDetail ;
+		// 합친거 객체에넣기
+		m.setAddress(fulladd);
 		
 		// 정보 바꾸고 오기
 		int result = memberService.updateMember(m);

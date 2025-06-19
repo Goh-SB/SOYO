@@ -1,6 +1,8 @@
 package com.kh.soyo.cart.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.kh.soyo.cart.model.vo.Cart;
 
 public interface CartService {
@@ -11,6 +13,8 @@ public interface CartService {
 	int updateCartCount(String memberId, int productNo, int count);
 
 	Cart updateCart(String memberId, int productNo, int productCount);
+
+	int deleteSelected(String memberId, List<Integer> productNoList);
 
 
 

@@ -296,19 +296,23 @@
                                 <td>${cart.productPrice }원</td>
 
                                 <!-- 상품금액 = 수량 * 단가 -->
-								
+                                
+                                <td>
+						            <strong class="item-total-price">0원</strong>
+						        </td>
+														
                                 </tr>
                             </c:forEach>
                          </tbody>
                       </table>
-                      <span class="totalPrice" name="totalPrice">0원</span>
+                     
     
                 <div class="xans-element- xans-order xans-order-selectorder">
                     <ul>
                         <li flex="0">
-                            <a href="#none" onclick="">
-                                <span>선택상품 삭제</span>
-                            </a>
+					      <a href="#none" onclick="deleteSelected()">
+							    <span>선택상품 삭제</span>
+							</a>
                         </li>
                     </ul>
                 </div>
@@ -375,8 +379,7 @@
 		function count(type, ths) {
 	    const $input = $(ths).closest("td").find(".pop_out");
 	    let currentCount = $input.val();
-		let $sss = $(".pop-out")
-	    
+
 	    // 수량 증감
 	    if (type === 'plus') {
 	        currentCount++;
@@ -404,7 +407,6 @@
 	        success: function (result) {
 	        	
 	        	updateSelectedTotal();
-
 
 	        },
 	        error: function () {
@@ -450,16 +452,70 @@
                 let itemTotal = numericPrice * cartCount;
                 total += itemTotal;
                 
+                $row.find(".item-total-price").text(itemTotal.toLocaleString('ko-KR') + "원");
+
+                
                 // 가격 상세 항목
               	details += "<p>"+ itemTotal.toLocaleString('ko-KR') + "원" + "</p>"
                 $(".totalPrice").html(details);
                 
             });
 
-            $('#total_order_price_front').text(total.toLocaleString('ko-KR') + ' 원');
-                       
+            $('#total_order_price_front').text(total.toLocaleString('ko-KR') + ' 원');                    
+        }
+        
+        function deleteSelected() {
+            let productNoList = [];
+
+            $('input[name="productId"]:checked').each(function () {
+                productNoList.push($(this).val());
+            });
+
+            if (productNoList.length === 0) {
+                alert("삭제할 상품을 선택하세요");
+                return;
+            }
+
+            if (!confirm("선택한 상품을 삭제하시겠습니까?")) return;
+
+            $.ajax({
+                type: "POST",
+                url: "/soyo/cart/delete",
+                traditional: true,
+                data: { 
+                    productNoList: productNoList 
+                },
+                success: function(result) {
+                    if (result === "성공") {
+                        $('input[name="productId"]:checked').each(function () {
+                            $(this).closest("tr").remove();
+                        });
+                        updateSelectedTotal();
+                        alert("선택된 상품이 삭제되었습니다");
+                    } else {
+                        alert("서버에서 삭제에 실패했습니다.");
+                    }
+                },
+                error: function () {
+                    console.log("ajax통신실패");
+                }
+            });
         }
         
 
     </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

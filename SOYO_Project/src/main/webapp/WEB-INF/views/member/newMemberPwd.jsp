@@ -56,7 +56,7 @@
     }
 
     #findIdContent {
-        width: 600px;
+        width: 500px;
         margin: auto;
         text-align: center;
         margin-top: 80px;
@@ -77,7 +77,7 @@
 
     .enrollform{
         clear: both;
-        width: 100%;
+        width: 500px;
         height: 600px;
         border: 3px solid #B0BEC5;
         background-color: rgba(255, 255, 255, 0.851);
@@ -143,7 +143,7 @@
 
     /* 인증번호 발급버튼 */
     #sert{
-        width: 70%;
+        width: 400px;
         height: 50px;
         font-size: 20px;
         background-color: lightcyan;

@@ -59,10 +59,10 @@
 
 
     #myContent{
-        width: 900px;
+        width: 800px;
             /*border: 2px solid rgb(122, 64, 126);*/
         box-sizing: border-box;
-        box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         border-radius: 50px;
         vertical-align: middle;
         background-color: rgba(246, 250, 255, 0.905);
@@ -175,7 +175,7 @@ function execDaumPostcode() {
                             <td><input type="password" class="fontGowunB inputText" id="memberPwd" name="memberPwd" placeholder="영문, 숫자, 특수기호를 포함한 8 ~ 20글자" maxlength="20" required></td>
                         </tr>
                         <tr>
-                            <th></th>
+
                             <td colspan="2" style="display: none;"><span id="pwdMsg" class="fontGowunB textsize20">올바른 비밀번호를 입력해주세요.</span></td>
                         </tr>
                         <tr>
@@ -185,7 +185,7 @@ function execDaumPostcode() {
                             <td><input type="password" class="fontGowunB inputText" id="memberPwdCheck" name="memberPwdCheck" maxlength="20" required></td>
                         </tr>
                         <tr>
-                            <th></th>
+
                             <td style="display: none;"><span id="checkPwdMsg" style="color: red;" class="fontGowunB textsize20">비밀번호가 다릅니다.</span></td>
                         </tr>
                         <tr>
@@ -216,15 +216,11 @@ function execDaumPostcode() {
                             <td><input id="email" class="fontGowunB inputText" name="email" type="email" maxlength="30"></td>
                             <td style="padding-bottom: 15px;"><button type="button" class="fontGowunB buttonStyle" id="sert" onclick="cert()">인증번호 발급</button></td>
                         </tr>
-                        <tr>
-                            <td><span class="textsize20">인증번호</span></td>
-                        </tr>
                         <tr style="display: none;">
-                            <td><input type="text" class="fontGowunB inputText" id="emailCheck"></td>
+                            <td><input type="text" class="fontGowunB inputText" id="emailCheck" placeholder="인증번호"></td>
                             <td style="padding-bottom: 15px;"><button type="button" class="fontGowunB buttonStyle" id="validate" onclick="valid();">인증</button></td>
                         </tr>
                         <tr>
-                            <th></th>
                             <td><span id="emailMsg" class="fontGowunB textsize20"></span></td>
                         </tr>
                         <tr>

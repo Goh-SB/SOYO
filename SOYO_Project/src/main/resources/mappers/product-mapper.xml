@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="productMapper">
+
+	<resultMap id="productMap" type="product">
+	  <result property="productNo" column="PRODUCT_NO"/>
+	  <result property="productName" column="PRODUCT_NAME"/>
+	  <result property="productPrice" column="PRODUCT_PRICE"/>
+	  <result property="productOrigin" column="PRODUCT_ORIGIN"/>
+	  <result property="productCaption" column="PRODUCT_CAPTION"/>
+	  <result property="productChange" column="PRODUCT_CHANGE"/>
+	  <result property="productCategory" column="PRODUCT_CATEGORY"/>
+	  <result property="productSubCaption" column="PRODUCT_SUB_CAPTION"/>
+	  <result property="productCount" column="STOCK_COUNT"/>
+	  <result property="productTag" column="TAG_NAME"/>
+	  <result property="productSort" column="PRODUCT_TAG"/>
+	  <!-- 필요한 만큼 추가 -->
+	</resultMap>
+
+  <select id="selectProductList" resultMap="productMap">
+    SELECT *
+    FROM PRODUCT
+    WHERE STATUS = 'Y'
+  </select>
+  
+  <select id="selectProductByNo" resultMap="productMap">
+	  SELECT P.*, S.*
+	  FROM PRODUCT P
+	  JOIN PRODUCT_SIZE S ON P.PRODUCT_NO = S.PRODUCT_NO
+	  WHERE P.PRODUCT_NO = #{productNo}
+	    AND P.STATUS = 'Y'
+  </select>
+  
+  <select id="selectTagsByProductNo" resultType="string">
+     SELECT TAG_NAME
+     FROM PRODUCT_TAG T
+     WHERE PRODUCT_NO = #{productNo}
+  </select>
+  
+  
+
+</mapper>

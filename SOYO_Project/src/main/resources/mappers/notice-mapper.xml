@@ -65,6 +65,26 @@
 	    LIKE '%' || #{keyword} || '%'
 	</select>
 	
+	<!-- 공지사항 필터링용 쿼리문(페이징 처리 포함) -->
+	<select id="noticeFilter" resultType="Notice" parameterType="list">
+	    SELECT *
+	    FROM NOTICE
+	    <where>
+	        <if test="noticeType != null and noticeType.size() > 0">
+	            NOTICE_TYPE IN
+	            <foreach item="type" collection="noticeType" open="(" separator="," close=")">
+	                #{type}
+	            </foreach>
+	        </if>
+	    </where>
+	</select>
+	
+	<select id="noticeFilterCount" parameterType="list" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE STATUS = 'Y'
+	</select>
+	
 	<!-- 공지사항 상세 조회용 쿼리문 -->
 	<select id="noticeDetail" parameterType="_int" 
 		resultMap="noticeResultSet">
