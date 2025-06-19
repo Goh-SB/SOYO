@@ -61,7 +61,7 @@ public class CartController {
 		    Cart c = cartService.updateCart(memberId,cart.getProductNo(),cart.getProductCount());
 
 		    model.addAttribute("c",c);
-		    System.out.println(c);
+		    //System.out.println(c);
 		    return (result > 0) ? "성공" : "실패";
 		   
 	}

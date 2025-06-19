@@ -296,19 +296,21 @@
                                 <td>${cart.productPrice }원</td>
 
                                 <!-- 상품금액 = 수량 * 단가 -->
-								
+                                
+                                <td>
+						            <strong class="item-total-price">0원</strong>
+						        </td>
+														
                                 </tr>
                             </c:forEach>
                          </tbody>
                       </table>
-                      <span class="totalPrice" name="totalPrice">0원</span>
+                     
     
                 <div class="xans-element- xans-order xans-order-selectorder">
                     <ul>
                         <li flex="0">
-                            <a href="#none" onclick="">
-                                <span>선택상품 삭제</span>
-                            </a>
+							<button>선택상품 삭제</button>
                         </li>
                     </ul>
                 </div>
@@ -447,6 +449,9 @@
                 
                 let itemTotal = numericPrice * cartCount;
                 total += itemTotal;
+                
+                $row.find(".item-total-price").text(itemTotal.toLocaleString('ko-KR') + "원");
+
                 
                 // 가격 상세 항목
               	details += "<p>"+ itemTotal.toLocaleString('ko-KR') + "원" + "</p>"
