@@ -91,4 +91,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.changePwd(sqlSession ,m);
 	}
 
+	// 이메일 찾기용 메소드
+	@Override
+	public String findEmail(Member m) {
+		
+		return memberDao.findEmail(sqlSession, m);
+	}
+
 }
