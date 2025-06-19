@@ -18,11 +18,6 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> selectReviewList(int productNo) {
         List<Review> reviewList = reviewDao.selectReviewList(productNo);
 
-        System.out.println("리뷰 개수: " + reviewList.size());
-        for (Review r : reviewList) {
-            System.out.println(r);
-        }
-
         return reviewList;
     }
 }

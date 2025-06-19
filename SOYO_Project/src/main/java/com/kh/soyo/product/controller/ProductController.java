@@ -37,8 +37,6 @@ public class ProductController {
 
 	    // 해당 상품 리뷰 목록 조회
 	    List<Review> reviewList = reviewService.selectReviewList(productNo);
-	    System.out.println("reviewList = " + reviewList);
-	    System.out.println("넘어온 productNo = " + productNo); // 반드시 12인지 확인
 
 	    
 	    // 모델에 담아서 JSP로 전달
