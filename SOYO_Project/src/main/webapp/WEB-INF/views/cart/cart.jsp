@@ -297,7 +297,7 @@
 
                                 <!-- 상품금액 = 수량 * 단가 -->
                                 <td>
- 								${requestScope.c.productCount }원
+ 					
                                 </td>
                                 </tr>
                             </c:forEach>
@@ -376,7 +376,8 @@
 		function count(type, ths) {
 	    const $input = $(ths).closest("td").find(".pop_out");
 	    let currentCount = $input.val();
-
+		let $sss = $(".pop-out")
+	    
 	    // 수량 증감
 	    if (type === 'plus') {
 	        currentCount++;
@@ -402,6 +403,7 @@
 	        success: function (result) {
 	        	
 	        	updateSelectedTotal();
+
 
 	        },
 	        error: function () {

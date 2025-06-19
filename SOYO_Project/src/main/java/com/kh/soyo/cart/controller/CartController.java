@@ -41,7 +41,7 @@ public class CartController {
 	
 	@ResponseBody
 	@PostMapping("/update")
-	public String updateCart(Cart cart,
+	public int updateCart(Cart cart,
 			
 						  HttpSession session,
 						  Model model) {
@@ -50,7 +50,7 @@ public class CartController {
 		 Member loginUser = (Member) session.getAttribute("loginUser");
 		    if (loginUser == null) {
 		    	model.addAttribute("fail","로그인 후 이용바랍니다");
-		        return "로그인후 이용바랍니다."; // 로그인 안 된 경우
+		        // return "로그인후 이용바랍니다."; // 로그인 안 된 경우
 		    }
 
 		    String memberId = loginUser.getMemberId();
@@ -60,9 +60,11 @@ public class CartController {
 		    
 		    Cart c = cartService.updateCart(memberId,cart.getProductNo(),cart.getProductCount());
 
+		    
+		    
 		    model.addAttribute("c",c);
-		    System.out.println(c);
-		    return (result > 0) ? "성공" : "실패";
+		    System.out.println(c.getProductCount());
+		    return c.getProductCount();
 		   
 	}
 }
