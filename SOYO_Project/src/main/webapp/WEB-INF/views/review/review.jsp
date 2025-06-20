@@ -277,7 +277,7 @@
             <c:forEach var="review" items="${bestReviewList}" varStatus="status">
                 <c:if test="${status.index lt 5}">
                     <div class="best-review-card">
-                        <img src="http://localhost:8100/soyo/resources/product_upfile/${review.productChange}" class="best-review-img" alt="리뷰 이미지">
+                        <img src="http://192.168.40.17:8100/soyo/resources/product_upfile/${review.productChange}" class="best-review-img" alt="리뷰 이미지">
                         <div class="best-review-subject">${review.reviewTitle}</div>
                         <div class="best-review-content">${review.reviewContent}</div>
                         <div class="best-review-rating">
@@ -318,7 +318,7 @@
                     <tr>
                         <td style="text-align:left;">
                             <div class="review-product">
-                                <img src="http://localhost:8100/soyo/resources/product_upfile/${review.productChange}" class="review-thumbnail">
+                                <img src="http://192.168.40.17:8100/soyo/resources/product_upfile/${review.productChange}" class="review-thumbnail">
                                 <span class="review-product-name">${review.reviewTitle}</span>
                             </div>
                         </td>
