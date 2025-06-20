@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.40.32:5173")
 @RequestMapping("product")
 @Slf4j
 public class ProductController {
@@ -76,7 +76,7 @@ public class ProductController {
 			String originName = file.getOriginalFilename();
 			String changeName = FileRenamePolicy.saveFile(file, filePath);
 			
-			String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
+			String fileUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + changeName;
 					
 			result.put("success", true);
 			result.put("url", fileUrl);
@@ -107,7 +107,7 @@ public class ProductController {
 		  
 		  String subOrinName = subThumbnail.getOriginalFilename();
 		  String subChangeName = FileRenamePolicy.saveFile(subThumbnail, filePath);
-		//  String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
+		//  String fileUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + changeName;
 		product.setProductOrigin(originName);
 		product.setProductChange(changeName);
 		product.setProductSubOrigin(subOrinName);
@@ -215,8 +215,8 @@ public class ProductController {
 		// System.out.println(p);
 		// System.out.println(thumbnail);
 		// System.out.println(subThumbnail);
-		System.out.println(productSubTag);
-		
+		// System.out.println(productSubTag);
+		 
 		
 		int result = 0;
 		
@@ -236,7 +236,7 @@ public class ProductController {
 			String originName = thumbnail.getOriginalFilename();
 			String changeName = FileRenamePolicy.saveFile(thumbnail, filePath);
 			  
-			// String fileUrl = "http://localhost:8100/soyo/resources/product_upfile/" + changeName;
+			// String fileUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + changeName;
 			p.setProductOrigin(originName);
 			p.setProductChange(changeName);
 			

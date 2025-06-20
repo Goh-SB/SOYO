@@ -9,6 +9,8 @@ import axios from 'axios';
 import $ from 'jquery';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+import React from 'react';
+
 
 Quill.register('modules/imageActions', ImageActions);
 Quill.register('modules/imageFormats', ImageFormats);
@@ -107,7 +109,7 @@ function ProductDetailComponent() {
         formData.append("file", file);
         console.log("formData: ", formData);
 
-        let uploadUrl = "http://localhost:8100/soyo/product/fileUpload";
+        let uploadUrl = "http://192.168.40.32:8100/soyo/product/fileUpload";
 
         await axios
           .post(uploadUrl, formData, {
@@ -181,7 +183,7 @@ function ProductDetailComponent() {
     console.log('subThumbnail', subThumbnail.files.length);
     console.log("productSubTag", productSubTag);
 
-    let url = "http://localhost:8100/soyo/product/update";
+    let url = "http://192.168.40.32:8100/soyo/product/update";
     axios({
       url,
       method: "post",
@@ -207,14 +209,17 @@ function ProductDetailComponent() {
     $("#product-subThumbnail").off("click").on("click", () => {
       $("#subThumbnail").click();
     })
-    tagfunc();
     loadContent();
 
-  }, [productSize])
+  }, [productSize]);
+
+  useEffect(()=>{
+    tagfunc();
+  }, [productSubTag]);
 
   const loadContent = () => {
     // 상품 정보 불러오기 함수
-    let url = "http://localhost:8100/soyo/product/detail/" + productNo;
+    let url = "http://192.168.40.32:8100/soyo/product/detail/" + productNo;
     axios({
       url,
       method: "get"
@@ -222,25 +227,18 @@ function ProductDetailComponent() {
 
       // console.log(response.data)
       setContent(response.data.result.productSubCaption);
-      document.querySelector("#product-thumbnail").src = `http://localhost:8100/soyo/resources/product_upfile/${response.data.result.productChange}`;
-      document.querySelector("#product-subThumbnail").src = `http://localhost:8100/soyo/resources/product_upfile/${response.data.result.productSubChange}`;
+      document.querySelector("#product-thumbnail").src = `http://192.168.40.32:8100/soyo/resources/product_upfile/${response.data.result.productChange}`;
+      document.querySelector("#product-subThumbnail").src = `http://192.168.40.32:8100/soyo/resources/product_upfile/${response.data.result.productSubChange}`;
       setProductName(response.data.result.productName);
       setProductPrice(response.data.result.productPrice);
       setProductCategory(response.data.result.productCategory);
       setProductTag(response.data.result.productTag);
-      const selectTag = document.querySelectorAll(".form-check-input");
-      const loadTag = response.data.list;
-      selectTag.forEach((data) => {
-        if (loadTag.includes(data.value)) {
-          data.checked = true;
-        }
-      });
-
+      setProductSubTag(response.data.list);
       setProductCaption(response.data.result.productCaption);
 
 
       // 사이즈별 재고를 불러오는 함수
-      url = "http://localhost:8100/soyo/product/detail/size";
+      url = "http://192.168.40.32:8100/soyo/product/detail/size";
       axios({
         url,
         method: "get",
@@ -294,7 +292,8 @@ function ProductDetailComponent() {
       return (
         <label className="form-check-label" key={index}>
           <input type="checkbox" className="form-check-input" value={item}
-            onChange={subTagChange} />
+          checked={productSubTag.includes(item)}
+          onChange={subTagChange} />
           {item}
         </label>
       );

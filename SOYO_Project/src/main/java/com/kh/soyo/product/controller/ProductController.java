@@ -37,7 +37,6 @@ public class ProductController {
 
 	    // 해당 상품 리뷰 목록 조회
 	    List<Review> reviewList = reviewService.selectReviewList(productNo);
-
 	    
 	    // 모델에 담아서 JSP로 전달
 	    model.addAttribute("product", product);

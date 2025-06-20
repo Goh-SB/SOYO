@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './NoticeDetailComponent.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import React from 'react';
 
 function NoticeDetailComponent() {
 
@@ -14,7 +15,7 @@ function NoticeDetailComponent() {
     useEffect(() => {
 
 
-        let url = "http://localhost:8100/soyo/notice/detail/" + noticeNo;
+        let url = "http://192.168.40.32:8100/soyo/notice/detail/" + noticeNo;
 
         axios({
             url,
@@ -71,7 +72,7 @@ function NoticeDetailComponent() {
                 <tbody>
                     <tr>
                         <td>
-                            <img id="fileImg" src={`http://localhost:8100/soyo/resources/notice_upfile/${dataList.noticeImage}`} />
+                            <img id="fileImg" src={`http://192.168.40.32:8100/soyo/resources/notice_upfile/${dataList.noticeImage}`} />
                             <br /><br />
                             <p id="noticeContent">{dataList.noticeContent}
 

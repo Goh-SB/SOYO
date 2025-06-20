@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState,useEffect } from "react";
+import React from 'react';
 
 function OrderDetailMemberComponent(){
 
@@ -8,7 +9,7 @@ function OrderDetailMemberComponent(){
     const memberId= useParams().memberId;
     const orderMember = () =>{
     
-        let url = "http://localhost:8100/soyo/delivery/memberInfo/"+memberId;
+        let url = "http://192.168.40.32:8100/soyo/delivery/memberInfo/"+memberId;
 
         axios({
             url,

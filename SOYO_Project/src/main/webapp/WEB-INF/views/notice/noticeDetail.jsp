@@ -135,7 +135,7 @@
 				</div>
 
 				<div class="notice-body">
-					<img id="fileImg" src="http://localhost:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
+					<img id="fileImg" src="http://192.168.40.17:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
 					<p>${requestScope.n.noticeContent}</p>
 				</div>
 			</div>

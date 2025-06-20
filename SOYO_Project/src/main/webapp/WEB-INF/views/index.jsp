@@ -33,6 +33,27 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: 'PyeongChang-Bold';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChang-Bold.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Dolbomche_R';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/Dolbomche_R.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SF_HailSnow';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HailSnow.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -61,22 +82,47 @@
             justify-content: center;
             text-align: center;
             padding: 0 1rem;
+            overflow: hidden;
         }
 
 
         .hero-content h2 {
-            font-size: 2.5rem;
-            color: #5A6C7C;
+            font-size: 2.9rem;
+            color: #5D4E47;
             margin-bottom: 1rem;
+            font-family: 'PyeongChang-Bold', sans-serif;
         }
 
         .hero-content p {
-            font-size: 1.5rem;
-            color: #949494;
+            font-size: 1.6rem;
+            color: #816a5fbb;
             margin-bottom: 2rem;
+            font-weight: 500;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-family: 'Dolbomche_R', sans-serif;
         }
 
         .cta-button {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.95) 0%, rgba(212, 165, 116, 0.85) 100%);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.7rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            font-family: 'SF_HailSnow', sans-serif;
+            
+        }
+
+        .cta-button:hover {
+            background-color: #bd9468;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .cta-button2 {
             background-color: #7C8E9F;
             color: white;
             padding: 1rem 2rem;
@@ -86,7 +132,7 @@
             transition: all 0.3s ease;
         }
 
-        .cta-button:hover {
+        .cta-button2:hover {
             background-color: #5b6c7c;
         }
 
@@ -350,6 +396,27 @@
             padding-left: 2px;
         }
 
+        .hero-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 220px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            flex: 0 0 auto;
+        }
+
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+
     </style>
 </head>
 <body>
@@ -393,14 +460,6 @@
             </div>
         </div>
 
-        <section class="hero">
-            <div class="hero-content">
-                <h2>한복의 새로운 스타일</h2>
-                <p>오방색의 아름다움을 감각적으로 재해석해<br>당신의 일상에 부드럽게 스며든 한복 컬렉션</p>
-                <a href="#collections" class="cta-button">컬렉션 보기</a>
-            </div>
-        </section>
-
         <section class="featured-products">
             <h2>추천 상품</h2>
             <div class="product-grid">
@@ -424,15 +483,30 @@
                 </div>
             </div>
         </section>
-
+        
+        <section class="hero">
+            <div class="hero-inner">
+                <div class="hero-image">
+                    <img src="${pageContext.request.contextPath}/resources/images/banner-model.png" alt="모델 이미지">
+                </div>
+                <div class="hero-content">
+                    <h2>한복의 새로운 스타일</h2>
+                    <p>오방색의 아름다움을 감각적으로 재해석해<br>당신의 일상에 부드럽게 스며든 한복 컬렉션</p>
+                    <a href="#collections" class="cta-button">컬렉션 보기</a>
+                </div>
+            </div>
+        </section>
+        
         <section class="about">
             <h2>소요의 이야기</h2>
             <div class="about-content">
                 <p>한복의 아름다움을 감각적으로 재해석한 소요.<br>
-				   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
-                <a href="<c:url value='/brand' />" class="cta-button">더 알아보기</a>
+                   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
+                <a href="<c:url value='/brand' />" class="cta-button2">더 알아보기</a>
             </div>
         </section>
+
+
 
         <section class="collections">
             <h2>컬렉션</h2>

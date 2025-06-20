@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +26,13 @@ public class ReviewDao {
             return new ArrayList<>();
         }
     }
+    
+    public List<Review> selectReviewList(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectList("reviewMapper.selectAllReviewList");
+    }
+
+	public List<Review> selectBestReviewList(SqlSessionTemplate sqlSession2) {
+		return sqlSession.selectList("reviewMapper.selectBestReviewList");
+	}
+    
 }

@@ -231,7 +231,7 @@
  		DELETE 
 		  FROM PRODUCT_TAG
 		 WHERE PRODUCT_NO = #{productNo}
-		   AND TAG_NAME = #{productSubTag}
+
  	
  	</delete>
  	

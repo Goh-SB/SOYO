@@ -2,6 +2,7 @@ import { useNavigate,Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./DeliveryComponent.css";
+import React from 'react';
 
 function DeliveryComponent() {
     let navigate = useNavigate();
@@ -14,7 +15,7 @@ function DeliveryComponent() {
     const selectDelivery = () => {
         setCpage(1);
 
-        let url = "http://localhost:8100/soyo/delivery/list";
+        let url = "http://192.168.40.32:8100/soyo/delivery/list";
 
         axios({
             url,
@@ -33,7 +34,7 @@ function DeliveryComponent() {
 
 
     const changeStatus = (orderNo, orderStatus) => {
-        let url = "http://localhost:8100/soyo/delivery/changeStatus";
+        let url = "http://192.168.40.32:8100/soyo/delivery/changeStatus";
         axios({
             url,
             method: "get",

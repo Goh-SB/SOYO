@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import React from 'react';
+
 function DeliveryProductDetailComponent(){
 
     const [product, setProduct] = useState([]);
@@ -14,7 +16,7 @@ function DeliveryProductDetailComponent(){
     }, []); 
     const cartProduct = ()=>{
 
-        let url = "http://localhost:8100/soyo/delivery/product/" + orderNo;
+        let url = "http://192.168.40.32:8100/soyo/delivery/product/" + orderNo;
 
         axios({
             url,

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import React from 'react';
 
 function OrderListComponent(){
 
@@ -8,7 +9,7 @@ function OrderListComponent(){
     let [dataList, setDataList] = useState([]);
 
     const selectPayment = () =>{
-        let url = "http://localhost:8100/soyo/delivery/payment";
+        let url = "http://192.168.40.32:8100/soyo/delivery/payment";
 
         axios({
             url,
@@ -21,7 +22,7 @@ function OrderListComponent(){
         });
     }
     const searchMember =()=>{
-        let url = "http://localhost:8100/soyo/delivery/searchMember";
+        let url = "http://192.168.40.32:8100/soyo/delivery/searchMember";
 
         const memberName = document.getElementById("searchInput").value;
         axios({

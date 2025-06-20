@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './NoticeListComponent.css';
+import React from 'react';
 
 function NoticeListComponent() {
 
@@ -24,7 +25,7 @@ function NoticeListComponent() {
     }, [cpage, keyword]);
 
     // 공지사항 목록 조회 요청
-    let url = "http://localhost:8100/soyo/notice/list";
+    let url = "http://192.168.40.32:8100/soyo/notice/list";
 
     const noticeList = () => {
 
@@ -158,7 +159,7 @@ function NoticeListComponent() {
     };
 
     const deleteBtn = (noticeNo) => {
-        let url = "http://localhost:8100/soyo/notice/delete";
+        let url = "http://192.168.40.32:8100/soyo/notice/delete";
         axios({
             url,
             method: "get",
@@ -174,7 +175,7 @@ function NoticeListComponent() {
     }
 
     const repairBtn = (noticeNo) => {
-        let url = "http://localhost:8100/soyo/notice/repair";
+        let url = "http://192.168.40.32:8100/soyo/notice/repair";
         axios({
             url,
             method: "get",
@@ -211,7 +212,7 @@ function NoticeListComponent() {
         setSelected(item);
         setCpage(1);
 
-        let url = "http://localhost:8100/soyo/notice/filter";
+        let url = "http://192.168.40.32:8100/soyo/notice/filter";
         axios({
             url,
             method: "get",
@@ -227,7 +228,7 @@ function NoticeListComponent() {
     const searchList = () => {
         setKeyword(document.querySelector("#notice-search-text").value);
         let noticeMenu = document.querySelector("#notice-search-menu").value;
-        let url = "http://localhost:8100/soyo/notice/search";
+        let url = "http://192.168.40.32:8100/soyo/notice/search";
         setCpage(1);
         axios({
             url,

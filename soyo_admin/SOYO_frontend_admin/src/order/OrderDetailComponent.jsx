@@ -3,6 +3,7 @@ import OrderDetailCancelComponent from "./OrderDetailCancelComponent";
 import OrderDetailMemberComponent from "./OrderDetailMemberComponent";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import React from 'react';
 
 function OrderDetailComponent() {
 
@@ -11,7 +12,7 @@ function OrderDetailComponent() {
     const productNo = useParams().productNo;
     const orderInfo = () =>{
         
-        let url = "http://localhost:8100/soyo/delivery/orderInfo/"+memberId+"/"+productNo;
+        let url = "http://192.168.40.32:8100/soyo/delivery/orderInfo/"+memberId+"/"+productNo;
 
         axios({
             url,

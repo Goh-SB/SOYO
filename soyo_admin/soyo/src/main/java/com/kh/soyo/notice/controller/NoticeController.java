@@ -24,7 +24,7 @@ import com.kh.soyo.notice.model.vo.Notice;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.40.32:5173")
 @RequestMapping("notice")
 public class NoticeController {
 
