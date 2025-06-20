@@ -63,7 +63,7 @@ public class CartController {
 		    
 		    
 		    model.addAttribute("c",c);
-		    System.out.println(c.getProductCount());
+		    //System.out.println(c.getProductCount());
 		    return c.getProductCount();
 		   
 	}
@@ -80,6 +80,35 @@ public class CartController {
 
 	    return result > 0 ? "성공" : "실패";
 		
+	}
+	
+	@GetMapping("/paymentCheck")
+	public String paymentCheck(@RequestParam("productNoList") List<Integer> productNoList, Model model,
+											  HttpSession session) {
+
+		Member loginUser = (Member) session.getAttribute("loginUser");
+	    if (loginUser == null) return "실패";
+
+	    String memberId = loginUser.getMemberId();
+	   
+	    //System.out.println(productNoList);
+	    
+	    List<Cart> selectedProducts=cartService.selectedProducts(memberId,productNoList);
+	    
+	    int totalPrice = 0;
+	    
+	    for(Cart c : selectedProducts) {
+	    	
+	    	if (c != null) {
+	    	    totalPrice += c.getProductPrice() * c.getProductCount();
+	    	}
+	    }
+	    
+	    
+	    model.addAttribute("selectedProducts", selectedProducts);
+	    model.addAttribute("totalPrice", totalPrice);
+
+	    return "cart/paymentCheck"; // 이동할 JSP 경로
 	}
 }
 

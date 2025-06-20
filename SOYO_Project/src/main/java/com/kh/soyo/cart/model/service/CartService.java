@@ -16,6 +16,10 @@ public interface CartService {
 
 	int deleteSelected(String memberId, List<Integer> productNoList);
 
+	int getTotalPrice(String memberId, List<Integer> productId);
+
+	List<Cart> selectedProducts(String memberId, List<Integer> productNoList);
+
 
 
 }

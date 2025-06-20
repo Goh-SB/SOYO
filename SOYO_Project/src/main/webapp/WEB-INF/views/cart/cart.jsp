@@ -251,7 +251,7 @@
             <p space="3xl"></p>
 
             <div id="orderListArea">
-
+			 <form action="/soyo/cart/paymentCheck" method="get" id="paymentCheck">
                 <table class="xans-element- xans-order xans-order-normnormal xans-record-">
                     <colgroup>
                         <col style="width:80px">
@@ -274,6 +274,7 @@
                     </thead>
                     
                        <tbody>
+                       	 
                             <c:forEach var="cart" items="${cartList}">
                                 <tr class="cart-item">
                                 
@@ -303,9 +304,10 @@
 														
                                 </tr>
                             </c:forEach>
+                           
                          </tbody>
                       </table>
-                     
+                      </form>
     
                 <div class="xans-element- xans-order xans-order-selectorder">
                     <ul>
@@ -358,13 +360,13 @@
                 <div class="xans-element- xans-order xans-order-totalorder">
                     <ul>
                         <li class="order-btn">
-                            <a href="#none" onclick="" link-order="" link-login="/member/login" class="">
-                                전체상품 주문
-                            </a>
+						 	<a href="#none" onclick="submitAll()">
+                           		전체상품 주문
+                           	</a>
 
-                            <a href="#none" onclick="" link-order="" link-login="/member/login" class="">
-                                선택상품 주문
-                            </a>
+                           <a href="#none" onclick="submitSelect(event)">
+                           		선택상품 주문
+                           	</a>
                         </li>
                     </ul>
                 </div>
@@ -501,6 +503,41 @@
                 }
             });
         }
+        
+        function submitSelect(event){     	
+            event.preventDefault();
+
+            let productNoList = [];
+
+            $('input[name="productId"]:checked').each(function () {
+                productNoList.push($(this).val());
+            });
+
+            if (productNoList.length === 0) {
+                alert("구매할 상품을 선택하세요");
+                return;
+            }
+
+       
+
+            $('#paymentCheck input[name="productNoList"]').remove();
+
+            productNoList.forEach(function(productNo) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'productNoList',
+                    value: productNo
+                }).appendTo('#paymentCheck');
+            });
+
+         
+            $('#paymentCheck').submit(); 
+        }
+        
+        function submitAll(){       	
+        	$('#paymentCheck').submit(); 
+        }
+        
         
 
     </script>

@@ -44,4 +44,19 @@ public class CartServiceImpl implements CartService {
 		return cartDao.deleteSelected(sqlSession,memberId,productNoList);
 	}
 
+
+	@Override
+	public int getTotalPrice(String memberId, List<Integer> productId) {
+		
+		return cartDao.getTotalPrice(sqlSession,memberId,productId);
+	}
+
+	@Override
+	public List<Cart> selectedProducts(String memberId, List<Integer> productNoList) {
+		
+		return cartDao.selectedProducts(sqlSession,memberId,productNoList);
+	}
+
+
+
 }
