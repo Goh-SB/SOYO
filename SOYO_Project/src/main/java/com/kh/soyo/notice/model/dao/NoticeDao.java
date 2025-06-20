@@ -2,6 +2,7 @@ package com.kh.soyo.notice.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,6 +34,18 @@ public class NoticeDao {
 
 	public int searchNoticeListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("noticeMapper.searchNoticeListCount", map);
+	}
+	
+	public ArrayList<Notice> noticeFilter(SqlSessionTemplate sqlSession, List<String> noticeType, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.noticeFilter", null, rowBounds);
+	}
+
+	public int noticeFilterCount(SqlSessionTemplate sqlSession, List<String> noticeType) {
+		return sqlSession.selectOne("noticeMapper.noticeFilterCount", noticeType);
 	}
 	
 	public Notice noticeDatail(SqlSessionTemplate sqlSession, int nno) {

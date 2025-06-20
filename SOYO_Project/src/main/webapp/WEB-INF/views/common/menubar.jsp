@@ -249,9 +249,8 @@
     <li class="dropdown">
         <a id="menu">소개</a>
         <ul class="submenu">
-            <li><a href="<c:url value='/location' />">오시는 길</a></li>
-            <li><a href="<c:url value='/guide' />">쇼핑 가이드</a></li>
             <li><a href="<c:url value='/brand' />">브랜드 소개</a></li>
+            <li><a href="<c:url value='/guide' />">쇼핑 가이드</a></li>
         </ul>
         </li>
       <li class="dropdown">
@@ -266,11 +265,7 @@
         </ul>
       </li>
       <li class="dropdown">
-        <a id="menu">리뷰</a>
-        <ul class="submenu">
-          <li><a href="<c:url value='/review/review_best' />">베스트 리뷰</a></li>
-          <li><a href="<c:url value='/review/review' />">리뷰 게시판</a></li>
-        </ul>
+        <a id="menu" style="cursor: pointer;" href="<c:url value='/review/review' />">리뷰</a>
       </li>
       <li class="dropdown">
         <a id="menu">갤러리</a>

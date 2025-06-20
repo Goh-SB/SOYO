@@ -34,7 +34,7 @@
     }
 
     #findIdContent {
-        width: 600px;
+        width: 500px;
         margin: auto;
         text-align: center;
         margin-top: 80px;

@@ -30,11 +30,21 @@ public interface ProductService {
 
 	int updateInsert(Product p);
 
-	int update(Product p);
+	int updateProduct(Product p);
 
 	int updateThumbnail(Product p);
 
 	int productStock(Product p);
+
+	List<String> detailSubTag(Product p);
+
+	int updateThumbnailNoSub(Product p);
+
+	int updateSubTumbnail(Product p);
+
+	int updateSize(Product p);
+
+	int updateSubTag(Product p, List<String> productSubTag);
 
 
 

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -61,12 +63,12 @@
         #hrFirst{
             border: 1px solid #cacaca7c;
             margin-top: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         #hrSecond{
             border: 1px solid #cacaca7c;
-            margin-top: 25px;
+            margin-top: 27px;
             margin-bottom: 20px;
         }
 
@@ -76,11 +78,12 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin: 2rem auto;
             padding: 2rem;
+            padding-bottom: 20px;
         }
 
         .product-image {
             width: 100%;
-            height: 500px;
+            height: 695px;
             object-fit: cover;
             border-radius: 8px;
         }
@@ -584,272 +587,404 @@
             color: var(--accent-pink);
             background: rgba(168,197,218,0.10);
         }
+        
+        #product-sort {
+        	margin-left: 8px;
+        	background: #d2e7f7a4;
+        }
 
-	    </style>
-	</head>
-	<body>
+        .product-detail-content img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block;
+            margin: 0 auto;
+        }
 
-	<jsp:include page="../common/menubar.jsp" />
+        .product-detail-content p {
+            font-size: 18px;
+            line-height: 2;
+        }
 
-	<br><br><br>
+        .tab-btn.active {
+            background: var(--main-color);
+            color: #333;
+            box-shadow: 0 2px 8px rgba(168,197,218,0.10);
+        }
+        .tab-btn:not(.active):hover {
+            background: var(--accent-yellow);
+            color: #333;
+        }
 
-    <div class="container">
-        <div class="product-container" style="position:relative;">
-            <button class="favorite-btn" id="favoriteBtn" aria-label="찜하기">
-                <span class="material-icons" id="favoriteIcon">favorite_border</span>
-            </button>
-            <div class="row">
-                <div class="col s12 m6">
-                    <img src="" alt="상품 이미지" class="product-image" id="mainImage">
-                </div>
-                <div class="col s12 m6">
-                    <span class="product-category">여성</span>
-                    <h1 class="product-title">현대적 개량 한복 원피스</h1>
-                    <p class="product-price">239,000원</p>
-                    
-                    <div class="tag-container">
-                        <span class="tag">#모던한복</span>
-                        <span class="tag">#데일리한복</span>
-                        <span class="tag">#개량한복</span>
-                    </div>
+        .tab-nav-material {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin: 2rem 0 0 0;
+            background: #fff;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 4px 24px 0 rgba(80,132,175,0.10), 0 1.5px 4px 0 rgba(244,166,166,0.07);
+            padding: 0.8rem 0.8rem;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+        .tab-btn-material {
+            background: none;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #5084af;
+            padding: 0.7rem 2.2rem;
+            border-radius: 30px;
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: 0.01em;
+            box-shadow: none;
+            outline: none;
+        }
+        .tab-btn-material.active {
+            background: linear-gradient(90deg, #f7f8fc 0%, #e7e9f7 60%, #faefd3 100%);
+            color: #333;
+            box-shadow: 0 2px 8px rgba(168,197,218,0.13);
+            font-weight: 700;
+            border: 1.5px solid #e3e4fa;
+        }
+        .tab-btn-material:not(.active):hover {
+            background: #f4a6a61a;
+            color: #e57373;
+        }
+        .tab-btn-material .material-icons {
+            font-size: 1.3rem;
+            vertical-align: middle;
+            margin-right: 2px;
+        }
+        @media (max-width: 600px) {
+            .tab-nav-material {
+                max-width: 98vw;
+                width: 100%;
+                gap: 1rem;
+                padding: 0.2rem 0.2rem;
+            }
+            .tab-btn-material {
+                font-size: 1rem;
+                padding: 0.5rem 1.1rem;
+            }
+        }
 
-                    <hr id="hrFirst">
+    </style>
+</head>
+<body>
 
-                    <div class="size-selector">
-                        <div class="size-selector-row">
-                            <h6 style="margin-bottom: 15px;">&nbsp;&nbsp;사이즈 선택</h6>
-                            <button class="size-guide-btn modal-trigger" data-target="sizeGuideModal">
-                                사이즈 안내 <span class="material-icons">help_outline</span>
-                            </button>
-                        </div>
-                        <button class="size-btn" data-size="S">S</button>
-                        <button class="size-btn active" data-size="M">M</button>
-                        <button class="size-btn" data-size="L">L</button>
-                    </div>
+<jsp:include page="../common/menubar.jsp" />
 
-                    <hr id="hrSecond">
+<br><br><br>
 
-                    <div class="quantity-selector">
-                        <span class="quantity-label">구매 수량</span>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" id="decreaseQuantity">-</button>
-                            <div class="quantity-divider"></div>
-                            <input type="number" value="1" min="1" class="quantity-input" id="quantity">
-                            <div class="quantity-divider"></div>
-                            <button class="quantity-btn" id="increaseQuantity">+</button>
-                        </div>
-                    </div>
-
-                    <p class="stock-info">상품 재고 : <span id="stockCount">15</span>개</p>
-
-                    <button class="add-to-cart-btn waves-effect">장바구니 담기</button>
-
-                </div>
+<div class="container">
+    <div class="product-container" style="position:relative;">
+        <button class="favorite-btn" id="favoriteBtn" aria-label="찜하기">
+            <span class="material-icons" id="favoriteIcon">favorite_border</span>
+        </button>
+        <div class="row">
+        
+            <div class="col s12 m6">
+            	<img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="상품 이미지"/>
             </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="product-description-container">
-            <div class="product-description">
-                <h5>상품 상세 정보</h5>
-                <div class="divider"></div>
-                <br>
-                <p>현대적인 감각으로 재해석한 개량한복입니다.<br>특별한 날은 물론 일상에서도 편하게 착용할 수 있도록 디자인되었습니다.</p>
-            </div>
-        </div>
-
-        <div class="review-container">
-            <h5>상품 리뷰</h5>
-            <div class="divider"></div>
             
-            <div class="review-list">
-                <div class="review-card">
-                    <div class="review-content-wrapper">
-                        <div class="review-info">
-                            <h6 class="review-title">정말 만족스러운 구매였어요!</h6>
-                            <div class="review-rating">
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                            </div>
-                            <div class="review-text">
-                                <p>개량 한복을 처음 입어봤는데 생각보다 훨씬 편안하고 예쁘네요. 
-                                사이즈도 딱 맞고 소재도 좋습니다.<br>이쿠조 화이팅!</p>
-                            </div>
-                            <div class="review-footer">
-                                <span class="review-author">김말똥</span>
-                                <span class="review-date">2025.04.15</span>
-                            </div>
-                        </div>
-                        <div class="review-thumbnail">
-                            <img src="https://via.placeholder.com/400x300" alt="리뷰 이미지">
-                        </div>
+            <div class="col s12 m6">
+                <span class="product-category">${product.productCategory}</span>
+                <span id="product-sort" class="product-category">
+					<c:choose>
+					  <c:when test="${product.productSort eq 'top'}">상의</c:when>
+					  <c:when test="${product.productSort eq 'acc'}">장신구</c:when>
+					  <c:otherwise>${product.productSort}</c:otherwise>
+					</c:choose>
+				</span>
+
+                <h1 class="product-title">${product.productName}</h1>
+                
+                <p>${product.productCaption}</p>
+                
+                <hr id="hrFirst">
+                
+                <p class="product-price"><fmt:formatNumber value="${product.productPrice}" type="number" groupingUsed="true" />원</p>
+                
+                <div class="tag-container">
+				    <c:forEach var="tag" items="${tagList}">
+				        <span class="tag">#${tag}</span>
+				    </c:forEach>
+                </div>
+
+                <hr id="hrSecond">
+
+                <div class="size-selector">
+                    <div class="size-selector-row">
+                        <h6 style="margin-bottom: 15px;">&nbsp;&nbsp;사이즈 선택</h6>
+                        <button class="size-guide-btn modal-trigger" data-target="sizeGuideModal">
+                            사이즈 안내 <span class="material-icons">help_outline</span>
+                        </button>
+                    </div>
+                    <button class="size-btn" data-size="S">S</button>
+                    <button class="size-btn active" data-size="M">M</button>
+                    <button class="size-btn" data-size="L">L</button>
+                </div>
+
+                <hr id="hrSecond">
+
+                <div class="quantity-selector">
+                    <span class="quantity-label">구매 수량</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" id="decreaseQuantity">-</button>
+                        <div class="quantity-divider"></div>
+                        <input type="number" value="1" min="1" class="quantity-input" id="quantity">
+                        <div class="quantity-divider"></div>
+                        <button class="quantity-btn" id="increaseQuantity">+</button>
                     </div>
                 </div>
 
-                <div class="review-card">
-                    <div class="review-content-wrapper">
-                        <div class="review-info">
-                            <h6 class="review-title">데일리로 입기 좋은 한복</h6>
-                            <div class="review-rating">
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star</span>
-                                <span class="material-icons">star_half</span>
-                            </div>
-                            <div class="review-text">
-                                <p>일상에서도 부담없이 입을 수 있어서 좋아요. 
-                                디자인이 모던하면서도 한복의 멋을 잘 살렸네요.<br>소요 흥해라</p>
-                            </div>
-                            <div class="review-footer">
-                                <span class="review-author">박말순</span>
-                                <span class="review-date">2025.06.05</span>
-                            </div>
-                        </div>
-                        <div class="review-thumbnail">
-                            <img src="https://via.placeholder.com/400x300" alt="리뷰 이미지">
-                        </div>
-                    </div>
-                </div>
+                <p class="stock-info">상품 재고 : <span id="stockCount">${product.productCount}</span>개</p>
+
+                <button class="add-to-cart-btn waves-effect">장바구니 담기</button>
+
+            </div>
+        </div>
+    </div>
+    <!-- 탭 네비게이션 -->
+    <div class="tab-nav-material">
+        <button class="tab-btn-material active" data-target="#productDetailSection"><span class="material-icons">info</span> 상세 정보</button>
+        <button class="tab-btn-material" data-target="#reviewSection"><span class="material-icons">rate_review</span> 리뷰</button>
+    </div>
+</div>
+
+<div class="container">
+    <div id="productDetailSection" class="product-description-container" style="margin-top:0; border-radius:0 0 16px 16px; box-shadow:0 4px 24px 0 rgba(80,132,175,0.07);">
+        <div class="product-description">
+            <h5>상품 상세 정보</h5>
+            <div class="divider"></div>
+            <br>
+            <div class="product-detail-content">
+                ${product.productSubCaption}
             </div>
         </div>
     </div>
 
-    <div id="sizeGuideModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="닫기">&times;</button>
-            <h5>사이즈 안내</h5>
-            <p>아래 표를 참고하여 본인에게 맞는 사이즈를 선택해 주세요.</p>
-            <table class="striped centered">
-                <thead>
-                    <tr>
-                        <th>사이즈</th>
-                        <th>총장(cm)</th>
-                        <th>가슴둘레(cm)</th>
-                        <th>권장 신장</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>S</td>
-                        <td>110</td>
-                        <td>88</td>
-                        <td>150~160cm</td>
-                    </tr>
-                    <tr>
-                        <td>M</td>
-                        <td>115</td>
-                        <td>94</td>
-                        <td>160~170cm</td>
-                    </tr>
-                    <tr>
-                        <td>L</td>
-                        <td>120</td>
-                        <td>100</td>
-                        <td>170~180cm</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="margin-top:1rem; color:#888; font-size:0.95rem;">* 사이즈는 측정 방법에 따라 1~2cm 오차가 있을 수 있습니다.</p>
-        </div>
+    <!-- 리뷰 영역 상단에도 동일한 탭 네비게이션 -->
+    <div class="tab-nav-material review-tab-nav" style="margin:0 0 0 0; border-radius:16px 16px 0 0;">
+        <button class="tab-btn-material" data-target="#productDetailSection"><span class="material-icons">info</span> 상세 정보</button>
+        <button class="tab-btn-material active" data-target="#reviewSection"><span class="material-icons">rate_review</span> 리뷰</button>
+    </div>
+
+    <div id="reviewSection" class="review-container" style="margin-top:0; border-radius:0 0 16px 16px; box-shadow:0 4px 24px 0 rgba(80,132,175,0.07);">
+        <h5>상품 리뷰</h5>
+        <div class="divider"></div>
+        
+        
+
+	<div class="review-list">
+	    <c:forEach var="review" items="${reviewList}">
+	        <div class="review-card">
+	            <div class="review-content-wrapper">
+	                <div class="review-info">
+	                    <h6 class="review-title">${review.reviewTitle}</h6>
+	                    <div class="review-rating">
+	                        <c:forEach var="i" begin="1" end="5">
+	                            <c:choose>
+	                                <c:when test="${i <= review.rating}">
+	                                    <span class="material-icons">star</span>
+	                                </c:when>
+	                                <c:when test="${i - 0.5 == review.rating}">
+	                                    <span class="material-icons">star_half</span>
+	                                </c:when>
+	                                <c:otherwise>
+	                                    <span class="material-icons">star_border</span>
+	                                </c:otherwise>
+	                            </c:choose>
+	                        </c:forEach>
+	                    </div>
+	                    <div class="review-text">
+	                        <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
+	                    </div>
+	                    <div class="review-footer">
+	                        <span class="review-author">${review.memberName}</span>
+	                        <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
+	                    </div>
+	                </div>
+	                <div class="review-thumbnail">
+	                    <img src="${pageContext.request.contextPath}/resources/review_upfile/${review.reviewThumbnailChange}" alt="리뷰 이미지">
+	                </div>
+	            </div>
+	        </div>
+	    </c:forEach>
+	</div>
+
+
+        
+        
+    </div>
+</div>
+<br>
+
+<div id="sizeGuideModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="닫기">&times;</button>
+        <h5>사이즈 안내</h5>
+        <p>아래 표를 참고하여 본인에게 맞는 사이즈를 선택해 주세요.</p>
+        <table class="striped centered">
+            <thead>
+                <tr>
+                    <th>사이즈</th>
+                    <th>총장(cm)</th>
+                    <th>가슴둘레(cm)</th>
+                    <th>권장 신장</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>S</td>
+                    <td>110</td>
+                    <td>88</td>
+                    <td>150~160cm</td>
+                </tr>
+                <tr>
+                    <td>M</td>
+                    <td>115</td>
+                    <td>94</td>
+                    <td>160~170cm</td>
+                </tr>
+                <tr>
+                    <td>L</td>
+                    <td>120</td>
+                    <td>100</td>
+                    <td>170~180cm</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top:1rem; color:#888; font-size:0.95rem;">* 사이즈는 측정 방법에 따라 1~2cm 오차가 있을 수 있습니다.</p>
     </div>
     
-    <jsp:include page="../common/footer.jsp" />
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 사이즈 선택 버튼
-            const sizeBtns = document.querySelectorAll('.size-btn');
-            sizeBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    sizeBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
+<jsp:include page="../common/footer.jsp" />
 
-            // 수량 컨트롤
-            const quantityInput = document.getElementById('quantity');
-            const decreaseBtn = document.getElementById('decreaseQuantity');
-            const increaseBtn = document.getElementById('increaseQuantity');
-
-            decreaseBtn.addEventListener('click', function() {
-                let value = parseInt(quantityInput.value);
-                if (value > 1) {
-                    quantityInput.value = value - 1;
-                }
-            });
-
-            increaseBtn.addEventListener('click', function() {
-                let value = parseInt(quantityInput.value);
-                let stock = parseInt(document.getElementById('stockCount').textContent);
-                if (value < stock) {
-                    quantityInput.value = value + 1;
-                }
-            });
-
-            // 썸네일 클릭 핸들링용
-            const thumbnails = document.querySelectorAll('.product-thumbnail');
-            const mainImage = document.getElementById('mainImage');
-            
-            thumbnails.forEach(thumbnail => {
-                thumbnail.addEventListener('click', function() {
-                    mainImage.src = this.src;
-                });
-            });
-
-            // Favorite(찜) 버튼 토글
-            const favoriteBtn = document.getElementById('favoriteBtn');
-            const favoriteIcon = document.getElementById('favoriteIcon');
-            let isFavorite = false;
-            favoriteBtn.addEventListener('click', function() {
-                isFavorite = !isFavorite;
-                favoriteIcon.textContent = isFavorite ? 'favorite' : 'favorite_border';
-            });
-
-            // 모달 기능 구현
-            const modalTriggers = document.querySelectorAll('.modal-trigger');
-            const modals = document.querySelectorAll('.modal');
-            const modalCloseBtns = document.querySelectorAll('.modal-close');
-
-            modalTriggers.forEach(trigger => {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const targetId = this.getAttribute('data-target');
-                    const targetModal = document.getElementById(targetId.replace('#', ''));
-                    if (targetModal) {
-                        targetModal.classList.add('show');
-                        targetModal.style.display = 'flex';
-                        document.body.style.overflow = 'hidden';
-                    }
-                });
-            });
-
-            modalCloseBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const modal = this.closest('.modal');
-                    if (modal) {
-                        modal.classList.remove('show');
-                        modal.style.display = 'none';
-                        document.body.style.overflow = '';
-                    }
-                });
-            });
-
-            window.addEventListener('click', function(event) {
-                modals.forEach(modal => {
-                    if (event.target === modal) {
-                        modal.classList.remove('show');
-                        modal.style.display = 'none';
-                        document.body.style.overflow = '';
-                    }
-                });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 사이즈 선택 버튼
+        const sizeBtns = document.querySelectorAll('.size-btn');
+        sizeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                sizeBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
             });
         });
-    </script>
+
+        // 수량 컨트롤
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.getElementById('decreaseQuantity');
+        const increaseBtn = document.getElementById('increaseQuantity');
+
+        decreaseBtn.addEventListener('click', function() {
+            let value = parseInt(quantityInput.value);
+            if (value > 1) {
+                quantityInput.value = value - 1;
+            }
+        });
+
+        increaseBtn.addEventListener('click', function() {
+            let value = parseInt(quantityInput.value);
+            let stock = parseInt(document.getElementById('stockCount').textContent);
+            if (value < stock) {
+                quantityInput.value = value + 1;
+            }
+        });
+
+        // 썸네일 클릭 핸들링용
+        const thumbnails = document.querySelectorAll('.product-thumbnail');
+        const mainImage = document.getElementById('mainImage');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                mainImage.src = this.src;
+            });
+        });
+
+        // Favorite(찜) 버튼 토글
+        const favoriteBtn = document.getElementById('favoriteBtn');
+        const favoriteIcon = document.getElementById('favoriteIcon');
+        let isFavorite = false;
+        favoriteBtn.addEventListener('click', function() {
+            isFavorite = !isFavorite;
+            favoriteIcon.textContent = isFavorite ? 'favorite' : 'favorite_border';
+        });
+
+        // 모달 기능 구현
+        const modalTriggers = document.querySelectorAll('.modal-trigger');
+        const modals = document.querySelectorAll('.modal');
+        const modalCloseBtns = document.querySelectorAll('.modal-close');
+
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const targetId = this.getAttribute('data-target');
+                const targetModal = document.getElementById(targetId.replace('#', ''));
+                if (targetModal) {
+                    targetModal.classList.add('show');
+                    targetModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        modalCloseBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        window.addEventListener('click', function(event) {
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // material 탭 네비게이션 기능 (여러 개 동시 적용)
+        function handleTabNav(tabNav) {
+            const btns = tabNav.querySelectorAll('.tab-btn-material');
+            btns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 모든 탭 네비게이션의 버튼 active 동기화
+                    document.querySelectorAll('.tab-btn-material').forEach(b => {
+                        if(b.getAttribute('data-target') === this.getAttribute('data-target')) {
+                            b.classList.add('active');
+                        } else {
+                            b.classList.remove('active');
+                        }
+                    });
+                    const target = document.querySelector(this.getAttribute('data-target'));
+                    if(target) {
+                        window.scrollTo({
+                            top: target.getBoundingClientRect().top + window.pageYOffset - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+        document.querySelectorAll('.tab-nav-material').forEach(handleTabNav);
+    });
+</script>
 </body>
 </html>

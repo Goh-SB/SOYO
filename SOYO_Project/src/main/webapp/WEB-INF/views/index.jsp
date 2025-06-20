@@ -250,10 +250,13 @@
             height: 100%;
             opacity: 0;
             transition: opacity 0.5s ease;
+            pointer-events: none;
         }
 
         .carousel-slide.active {
             opacity: 1;
+            pointer-events: auto;
+            cursor: pointer;
         }
 
         .carousel-slide img {
@@ -360,9 +363,13 @@
 
         <div class="carousel-container">
             <div class="carousel-slides">
-                <div class="carousel-slide">
-                    <img src="${pageContext.request.contextPath}/resources/images/slide-1.jpg" alt="슬라이드 1">
-                </div>
+            
+	            <div class="carousel-slide">
+	            	<a href="${pageContext.request.contextPath}/product/productDetail?no=12">
+		                <img src="${pageContext.request.contextPath}/resources/images/slide-1.jpg" alt="슬라이드 1">
+	                </a>
+	            </div>
+                
                 <div class="carousel-slide">
                     <img src="${pageContext.request.contextPath}/resources/images/slide-2.jpg" alt="슬라이드 2">
                 </div>
@@ -531,6 +538,37 @@
 
             // 자동 슬라이드 시작
             startSlideShow();
+
+            slides.forEach((slide, idx) => {
+                // 첫 번째 슬라이드에만 특별 처리
+                if(idx === 0) {
+                    const firstSlideLink = slide.querySelector('a');
+                    slide.addEventListener('click', function(e) {
+                        if (slide.classList.contains('active')) {
+                            if(firstSlideLink) {
+                                firstSlideLink.click();
+                            }
+                        }
+                    });
+                    if(firstSlideLink) {
+                        firstSlideLink.style.pointerEvents = 'auto';
+                    }
+                } else if(idx === 1) {
+                    // 두 번째 슬라이드 클릭 시 이동
+                    slide.addEventListener('click', function(e) {
+                        if (slide.classList.contains('active')) {
+                            window.location.href = `${pageContext.request.contextPath}/product/productDetail?no=13`;
+                        }
+                    });
+                } else if(idx === 2) {
+                    // 세 번째 슬라이드 클릭 시 이동
+                    slide.addEventListener('click', function(e) {
+                        if (slide.classList.contains('active')) {
+                            window.location.href = `${pageContext.request.contextPath}/product/productDetail?no=14`;
+                        }
+                    });
+                }
+            });
         });
     </script>
 

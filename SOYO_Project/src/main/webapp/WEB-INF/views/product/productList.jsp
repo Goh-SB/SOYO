@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,151 +26,163 @@
     }
 
   body {
-    background: #f8f4fcc5;
+    background: #fff;
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   .container {
-    max-width: 1550px;
-    margin: 40px auto;
-    background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    padding: 40px 32px 32px 32px;
-    font-family: 'NEXON Lv2 Gothic';
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 44px 36px;
+    flex: 1;
   }
   .product-category {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 600;
     text-align: center;
-    color: #3B2A5A;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    color: #333;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
   }
   .product-count {
-    color: #7B5FA1;
-    font-size: 1.1rem;
-    margin-bottom: 24px;
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 35px;
     display: block;
     text-align: center;
+    font-weight: 400;
   }
   .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    gap: 16px;
+    padding: 0 12px;
   }
   .sort-tabs {
     display: flex;
-    gap: 12px;
   }
   .sort-tab {
-    background: #F5EFFA;
-    color: #7B5FA1;
+    background: transparent;
+    color: #666;
     border: none;
-    border-radius: 16px;
     padding: 8px 20px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    background: #f5effad7;
-    border: 1px groove #92929260;
-    font-family: 'NanumSquareRound', sans-serif;
+    transition: color 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    outline: none;
   }
   .sort-tab.active, .sort-tab:hover {
-    background: #EADCF1;
-    color: #3B2A5A;
-    font-weight: 600;
+    color: #000;
+    font-weight: 500;
   }
   .search-box {
     display: flex;
     align-items: center;
-    border-radius: 16px;
+    border-radius: 4px;
     padding: 6px 16px;
-    background: #f5effad7;
-    border: 1px groove #92929260;
+    background: #f8f8f8;
+    border: 1px solid #eee;
   }
   .search-box input {
     border: none;
     background: transparent;
     outline: none;
-    font-size: 1rem;
-    width: 160px;
-    color: #3B2A5A;
-    font-family: 'NanumSquareRound', sans-serif;
+    font-size: 0.95rem;
+    width: 180px;
+    color: #333;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 4px 0;
   }
   .search-box button {
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: center;
     background: none;
     border: none;
-    color: #7B5FA1;
-    font-size: 1.6rem;
+    color: #666;
+    font-size: 1.4rem;
     cursor: pointer;
-    margin-left: 4px;
-    width: 36px;
-    height: 36px;
     padding: 0;
+    transition: color 0.2s;
+  }
+  .search-box button:hover {
+    color: #333;
   }
   .search-box .material-icons {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     line-height: 1;
   }
-
   hr {
     border: none;
-    height: 2px;
-    background: linear-gradient(to right, #EADCF1, #CBB4E7, #EADCF1);
-    margin: 20px 0;
-    border-radius: 4px;
-    opacity: 0.7;
+    height: 1px;
+    background: #7f919d52;
+    margin: auto;
+    margin-bottom: 40px;
+    opacity: 0.8;
+    width: 98.4%;
   }
-
-  /* 상품 카드 스타일 */
+  
   .product-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 32px;
-    justify-content: flex-start;
-    margin-top: 32px;
+    padding: 0 12px;
+    margin-bottom: 80px;
   }
   .product-card {
-    width: 320px;
-    background: #fdf8ff;
-    border-radius: 18px;
-    box-shadow: 0 2px 8px rgba(203,180,231,0.08);
-    padding: 18px;
+    width: 100%;
+    background: #fff;
     text-align: center;
     cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.2s;
+    transition: transform 0.2s;
     text-decoration: none;
-    display: block;
-    border: 1px groove #92929260;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
   }
   .product-card:hover {
-    box-shadow: 0 4px 16px rgba(123,95,161,0.13);
-    transform: translateY(-4px) scale(1.03);
+    transform: translateY(-4px);
   }
   .product-card img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 12px;
+    aspect-ratio: 4/5;
+    object-fit: contain;
     margin-bottom: 16px;
   }
   .product-card-title {
-    font-size: 1.1rem;
-    color: #3B2A5A;
-    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 400;
     margin-bottom: 8px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: left;
+    padding: 0 4px;
   }
   .product-card-price {
-    color: #3B2A5A;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-align: left;
+    width: 100%;
+    padding: 0 4px;
   }
+
 
 </style>
 <script>
@@ -214,7 +228,6 @@
 
     
     <span class="product-count">총 <b>10</b> 개의 상품</span>
-    <hr>
     <div class="top-bar">
       <div class="sort-tabs">
         <button class="sort-tab active">인기순</button>
@@ -226,17 +239,20 @@
         <button type="submit"><span class="material-icons">search</span></button>
       </form>
     </div>
-    <!-- 상품 리스트 영역이 여기에 들어감 -->
+    
+    <hr>
+    
+    <!-- 상품 리스트 영역 -->
     <div class="product-list">
-      <a href="/soyo/product/productDetail?" class="product-card">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/adult-1868750_1280.jpg" alt="샘플 상품" />
-        <div class="product-card-title">한글 반팔 셔츠 저고리 [베이지]</div>
-        <div class="product-card-price">₩169,000</div>
+    <c:forEach var="product" items="${productList}">
+      <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
+        <img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
+        <div class="product-card-title">${product.productName}</div>
+        <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
       </a>
+    </c:forEach>
     </div>
   </div>
-
-  <br>
 
   <jsp:include page="../common/footer.jsp" />
 
