@@ -42,12 +42,12 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
-	public ArrayList<Notice> noticeFilter(List<String> noticeType, PageInfo pi) {
+	public ArrayList<Notice> noticeFilter(String noticeType, PageInfo pi) {
 		return noticeDao.noticeFilter(sqlSession, noticeType, pi);
 	}
-
+	
 	@Override
-	public int noticeFilterCount(List<String> noticeType) {
+	public int noticeFilterCount(String noticeType) {
 		return noticeDao.noticeFilterCount(sqlSession, noticeType);
 	}
 	
