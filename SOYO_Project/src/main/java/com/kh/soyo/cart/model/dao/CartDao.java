@@ -49,5 +49,25 @@ public class CartDao {
 
 
 
+	public int getTotalPrice(SqlSessionTemplate sqlSession, String memberId, List<Integer> productId) {
+		
+		Map<String, Object> param = new HashMap<>();
+	    param.put("memberId", memberId);
+	    param.put("productNoList", productId);
+	    
+		return sqlSession.selectOne("cartMapper.getTotalPrice",param);
+	}
+
+	public List<Cart> selectedProducts(SqlSessionTemplate sqlSession, String memberId, List<Integer> productNoList) {
+		
+		Map<String, Object> param = new HashMap<>();
+	    param.put("memberId", memberId);
+	    param.put("productNoList", productNoList);
+	    
+		return sqlSession.selectList("cartMapper.selectedProducts",param);
+	}
+
+
+
 
 }

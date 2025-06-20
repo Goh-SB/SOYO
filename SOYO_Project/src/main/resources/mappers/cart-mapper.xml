@@ -46,8 +46,39 @@
     DELETE FROM cart
      WHERE MEMBER_ID = #{memberId}
        AND PRODUCT_NO IN
-    <foreach item="no" collection="productNoList" open="(" separator="," close=")">
-        #{no}
-    </foreach>
-</delete>
+	    <foreach item="no" collection="productNoList" open="(" separator="," close=")">
+	        #{no}
+	    </foreach>
+	</delete>
+	
+	<select id="selectedProducts" parameterType="map" resultMap="cartResultMap">
+    SELECT P.PRODUCT_NO, P.PRODUCT_PRICE, C.PRODUCT_COUNT
+   	  FROM CART C
+      JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
+     WHERE C.MEMBER_ID = #{memberId}
+       AND C.PRODUCT_NO IN 
+      <foreach collection="productNoList" item="productNo" open="(" separator="," close=")">
+        #{productNo}
+      </foreach>
+</select>
+	
+
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
