@@ -2,12 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>남성 상품 목록</title>
+<title>소요 - 상품 목록</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 
@@ -227,7 +228,7 @@
 	</c:choose>
 
     
-    <span class="product-count">총 <b>10</b> 개의 상품</span>
+    <span class="product-count">총 <b>${fn:length(productList)}</b>개의 상품</span>
     <div class="top-bar">
       <div class="sort-tabs">
         <button class="sort-tab active">인기순</button>
@@ -246,7 +247,7 @@
     <div class="product-list">
     <c:forEach var="product" items="${productList}">
       <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
-        <img id="mainImage" class="product-image" src="http://192.168.40.17:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
+        <img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
         <div class="product-card-title">${product.productName}</div>
         <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
       </a>

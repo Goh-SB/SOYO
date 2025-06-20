@@ -30,4 +30,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.selectTagsByProductNo(productNo);
 	}
 
+	@Override
+	public List<Product> selectProductListByCategory(String category) {
+		return productDao.selectProductListByCategory(category);
+	}
+
 }

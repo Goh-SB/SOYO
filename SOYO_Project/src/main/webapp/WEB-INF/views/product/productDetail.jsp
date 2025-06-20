@@ -692,7 +692,7 @@
         <div class="row">
         
             <div class="col s12 m6">
-            	<img id="mainImage" class="product-image" src="http://192.168.40.17:8100/soyo/resources/product_upfile/${product.productChange}" alt="상품 이미지"/>
+            	<img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="상품 이미지"/>
             </div>
             
             <div class="col s12 m6">

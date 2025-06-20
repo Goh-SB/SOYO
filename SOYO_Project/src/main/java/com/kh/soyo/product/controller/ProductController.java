@@ -48,10 +48,32 @@ public class ProductController {
 
 	
 	@GetMapping("/productList")
-	public String showProductList(Model model) {
-	    ArrayList<Product> productList = productService.selectProductList();
+	public String showProductList(@RequestParam(value = "type", required = false, defaultValue = "all") String type,
+	                              Model model) {
+
+	    List<Product> productList;
+
+	    switch (type) {
+	        case "mens":
+	            productList = productService.selectProductListByCategory("남성");
+	            break;
+	        case "womens":
+	            productList = productService.selectProductListByCategory("여성");
+	            break;
+	        case "kids":
+	            productList = productService.selectProductListByCategory("아동");
+	            break;
+	        case "accessory":
+	            productList = productService.selectProductListByCategory("악세사리");
+	            break;
+	        default:  // type == "all" 또는 null일 경우
+	            productList = productService.selectProductList();
+	    }
+
 	    model.addAttribute("productList", productList);
+	    model.addAttribute("type", type); // JSP에서 필요할 수 있음
 	    return "product/productList";
 	}
+
 	
 }

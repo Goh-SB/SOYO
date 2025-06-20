@@ -13,5 +13,7 @@ public interface ProductService {
 	Product selectProductByNo(int productNo);
 
 	List<String> getTagsForProduct(int productNo);
+
+	List<Product> selectProductListByCategory(String string);
 	
 }

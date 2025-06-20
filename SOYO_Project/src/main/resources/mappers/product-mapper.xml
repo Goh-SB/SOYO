@@ -37,6 +37,11 @@
      WHERE PRODUCT_NO = #{productNo}
   </select>
   
+  <select id="selectProductListByCategory" parameterType="String" resultMap="productMap">
+    SELECT * FROM PRODUCT
+    WHERE PRODUCT_CATEGORY = #{productCategory}
+      AND STATUS = 'Y'
+  </select>
   
 
 </mapper>

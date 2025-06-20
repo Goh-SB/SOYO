@@ -25,4 +25,8 @@ public class ProductDao {
 	    return sqlSession.selectList("productMapper.selectTagsByProductNo", productNo);
 	}
 
+	public List<Product> selectProductListByCategory(String category) {
+		return sqlSession.selectList("productMapper.selectProductListByCategory", category);
+	}
+
 }
