@@ -39,25 +39,18 @@
             height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${pageContext.request.contextPath}/resources/images/brand-bg.jpg');
             background-size: cover;
             background-position: center;
             color: white;
-            padding-right: 20%;
+            text-align: center;
         }
 
         .hero-content {
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s ease forwards;
-            text-align: right;
-            position: relative;
-            left: 22%;
-            top: 150px;
-            transform: translateX(-50%);
-            width: 50%;
-            max-width: 600px;
         }
 
         .hero h1 {
@@ -115,7 +108,6 @@
             font-family: 'Noto Serif KR', serif;
             color: var(--accent-color);
             margin-bottom: 1rem;
-            font-size: 1.5rem;
         }
 
         @keyframes fadeInUp {
@@ -145,29 +137,30 @@
 
         .back-button {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 30px;
+            left: 30px;
             z-index: 1000;
+            background-color: rgba(39, 39, 39, 0.664);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
             text-decoration: none;
-            font-size: 16px;
-            padding: 12px 24px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
             transition: all 0.3s ease;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            opacity: 1;
+            visibility: visible;
         }
 
         .back-button.hidden {
             opacity: 0;
             visibility: hidden;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
     </style>
 </head>

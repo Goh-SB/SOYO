@@ -8,4 +8,3 @@ export default {
     port: 5173
   }
 };
-
