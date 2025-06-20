@@ -36,15 +36,18 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.searchNoticeListCount", map);
 	}
 	
-	public ArrayList<Notice> noticeFilter(SqlSessionTemplate sqlSession, List<String> noticeType, PageInfo pi) {
-		int limit = pi.getBoardLimit();
-		int offset = (pi.getCurrentPage() - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
+	public ArrayList<Notice> noticeFilter(SqlSessionTemplate sqlSession, String noticeType, PageInfo pi) {
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
 		
-		return (ArrayList)sqlSession.selectList("noticeMapper.noticeFilter", null, rowBounds);
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("noticeType", noticeType);
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		return (ArrayList)sqlSession.selectList("noticeMapper.noticeFilter", hm);
 	}
-
-	public int noticeFilterCount(SqlSessionTemplate sqlSession, List<String> noticeType) {
+	
+	public int noticeFilterCount(SqlSessionTemplate sqlSession, String noticeType) {
 		return sqlSession.selectOne("noticeMapper.noticeFilterCount", noticeType);
 	}
 	

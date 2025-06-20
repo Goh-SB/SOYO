@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.soyo.cart.model.vo.Cart;
+import com.kh.soyo.cart.model.vo.Delivery;
 
 public interface CartService {
 
@@ -19,6 +20,8 @@ public interface CartService {
 	int getTotalPrice(String memberId, List<Integer> productId);
 
 	List<Cart> selectedProducts(String memberId, List<Integer> productNoList);
+
+	int deliveryInfo(Delivery delivery);
 
 
 

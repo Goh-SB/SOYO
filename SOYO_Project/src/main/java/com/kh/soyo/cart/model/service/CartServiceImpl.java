@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.soyo.cart.model.dao.CartDao;
 import com.kh.soyo.cart.model.vo.Cart;
+import com.kh.soyo.cart.model.vo.Delivery;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -57,6 +58,15 @@ public class CartServiceImpl implements CartService {
 		return cartDao.selectedProducts(sqlSession,memberId,productNoList);
 	}
 
+	@Override
+	@Transactional
+	public int deliveryInfo(Delivery delivery) {
+	    int result1 = cartDao.insertOrder(sqlSession, delivery);  
+	    
+	    int result2 = cartDao.insertAddress(sqlSession, delivery); 
+
+	    return (result1 > 0 && result2 > 0) ? 1 : 0;
+	}
 
 
 }

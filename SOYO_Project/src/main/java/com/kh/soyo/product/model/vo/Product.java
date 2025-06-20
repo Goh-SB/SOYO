@@ -37,5 +37,10 @@ public class Product {
     private String orderImpno;
     private Date deliveryDate;
     private String orderStatus;
+    
+    private String receiverName;
+    private String memberName;
+    
+    private String addressOther;
 	
 }

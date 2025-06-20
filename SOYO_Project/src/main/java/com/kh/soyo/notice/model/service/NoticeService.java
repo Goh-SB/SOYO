@@ -17,8 +17,8 @@ public interface NoticeService {
 	int searchNoticeListCount(HashMap<String, String> map);
 	
 	// 공지사항 필터링용 서비스(페이징 처리 포함)
-	ArrayList<Notice> noticeFilter(List<String> noticeType, PageInfo pi);
-	int noticeFilterCount(List<String> noticeType);
+	ArrayList<Notice> noticeFilter(String noticeType, PageInfo pi);
+	int noticeFilterCount(String noticeType);
 	
 	// 공지사항 상세 조회용 서비스
 	Notice noticeDetail(int nno);

@@ -212,38 +212,68 @@
 	</style>
 
 	<body>
+		<!-- jQuery 연동 구문 -->
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-		<jsp:include page="../common/menubar.jsp" />
 
-		<br><br><br><br>
+		<jsp:include page="../common/menubar.jsp" /><br><br><br><br>
 
 		<p id="top-title">.Notice / Event</p>
 
 		<div class="list_wrap">
 			<div class="list_form">
 				<!-- 필터링 버튼 -->
-				<div class="filter-btn-group">
-					<button class="filter-btn active" onclick="filter([], this)">ALL</button>
-					<button class="filter-btn" onclick="filter(['notice'], this)">공지사항</button>
-					<button class="filter-btn" onclick="filter(['event'], this)">이벤트</button>
-				</div>
+				<c:if test="${!isAjax}">
+					<div class="filter-btn-group">
+						<button class="filter-btn active" onclick="filter(this)" value="ALL">ALL</button>
+						<button class="filter-btn" onclick="filter(this)" value="공지사항">공지사항</button>
+						<button class="filter-btn" onclick="filter(this)" value="이벤트">이벤트</button>
+					</div>
+				</c:if>
+
+				<!-- Ajax로 바뀌는 영역 -->
+				<c:if test="${ !isAjax }">
+					<div id="notice-filter">
+				</c:if>
+
+				<c:if test="${!isAjax}">
+					<!-- notice-filter 닫기 -->
+					</div>
+				</c:if>
 
 				<script>
-					function filter(noticeType) {
-						// 이동할 url 결정
-						let url;
+					function filter(btn) {
+						// active 클래스 토글
+						document.querySelectorAll('.filter-btn').forEach(button => button.classList.remove('active'));
+						btn.classList.add('active');
+						
+						console.log($(btn).val());
 
-						if (!noticeType || noticeType.length === 0) {
-							// ALL 버튼
-							url = "/soyo/notice/noticeList";
-						} else {
-							// 나머지 버튼(noticeType 파라미터를 쿼리스트링으로 변환)
-							const queryString = noticeType.map(type => "noticeType=" + encodeURIComponent(type)).join("&");
-							url = "/soyo/notice/noticeFilter" + (queryString ? "?" + queryString : "");
-						}
+						// 이동할 url 및 data 생성
+						let noticeType = $(btn).val();
 
-						// 페이지 이동
-						window.location.href = url;
+						// Ajax 요청
+						$.ajax({
+							url : "/soyo/notice/noticeFilter",
+							type : "GET",
+							data : {
+								noticeType : noticeType
+							},
+							success : function(result) {
+								let resultStr = "";
+
+								for(let i = 0; i < result.length; i++) {
+									 resultStr += "<tr>" + 
+												"<td>" + result[i].noticeNo + "</td>" +
+												"<td>" + result[i].noticeTitle  + "</td>"
+												+ "</tr>";
+								}
+
+								$("#noticeList-area").html(resultStr);
+							},
+							error : function() {
+								alert("ajax 연동 실패!");
+							}
+						});
 					}
 				</script>
 
@@ -256,7 +286,7 @@
 							<th>작성일</th>
 						</tr>
 					</thead>
-					<tbody align="center">
+					<tbody align="center" id="noticeList-area">
 						<c:choose>
 							<c:when test="${ empty requestScope.list }">
 								<tr>
