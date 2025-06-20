@@ -25,7 +25,10 @@ public class Review {
     private String status;                      // STATUS ('Y', 'N')
     private int productNo;                      // PRODUCT_NO
     private String memberId;                    // MEMBER_ID (FK)
-	
+    
+    // JOIN 전용
     private String memberName;
+    private String productOrigin;      			// 상품) 원본 이미지명
+    private String productChange;      			// 상품) 저장용 변경 이미지명
     
 }
