@@ -45,12 +45,20 @@
             background-position: center;
             color: white;
             text-align: center;
+            overflow-x: hidden;
         }
 
         .hero-content {
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s ease forwards;
+            text-align: left;
+            position: relative;
+            left: 46%;
+            top: 150px;
+            transform: translateX(-50%);
+            width: 50%;
+            max-width: 600px;
         }
 
         .hero h1 {
@@ -108,6 +116,12 @@
             font-family: 'Noto Serif KR', serif;
             color: var(--accent-color);
             margin-bottom: 1rem;
+            font-size: 1.7rem;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
 
         @keyframes fadeInUp {
