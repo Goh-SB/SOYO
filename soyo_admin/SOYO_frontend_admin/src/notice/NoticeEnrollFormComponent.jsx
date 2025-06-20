@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import './NoticeEnrollFormComponent.css';
 import $ from 'jquery';
 import axios from 'axios';
+import React from 'react';
 
 function NoticeEnrollFormComponent() {
 
@@ -27,7 +28,7 @@ function NoticeEnrollFormComponent() {
             formData.append("upfile", upfile.files[0]);
         }
 
-        let url = "http://localhost:8100/soyo/notice/enrollForm";
+        let url = "http://192.168.40.32:8100/soyo/notice/enrollForm";
 
         axios({
             url,

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-
+import React from 'react';
 
 function Chart1() {
 

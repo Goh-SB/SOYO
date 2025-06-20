@@ -138,28 +138,12 @@ public class ProductDao {
 	
 	// ----- subTag 업데이트
 		public int updateSubTag(SqlSessionTemplate sqlSession, Product p, List<String> productSubTag) {
-			System.out.println(productSubTag);
-			ArrayList list =  (ArrayList)sqlSession.selectList("productMapper.originTag", p);
-			
-			System.out.println(list);
-			
-			int result1 = 1;
+			int result1 = sqlSession.delete("productMapper.deleteSubTag", p);
 			int result2 = 1;
 			for(int i = 0; i < productSubTag.size(); i++) {
-				
-				for(int j = 0; j < list.size(); j++) {
-					
-					if(!productSubTag.get(i).equals(list.get(j))) {
-						
-						p.setProductSubTag((String)list.get(j));
-						result1 *= sqlSession.delete("productMapper.deleteSubTag", p);
-					}
-				}
 				p.setProductSubTag(productSubTag.get(i));
-				
 				result2 *= sqlSession.insert("productMapper.updateSubTag", p);
 			}
-			
 			return (result1 * result2);
 		}
 

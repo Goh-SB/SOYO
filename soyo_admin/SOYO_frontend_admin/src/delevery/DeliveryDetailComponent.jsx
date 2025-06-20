@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DeliveryProductDetailComponent from "./DeliveryProductDetailComponent";
+import React from 'react';
 
 function DeliveryDetailComponent(){
 
@@ -19,7 +20,7 @@ function DeliveryDetailComponent(){
 
     const deliveryDetail = ()=> {
 
-       let url = "http://localhost:8100/soyo/delivery/info/" + orderNo;
+       let url = "http://192.168.40.32:8100/soyo/delivery/info/" + orderNo;
 
         axios({
             url,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import React from 'react';
 import { Chart1, Chart2} from './dashboard/Chart';
 
 function Home (props) {
@@ -16,7 +17,7 @@ function Home (props) {
         let memberId = document.getElementById("memberId").value;
         let memberPwd = document.getElementById("memberPwd").value;
 
-        let url = "http://localhost:8100/soyo/auth/login";
+        let url = "http://192.168.40.32:8100/soyo/auth/login";
 
         axios({
             url,

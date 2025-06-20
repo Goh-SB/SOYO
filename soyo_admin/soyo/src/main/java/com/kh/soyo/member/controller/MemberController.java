@@ -19,7 +19,7 @@ import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 
 @RestController
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.40.32:5173")
 @RequestMapping("member")
 public class MemberController {
 

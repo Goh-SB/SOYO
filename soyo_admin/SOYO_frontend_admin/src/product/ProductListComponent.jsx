@@ -3,6 +3,7 @@ import './ProductListComponent.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import React from 'react';
 
 function ProductListComponent() {
 
@@ -28,7 +29,7 @@ function ProductListComponent() {
 
     const productList = () => {
 
-        let url = "http://localhost:8100/soyo/product/list";
+        let url = "http://192.168.40.32:8100/soyo/product/list";
         axios({
             url,
             method: "get",
@@ -54,7 +55,7 @@ function ProductListComponent() {
                     onClick={() => { navigate("/product/detail/" + item.productNo); }}>
                     <td>
                         <div className="product-Object">
-                            <img src={`http://localhost:8100/soyo/resources/product_upfile/${item.productChange}`} className="product-img" width="200" height="250"
+                            <img src={`http://192.168.40.32:8100/soyo/resources/product_upfile/${item.productChange}`} className="product-img" width="200" height="250"
                             />
                             <br />
                             <div align="center">
@@ -129,7 +130,7 @@ function ProductListComponent() {
 
     const searchList = () => {
 
-        let url = "http://localhost:8100/soyo/product/search";
+        let url = "http://192.168.40.32:/soyo/product/search";
         axios({
             url,
             method: "get",
@@ -155,7 +156,7 @@ function ProductListComponent() {
 
     const categoryFilter = (e) => {
         // console.log(e.target.value);
-        let url = "http://localhost:8100/soyo/product/filtering";
+        let url = "http://192.168.40.32:8100/soyo/product/filtering";
         let cate = e.target.value;
         setCpage(1);
         // console.log(cate);

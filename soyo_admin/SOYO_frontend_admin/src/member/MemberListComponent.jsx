@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './MemberListComponent.css';
+import React from 'react';
 
 function MemberListComponent() {
 
@@ -30,7 +31,7 @@ function MemberListComponent() {
     }, [cpage, keyword]);
 
     const selectMember = () => {
-        let url = "http://localhost:8100/soyo/member/list";
+        let url = "http://192.168.40.32:8100/soyo/member/list";
         axios({
             url,
             method: "get",
@@ -150,7 +151,7 @@ function MemberListComponent() {
 
 
     const deleteBtn = (memberId) => {
-        let url = "http://localhost:8100/soyo/member/delete";
+        let url = "http://192.168.40.32:8100/soyo/member/delete";
 
         axios({
             url,
@@ -171,7 +172,7 @@ function MemberListComponent() {
 
     const repairBtn = (memberId) => {
 
-        let url = "http://localhost:8100/soyo/member/repair";
+        let url = "http://192.168.40.32:8100/soyo/member/repair";
 
         axios({
             url,
@@ -195,7 +196,7 @@ function MemberListComponent() {
 
         let searchMenu = document.getElementById("member-searchMenu").value;
         let searchText = document.getElementById("member-searchText").value;
-        let url = "http://localhost:8100/soyo/member/searchMember";
+        let url = "http://192.168.40.32:8100/soyo/member/searchMember";
         // console.log(searchMenu, searchText);
 
         axios({
@@ -245,7 +246,7 @@ function MemberListComponent() {
 
         document.getElementById("member-searchText").value = '';
 
-        let url = "http://localhost:8100/soyo/member/filter";
+        let url = "http://192.168.40.32:8100/soyo/member/filter";
         axios({
             url,
             method: "get",

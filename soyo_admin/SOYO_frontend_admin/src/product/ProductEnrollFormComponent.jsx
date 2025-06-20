@@ -9,6 +9,7 @@ import { ImageFormats } from '@xeger/quill-image-formats';
 import axios from 'axios';
 import $ from 'jquery';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 Quill.register('modules/ImageResize', ImageResize);
 Quill.register('modules/imageActions', ImageActions);
@@ -99,7 +100,7 @@ function ProductEnrollFormComponent() {
       formData.append("file", file);
       console.log('formData : ', formData);
 
-      let url = "http://localhost:8100/soyo/product/fileUpload";
+      let url = "http://192.168.40.32:8100/soyo/product/fileUpload";
 
       await axios.post(
         url, formData,
@@ -171,7 +172,7 @@ function ProductEnrollFormComponent() {
 
     console.log("최종본 : ", data);
 
-    let url = "http://localhost:8100/soyo/product/enrollForm";
+    let url = "http://192.168.40.32:8100/soyo/product/enrollForm";
     axios({
       url,
       method: "post",

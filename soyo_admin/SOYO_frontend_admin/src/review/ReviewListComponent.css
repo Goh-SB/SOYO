@@ -1,0 +1,9 @@
+#Top-N-area{
+    display : flex;
+    gap : 25px;
+}
+.Top-object{
+    width : 300px;
+    height : 400px;
+    border : 1px solid lightgray;
+}

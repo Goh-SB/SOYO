@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import './MemberDetailComponent.css';
+import React from 'react';
 
 function MemberDetailComponent() {
 
@@ -15,7 +16,7 @@ function MemberDetailComponent() {
 
     const memberDetail = () => {
 
-        let url = "http://localhost:8100/soyo/member/detail/" + memberId;
+        let url = "http://192.168.40.32:8100/soyo/member/detail/" + memberId;
 
         axios({
             url,
@@ -58,7 +59,7 @@ function MemberDetailComponent() {
         let address = document.querySelector("#address").value;
         let email = document.querySelector("#email").value;
 
-        let url = "http://localhost:8100/soyo/member/updateForm";
+        let url = "http://192.168.40.32:8100/soyo/member/updateForm";
         axios({
             url,
             method: "post",
