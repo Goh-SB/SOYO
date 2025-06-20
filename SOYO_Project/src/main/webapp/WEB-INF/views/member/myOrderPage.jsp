@@ -208,19 +208,22 @@
 						        <form action="./orderProduct" method="get">
 						            <table class="order-table">
 						                <tr>
-						                    <th>${p.deliveryDate} 주문</th>
+						                    <th> 주문</th>
 						                </tr>
 						                <tr></tr>
 						                <tr>
 						                    <td class="product-img">
-						                        <img src="${pageContext.request.contextPath}/resources/images/${p.productChange}" alt="">
+						                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${p.productChange}" alt="">
 						                    </td>
 						                    <td class="product-name">
 						                        <div>
+						                        	수령인 : ${p.receiverName} <br>
+						                        	배송지 : ${p.addressOther}<br>
 						                            ${p.productName} - 수량 ${p.productCount}개<br>
 						                            배송날짜 : ${p.deliveryDate }<br>
 						                            가격 : ${p.productPrice}<br>
 						                            주문번호 : ${p.orderImpno } 
+						                            
 						                            <button type="button" onclick="copyImpUid('${p.orderImpno}')">복사</button>
 						                        </div>
 						                    </td>

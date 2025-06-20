@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.cart.model.vo.Cart;
+import com.kh.soyo.cart.model.vo.Delivery;
 
 @Repository
 public class CartDao {
@@ -67,7 +68,15 @@ public class CartDao {
 		return sqlSession.selectList("cartMapper.selectedProducts",param);
 	}
 
+	public int insertOrder(SqlSessionTemplate sqlSession, Delivery delivery) {
+		
+		return sqlSession.insert("cartMapper.insertOrder",delivery);
+	}
 
+	public int insertAddress(SqlSessionTemplate sqlSession, Delivery delivery) {
+		
+		return sqlSession.insert("cartMapper.insertAddress",delivery);
+	}
 
 
 }

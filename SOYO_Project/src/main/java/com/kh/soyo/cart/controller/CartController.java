@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.soyo.cart.model.service.CartService;
 import com.kh.soyo.cart.model.vo.Cart;
+import com.kh.soyo.cart.model.vo.Delivery;
 import com.kh.soyo.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpSession;
@@ -104,12 +106,19 @@ public class CartController {
 	    	}
 	    }
 	    
-	    
 	    model.addAttribute("selectedProducts", selectedProducts);
 	    model.addAttribute("totalPrice", totalPrice);
 
 	    return "cart/paymentCheck"; // 이동할 JSP 경로
 	}
+	
+	@PostMapping("/insertOrder")
+	@ResponseBody
+	public int insertOrder(@RequestBody Delivery delivery) {
+		System.out.println(delivery);	
+	    return cartService.deliveryInfo(delivery); 
+	}
+		
 }
 
 

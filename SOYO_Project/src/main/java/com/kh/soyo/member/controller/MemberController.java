@@ -572,9 +572,11 @@ public class MemberController {
 	    
 	    if (loginUser != null) {
 	        List<Product> product = memberService.orderProduct(loginUser.getMemberId());
+	        System.out.println(product);
 	        model.addAttribute("product", product);
 	    }
 
+	   
 	    return "member/myOrderPage";
 	}
 	

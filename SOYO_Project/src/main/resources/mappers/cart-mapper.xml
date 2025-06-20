@@ -52,7 +52,7 @@
 	</delete>
 	
 	<select id="selectedProducts" parameterType="map" resultMap="cartResultMap">
-    SELECT P.PRODUCT_NO, P.PRODUCT_PRICE, C.PRODUCT_COUNT
+    SELECT P.PRODUCT_NO, P.PRODUCT_PRICE, C.PRODUCT_COUNT,P.PRODUCT_NAME
    	  FROM CART C
       JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
      WHERE C.MEMBER_ID = #{memberId}
@@ -60,7 +60,28 @@
       <foreach collection="productNoList" item="productNo" open="(" separator="," close=")">
         #{productNo}
       </foreach>
-</select>
+	</select>
+	
+	<insert id="insertOrder" parameterType="Delivery">
+    INSERT INTO ORDER_TB (
+        ORDER_NO, MEMBER_ID, RECEIVER_NAME, RECEIVER_PHONE,
+        REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE
+    ) VALUES (
+        ORDER_SEQ.NEXTVAL, #{memberId}, #{receiverName}, #{receiverPhone},
+        #{requestMsg}, #{totalPrice}, #{orderImpno}, SYSDATE
+    )
+</insert>
+
+<insert id="insertAddress" parameterType="Delivery">
+    INSERT INTO DELIVERY_ADDRESS (
+        ADDRESS_NO, ADDRESS_NAME, ADDRESS_OTHER,
+        IS_DEFAULT, RECEIVER_NAME, RECEIVER_PHONE, MEMBER_ID
+    ) VALUES ( 
+        SEQ_DELIVERY_ADDRESS.NEXTVAL, #{addressName}, #{addressOther},
+        'N', #{receiverName}, #{receiverPhone}, #{memberId}
+    )
+</insert>
+	
 	
 
 
