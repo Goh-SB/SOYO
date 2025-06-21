@@ -64,8 +64,10 @@ public class CartServiceImpl implements CartService {
 	    int result1 = cartDao.insertOrder(sqlSession, delivery);  
 	    
 	    int result2 = cartDao.insertAddress(sqlSession, delivery); 
+	   
+	    int result3 = cartDao.deleteCartProduct(sqlSession,delivery);
 
-	    return (result1 > 0 && result2 > 0) ? 1 : 0;
+	    return result1 * result2 * result3;
 	}
 
 

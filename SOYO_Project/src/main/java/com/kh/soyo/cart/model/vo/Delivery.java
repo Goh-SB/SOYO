@@ -1,6 +1,6 @@
 package com.kh.soyo.cart.model.vo;
 
-import java.sql.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -23,4 +23,6 @@ public class Delivery {
     private String requestMsg;
     private int totalPrice;
     private String orderImpno;
+    
+    private List<Integer> selectedProductList;
 }

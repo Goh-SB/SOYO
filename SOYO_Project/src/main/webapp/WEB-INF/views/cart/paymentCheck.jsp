@@ -128,6 +128,8 @@
 <body>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	 <jsp:include page="../common/menubar.jsp" />
+	 
+	
 		<div class="container">
         <div class="" id="myTitle">
             마이페이지
@@ -191,11 +193,16 @@
                     </div>
           
 		            </div>
-		         			 <h2>결제 정보</h2>
-					<p>총 결제 금액: <strong>${totalPrice}</strong>원</p>
-		     	   </div>
+		         	 <h2>결제 정보</h2>
+					 <p>총 결제 금액: <strong>${totalPrice}</strong>원</p>
+		     	    </div>
+		     	   
+		     	   <!-- 체크된 상품번호 가져오기 -->
+		     	    <c:forEach var="productNo" items="${paramValues.productNoList}">
+					    <input type="hidden" name="productNoList" value="${productNo}" />
+					</c:forEach>
           
-    </div>
+    			</div>
     <jsp:include page="../common/footer.jsp" />
 </body>
 		<script>
@@ -224,6 +231,14 @@
 			  const addressName = document.querySelector("input[name='addressName']").value;
 			  const fullAddress = address + " " + addrDetail;
 			  
+			  const selectedProducts=document.querySelectorAll("input[name='productNoList']");
+			  
+			  const selectedProductList=[];
+			  
+			  selectedProducts.forEach(function(input){
+				  selectedProductList.push(parseInt(input.value));
+			  })
+			  
 		    IMP.request_pay({
 		      pg: "html5_inicis", // 또는 "html5_inicis", "danal" 등 테스트 가능한 pg
 		      pay_method: "card",
@@ -242,15 +257,16 @@
 		    	 console.log(rsp);
 		    	 
 		    	 const orderInfo = {
-		    			    memberId: document.querySelector("input[name='memberId']").value,
-		    	
+		    			    memberId: document.querySelector("input[name='memberId']").value,    	
 		    			    orderImpno : rsp.imp_uid,  
 		    			    receiverName: memberName,
 		    			    receiverPhone: phone,
 		    			    addressName: addressName,
 		    			    addressOther: fullAddress,
 		    			    requestMsg: requestMsg,
-		    			    totalPrice: totalPrice
+		    			    totalPrice: totalPrice,
+		    			    selectedProductList: selectedProductList
+		    			    
 		    			};
 		    	 
 		    	 $.ajax({

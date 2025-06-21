@@ -81,7 +81,15 @@
         'N', #{receiverName}, #{receiverPhone}, #{memberId}
     )
 </insert>
-	
+
+	<delete id="deleteCartProduct" parameterType="Delivery">
+	    DELETE FROM CART
+	    WHERE MEMBER_ID = #{memberId}
+	    AND PRODUCT_NO IN
+	    <foreach item="productNo" collection="selectedProductList" open="(" separator="," close=")">
+	        #{productNo}
+	    </foreach>
+	</delete>
 	
 
 

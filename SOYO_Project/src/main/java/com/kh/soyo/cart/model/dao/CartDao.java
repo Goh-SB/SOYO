@@ -78,5 +78,10 @@ public class CartDao {
 		return sqlSession.insert("cartMapper.insertAddress",delivery);
 	}
 
+	public int deleteCartProduct(SqlSessionTemplate sqlSession, Delivery delivery) {
+		
+		return sqlSession.delete("cartMapper.deleteCartProduct",delivery);
+	}
+
 
 }
