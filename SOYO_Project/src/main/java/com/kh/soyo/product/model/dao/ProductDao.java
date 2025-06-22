@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.kh.soyo.product.model.vo.Product;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductDao {
@@ -28,5 +29,9 @@ public class ProductDao {
 	public List<Product> selectProductListByCategory(String category) {
 		return sqlSession.selectList("productMapper.selectProductListByCategory", category);
 	}
+
+    public List<Product> searchProductList(Map<String, String> paramMap) {
+        return sqlSession.selectList("productMapper.searchProductList", paramMap);
+    }
 
 }

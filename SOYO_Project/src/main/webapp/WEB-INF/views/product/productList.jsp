@@ -235,10 +235,15 @@
         <button class="sort-tab">최신순</button>
         <button class="sort-tab">가격순</button>
       </div>
-      <form class="search-box" action="#" method="get">
-        <input type="text" name="search" placeholder="상품명 검색" />
-        <button type="submit"><span class="material-icons">search</span></button>
-      </form>
+
+
+    <form class="search-box" action="/soyo/product/productList" method="get">
+      <input type="hidden" name="type" value="${param.type}" />
+      <input type="text" name="search" value="${param.search}" placeholder="상품명 검색" />
+      <button type="submit"><span class="material-icons">search</span></button>
+    </form>
+
+      
     </div>
     
     <hr>

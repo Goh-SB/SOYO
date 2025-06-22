@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.soyo.product.model.dao.ProductDao;
 import com.kh.soyo.product.model.vo.Product;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -34,5 +36,14 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> selectProductListByCategory(String category) {
 		return productDao.selectProductListByCategory(category);
 	}
+	
+    @Override
+    public List<Product> searchProductList(String type, String keyword) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("type", type);
+        paramMap.put("keyword", keyword);
+
+        return productDao.searchProductList(paramMap);
+    }
 
 }

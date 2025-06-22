@@ -16,4 +16,6 @@ public interface ProductService {
 
 	List<Product> selectProductListByCategory(String string);
 	
+	List<Product> searchProductList(String type, String keyword);
+	
 }

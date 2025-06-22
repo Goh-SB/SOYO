@@ -49,31 +49,41 @@ public class ProductController {
 	
 	@GetMapping("/productList")
 	public String showProductList(@RequestParam(value = "type", required = false, defaultValue = "all") String type,
+	                              @RequestParam(value = "search", required = false) String search,
 	                              Model model) {
 
 	    List<Product> productList;
 
-	    switch (type) {
-	        case "mens":
-	            productList = productService.selectProductListByCategory("남성");
-	            break;
-	        case "womens":
-	            productList = productService.selectProductListByCategory("여성");
-	            break;
-	        case "kids":
-	            productList = productService.selectProductListByCategory("아동");
-	            break;
-	        case "accessory":
-	            productList = productService.selectProductListByCategory("악세사리");
-	            break;
-	        default:  // type == "all" 또는 null일 경우
-	            productList = productService.selectProductList();
+	    // 검색어가 있을 경우 type + search 조건으로 필터링
+	    if (search != null && !search.trim().isEmpty()) {
+	        productList = productService.searchProductList(type, search);
+	    } else {
+	        // 검색어가 없으면 카테고리만 필터링
+	        switch (type) {
+	            case "mens":
+	                productList = productService.selectProductListByCategory("남성");
+	                break;
+	            case "womens":
+	                productList = productService.selectProductListByCategory("여성");
+	                break;
+	            case "kids":
+	                productList = productService.selectProductListByCategory("아동");
+	                break;
+	            case "accessory":
+	                productList = productService.selectProductListByCategory("악세사리");
+	                break;
+	            default:
+	                productList = productService.selectProductList();  // 전체 조회
+	        }
 	    }
 
 	    model.addAttribute("productList", productList);
-	    model.addAttribute("type", type); // JSP에서 필요할 수 있음
+	    model.addAttribute("type", type);
+	    model.addAttribute("search", search); // JSP에서 검색어 유지하려면 필요
+
 	    return "product/productList";
 	}
+
 
 	
 }
