@@ -190,38 +190,120 @@
             font-weight: bold;
         }
 
-        /* 소요의 이야기 섹션 */
         .about {
-            padding: 5rem 0;
-            background-color: #fff;
-            text-align: center;
+            position: relative;
+            padding: 3.5rem 0 6rem 0;
+            background: linear-gradient(135deg, #f7f8fa 0%, #ececec 100%);
+            overflow: hidden;
         }
 
+        .about::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; right: -100px;
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #98acb6 0%, transparent 70%);
+            opacity: 0.13;
+            z-index: 1;
+        }
         .about-content {
-            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2rem 2.5rem 2rem;
+            background: rgba(255,255,255,0.75);
+            border-radius: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1) both;
         }
-
+        .about-illust {
+            width: 124px;
+            height: 124px;
+            margin-bottom: 1.5rem;
+            border-radius: 50%;
+            background: radial-gradient(circle at 60% 40%, #fff7ff 55%, #e9c6f7 80%, #f7b6d2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 0 6px rgba(233,198,247,0.13),
+                0 0 16px 4px #f7b6d2,
+                0 4px 16px 0 rgba(233,198,247,0.10);
+            overflow: hidden;
+            position: relative;
+            animation: soyo-glow 2.2s cubic-bezier(.23,1.01,.32,1) 0.2s both;
+        }
+        .about-illust::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            box-shadow: 0 0 16px 4px #f7b6d2, 0 0 0 1px #fff7ff inset;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .about-illust img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 12px rgba(233,198,247,0.18));
+            z-index: 1;
+        }
         .about-content p {
-            color: var(--color5);
-            line-height: 1.8;
-            font-size: 1.5rem;
+            color: #7c8e9f;
+            line-height: 1.9;
+            font-size: 1.38rem;
+            margin-bottom: 1.5rem;
+            font-family: 'NanumSquareRound', sans-serif;
+            animation: fadeIn 1.8s 0.2s both;
         }
-
-        .about-content a {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background-color: var(--color1);
-            color: white;
+        .about-content a.cta-button2 {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6em;
+            padding: 1rem 2.2rem;
+            background: linear-gradient(90deg, #98acb6 0%, #f4a6a6 100%);
+            color: #fff;
             text-decoration: none;
             border-radius: 30px;
-            transition: background-color 0.3s ease;
-            margin-top: 1rem;
+            font-size: 1.13rem;
+            font-family: 'NanumSquareRound', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(152,172,182,0.13);
+            letter-spacing: 0.01em;
+            text-shadow: 0 1px 4px rgba(244,166,166,0.13);
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
         }
-
-        .about-content a:hover {
-            background-color: #8ABED1;
+        .about-content a.cta-button2 i {
+            font-size: 1.1em;
+            transition: transform 0.2s;
+        }
+        .about-content a.cta-button2:hover {
+            background: linear-gradient(90deg, #8ABED1 0%, #f4a6a6 100%);
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 8px 24px rgba(152,172,182,0.18);
+            filter: brightness(1.08);
+        }
+        .about-content a.cta-button2:hover i {
+            transform: translateX(3px) scale(1.1);
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes soyo-glow {
+            0% { opacity: 0; transform: scale(0.8);}
+            100% { opacity: 1; transform: scale(1);}
         }
 
         /* 컬렉션 섹션 */
@@ -416,6 +498,27 @@
             height: 100%;
         }
 
+        .about h2 {
+            font-family: 'PyeongChang-Bold', sans-serif;
+            text-align: center;
+            color: var(--color1);
+            font-size:2.4rem;
+            font-weight: 800;
+            letter-spacing:0.04em;
+            margin-bottom:0.7em;
+            z-index:2;
+            position:relative;
+        }
+
+        /* about-illust float animation */
+        .about-illust {
+            animation: soyo-glow 2.2s cubic-bezier(.23,1.01,.32,1) 0.2s both, floatY 3.5s ease-in-out infinite;
+        }
+        @keyframes floatY {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
 
     </style>
 </head>
@@ -484,6 +587,21 @@
             </div>
         </section>
         
+        <section class="about">
+            <h2>소요의 이야기</h2>
+            <div class="about-content">
+                <div class="about-illust">
+                    <img src="${pageContext.request.contextPath}/resources/images/real-soyo-logo-resize.png" alt="한복 일러스트">
+                </div>
+                <p>한복의 아름다움을 감각적으로 재해석한 소요.<br>
+                   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
+                <a href="<c:url value='/brand' />" class="cta-button2">
+                    <i class="fas fa-arrow-right"></i> 더 알아보기
+                </a>
+            </div>
+        </section>
+
+
         <section class="hero">
             <div class="hero-inner">
                 <div class="hero-image">
@@ -496,16 +614,6 @@
                 </div>
             </div>
         </section>
-        
-        <section class="about">
-            <h2>소요의 이야기</h2>
-            <div class="about-content">
-                <p>한복의 아름다움을 감각적으로 재해석한 소요.<br>
-                   전통과 현대를 넘나드는, 새로운 패션의 흐름을 이끕니다.</p>
-                <a href="<c:url value='/brand' />" class="cta-button2">더 알아보기</a>
-            </div>
-        </section>
-
 
 
         <section class="collections">
