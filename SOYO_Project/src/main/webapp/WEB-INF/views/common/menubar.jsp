@@ -26,6 +26,9 @@
       --color3: #F6E5AC;
       --color4: #F8F8F8;
       --color5: #8d8d8d;
+      --accent-purple: #C8A2C8;
+      --accent-purple-light: #E6D6F3;
+      --accent-purple-dark: #A678B4;
     }
 
     @font-face {
@@ -40,6 +43,20 @@
         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff'); 
         font-weight: 500; 
         font-style: normal; 
+    }
+
+    @font-face {
+        font-family: 'KBIZHanmaumGothic';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/KBIZHanmaumGothic.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Dolbomche_R';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/Dolbomche_R.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
     }
 
     * {
@@ -225,6 +242,145 @@
       cursor: none;
     }
 
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(200, 162, 200, 0.10);
+      backdrop-filter: blur(2px);
+      justify-content: center;
+      align-items: center;
+      animation: fadeInBg 0.3s;
+    }
+    @keyframes fadeInBg {
+      from { background: rgba(200, 162, 200, 0); }
+      to { background: rgba(200, 162, 200, 0.10); }
+    }
+    .modal-content {
+      background: #fff;
+      margin: 0 auto;
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(200,162,200,0.18), 0 1.5px 6px 0 rgba(0,0,0,0.08);
+      width: 370px;
+      position: relative;
+      text-align: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      animation: modalPop 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.95) translateY(30px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .close {
+      color: var(--accent-purple);
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-size: 2.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s, transform 0.2s;
+      z-index: 10;
+    }
+    .close:hover, .close:focus {
+      color: var(--accent-purple-dark);
+      transform: scale(1.15) rotate(8deg);
+      text-shadow: 0 2px 8px var(--accent-purple-light);
+    }
+    #searchForm label {
+      font-size: 1.5rem !important;
+      color: var(--accent-purple-dark);
+      font-weight: 590;
+      letter-spacing: 0.5px;
+      display: block;
+      font-family: 'KBIZHanmaumGothic', sans-serif !important;
+    }
+    #searchForm .search-divider {
+      width: 95%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-purple-light) 0%, var(--accent-purple) 100%);
+      border-radius: 2px;
+      margin: auto;
+      margin-bottom: 1.7rem;
+      opacity: 0.7;
+      display: block;
+    }
+    #searchForm .search-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1rem 0 0.5rem 0;
+    }
+    #searchForm .search-row input[type="text"],
+    #searchForm .search-row button[type="submit"] {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    #searchForm .search-row input[type="text"] {
+      height: 48px;
+      border: 2px solid var(--accent-purple-light);
+      border-radius: 12px;
+      padding: 0 1rem;
+      width: 70%;
+      background: #F9F3FF;
+      color: #4B3869;
+      box-shadow: 0 1px 4px 0 rgba(200,162,200,0.07);
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+      margin-bottom: 0;
+      display: block;
+      font-family: 'Dolbomche_R', sans-serif !important;
+    }
+    #searchForm .search-row input[type="text"]:focus {
+      border: 2px solid var(--accent-purple);
+      box-shadow: 0 0 0 2px var(--accent-purple-light);
+      background: #fff;
+    }
+    #searchForm .search-row button[type="submit"] {
+      height: 48px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(90deg, var(--accent-purple) 60%, var(--accent-purple-light) 100%);
+      color: #fff;
+      padding: 0 2.2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(200,162,200,0.10);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      margin: 0;
+      letter-spacing: 0.5px;
+      display: block;
+      white-space: nowrap;
+      min-width: 70px;
+      font-family: 'Dolbomche_R', sans-serif !important;
+    }
+    #searchForm .search-row button[type="submit"]:hover {
+      background: linear-gradient(90deg, var(--accent-purple-dark) 60%, var(--accent-purple) 100%);
+      box-shadow: 0 4px 16px 0 rgba(200,162,200,0.18);
+      transform: translateY(-2px) scale(1.04);
+    }
+    @media (max-width: 500px) {
+      .modal-content {
+        width: 92vw;
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+      }
+      #searchForm .search-row {
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      #searchForm .search-row input[type="text"],
+      #searchForm .search-row button[type="submit"] {
+        width: 95%;
+        min-width: 0;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -349,5 +505,52 @@
     </c:choose>
     
   </nav>
+
+  <!-- 상품 검색 모달 -->
+  <div id="searchModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <form id="searchForm" method="get" action="<c:url value='/product/productList' />">
+        <label for="searchInput" style="font-size:1.2rem;">상품명 검색</label><br/>
+        <div class="search-divider"></div>
+        <div class="search-row">
+          <input type="text" id="searchInput" name="search" placeholder="상품명을 입력하세요" required />
+          <button type="submit">검색</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // 모달 열기/닫기
+    document.addEventListener('DOMContentLoaded', function() {
+      var modal = document.getElementById('searchModal');
+      var openBtn = document.querySelector('.fa-search').parentElement;
+      var closeBtn = document.getElementById('closeModal');
+      var searchInput = document.getElementById('searchInput');
+
+      openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'flex';
+        setTimeout(function() { searchInput.focus(); }, 100);
+      });
+      closeBtn.onclick = function() {
+        modal.style.display = 'none';
+      }
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      }
+      // 엔터로도 submit
+      document.getElementById('searchForm').onsubmit = function() {
+        if(!searchInput.value.trim()) {
+          alertify.alert('검색어를 입력하세요.');
+          return false;
+        }
+        return true;
+      }
+    });
+  </script>
 </body>
 </html>
