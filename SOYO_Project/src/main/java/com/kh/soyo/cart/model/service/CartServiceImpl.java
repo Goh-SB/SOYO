@@ -70,5 +70,10 @@ public class CartServiceImpl implements CartService {
 	    return result1 * result2 * result3;
 	}
 
+	@Override
+	public int insertCart(Cart cart) {
+		return cartDao.insertCart(sqlSession, cart);
+	}
+
 
 }

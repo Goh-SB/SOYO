@@ -22,4 +22,6 @@ public class Cart {
 	private String productName;       // 상품명
     private int productPrice;         // 상품 가격
     private String productChange;     // 상품 사진
+    private String productSize; 	  // 선택한 사이즈
+
 }

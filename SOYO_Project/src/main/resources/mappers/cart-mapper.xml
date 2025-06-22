@@ -91,6 +91,24 @@
 	    </foreach>
 	</delete>
 	
+	
+	
+    <insert id="insertCart" parameterType="cart">
+       INSERT INTO CART (
+           CART_NO,
+           PRODUCT_NO,
+           PRODUCT_COUNT,
+           CART_ENROLLDATE,
+           MEMBER_ID
+       ) VALUES (
+           SEQ_CART_NO.NEXTVAL,
+           #{productNo},
+           #{productCount},
+           SYSDATE,
+           #{memberId}
+       )
+    </insert>
+	
 
 
 </mapper>

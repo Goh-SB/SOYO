@@ -23,6 +23,8 @@ public interface CartService {
 
 	int deliveryInfo(Delivery delivery);
 
+	int insertCart(Cart cart);
+
 
 
 }

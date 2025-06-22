@@ -83,5 +83,9 @@ public class CartDao {
 		return sqlSession.delete("cartMapper.deleteCartProduct",delivery);
 	}
 
+	public int insertCart(SqlSessionTemplate sqlSession, Cart cart) {
+		return sqlSession.insert("cartMapper.insertCart", cart);
+	}
+
 
 }

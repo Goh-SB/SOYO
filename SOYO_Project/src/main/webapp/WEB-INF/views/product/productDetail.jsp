@@ -748,7 +748,7 @@
 
                 <p class="stock-info">상품 재고 : <span id="stockCount">${product.productCount}</span>개</p>
 
-                <button class="add-to-cart-btn waves-effect">장바구니 담기</button>
+                <button type="button" class="add-to-cart-btn waves-effect" onclick="insertCart()">장바구니 담기</button>
 
             </div>
         </div>
@@ -985,6 +985,33 @@
         }
         document.querySelectorAll('.tab-nav-material').forEach(handleTabNav);
     });
+
+    // 장바구니 담기 버튼 클릭 시 작동 로직
+    function insertCart() {
+    const productNo = "${product.productNo}"; // EL로 바로 값 삽입
+    const productCount = document.getElementById("quantity").value;
+    const productSize = document.querySelector(".size-btn.active").getAttribute("data-size");
+
+    const formData = {
+        productNo: productNo,
+        productCount: productCount,
+        productSize: productSize
+    };
+
+    fetch("${pageContext.request.contextPath}/cart/insert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(res => res.text())
+    .then(msg => {
+        if (msg === "success") alert("선택하신 상품이 장바구니에 담겼습니다.");
+        else if (msg === "notLogin") alert("로그인 후 이용 가능합니다.");
+        else alert("장바구니 담기에 실패했습니다.");
+    });
+}
+
+
 </script>
 </body>
 </html>

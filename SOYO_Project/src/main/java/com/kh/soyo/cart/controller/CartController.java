@@ -118,6 +118,25 @@ public class CartController {
 		System.out.println(delivery);	
 	    return cartService.deliveryInfo(delivery); 
 	}
+	
+	
+	
+	@PostMapping("/insert")
+	@ResponseBody
+	public String insertCart(@RequestBody Cart cart, HttpSession session) {
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+
+	    if (loginUser == null) {
+	        return "notLogin";
+	    }
+
+	    cart.setMemberId(loginUser.getMemberId());
+
+	    int result = cartService.insertCart(cart);
+	    return result > 0 ? "success" : "fail";
+	}
+
+	
 		
 }
 
