@@ -183,7 +183,36 @@
     width: 100%;
     padding: 0 4px;
   }
-
+  .no-product-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 140px 0 180px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fafafd;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px 0 #eaeaea;
+    margin: 0 auto;
+    max-width: 700px;
+    min-width: 1450px;
+    width: 100%;
+  }
+  .no-product-icon {
+    font-size: 4rem;
+    color: #d1c4e9;
+    margin-bottom: 16px;
+  }
+  .no-product-title {
+    font-size: 1.3rem;
+    color: #888;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .no-product-sub {
+    font-size: 1rem;
+    color: #b0b0b0;
+  }
 
 </style>
 <script>
@@ -250,13 +279,24 @@
     
     <!-- 상품 리스트 영역 -->
     <div class="product-list">
-    <c:forEach var="product" items="${productList}">
-      <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
-        <img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
-        <div class="product-card-title">${product.productName}</div>
-        <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
-      </a>
-    </c:forEach>
+    <c:choose>
+      <c:when test="${fn:length(productList) == 0}">
+        <div class="no-product-message">
+          <span class="material-icons no-product-icon">inventory_2</span>
+          <div class="no-product-title">등록된 상품이 없습니다.</div>
+          <div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>
+        </div>
+      </c:when>
+      <c:otherwise>
+        <c:forEach var="product" items="${productList}">
+          <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
+            <img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
+            <div class="product-card-title">${product.productName}</div>
+            <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
+          </a>
+        </c:forEach>
+      </c:otherwise>
+    </c:choose>
     </div>
   </div>
 
