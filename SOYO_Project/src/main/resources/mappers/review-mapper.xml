@@ -37,26 +37,39 @@
 	    ORDER BY R.REVIEW_DATE DESC
 	</select>
 
-	
-	<select id="selectAllReviewList" resultMap="reviewResultMap">
-        SELECT
-            R.REVIEW_NO,
-            R.REVIEW_TITLE,
-            R.REVIEW_CONTENT,
-            R.RATING,
-            R.REVIEW_THUMBNAIL_ORIGIN,
-            R.REVIEW_THUMBNAIL_CHANGE,
-            R.REVIEW_DATE,
-            R.STATUS,
-            R.PRODUCT_NO,
-            R.MEMBER_ID,
-            M.MEMBER_NAME,
-            P.PRODUCT_CHANGE AS PRODUCT_CHANGE
-        FROM REVIEW R
-        JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
-        JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
-        WHERE R.STATUS = 'Y'
-        ORDER BY R.REVIEW_DATE DESC
+	<select id="selectReviewListCount" resultType="_int">
+		SELECT
+			COUNT(*)
+		FROM REVIEW
+		WHERE STATUS = 'Y'
+	</select>
+
+	<select id="selectAllReviewList" parameterType="pageInfo" resultMap="reviewResultMap">
+		SELECT *
+		FROM (
+		    SELECT ROWNUM AS RNUM, A.*
+		    FROM (
+		        SELECT
+		            R.REVIEW_NO,
+		            R.REVIEW_TITLE,
+		            R.REVIEW_CONTENT,
+		            R.RATING,
+		            R.REVIEW_THUMBNAIL_ORIGIN,
+		            R.REVIEW_THUMBNAIL_CHANGE,
+		            R.REVIEW_DATE,
+		            R.STATUS,
+		            R.PRODUCT_NO,
+		            R.MEMBER_ID,
+		            M.MEMBER_NAME,
+		            P.PRODUCT_CHANGE
+		        FROM REVIEW R
+		        JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+		        JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+		        WHERE R.STATUS = 'Y'
+		        ORDER BY R.REVIEW_DATE DESC
+		    ) A
+		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
     </select>
 
 

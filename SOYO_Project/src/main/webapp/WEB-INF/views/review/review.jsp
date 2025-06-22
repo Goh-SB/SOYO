@@ -263,6 +263,48 @@
         .best-review-img { height: 90px; }
         .best-review-title { font-size: 18px; }
     }
+	
+	.paging-area {
+		margin-top: 30px;
+		text-align: center;
+	}
+
+	.pagination {
+		display: inline-flex;
+		list-style: none;
+		gap: 5px;
+		padding: 0;
+	}
+
+	.page-item {
+		display: inline-block;
+	}
+
+	.page-link {
+		display: block;
+		padding: 8px 12px;
+		text-decoration: none;
+		color: #495057;
+		border: 1px solid #dee2e6;
+		border-radius: 4px;
+		transition: all 0.2s ease;
+	}
+
+	.page-link:hover {
+		background-color: #e9ecef;
+	}
+
+	.page-item.active .page-link {
+		background-color: #495057;
+		color: white;
+		border-color: #495057;
+	}
+
+	.page-item.disabled .page-link {
+		color: #adb5bd;
+		pointer-events: none;
+		background-color: #f8f9fa;
+	}
 </style>
 </head>
 <body>
@@ -277,7 +319,7 @@
             <c:forEach var="review" items="${bestReviewList}" varStatus="status">
                 <c:if test="${status.index lt 5}">
                     <div class="best-review-card">
-                        <img src="http://192.168.40.17:8100/soyo/resources/product_upfile/${review.productChange}" class="best-review-img" alt="리뷰 이미지">
+                        <img src="http://localhost:8100/soyo/resources/product_upfile/${review.productChange}" class="best-review-img" alt="리뷰 이미지">
                         <div class="best-review-subject">${review.reviewTitle}</div>
                         <div class="best-review-content">${review.reviewContent}</div>
                         <div class="best-review-rating">
@@ -318,7 +360,7 @@
                     <tr>
                         <td style="text-align:left;">
                             <div class="review-product">
-                                <img src="http://192.168.40.17:8100/soyo/resources/product_upfile/${review.productChange}" class="review-thumbnail">
+                                <img src="http://localhost:8100/soyo/resources/product_upfile/${review.productChange}" class="review-thumbnail">
                                 <span class="review-product-name">${review.reviewTitle}</span>
                             </div>
                         </td>
@@ -349,6 +391,29 @@
 
 
         </table>
+		
+		<div class="paging-area">
+			<ul class="pagination">
+				<c:if test="${ pi.currentPage > 1 }">
+					<li class="page-item">
+						<a class="page-link" href="${ pageContext.request.contextPath }/review/review?page=${ pi.currentPage - 1 }">&lt;</a>
+					</li>
+				</c:if>
+
+				<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+					<li class="page-item <c:if test='${ p eq pi.currentPage }'>active</c:if>">
+						<a class="page-link" href="${ pageContext.request.contextPath }/review/review?page=${ p }">${ p }</a>
+					</li>
+				</c:forEach>
+
+				<c:if test="${ pi.currentPage < pi.maxPage }">
+					<li class="page-item">
+						<a class="page-link" href="${ pageContext.request.contextPath }/review/review?page=${ pi.currentPage + 1 }">&gt;</a>
+					</li>
+				</c:if>
+			</ul>
+		</div>
+
     </div>
 
     <jsp:include page="../common/footer.jsp" />

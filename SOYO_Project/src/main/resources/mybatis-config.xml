@@ -15,6 +15,7 @@
 		<typeAlias type="com.kh.soyo.product.model.vo.Product" alias="product" />
 		<typeAlias type="com.kh.soyo.review.model.vo.Review" alias="review" />
 		<typeAlias type="com.kh.soyo.wishlist.model.vo.Wish" alias="wish" />
+		<typeAlias type="com.kh.soyo.common.model.vo.PageInfo" alias="pageInfo" />
 	</typeAliases>
 
 </configuration>

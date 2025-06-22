@@ -19,7 +19,10 @@ public class Pagination {
 			endPage = maxPage;
 		}
 		
-		// 7개의 변수를 PageInfo로 가공해서 반환
-		return new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+		int startRow = (currentPage - 1) * boardLimit + 1;
+		int endRow = startRow + boardLimit - 1;
+		
+		// 9개의 변수를 PageInfo로 가공해서 반환
+		return new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage, startRow, endRow);
 	}
 }

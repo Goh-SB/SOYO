@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.review.model.dao.ReviewDao;
 import com.kh.soyo.review.model.vo.Review;
 
@@ -18,16 +19,14 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private SqlSessionTemplate sqlSession;
 
-    @Override
-    public List<Review> selectReviewList(int productNo) {
-        List<Review> reviewList = reviewDao.selectReviewList(productNo);
-
-        return reviewList;
-    }
-
 	@Override
-	public List<Review> selectReviewList() {
-		return reviewDao.selectReviewList(sqlSession);
+	public int selectListCount() {
+		return reviewDao.selectListCount(sqlSession);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(PageInfo pi) {
+		return reviewDao.selectReviewList(sqlSession, pi);
 	}
 	
 	
@@ -36,5 +35,11 @@ public class ReviewServiceImpl implements ReviewService {
 	    return reviewDao.selectBestReviewList(sqlSession);
 	}
 
-	
+	@Override
+	public List<Review> selectReviewList(int productNo) {
+        List<Review> reviewList = reviewDao.selectReviewList(productNo);
+
+        return reviewList;
+	}
+
 }
