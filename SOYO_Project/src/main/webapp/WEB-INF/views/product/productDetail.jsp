@@ -914,11 +914,13 @@
         // Favorite(찜) 버튼 토글
         const favoriteBtn = document.getElementById('favoriteBtn');
         const favoriteIcon = document.getElementById('favoriteIcon');
+        /*
         let isFavorite = false;
         favoriteBtn.addEventListener('click', function() {
             isFavorite = !isFavorite;
             favoriteIcon.textContent = isFavorite ? 'favorite' : 'favorite_border';
         });
+        */
 
         // 모달 기능 구현
         const modalTriggers = document.querySelectorAll('.modal-trigger');
@@ -1010,6 +1012,29 @@
         else alert("장바구니 담기에 실패했습니다.");
     });
 }
+
+document.getElementById("favoriteBtn").addEventListener("click", function () {
+    const productNo = "${product.productNo}";
+
+    fetch("${pageContext.request.contextPath}/wishlist/insert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productNo: productNo })
+    })
+    .then(res => res.text())
+    .then(msg => {
+        if (msg === "success") {
+            alert("찜 목록에 추가되었습니다.");
+            document.getElementById("favoriteIcon").textContent = "favorite";
+        } else if (msg === "notLogin") {
+            alert("로그인 후 이용 가능합니다.");
+        } else if (msg === "duplicated") {
+            alert("이미 찜한 상품입니다.");
+        } else {
+            alert("찜 목록 추가 실패");
+        }
+    });
+});
 
 
 </script>

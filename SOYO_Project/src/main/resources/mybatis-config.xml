@@ -14,6 +14,7 @@
 		<typeAlias type="com.kh.soyo.notice.model.vo.Notice" alias="notice" />
 		<typeAlias type="com.kh.soyo.product.model.vo.Product" alias="product" />
 		<typeAlias type="com.kh.soyo.review.model.vo.Review" alias="review" />
+		<typeAlias type="com.kh.soyo.wishlist.model.vo.Wish" alias="wish" />
 	</typeAliases>
 
 </configuration>
