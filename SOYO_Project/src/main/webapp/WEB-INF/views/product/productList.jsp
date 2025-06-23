@@ -290,7 +290,7 @@
       <c:otherwise>
         <c:forEach var="product" items="${productList}">
           <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
-            <img id="mainImage" class="product-image" src="http://localhost:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
+            <img id="mainImage" class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
             <div class="product-card-title">${product.productName}</div>
             <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
           </a>

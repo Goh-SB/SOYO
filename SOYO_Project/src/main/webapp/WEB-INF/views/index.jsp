@@ -510,7 +510,6 @@
             position:relative;
         }
 
-        /* about-illust float animation */
         .about-illust {
             animation: soyo-glow 2.2s cubic-bezier(.23,1.01,.32,1) 0.2s both, floatY 3.5s ease-in-out infinite;
         }
@@ -544,7 +543,9 @@
                     <img src="${pageContext.request.contextPath}/resources/images/slide-2.jpg" alt="슬라이드 2">
                 </div>
                 <div class="carousel-slide">
-                    <img src="${pageContext.request.contextPath}/resources/images/slide-3.jpg" alt="슬라이드 3">
+                	<a href="${pageContext.request.contextPath}/product/productDetail?no=17">
+                    	<img src="${pageContext.request.contextPath}/resources/images/slide-3.jpg" alt="슬라이드 3">
+                	</a>
                 </div>
             </div>
             <button class="carousel-arrow prev">
