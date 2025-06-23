@@ -329,7 +329,7 @@
       border-radius: 12px;
       padding: 0 1rem;
       width: 70%;
-      background: #F9F3FF;
+      background: #f9f3ffcd;
       color: #4B3869;
       box-shadow: 0 1px 4px 0 rgba(200,162,200,0.07);
       outline: none;
@@ -359,6 +359,7 @@
       white-space: nowrap;
       min-width: 70px;
       font-family: 'Dolbomche_R', sans-serif !important;
+      font-size: 20px !important;
     }
     #searchForm .search-row button[type="submit"]:hover {
       background: linear-gradient(90deg, var(--accent-purple-dark) 60%, var(--accent-purple) 100%);
