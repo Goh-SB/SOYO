@@ -172,4 +172,15 @@
 		 WHERE RNUM BETWEEN #{startRow}	AND #{endRow}	
 	</select>
 	
+	
+	
+	<select id="chart1Data" resultType="hashmap">
+		SELECT TRUNC(ENROLL_DATE, 'MM') - MOD(TO_NUMBER(TO_CHAR(ENROLL_DATE, 'MM')) - 1, 3) * INTERVAL '1' MONTH AS QUARTER_START,
+	           COUNT(*) AS TOTAL
+		  FROM MEMBER
+		 GROUP BY TRUNC(ENROLL_DATE, 'MM') - MOD(TO_NUMBER(TO_CHAR(ENROLL_DATE, 'MM')) - 1, 3) * INTERVAL '1' MONTH
+		 ORDER BY QUARTER_START
+		
+	</select>
+	
 </mapper>
