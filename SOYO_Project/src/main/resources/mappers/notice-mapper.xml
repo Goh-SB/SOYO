@@ -68,23 +68,34 @@
 	<!-- 공지사항 필터링용 쿼리문(페이징 처리 포함) -->
 	<select id="noticeFilter" resultMap="noticeResultSet" parameterType="hashmap">
 		SELECT *
-		FROM NOTICE
-		WHERE
-			<if test="noticeType == '공지사항'" >
-				NOTICE_TYPE = #{noticeType} AND 
-			</if>
-			
-			<if test="noticeType == '이벤트'">
-				NOTICE_TYPE = #{noticeType} AND
-			</if>
-			STATUS = 'Y'
+		  FROM	
+			(
+			SELECT ROWNUM RNUM, A.*
+			  FROM
+				(
+				SELECT NOTICE_NO,
+					NOTICE_TITLE,
+					NOTICE_DATE,
+					NOTICE_IMAGE,
+					NOTICE_TYPE
+				FROM NOTICE
+				WHERE STATUS = 'Y'
+					<if test="noticeType != null and noticeType != 'ALL'">
+						AND NOTICE_TYPE = #{noticeType}
+					</if>
+				ORDER BY NOTICE_NO DESC
+				) A
+			)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 	<select id="noticeFilterCount" resultType="_int">
 	    SELECT COUNT(*)
 		FROM NOTICE
 		WHERE NOTICE_TYPE = #{noticeType}
-			AND STATUS = 'Y'
+			<if test="noticeType != null and noticeType != 'ALL'">
+				AND NOTICE_TYPE = #{noticeType}
+			</if>
 	</select>
 	
 	<!-- 공지사항 상세 조회용 쿼리문 -->

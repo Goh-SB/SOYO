@@ -2,7 +2,6 @@ package com.kh.soyo.notice.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.notice.model.service.NoticeService;
 import com.kh.soyo.notice.model.vo.Notice;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -69,8 +66,10 @@ public class NoticeController {
 		ArrayList<Notice> list = noticeService.searchNoticeList(pi, map);
 			
 		// list와 pi를 응답 데이터로 보내고 화면 포워딩(기존의 게시글 목록 페이지 재활용)
-		mv.addObject("list", list)	// tbody 영역에 출력
-			.addObject("pi", pi)	// paging-area에 출력
+		mv.addObject("list", list)				// tbody 영역에 출력
+			.addObject("pi", pi)				// paging-area에 출력
+		    .addObject("condition", condition)	// 검색 조건 유지
+		    .addObject("keyword", keyword)		// 검색어 유지
 			.setViewName("notice/noticeList");
 		
 		return mv;
@@ -79,8 +78,8 @@ public class NoticeController {
 	// 공지사항 필터링용 컨트롤러
 	@GetMapping("noticeFilter")
 	@ResponseBody
-	public ModelAndView noticeFilter(@RequestParam(value="nPage", defaultValue="1") int currentPage,
-									ModelAndView mv, String noticeType) {
+	public HashMap<String, Object> noticeFilter(@RequestParam(value="nPage", defaultValue="1") int currentPage,
+												String noticeType) {
 		// 페이징 설정
 		int listCount = noticeService.noticeFilterCount(noticeType);
 	    int pageLimit = 10;
@@ -90,11 +89,12 @@ public class NoticeController {
 	    // 공지 타입과 pi를 DAO로 넘기기 위해 하나의 ArrayList로 가공
 	    ArrayList<Notice> list = noticeService.noticeFilter(noticeType, pi);
 	    
-	    mv.addObject("list", list);
-	    mv.addObject("pi", pi);
-	    mv.setViewName("notice/noticeList");
-	    System.out.println(list);
-	    return mv;
+	    HashMap<String, Object> map = new HashMap<>();
+	    map.put("list", list);
+	    map.put("pi", pi);
+	    
+	    // System.out.println(model);
+	    return map;
 	}
 	
 	// 공지사항 상세 조회용 컨트롤러
