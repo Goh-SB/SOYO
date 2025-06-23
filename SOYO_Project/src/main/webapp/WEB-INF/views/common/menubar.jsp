@@ -532,7 +532,7 @@
       openBtn.addEventListener('click', function(e) {
         e.preventDefault();
         modal.style.display = 'flex';
-        setTimeout(function() { searchInput.focus(); }, 100);
+        // setTimeout(function() { searchInput.focus(); }, 100);
       });
       closeBtn.onclick = function() {
         modal.style.display = 'none';
