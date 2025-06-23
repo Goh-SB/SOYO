@@ -508,9 +508,14 @@
             event.preventDefault();
 
             let productNoList = [];
+            let productCountList = [];
 
             $('input[name="productId"]:checked').each(function () {
+                const $row = $(this).closest("tr");
+                const count = parseInt($row.find(".pop_out").val());
+
                 productNoList.push($(this).val());
+                productCountList.push(count);
             });
 
             if (productNoList.length === 0) {
@@ -518,10 +523,10 @@
                 return;
             }
 
-       
-
             $('#paymentCheck input[name="productNoList"]').remove();
+            $('#paymentCheck input[name="productCountList"]').remove();
 
+            // 상품 번호 input 추가
             productNoList.forEach(function(productNo) {
                 $('<input>').attr({
                     type: 'hidden',
@@ -530,13 +535,18 @@
                 }).appendTo('#paymentCheck');
             });
 
-         
+            // 상품 수량 input 추가 ✅
+            productCountList.forEach(function(count) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'productCountList',
+                    value: count
+                }).appendTo('#paymentCheck');
+            });
+
             $('#paymentCheck').submit(); 
         }
-        
-        function submitAll(){       	
-        	$('#paymentCheck').submit(); 
-        }
+
         
         
 

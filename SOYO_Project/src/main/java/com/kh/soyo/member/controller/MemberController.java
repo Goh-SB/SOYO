@@ -571,13 +571,24 @@ public class MemberController {
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    
 	    if (loginUser != null) {
-	        List<Product> product = memberService.orderProduct(loginUser.getMemberId());
-	        System.out.println(product);
-	        model.addAttribute("product", product);
+	        List<Product> order = memberService.orderProduct(loginUser.getMemberId());
+	  
+	        model.addAttribute("order", order);
 	    }
 
 	   
 	    return "member/myOrderPage";
+	}
+	
+	@GetMapping("/myOrderPage/detail")
+	public String myOrderPage(@RequestParam("impNo") String impNo,
+							  Model model) {
+		
+		List<Product> product=memberService.orderProductList(impNo);
+		
+		model.addAttribute("product",product);
+		
+	    return "member/orderDetail";
 	}
 	
 }

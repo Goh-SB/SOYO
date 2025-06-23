@@ -201,6 +201,10 @@
 		     	    <c:forEach var="productNo" items="${paramValues.productNoList}">
 					    <input type="hidden" name="productNoList" value="${productNo}" />
 					</c:forEach>
+					
+					<c:forEach var="productCount" items="${paramValues.productCountList}">
+					    <input type="hidden" name="productCountList" value="${productCount}" />
+					</c:forEach>
           
     			</div>
     <jsp:include page="../common/footer.jsp" />
@@ -221,6 +225,7 @@
 		  IMP.init("imp28344582");  // 네 포트원 userCode
 		
 		  function requestPay() {
+			  
 		
 			  const memberName = document.querySelector("input[name='memberName']").value;
 			  const phone = document.querySelector("input[name='phone']").value;
@@ -231,13 +236,20 @@
 			  const addressName = document.querySelector("input[name='addressName']").value;
 			  const fullAddress = address + " " + addrDetail;
 			  
-			  const selectedProducts=document.querySelectorAll("input[name='productNoList']");
 			  
-			  const selectedProductList=[];
-			  
+			  const selectedProductList = [];
+			  const selectedProductCountList = []; 
+
+			  const countInputs = document.querySelectorAll("input[name='productCountList']");
+			  countInputs.forEach(function(input){
+			    selectedProductCountList.push(parseInt(input.value));
+			  });
+
+			  const selectedProducts = document.querySelectorAll("input[name='productNoList']");
 			  selectedProducts.forEach(function(input){
-				  selectedProductList.push(parseInt(input.value));
-			  })
+			    selectedProductList.push(parseInt(input.value));
+			  });
+
 			  
 		    IMP.request_pay({
 		      pg: "html5_inicis", // 또는 "html5_inicis", "danal" 등 테스트 가능한 pg
@@ -258,17 +270,17 @@
 		    	 
 		    	 const orderInfo = {
 		    			    memberId: document.querySelector("input[name='memberId']").value,    	
-		    			    orderImpno : rsp.imp_uid,  
+		    			    orderImpNo : rsp.imp_uid,  
 		    			    receiverName: memberName,
 		    			    receiverPhone: phone,
 		    			    addressName: addressName,
 		    			    addressOther: fullAddress,
 		    			    requestMsg: requestMsg,
-		    			    totalPrice: totalPrice,
-		    			    selectedProductList: selectedProductList
-		    			    
+		    			    totalPrice: parseInt(totalPrice), // 
+		    			    selectedProductList: selectedProductList,
+		    			    selectedProductCountList: selectedProductCountList	    			    
 		    			};
-		    	 
+		    		 console.log(JSON.stringify(orderInfo));
 		    	 $.ajax({
 		    		    type: "POST",
 		    		    url: "/soyo/cart/insertOrder", // 컨트롤러에 맞게 URL 조정
@@ -277,6 +289,7 @@
 		    		    success: function(result) {
 							if(result>0){
 								alert("주문완료!");
+								location.href = "/soyo";
 							}else{
 								alert("주문실패!");
 							}

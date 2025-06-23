@@ -191,25 +191,12 @@
 	<!-- 모달 창 -->
 	<div id="refundModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
 	    <div style="background:white; width:400px; padding:20px; border-radius:10px; margin:150px auto; position:relative;">				
-	        <div style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
-			    <h3 style="margin-bottom: 20px;">환불 요청</h3>
-			    
-			    <div style="margin-bottom: 15px;">
-			        <label for="imp_uid" style="display: inline-block; width: 100px; font-weight: bold;">주문번호</label>
-			        <input type="text" id="imp_uid" placeholder="주문번호 입력" style="width: 250px; padding: 8px;" required>
-			    </div>
-			    
-			    <div style="margin-bottom: 20px;">
-			        <label for="reason" style="display: inline-block; width: 100px; font-weight: bold;">취소 사유</label>
-			        <input type="text" id="reason" placeholder="취소 사유 입력" style="width: 250px; padding: 8px;" required>
-			    </div>
-			    
-			    <div style="text-align: right;">
-			        <button onclick="closeModal()" style="padding: 8px 16px; margin-right: 10px;">취소</button>
-			        <button onclick="cancelPay()" style="padding: 8px 16px; background-color: #8156c2; color: white; border: none; border-radius: 5px;">환불하기</button>
-			    </div>
-			</div>
-
+	        <div style="text-align:right; margin-top:20px;">
+	        	<input type="text" id="imp_uid" placeholder="주문번호 입력" required>
+				<input type="text" id="reason" placeholder="취소 사유" required>
+	        	<button onclick="closeModal()">취소</button>
+	            <button onclick="cancelPay()" style="margin-right:10px;">환불하기</button>
+	        </div>
 	    </div>
 	</div>
 	<jsp:include page="../common/menubar.jsp" />
@@ -232,112 +219,38 @@
 
             <div class="" id="myContent">
                 <div style="height: 5%; font-size: 30px;
-                padding: 15px;">내 주문 목록</div>
+                padding: 15px;">상품 리스트</div>
                     <div id="order-List">
                         <ul>
-                       <c:forEach var="o" items="${order}">
-						    <li>
-						 
-						            <table class="order-table">
-						                <tr>
-						                    <th> 주문</th>
-						                </tr>
-						                <tr></tr>
-						                <tr>
-						                    <td class="product-img">
-						                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${p.productChange}" alt="">
-						                    </td>
-						                    <td class="product-name">
-						                        <div>
-						                        	수령인 : ${o.receiverName} <br>
-						                        	배송지 : ${o.addressOther}<br>
-						                            배송날짜 : ${o.orderDate }<br>
-						                            가격 : ${o.totalPrice}<br>
-						                            주문번호 : ${o.orderImpNo } 
-						                            
-						                            <button type="button" onclick="copyImpUid('${o.orderImpNo}')">복사</button>
-						                        </div>
-						                    </td>
-						                    <td class="product-menu">
-						                        <a href="./myOrderPage/detail?impNo=${o.orderImpNo}" class="order-link-button">
-						                        	상세 조회
-						                        </a>
-						                        <a href="<c:url value='/product/productList?type=all' />" class="order-link-button">
-						                        	추가 주문
-						                        </a>
-						                        <button type="button">리뷰 작성</button>
-						                    </td>
-						                </tr>
-						            </table>
-						      
+                       <c:forEach var="p" items="${product}">
+						    <li>						 
+					            <table class="order-table">
+					                <tr>
+					                    <th> </th>
+					                </tr>
+					                <tr></tr>
+					                <tr>
+					                    <td class="product-img">
+					                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${p.productChange}" alt="">
+					                    </td>
+					                    <td class="product-name">
+										    <div>
+										        상품명: ${p.productName}<br>
+										        가격: ${p.productPrice}원<br>
+										        주문번호: ${p.orderImpNo}<br>
+										        배송상태: ${p.orderStatus}
+										    </div>
+										</td>
+					                </tr>
+					            </table>     
 						    </li>
 						</c:forEach>
 						</ul>
-						<button style="float: right; margin-right: 20px;"
-								onclick="openModal()">
-							전체 환불
-						</button>
-                        <div id="page">
-		                    <button>&lt;</button>
-		                    <button>1</button>
-		                    <button>2</button>
-		                    <button>&gt;</button>
-		                </div>
                     </div> 
             </div>
         </div>
     </div>
     <br>
     <jsp:include page="../common/footer.jsp" />
-    <script>
-
-    function copyImpUid(orderNo) {
-        document.getElementById("imp_uid").value = orderNo;
-        alert("주문번호가 복사되었습니다!");
-    }
-
-    function openModal() {
-        document.getElementById("refundModal").style.display = "block";
-    }
-
-    function closeModal() {
-        document.getElementById("refundModal").style.display = "none";
-    }
-
-    function confirmRefund() {
-        closeModal();
-        alert("전체 환불 처리가 진행됩니다.");
-        // 실제 환불 로직을 여기에 추가할 수 있음 (예: fetch, form 제출 등)
-    }
-
-	function cancelPay() {
-		
-		const impUid = document.querySelector("#imp_uid").value;
-		const reason = document.querySelector("#reason").value;
-		
-		  jQuery.ajax({
-			  url: "${pageContext.request.contextPath}/soyo/cancelPayment",
-		    type: "POST",
-		    contentType: "application/json",
-		    data: JSON.stringify({ imp_uid: impUid, reason: reason }),
-		    dataType: "json",
-		    success: function (response) {
-		    	  if (response.success) {
-		    	    alert("✅ 환불 성공!");
-		    	    location.href = "/soyo";
-		    	  } else {
-		    	    alert("❌ 환불 실패: " + response.message);
-		    	  }
-		    	},
-		    error: function (xhr, status, error) {
-		    	console.error("에러 상태코드:", xhr.status);
-		    	  console.error("서버 응답:", xhr.responseText);
-		    	  alert("❌ 오류 발생: " + xhr.responseText);
-		    }
-		  });
-		  
-		  console.log("imp_uid:", impUid);
-		}
-	</script>
 </body>
 </html>

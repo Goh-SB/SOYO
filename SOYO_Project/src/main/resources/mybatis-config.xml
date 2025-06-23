@@ -11,6 +11,7 @@
 		<typeAlias type="com.kh.soyo.board.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.soyo.cart.model.vo.Cart" alias="cart" />
 		<typeAlias type="com.kh.soyo.cart.model.vo.Delivery" alias="delivery" />
+		<typeAlias type="com.kh.soyo.cart.model.vo.Payment" alias="payment" />
 		<typeAlias type="com.kh.soyo.notice.model.vo.Notice" alias="notice" />
 		<typeAlias type="com.kh.soyo.product.model.vo.Product" alias="product" />
 		<typeAlias type="com.kh.soyo.review.model.vo.Review" alias="review" />

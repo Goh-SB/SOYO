@@ -98,4 +98,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.findEmail(sqlSession, m);
 	}
 
+	@Override
+	public List<Product> orderProductList(String impNo) {
+		
+		return memberDao.orderProductList(sqlSession,impNo);
+	}
+
 }

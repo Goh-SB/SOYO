@@ -115,10 +115,16 @@ public class CartController {
 	@PostMapping("/insertOrder")
 	@ResponseBody
 	public int insertOrder(@RequestBody Delivery delivery) {
-		System.out.println(delivery);	
-	    return cartService.deliveryInfo(delivery); 
+
+		System.out.println(delivery);
+	    // 1. 배송 + 주문 정보 저장
+	    int result1 = cartService.deliveryInfo(delivery); // insertOrder + insertAddress
+
+	    // 2. 결제 테이블 저장 (단순화: 반복 insert 아님)
+	    int result2 = cartService.insertPayment(delivery);
+
+	    return (result1 > 0 && result2 > 0) ? 1 : 0;
 	}
-	
 	
 	
 	@PostMapping("/insert")

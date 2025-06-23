@@ -74,4 +74,9 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.findEmail", m);
 	}
 
+	public List<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
+		
+		return sqlSession.selectList("memberMapper.orderProductList",impNo);
+	}
+
 }

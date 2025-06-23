@@ -20,6 +20,7 @@
 	
 	<resultMap id="deliveryResultSet" type="com.kh.soyo.product.model.vo.Product">
 		<result property="receiverName" column="RECEIVER_NAME"/>
+		<result property="receiverPhone" column="RECEIVER_PHONE"/>
 		<result property="memberName" column="MEMBER_NAME"/>
 	    <result property="productChange" column="PRODUCT_CHANGE"/>
 	    <result property="productName" column="PRODUCT_NAME"/>
@@ -27,8 +28,11 @@
 	    <result property="productPrice" column="PRODUCT_PRICE"/>
 	    <result property="deliveryDate" column="DELIVERY_DATE"/>
 	    <result property="orderStatus" column="ORDER_STATUS"/>
-	    <result property="orderImpno" column="ORDER_IMPNO"/>
+	    <result property="orderImpNo" column="ORDER_IMPNO"/>
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
+	    <result property="addressName" column="ADDRESS_NAME"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="orderDate" column="ORDER_DATE"/>
 	</resultMap>
 
 	<!-- 로그인용 쿼리문 -->
@@ -76,27 +80,20 @@
     	
 	</select>
 	
-	<select id="orderProduct" parameterType="string"
-								resultMap="deliveryResultSet">
-								
-			SELECT P.PRODUCT_CHANGE,
-			       O.ORDER_IMPNO,
-			       P.PRODUCT_NAME,
-			       P.PRODUCT_PRICE,
-			       C.PRODUCT_COUNT,
-			       O.DELIVERY_DATE,
-			       O.ORDER_STATUS,
-                   O.RECEIVER_NAME,
-                   M.MEMBER_NAME,
-                   D.ADDRESS_OTHER
-			FROM CART C
-			JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
-			JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
-            JOIN MEMBER M ON C.MEMBER_ID = M.MEMBER_ID
-            JOIN DELIVERY_ADDRESS D ON O.RECEIVER_NAME = D.RECEIVER_NAME
-			WHERE C.MEMBER_ID=#{memberId}
-			
-	</select>
+	<select id="orderProduct" parameterType="string" resultMap="deliveryResultSet">
+    SELECT D.RECEIVER_NAME,
+           D.RECEIVER_PHONE,
+           D.ADDRESS_NAME,
+           D.ADDRESS_OTHER,
+           O.TOTAL_PRICE,
+           O.ORDER_DATE,
+           O.ORDER_IMPNO
+    FROM ORDER_TB O
+    JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
+    WHERE O.MEMBER_ID = #{memberId}
+      AND O.RECEIVER_NAME = D.RECEIVER_NAME
+    ORDER BY O.ORDER_IMPNO DESC
+</select>
 	
 	<!-- 회원가입용 쿼리문 -->
 	<select id="insertMember" parameterType="member">
@@ -146,5 +143,15 @@
 		    WHERE MEMBER_ID = #{memberId}
 		    AND STATUS = 'Y'
 	</select>
+	
+	<select id="orderProductList" parameterType="string" resultMap="deliveryResultSet">
+	SELECT PD.PRODUCT_NAME,
+	       PD.PRODUCT_PRICE,
+	       P.PRODUCT_COUNT,
+	       PD.PRODUCT_CHANGE  
+	  FROM PAYMENT P
+	  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
+	 WHERE P.ORDER_IMPNO = #{orderImpNo}
+</select>
 		
 </mapper>

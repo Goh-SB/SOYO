@@ -44,6 +44,8 @@ public interface MemberService {
 
 	String findEmail(Member m);
 
+	List<Product> orderProductList(String impNo);
+
 	
 
 	

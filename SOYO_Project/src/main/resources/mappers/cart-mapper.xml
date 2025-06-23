@@ -11,6 +11,7 @@
         <result property="productName" column="PRODUCT_NAME" />
         <result property="productPrice" column="PRODUCT_PRICE" />
         <result property="productChange" column="PRODUCT_CHANGE" />
+        <result property="orderImpNo" column="ORDER_IMPNO" />
     </resultMap>
 
     <select id="cartList" parameterType="string" resultMap="cartResultMap">
@@ -68,17 +69,29 @@
         REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE
     ) VALUES (
         ORDER_SEQ.NEXTVAL, #{memberId}, #{receiverName}, #{receiverPhone},
-        #{requestMsg}, #{totalPrice}, #{orderImpno}, SYSDATE
+        #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE
     )
 </insert>
 
-<insert id="insertAddress" parameterType="Delivery">
+ 	<insert id="insertAddress" parameterType="Delivery">
     INSERT INTO DELIVERY_ADDRESS (
-        ADDRESS_NO, ADDRESS_NAME, ADDRESS_OTHER,
-        IS_DEFAULT, RECEIVER_NAME, RECEIVER_PHONE, MEMBER_ID
-    ) VALUES ( 
-        SEQ_DELIVERY_ADDRESS.NEXTVAL, #{addressName}, #{addressOther},
-        'N', #{receiverName}, #{receiverPhone}, #{memberId}
+        ADDRESS_NO,
+        ADDRESS_NAME,
+        ADDRESS_OTHER,
+        IS_DEFAULT,
+        RECEIVER_NAME,
+        RECEIVER_PHONE,
+        MEMBER_ID,
+        ORDER_IMPNO
+    ) VALUES (
+        SEQ_DELIVERY_ADDRESS.NEXTVAL,
+        #{addressName},
+        #{addressOther},
+        'N',
+        #{receiverName},
+        #{receiverPhone},
+        #{memberId},
+        #{orderImpNo}
     )
 </insert>
 
@@ -90,6 +103,22 @@
 	        #{productNo}
 	    </foreach>
 	</delete>
+	
+	<insert id="insertPayment" parameterType="map">
+	    INSERT INTO PAYMENT (
+	        ORDER_IMPNO,
+	        PRODUCT_NO,
+	        PRODUCT_COUNT,
+	        CANCEL_STATUS,
+	        CANCEL_REASON
+	    ) VALUES (
+	        #{orderImpNo},
+	        #{productNo},
+	        #{productCount},
+	        '결제완료',
+	        NULL
+	    )
+	</insert>
 	
 	
 	
