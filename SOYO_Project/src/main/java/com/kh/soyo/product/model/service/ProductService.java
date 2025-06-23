@@ -27,4 +27,5 @@ public interface ProductService {
 	
 	List<Product> selectSortedProductList(String category, String sort);
 	
+	List<Product> selectSortedProductList(String category, String sort, PageInfo pi);
 }

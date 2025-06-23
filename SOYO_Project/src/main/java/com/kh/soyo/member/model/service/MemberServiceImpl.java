@@ -101,9 +101,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ArrayList<Review> myReview(String mi) {
-		// TODO Auto-generated method stub
 		return memberDao.myReview(sqlSession, mi);
-
+	}
+	
 	public List<Product> orderProductList(String impNo) {
 		
 		return memberDao.orderProductList(sqlSession,impNo);

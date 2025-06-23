@@ -1,6 +1,8 @@
 package com.kh.soyo.product.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +32,9 @@ public class ProductController {
 
 	@ResponseBody
 	@GetMapping("/sort")
-	public List<Product> ajaxSortedList(@RequestParam String category,
-	                                    @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
+	public Map<String, Object> ajaxSortedList(@RequestParam String category,
+	                                    @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
+	                                    @RequestParam(value = "page", defaultValue = "1") int currentPage) {
 		
 	    // category 파라미터를 DB에 맞게 한글로 변환
 	    switch (category) {
@@ -51,7 +54,16 @@ public class ProductController {
 	            category = null; // SQL WHERE 조건에서 null이면 매칭 안 됨
 	    }
 
-	    return productService.selectSortedProductList(category, sort);
+	    int listCount = productService.selectProductListCountByCategory(category);
+	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
+	    
+	    List<Product> products = productService.selectSortedProductList(category, sort, pi);
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("products", products);
+	    response.put("pi", pi);
+	    
+	    return response;
 	}
 
 	

@@ -81,6 +81,7 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.myReview", mi);
 
+	}
 	public List<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
 		
 		return sqlSession.selectList("memberMapper.orderProductList",impNo);

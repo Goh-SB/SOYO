@@ -220,20 +220,26 @@
     text-align: center;
   }
   .pagination {
-    display: inline-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    margin: 0;
     list-style: none;
-    gap: 5px;
   }
   .page-item {
     display: inline-block;
   }
   .page-link {
     display: block;
-    padding: 8px 12px;
+    padding: 6px 12px;
     text-decoration: none;
     color: #495057;
     border: 1px solid #dee2e6;
     border-radius: 4px;
+    background: #fff;
+    font-size: 0.9rem;
     transition: all 0.2s ease;
   }
   .page-link:hover {
@@ -256,98 +262,128 @@
   document.addEventListener('DOMContentLoaded', function () {
     const sortTabs = document.querySelectorAll('.sort-tab');
     const productList = document.getElementById('productList');
+    const pagingArea = document.querySelector('.paging-area');
+    let currentPage = 1;
+
+    // 페이징 처리 함수
+    function updatePagination(pi) {
+      let paginationHtml = '<ul class="pagination">';
+      
+      // 이전 페이지 버튼
+      if (pi.currentPage === 1) {
+        paginationHtml += '<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>';
+      } else {
+        paginationHtml += '<li class="page-item"><a class="page-link" href="#" data-page="' + (pi.currentPage - 1) + '">&laquo;</a></li>';
+      }
+
+      // 페이지 번호 버튼 (빈 버튼 방지)
+      for (let p = pi.startPage; p <= pi.endPage; p++) {
+        if (p > pi.maxPage) break;
+        if (p === pi.currentPage) {
+          paginationHtml += '<li class="page-item active"><a class="page-link" href="#" data-page="' + p + '">' + p + '</a></li>';
+        } else {
+          paginationHtml += '<li class="page-item"><a class="page-link" href="#" data-page="' + p + '">' + p + '</a></li>';
+        }
+      }
+
+      // 다음 페이지 버튼
+      if (pi.currentPage === pi.maxPage || pi.maxPage === 0) {
+        paginationHtml += '<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>';
+      } else {
+        paginationHtml += '<li class="page-item"><a class="page-link" href="#" data-page="' + (pi.currentPage + 1) + '">&raquo;</a></li>';
+      }
+
+      paginationHtml += '</ul>';
+      pagingArea.innerHTML = paginationHtml;
+
+      // 페이지 클릭 이벤트 추가
+      const pageLinks = pagingArea.querySelectorAll('.page-link');
+      pageLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const page = this.getAttribute('data-page');
+          if (page && !this.parentElement.classList.contains('disabled')) {
+            currentPage = parseInt(page);
+            const activeTab = document.querySelector('.sort-tab.active');
+            if (activeTab) {
+              loadSortedProducts(activeTab.getAttribute('data-sort-type'), currentPage);
+            }
+          }
+        });
+      });
+    }
+
+    // 정렬된 상품 로드 함수
+    function loadSortedProducts(sortValue, page) {
+      const validTypes = ['womens', 'mens', 'kids', 'accessory'];
+      let rawType = new URLSearchParams(window.location.search).get('type') || 'womens';
+      let type = rawType.split(':')[0];
+
+      if (!validTypes.includes(type)) {
+        type = 'womens';
+      }
+
+      fetch('/soyo/product/sort?category=' + type + '&sort=' + sortValue + '&page=' + page)
+        .then(res => res.json())
+        .then(data => {
+          if (!data.products || !Array.isArray(data.products)) {
+            console.error("데이터가 올바른 형식이 아닙니다:", data);
+            return;
+          }
+
+          if (data.products.length === 0) {
+            productList.innerHTML = 
+              '<div class="no-product-message">' +
+                '<span class="material-icons no-product-icon">inventory_2</span>' +
+                '<div class="no-product-title">등록된 상품이 없습니다.</div>' +
+                '<div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>' +
+              '</div>';
+            return;
+          }
+
+          let productHTML = "";
+          data.products.forEach(product => {
+            const imageUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + product.productChange;
+            const price = product.productPrice
+              ? new Intl.NumberFormat('ko-KR').format(product.productPrice)
+              : '0';
+
+            productHTML += '<a href="/soyo/product/productDetail?no=' + product.productNo + '" class="product-card">' +
+              '<img class="product-image" src="' + imageUrl + '" alt="' + product.productName + '" />' +
+              '<div class="product-card-title">' + product.productName + '</div>' +
+              '<div class="product-card-price">₩' + price + '</div>' +
+              '</a>';
+          });
+
+          productList.innerHTML = productHTML;
+          
+          // 페이징 정보 업데이트
+          if (data.pi) {
+            updatePagination(data.pi);
+          }
+        })
+        .catch(err => {
+          console.error("상품을 불러오는 중 오류 발생:", err);
+          productList.innerHTML = '<p>상품을 불러오는 데 실패했습니다.</p>';
+        });
+    }
 
     sortTabs.forEach(tab => {
       tab.addEventListener('click', function (event) {
-        event.preventDefault(); // 혹시 모르니까 기본 동작 막기
-        console.log("=========== 정렬 버튼 클릭 정보 ===========");
-        console.log("클릭된 버튼 텍스트:", this.textContent);
-        console.log("클릭된 버튼 data-sort-type:", this.getAttribute('data-sort-type'));
-
+        event.preventDefault();
         const sortValue = this.getAttribute('data-sort-type');
         if (!sortValue) {
           console.error("정렬 값이 없습니다.");
           return;
         }
 
-        const validTypes = ['womens', 'mens', 'kids', 'accessory'];
-        let rawType = new URLSearchParams(window.location.search).get('type') || 'womens';
-        let type = rawType.split(':')[0];
-
-        console.log("URL 파라미터:", window.location.search);
-        console.log("추출된 type:", type);
-        console.log("최종 요청 URL:", "/soyo/product/sort?category="+type+"&sort="+sortValue);
-        console.log("=====================================");
-
-        if (!validTypes.includes(type)) {
-          type = 'womens';
-        }
-
         // 버튼 UI 변경
         sortTabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
 
-        fetch("/soyo/product/sort?category=" + type + "&sort=" + sortValue)
-          .then(res => res.json())
-          .then(data => {
-            // console.log('정렬 fetch 응답 data:', data);
-            if (!Array.isArray(data)) {
-              console.error("데이터가 배열이 아닙니다:", data);
-              return;
-            }
-
-            if (data.length === 0) {
-              productList.innerHTML = 
-                '<div class="no-product-message">' +
-                  '<span class="material-icons no-product-icon">inventory_2</span>' +
-                  '<div class="no-product-title">등록된 상품이 없습니다.</div>' +
-                  '<div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>' +
-                '</div>';
-              return;
-            }
-
-            let productHTML = "";
-
-            data.forEach((product, i) => {
-              console.log(`[${i}] 상품 전체 데이터:`, product);
-              const productNo = product.productNo;
-              const productName = product.productName;
-              const productPrice = product.productPrice;
-              const productChange = product.productChange;
-
-              console.log(`[${i}] 상품 필드 확인`, {
-                productNo, productName, productPrice, productChange
-              });
-
-              /*
-              if (!productNo || !productName || !productChange) {
-                console.warn("누락된 상품 데이터:", product);
-                return;
-              }
-              */
-
-              const imageUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + productChange;
-              const price = productPrice
-                ? new Intl.NumberFormat('ko-KR').format(productPrice)
-                : '0';
-
-                productHTML += '<a href="/soyo/product/productDetail?no=' + productNo + '" class="product-card">' +
-               '<img class="product-image" src="' + imageUrl + '" alt="' + productName + '" />' +
-               '<div class="product-card-title">' + productName + '</div>' +
-               '<div class="product-card-price">₩' + price + '</div>' +
-               '</a>';
-
-            });
-
-            // console.log("최종 productHTML:\n", productHTML);
-            productList.innerHTML = productHTML;
-            // console.log("innerHTML 삽입 완료");
-            // console.log("실제 productList 내용:", productList.innerHTML);
-          })
-          .catch(err => {
-            console.error("상품을 불러오는 중 오류 발생:", err);
-            productList.innerHTML = '<p>상품을 불러오는 데 실패했습니다.</p>';
-          });
+        // 페이지를 1로 리셋하고 상품 로드
+        currentPage = 1;
+        loadSortedProducts(sortValue, currentPage);
       });
     });
   });

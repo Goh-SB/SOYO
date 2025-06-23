@@ -83,4 +83,15 @@ public class ProductServiceImpl implements ProductService {
         return productDao.selectSortedProductList(sqlSession, param);
     }
 
+    @Override
+    public List<Product> selectSortedProductList(String category, String sort, PageInfo pi) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("category", category);
+        param.put("sort", sort);
+        
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
+        return productDao.selectSortedProductList(sqlSession, param, rowBounds);
+    }
 }
