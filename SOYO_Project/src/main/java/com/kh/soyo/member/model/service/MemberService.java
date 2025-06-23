@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
+import com.kh.soyo.review.model.vo.Review;
 
 public interface MemberService {
 
@@ -43,6 +44,8 @@ public interface MemberService {
 	int changePwd(Member m);
 
 	String findEmail(Member m);
+
+	ArrayList<Review> myReview(String mi);
 
 	
 

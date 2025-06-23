@@ -30,6 +30,22 @@
 	    <result property="orderImpno" column="ORDER_IMPNO"/>
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	</resultMap>
+	
+	<!-- 리뷰용 resultmap -->
+	<resultMap id="reviewResultMap" type="review">
+	    <result property="reviewNo" column="REVIEW_NO"/>
+	    <result property="reviewTitle" column="REVIEW_TITLE"/>
+	    <result property="reviewContent" column="REVIEW_CONTENT"/>
+	    <result property="rating" column="RATING"/>
+	    <result property="reviewThumbnailOrigin" column="REVIEW_THUMBNAIL_ORIGIN"/>
+	    <result property="reviewThumbnailChange" column="REVIEW_THUMBNAIL_CHANGE"/>
+	    <result property="reviewDate" column="REVIEW_DATE"/>
+	    <result property="status" column="STATUS"/>
+	    <result property="productNo" column="PRODUCT_NO"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="memberName" column="MEMBER_NAME"/>
+	    <result property="productChange" column="PRODUCT_CHANGE"/>
+	</resultMap>
 
 	<!-- 로그인용 쿼리문 -->
 	<select id="loginMember" parameterType="member"
@@ -99,7 +115,7 @@
 	</select>
 	
 	<!-- 회원가입용 쿼리문 -->
-	<select id="insertMember" parameterType="member">
+	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER(MEMBER_ID
                  , MEMBER_PWD
                  , MEMBER_NAME
@@ -116,7 +132,7 @@
              , #{email}
              , #{phone}
              , #{address})
-	</select>
+	</insert>
 	
 	<!-- 아이디 찾기용 쿼리문 -->
 	<select id="findId" parameterType="member" resultType="string">
@@ -141,10 +157,28 @@
 		    AND STATUS = 'Y'
 	</update>
 	
+	<!-- 이메일 뽑아오기 -->
 	<select id="findEmail" parameterType="member" resultType="string">
 		SELECT EMAIL FROM MEMBER
 		    WHERE MEMBER_ID = #{memberId}
 		    AND STATUS = 'Y'
+	</select>
+	
+	<!-- 회원의 리뷰 가져오기 -->
+	<select id="myReview" parameterType="string" resultMap="reviewResultMap">
+		SELECT REVIEW_NO,
+		       REVIEW_TITLE,
+		       REVIEW_CONTENT,
+		       RATING,
+		       REVIEW_THUMBNAIL_ORIGIN,
+		       REVIEW_THUMBNAIL_CHANGE,
+		       REVIEW_DATE,
+		       STATUS,
+		       PRODUCT_NO
+	    	FROM REVIEW 
+	    	WHERE MEMBER_ID = #{memberId}
+	      AND STATUS = 'Y'
+	    ORDER BY REVIEW_DATE DESC
 	</select>
 		
 </mapper>

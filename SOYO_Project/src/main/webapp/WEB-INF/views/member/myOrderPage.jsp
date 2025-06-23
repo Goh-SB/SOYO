@@ -191,7 +191,7 @@
                 <ul id="left-MenuList">
                     <li><a href="./myOrderPage">주문/배송조회</a></li>
                     <li><a href="">찜한 상품</a></li>
-                    <li><a href="myPage-myreview">내 리뷰</a></li>
+                    <li><a href="../member/myPageMyReview">내 리뷰</a></li>
                     <li><a href="">배송지 관리</a></li>
                     <li><a href="../member/myInformation">내 정보</a></li>
                     <li><a href="">최근 본 상품</a></li>
