@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -129,13 +130,15 @@
 
 			<div class="notice-content">
 				<div class="notice-title">
-					<h3>[${requestScope.n.noticeType}] ${requestScope.n.noticeTitle}</h3>
+					<h3>&#91;${requestScope.n.noticeType}&#93; ${requestScope.n.noticeTitle}</h3>
 					<div class="notice-date">${requestScope.n.noticeDate}</div>
 					<br>
 				</div>
 
 				<div class="notice-body">
-					<img id="fileImg" src="http://192.168.40.17:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
+					<c:if test="${not empty requestScope.n.noticeImage}">
+						<img id="fileImg" src="http://192.168.40.17:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
+					</c:if>
 					<p>${requestScope.n.noticeContent}</p>
 				</div>
 			</div>
