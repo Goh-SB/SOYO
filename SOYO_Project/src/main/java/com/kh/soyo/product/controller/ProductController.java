@@ -1,6 +1,6 @@
 package com.kh.soyo.product.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
@@ -15,8 +16,6 @@ import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.service.ReviewService;
 import com.kh.soyo.review.model.vo.Review;
-
-import java.util.List;
 
 
 @Controller
@@ -28,6 +27,34 @@ public class ProductController {
 	
 	@Autowired
 	private ReviewService reviewService;
+
+	@ResponseBody
+	@GetMapping("/sort")
+	public List<Product> ajaxSortedList(@RequestParam String category,
+	                                    @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
+		
+	    // category 파라미터를 DB에 맞게 한글로 변환
+	    switch (category) {
+	        case "womens":
+	            category = "여성";
+	            break;
+	        case "mens":
+	            category = "남성";
+	            break;
+	        case "kids":
+	            category = "아동";
+	            break;
+	        case "accessory":
+	            category = "악세사리";
+	            break;
+	        default:
+	            category = null; // SQL WHERE 조건에서 null이면 매칭 안 됨
+	    }
+
+	    return productService.selectSortedProductList(category, sort);
+	}
+
+	
 
 	@GetMapping("/productDetail")
 	public String showProductDetail(@RequestParam("no") int productNo, Model model) {
@@ -47,6 +74,7 @@ public class ProductController {
 
 	    return "product/productDetail";
 	}
+
 
 	
 	@GetMapping("/productList")

@@ -3,6 +3,7 @@ package com.kh.soyo.product.model.service;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
 
+    @Autowired
+    private SqlSessionTemplate sqlSession;
+    
     @Override
     public ArrayList<Product> selectProductList(PageInfo pi) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
@@ -70,5 +74,13 @@ public class ProductServiceImpl implements ProductService {
 		paramMap.put("keyword", keyword);
 		return productDao.searchProductListCount(paramMap);
 	}
+	
+    @Override
+    public List<Product> selectSortedProductList(String category, String sort) {
+        Map<String, String> param = new HashMap<>();
+        param.put("category", category);
+        param.put("sort", sort);
+        return productDao.selectSortedProductList(sqlSession, param);
+    }
 
 }

@@ -46,5 +46,9 @@ public class ProductDao {
 	public int searchProductListCount(Map<String, String> paramMap) {
 		return sqlSession.selectOne("productMapper.searchProductListCount", paramMap);
 	}
+	
+    public List<Product> selectSortedProductList(SqlSessionTemplate sqlSession, Map<String, String> param) {
+        return sqlSession.selectList("productMapper.selectSortedProductList", param);
+    }
 
 }

@@ -11,11 +11,14 @@
 	  <result property="productChange" column="PRODUCT_CHANGE"/>
 	  <result property="productCategory" column="PRODUCT_CATEGORY"/>
 	  <result property="productSubCaption" column="PRODUCT_SUB_CAPTION"/>
-	  <result property="productCount" column="STOCK_COUNT"/>
-	  <result property="productTag" column="TAG_NAME"/>
+	  <result property="productRegisteredDate" column="PRODUCT_REGISTERED_DATE"/>
+	  <result property="status" column="STATUS"/>
 	  <result property="productSort" column="PRODUCT_TAG"/>
-	  <!-- 필요한 만큼 추가 -->
+	  <result property="productSubOrigin" column="PRODUCT_SUB_ORIGIN"/>
+	  <result property="productSubChange" column="PRODUCT_SUB_CHANGE"/>
+	  <result property="productCount" column="STOCK_COUNT"/>
 	</resultMap>
+
 
   <select id="selectProductList" resultMap="productMap">
     SELECT *
@@ -86,5 +89,53 @@
 		</if>
 		AND PRODUCT_NAME LIKE '%' || #{keyword} || '%'
 	</select>
+	
+	
+	<select id="selectSortedProductList" resultMap="productMap" parameterType="map">
+	    SELECT
+	        P.PRODUCT_NO AS PRODUCT_NO,
+	        P.PRODUCT_NAME AS PRODUCT_NAME,
+	        P.PRODUCT_PRICE AS PRODUCT_PRICE,
+	        P.PRODUCT_ORIGIN AS PRODUCT_ORIGIN,
+	        P.PRODUCT_CAPTION AS PRODUCT_CAPTION,
+	        P.PRODUCT_CHANGE AS PRODUCT_CHANGE,
+	        P.PRODUCT_CATEGORY AS PRODUCT_CATEGORY,
+	        P.PRODUCT_SUB_CAPTION AS PRODUCT_SUB_CAPTION,
+	        P.PRODUCT_REGISTERED_DATE AS PRODUCT_REGISTERED_DATE,
+	        P.STATUS AS STATUS,
+	        P.PRODUCT_TAG AS PRODUCT_TAG,
+	        P.PRODUCT_SUB_ORIGIN AS PRODUCT_SUB_ORIGIN,
+	        P.PRODUCT_SUB_CHANGE AS PRODUCT_SUB_CHANGE
+	    FROM PRODUCT P
+	    LEFT JOIN (
+	        SELECT PRODUCT_NO, COUNT(*) AS LIKE_COUNT
+	        FROM WISH_LIST
+	        GROUP BY PRODUCT_NO
+	    ) L ON P.PRODUCT_NO = L.PRODUCT_NO
+	    WHERE P.PRODUCT_CATEGORY = #{category}
+	      AND P.STATUS = 'Y'
+	    <choose>
+	        <when test="sort == 'popular'">
+	            ORDER BY NVL(L.LIKE_COUNT, 0) DESC
+	        </when>
+	        <when test="sort == 'latest'">
+	            ORDER BY P.PRODUCT_REGISTERED_DATE DESC
+	        </when>
+	        <when test="sort == 'price-low'">
+	            ORDER BY P.PRODUCT_PRICE ASC
+	        </when>
+	        <when test="sort == 'price-high'">
+	            ORDER BY P.PRODUCT_PRICE DESC
+	        </when>
+	        <otherwise>
+	            ORDER BY NVL(L.LIKE_COUNT, 0) DESC
+	        </otherwise>
+	    </choose>
+	</select>
+
+
+
+
+
 
 </mapper>

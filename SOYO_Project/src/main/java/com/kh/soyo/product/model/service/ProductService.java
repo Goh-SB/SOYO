@@ -25,4 +25,6 @@ public interface ProductService {
 
 	int searchProductListCount(String type, String keyword);
 	
+	List<Product> selectSortedProductList(String category, String sort);
+	
 }

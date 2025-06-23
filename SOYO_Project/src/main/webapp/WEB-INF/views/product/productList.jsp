@@ -251,19 +251,108 @@
   }
 
 </style>
+
 <script>
-  // 정렬 탭 클릭 시 active 클래스 변경
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const sortTabs = document.querySelectorAll('.sort-tab');
+    const productList = document.getElementById('productList');
+
     sortTabs.forEach(tab => {
-      tab.addEventListener('click', function() {
+      tab.addEventListener('click', function (event) {
+        event.preventDefault(); // 혹시 모르니까 기본 동작 막기
+        console.log("=========== 정렬 버튼 클릭 정보 ===========");
+        console.log("클릭된 버튼 텍스트:", this.textContent);
+        console.log("클릭된 버튼 data-sort-type:", this.getAttribute('data-sort-type'));
+
+        const sortValue = this.getAttribute('data-sort-type');
+        if (!sortValue) {
+          console.error("정렬 값이 없습니다.");
+          return;
+        }
+
+        const validTypes = ['womens', 'mens', 'kids', 'accessory'];
+        let rawType = new URLSearchParams(window.location.search).get('type') || 'womens';
+        let type = rawType.split(':')[0];
+
+        console.log("URL 파라미터:", window.location.search);
+        console.log("추출된 type:", type);
+        console.log("최종 요청 URL:", "/soyo/product/sort?category="+type+"&sort="+sortValue);
+        console.log("=====================================");
+
+        if (!validTypes.includes(type)) {
+          type = 'womens';
+        }
+
+        // 버튼 UI 변경
         sortTabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        // 실제 정렬 동작은 필요시 여기에 추가
+
+        fetch("/soyo/product/sort?category=" + type + "&sort=" + sortValue)
+          .then(res => res.json())
+          .then(data => {
+            // console.log('정렬 fetch 응답 data:', data);
+            if (!Array.isArray(data)) {
+              console.error("데이터가 배열이 아닙니다:", data);
+              return;
+            }
+
+            if (data.length === 0) {
+              productList.innerHTML = 
+                '<div class="no-product-message">' +
+                  '<span class="material-icons no-product-icon">inventory_2</span>' +
+                  '<div class="no-product-title">등록된 상품이 없습니다.</div>' +
+                  '<div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>' +
+                '</div>';
+              return;
+            }
+
+            let productHTML = "";
+
+            data.forEach((product, i) => {
+              console.log(`[${i}] 상품 전체 데이터:`, product);
+              const productNo = product.productNo;
+              const productName = product.productName;
+              const productPrice = product.productPrice;
+              const productChange = product.productChange;
+
+              console.log(`[${i}] 상품 필드 확인`, {
+                productNo, productName, productPrice, productChange
+              });
+
+              /*
+              if (!productNo || !productName || !productChange) {
+                console.warn("누락된 상품 데이터:", product);
+                return;
+              }
+              */
+
+              const imageUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + productChange;
+              const price = productPrice
+                ? new Intl.NumberFormat('ko-KR').format(productPrice)
+                : '0';
+
+                productHTML += '<a href="/soyo/product/productDetail?no=' + productNo + '" class="product-card">' +
+               '<img class="product-image" src="' + imageUrl + '" alt="' + productName + '" />' +
+               '<div class="product-card-title">' + productName + '</div>' +
+               '<div class="product-card-price">₩' + price + '</div>' +
+               '</a>';
+
+            });
+
+            // console.log("최종 productHTML:\n", productHTML);
+            productList.innerHTML = productHTML;
+            // console.log("innerHTML 삽입 완료");
+            // console.log("실제 productList 내용:", productList.innerHTML);
+          })
+          .catch(err => {
+            console.error("상품을 불러오는 중 오류 발생:", err);
+            productList.innerHTML = '<p>상품을 불러오는 데 실패했습니다.</p>';
+          });
       });
     });
   });
 </script>
+  
 </head>
 <body>
 
@@ -296,11 +385,11 @@
     <span class="product-count">총 <b>${pi.listCount}</b>개의 상품</span>
     <div class="top-bar">
       <div class="sort-tabs">
-        <button class="sort-tab active">인기순</button>
-        <button class="sort-tab">최신순</button>
-        <button class="sort-tab">가격순</button>
+        <button type="button" class="sort-tab active" data-sort-type="popular">인기순</button>
+        <button type="button" class="sort-tab" data-sort-type="latest">최신순</button>
+        <button type="button" class="sort-tab" data-sort-type="price-high">높은가격순</button>
+        <button type="button" class="sort-tab" data-sort-type="price-low">낮은가격순</button>
       </div>
-
 
     <form class="search-box" action="/soyo/product/productList" method="get">
       <input type="hidden" name="type" value="${param.type}" />
@@ -314,26 +403,51 @@
     <hr>
     
     <!-- 상품 리스트 영역 -->
+
+    <!--
     <div class="product-list">
-    <c:choose>
-      <c:when test="${fn:length(productList) == 0}">
-        <div class="no-product-message">
-          <span class="material-icons no-product-icon">inventory_2</span>
-          <div class="no-product-title">등록된 상품이 없습니다.</div>
-          <div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>
-        </div>
-      </c:when>
-      <c:otherwise>
-        <c:forEach var="product" items="${productList}">
-          <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
-            <img id="mainImage" class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}"/>
-            <div class="product-card-title">${product.productName}</div>
-            <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
-          </a>
-        </c:forEach>
-      </c:otherwise>
-    </c:choose>
+      <c:choose>
+        <c:when test="${fn:length(productList) == 0}">
+          <div class="no-product-message">
+            <span class="material-icons no-product-icon">inventory_2</span>
+            <div class="no-product-title">등록된 상품이 없습니다.</div>
+            <div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>
+          </div>
+        </c:when>
+        <c:otherwise>
+          <c:forEach var="product" items="${productList}">
+            <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
+              <img class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}" />
+              <div class="product-card-title">${product.productName}</div>
+              <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
+            </a>
+          </c:forEach>
+        </c:otherwise>
+      </c:choose>
     </div>
+    -->
+
+    <div class="product-list" id="productList">
+      <c:choose>
+        <c:when test="${fn:length(productList) == 0}">
+          <div class="no-product-message">
+            <span class="material-icons no-product-icon">inventory_2</span>
+            <div class="no-product-title">등록된 상품이 없습니다.</div>
+            <div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>
+          </div>
+        </c:when>
+        <c:otherwise>
+          <c:forEach var="product" items="${productList}">
+            <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
+              <img class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}" />
+              <div class="product-card-title">${product.productName}</div>
+              <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
+            </a>
+          </c:forEach>
+        </c:otherwise>
+      </c:choose>
+    </div>
+    
 
 	<!-- 페이징바 -->
 	<div class="paging-area" align="center">
