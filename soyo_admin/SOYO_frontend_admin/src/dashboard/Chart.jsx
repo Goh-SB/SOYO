@@ -1,40 +1,68 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
+import './Chart.css';
+import axios from 'axios';
+
 
 function Chart1() {
 
     useEffect(() => {
+        chart1();
+    }, []);
+
+    const chart1 = () => {
         // -- 1번 그래프
         google.charts.load('current', { 'packages': ['bar'] });
         google.charts.setOnLoadCallback(drawBar2);
 
-        function drawBar2() {
+
+
+        let url = "http://192.168.40.32:8100/soyo/member/chart1";
+        axios({
+            url,
+            method: "get"
+        }).then((response) => { const data = response.data;
+            const chartData = [['분기별 회원가입', '가입 수']];
+
+            data.forEach(item => {
+                const date = new Date(item.QUARTER_START);
+                const label = `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+                chartData.push([label, item.TOTAL]);
+            });
+
+            google.charts.setOnLoadCallback(() => drawBar2(chartData));
+
+
+        }).catch(() => { });
+
+        const setQuery = (data) => {
+            const chartData = [['분기 시작일', '가입 수']];  // 헤더
+
+            data.forEach(item => {
+                // QUARTER_START가 ISO 날짜 형식이므로 new Date로 변환 후 연/월 추출
+                const date = new Date(item.QUARTER_START);
+                const label = `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+                chartData.push([label, item.TOTAL]);
+            });
+
+            drawBar2(chartData);
+        };
+
+
+        function drawBar2(chartData) {
             // 그래프 상에 표현할 데이터
-            var data = google.visualization.arrayToDataTable([
-                ['월', '매출(원)', '순이익(원)'],
-                ['1', 1000000, 700000],
-                ['2', 1170000, 830000],
-                ['3', 660000, 570000],
-                ['4', 1030000, 990000],
-                ['5', 360000, 270000],
-                ['6', 830000, 790000],
-                ['7', 1470000, 1250000],
-                ['8', 860000, 700000],
-                ['9', 1200000, 1100000],
-                ['10', 660000, 240000],
-                ['11', 1720000, 1530000],
-                ['12', 500000, 488000]
-            ]);
+            var data = google.visualization.arrayToDataTable(chartData);
 
             // 그래프 그리기 옵션
             var options = {
                 chart: {
-                    title: '월별 매출 현황',
-                    subtitle: '2023년',
+                    title: '월별 회원가입 현황',
+                    subtitle: '현재',
                 },
                 bars: 'vertical',
                 vAxis: { format: 'decimal' },
                 height: 300,
+                width: 1000,
                 colors: ['#1b9e77', '#d95f02']
             };
 
@@ -43,12 +71,10 @@ function Chart1() {
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
 
-    }, []);
-
-
+    };
 
     return (
-        <div>
+        <div id="chart_div2_area">
 
             <div id="chart_div2"></div>
         </div>
@@ -56,7 +82,7 @@ function Chart1() {
 }
 
 function Chart2() {
-    // ----- 2번 그래프
+    // ----- 원형 그래프
     useEffect(() => {
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawPie);
@@ -84,7 +110,7 @@ function Chart2() {
 
 
     return (
-        <div>
+        <div id="chart_div3_area">
             <div id="chart_div3"></div>
 
         </div>
@@ -95,5 +121,40 @@ function Chart2() {
 }
 
 
+function Chart3() {
 
-export { Chart1, Chart2 };
+    const [memberData, setMemberData] = useState(0);
+
+    useEffect(() => {
+        chart3Data();
+
+    }, [])
+
+    const chart3Data = () => {
+        let url = "http://192.168.40.32:8100/soyo/member/chart3";
+        axios({
+            url,
+            method: "get"
+        }).then((response) => {
+            setMemberData(response.data);
+        }).catch(() => { })
+    };
+
+
+
+    return (
+        <div id="total-member-area" align="right">
+            <div id="total-member">
+                <span>총 회원 수
+                    <br />
+                    {memberData}
+                </span>
+            </div>
+        </div>
+    );
+
+}
+
+
+
+export { Chart1, Chart2, Chart3 };

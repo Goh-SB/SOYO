@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
-import { Chart1, Chart2} from './dashboard/Chart';
+import { Chart1, Chart2, Chart3} from './dashboard/Chart';
+import './Home.css';
 
 function Home (props) {
 
@@ -86,6 +87,10 @@ function Home (props) {
                 <br /><br />
 
                 <Chart1 />
+                <br />
+                <Chart3 />
+                <br />
+                
                 <Chart2 />
 
             </div>

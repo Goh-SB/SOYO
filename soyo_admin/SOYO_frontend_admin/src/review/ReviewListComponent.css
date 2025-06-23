@@ -7,3 +7,20 @@
     height : 400px;
     border : 1px solid lightgray;
 }
+#review-table{
+    width : 1400px;
+
+}
+#review-table>tbody>tr>td{
+    vertical-align: middle;
+}
+.review-rating{
+    color:#ff9800;
+}
+.review-status{
+    gap:10px; 
+}
+.review-title{
+    font-weight : 600;
+    font-size :22px;
+}

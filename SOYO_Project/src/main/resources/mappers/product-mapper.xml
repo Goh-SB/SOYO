@@ -58,6 +58,33 @@
 	  AND PRODUCT_NAME LIKE '%' || #{keyword} || '%'
 	</select>
 
+	<select id="selectProductListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE STATUS = 'Y'
+	</select>
   
+	<select id="selectProductListCountByCategory" parameterType="String" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT
+		WHERE PRODUCT_CATEGORY = #{productCategory}
+		AND STATUS = 'Y'
+	</select>
+  
+	<select id="searchProductListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE STATUS = 'Y'
+		<if test="type != null and type != '' and type != 'all'">
+			AND PRODUCT_CATEGORY =
+			<choose>
+				<when test="type == 'mens'"> '남성' </when>
+				<when test="type == 'womens'"> '여성' </when>
+				<when test="type == 'kids'"> '아동' </when>
+				<when test="type == 'accessory'"> '악세사리' </when>
+			</choose>
+		</if>
+		AND PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+	</select>
 
 </mapper>

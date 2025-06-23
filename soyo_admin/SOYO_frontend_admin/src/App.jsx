@@ -53,7 +53,7 @@ function App() {
         <Route path="/order/:memberId/:productNo" element={<OrderDetailComponent />} />
         <Route path="/order/:memberId" element={ <OrderDetailComponent/>}/>
         <Route path="/review/list" element={ <ReviewListComponent />} />
-      </Routes>
+      </Routes> 
       {/* footer? */}
 
 
