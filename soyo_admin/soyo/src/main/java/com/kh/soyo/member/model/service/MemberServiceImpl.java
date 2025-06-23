@@ -2,6 +2,8 @@ package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,14 @@ public class MemberServiceImpl implements MemberService{
 
 		return memberDao.filter(sqlSession, pi, item);
 	}
+
+	@Override
+	public List<Map<String, Object>> chart1Data() {
+
+		return memberDao.chart1Data(sqlSession);
+	}
+
+
 
 
 

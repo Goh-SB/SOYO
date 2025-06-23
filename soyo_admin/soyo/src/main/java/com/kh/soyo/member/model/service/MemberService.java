@@ -2,6 +2,8 @@ package com.kh.soyo.member.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
@@ -27,5 +29,8 @@ public interface MemberService {
 	int filterCount(String item);
 
 	ArrayList<Member> filter(PageInfo pi, String item);
+
+	List<Map<String, Object>> chart1Data();
+
 
 }

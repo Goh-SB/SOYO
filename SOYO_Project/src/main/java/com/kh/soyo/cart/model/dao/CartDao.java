@@ -87,5 +87,25 @@ public class CartDao {
 		return sqlSession.insert("cartMapper.insertCart", cart);
 	}
 
+	public int insertPayment(SqlSessionTemplate sqlSession, Delivery delivery) {
+	    int result = 0;
+
+	    List<Integer> productList = delivery.getSelectedProductList();
+	    List<Integer> countList = delivery.getSelectedProductCountList();
+
+	    for (int i = 0; i < productList.size(); i++) {
+	        Map<String, Object> param = new HashMap<>();
+	        param.put("orderImpNo", delivery.getOrderImpNo());
+	        param.put("productNo", productList.get(i));
+	        param.put("productCount", countList.get(i));
+	        System.out.println(param);
+	        result += sqlSession.insert("cartMapper.insertPayment", param);
+	    }
+	    
+	    System.out.println(delivery);
+
+	    return result;
+	}
+
 
 }

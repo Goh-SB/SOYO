@@ -29,7 +29,4 @@ public interface DeliveryService {
 
 	int deliveryListCount();
 
-	
-
-	
 }

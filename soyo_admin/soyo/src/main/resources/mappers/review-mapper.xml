@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+
+<mapper namespace="reviewMapper">
+
+	<resultMap id="reviewResultMap" type="review">
+    	<result property="reviewNo" column="REVIEW_NO"/>
+	    <result property="reviewTitle" column="REVIEW_TITLE"/>
+	    <result property="reviewContent" column="REVIEW_CONTENT"/>
+	    <result property="rating" column="RATING"/>
+	    <result property="reviewThumbnailOrigin" column="REVIEW_THUMBNAIL_ORIGIN"/>
+	    <result property="reviewThumbnailChange" column="REVIEW_THUMBNAIL_CHANGE"/>
+	    <result property="reviewDate" column="REVIEW_DATE"/>
+	    <result property="status" column="STATUS"/>
+	    <result property="productNo" column="PRODUCT_NO"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="memberName" column="MEMBER_NAME"/>
+	    <result property="productChange" column="PRODUCT_CHANGE"/>
+	    <result property="productName" column="PRODUCT_NAME" />
+	</resultMap>
+
+	<select id="reviewListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM REVIEW
+		  
+	</select>
+	
+	<select id="reviewList" resultMap="reviewResultMap">
+		SELECT REVIEW_NO
+			 , REVIEW_TITLE
+			 , REVIEW_CONTENT
+			 , RATING
+			 , REVIEW_THUMBNAIL_ORIGIN 
+			 , REVIEW_THUMBNAIL_CHANGE
+			 , REVIEW_DATE
+			 , R.STATUS
+			 , R.PRODUCT_NO
+			 , R.MEMBER_ID
+             , P.PRODUCT_NAME
+             , M.MEMBER_NAME
+		  FROM REVIEW R
+		  JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+		  JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+	
+	</select>
+	
+	<update id="deleteBtn" parameterType="review">
+		UPDATE REVIEW
+		   SET STATUS = 'N'
+		 WHERE REVIEW_NO = #{reviewNo}
+		   AND STATUS = 'Y'  
+		
+	</update>
+	
+	<update id="repairBtn" parameterType="review">
+		UPDATE REVIEW
+		   SET STATUS = 'Y'
+		 WHERE REVIEW_NO = #{reviewNo}
+		   AND STATUS = 'N'  
+	</update>
+
+</mapper>

@@ -1,5 +1,6 @@
 package com.kh.soyo.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
+import com.kh.soyo.review.model.vo.Review;
 
 @Repository
 public class MemberDao {
@@ -72,6 +74,17 @@ public class MemberDao {
 	public String findEmail(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.selectOne("memberMapper.findEmail", m);
+	}
+
+
+	public ArrayList<Review> myReview(SqlSessionTemplate sqlSession, String mi) {
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.myReview", mi);
+
+	public List<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
+		
+		return sqlSession.selectList("memberMapper.orderProductList",impNo);
+
 	}
 
 }

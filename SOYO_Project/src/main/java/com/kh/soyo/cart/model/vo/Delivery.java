@@ -11,8 +11,8 @@ import lombok.ToString;
 
 @Alias("delivery")
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 public class Delivery {
     private String memberId;
@@ -22,7 +22,8 @@ public class Delivery {
     private String addressOther;
     private String requestMsg;
     private int totalPrice;
-    private String orderImpno;
-    
-    private List<Integer> selectedProductList;
+    private String orderImpNo;
+
+    private List<Integer> selectedProductList; 
+    private List<Integer> selectedProductCountList;
 }

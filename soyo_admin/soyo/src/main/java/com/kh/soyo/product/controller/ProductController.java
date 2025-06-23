@@ -49,8 +49,8 @@ public class ProductController {
 	public HashMap<String, Object> productList(@RequestParam(value="cpage") int currentPage) {
 		
 		int listCount = productService.productListCount();
-		int pageLimit = 12;
-		int boardLimit = 10;
+		int pageLimit = 10;
+		int boardLimit = 8;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		
@@ -131,8 +131,8 @@ public class ProductController {
 		// System.out.println(currentPage);
 		// System.out.println(keyword);
 		int listCount = productService.searchCount(keyword);
-		int pageLimit = 12;
-		int boardLimit = 10;
+		int pageLimit = 10;
+		int boardLimit = 8;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		ArrayList<Member> list = productService.search(keyword, pi);
@@ -150,8 +150,8 @@ public class ProductController {
 						@RequestParam(value="cpage") int currentPage) {
 		
 		int listCount = productService.filterCount(cate);
-		int pageLimit = 12;
-		int boardLimit = 10;
+		int pageLimit = 10;
+		int boardLimit = 8;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		ArrayList<Member> list = productService.filter(cate, pi);

@@ -25,6 +25,8 @@ public interface CartService {
 
 	int insertCart(Cart cart);
 
+	int insertPayment(Delivery delivery);
+
 
 
 }

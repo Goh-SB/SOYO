@@ -2,6 +2,7 @@ package com.kh.soyo.member.controller;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -26,6 +27,7 @@ import com.kh.soyo.common.template.XssDefencePolicy;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
+import com.kh.soyo.review.model.vo.Review;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -132,6 +134,25 @@ public class MemberController {
 	@GetMapping("/newMemberPwd")
 	public String newMemberPwd() {
 		return "member/newMemberPwd";
+	}
+	
+	// 내 리뷰페이지 목록조회
+	@GetMapping("/myPageMyReview")
+	public String myReview(HttpSession session ,Model model) {
+		
+		// 세션에서 로그인한 사람의 정보 가져오기
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		// 거기서 id 만 가져오기
+		String mi = loginUser.getMemberId();
+		
+		// 리뷰객체로 id값 넘기면서 내 리뷰 받아오기
+		ArrayList<Review>  myreview = memberService.myReview(mi);
+		
+		// jsp 에서 쓰기위해 model 이용
+		model.addAttribute("myreview", myreview);
+		
+		return "member/myPageMyReview";
 	}
 	
 	
@@ -571,13 +592,24 @@ public class MemberController {
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    
 	    if (loginUser != null) {
-	        List<Product> product = memberService.orderProduct(loginUser.getMemberId());
-	        System.out.println(product);
-	        model.addAttribute("product", product);
+	        List<Product> order = memberService.orderProduct(loginUser.getMemberId());
+	  
+	        model.addAttribute("order", order);
 	    }
 
 	   
 	    return "member/myOrderPage";
+	}
+	
+	@GetMapping("/myOrderPage/detail")
+	public String myOrderPage(@RequestParam("impNo") String impNo,
+							  Model model) {
+		
+		List<Product> product=memberService.orderProductList(impNo);
+		
+		model.addAttribute("product",product);
+		
+	    return "member/orderDetail";
 	}
 	
 }

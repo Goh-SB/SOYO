@@ -20,6 +20,7 @@
 	
 	<resultMap id="deliveryResultSet" type="com.kh.soyo.product.model.vo.Product">
 		<result property="receiverName" column="RECEIVER_NAME"/>
+		<result property="receiverPhone" column="RECEIVER_PHONE"/>
 		<result property="memberName" column="MEMBER_NAME"/>
 	    <result property="productChange" column="PRODUCT_CHANGE"/>
 	    <result property="productName" column="PRODUCT_NAME"/>
@@ -27,8 +28,27 @@
 	    <result property="productPrice" column="PRODUCT_PRICE"/>
 	    <result property="deliveryDate" column="DELIVERY_DATE"/>
 	    <result property="orderStatus" column="ORDER_STATUS"/>
-	    <result property="orderImpno" column="ORDER_IMPNO"/>
+	    <result property="orderImpNo" column="ORDER_IMPNO"/>
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
+	    <result property="addressName" column="ADDRESS_NAME"/>
+	    <result property="totalPrice" column="TOTAL_PRICE"/>
+	    <result property="orderDate" column="ORDER_DATE"/>
+	</resultMap>
+	
+	<!-- 리뷰용 resultmap -->
+	<resultMap id="reviewResultMap" type="review">
+	    <result property="reviewNo" column="REVIEW_NO"/>
+	    <result property="reviewTitle" column="REVIEW_TITLE"/>
+	    <result property="reviewContent" column="REVIEW_CONTENT"/>
+	    <result property="rating" column="RATING"/>
+	    <result property="reviewThumbnailOrigin" column="REVIEW_THUMBNAIL_ORIGIN"/>
+	    <result property="reviewThumbnailChange" column="REVIEW_THUMBNAIL_CHANGE"/>
+	    <result property="reviewDate" column="REVIEW_DATE"/>
+	    <result property="status" column="STATUS"/>
+	    <result property="productNo" column="PRODUCT_NO"/>
+	    <result property="memberId" column="MEMBER_ID"/>
+	    <result property="memberName" column="MEMBER_NAME"/>
+	    <result property="productChange" column="PRODUCT_CHANGE"/>
 	</resultMap>
 
 	<!-- 로그인용 쿼리문 -->
@@ -76,30 +96,23 @@
     	
 	</select>
 	
-	<select id="orderProduct" parameterType="string"
-								resultMap="deliveryResultSet">
-								
-			SELECT P.PRODUCT_CHANGE,
-			       O.ORDER_IMPNO,
-			       P.PRODUCT_NAME,
-			       P.PRODUCT_PRICE,
-			       C.PRODUCT_COUNT,
-			       O.DELIVERY_DATE,
-			       O.ORDER_STATUS,
-                   O.RECEIVER_NAME,
-                   M.MEMBER_NAME,
-                   D.ADDRESS_OTHER
-			FROM CART C
-			JOIN ORDER_TB O ON O.MEMBER_ID = C.MEMBER_ID
-			JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
-            JOIN MEMBER M ON C.MEMBER_ID = M.MEMBER_ID
-            JOIN DELIVERY_ADDRESS D ON O.RECEIVER_NAME = D.RECEIVER_NAME
-			WHERE C.MEMBER_ID=#{memberId}
-			
-	</select>
+	<select id="orderProduct" parameterType="string" resultMap="deliveryResultSet">
+    SELECT D.RECEIVER_NAME,
+           D.RECEIVER_PHONE,
+           D.ADDRESS_NAME,
+           D.ADDRESS_OTHER,
+           O.TOTAL_PRICE,
+           O.ORDER_DATE,
+           O.ORDER_IMPNO
+    FROM ORDER_TB O
+    JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
+    WHERE O.MEMBER_ID = #{memberId}
+      AND O.RECEIVER_NAME = D.RECEIVER_NAME
+    ORDER BY O.ORDER_IMPNO DESC
+</select>
 	
 	<!-- 회원가입용 쿼리문 -->
-	<select id="insertMember" parameterType="member">
+	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER(MEMBER_ID
                  , MEMBER_PWD
                  , MEMBER_NAME
@@ -116,7 +129,7 @@
              , #{email}
              , #{phone}
              , #{address})
-	</select>
+	</insert>
 	
 	<!-- 아이디 찾기용 쿼리문 -->
 	<select id="findId" parameterType="member" resultType="string">
@@ -141,10 +154,40 @@
 		    AND STATUS = 'Y'
 	</update>
 	
+	<!-- 이메일 뽑아오기 -->
 	<select id="findEmail" parameterType="member" resultType="string">
 		SELECT EMAIL FROM MEMBER
 		    WHERE MEMBER_ID = #{memberId}
 		    AND STATUS = 'Y'
 	</select>
+	
+
+	<!-- 회원의 리뷰 가져오기 -->
+	<select id="myReview" parameterType="string" resultMap="reviewResultMap">
+		SELECT REVIEW_NO,
+		       REVIEW_TITLE,
+		       REVIEW_CONTENT,
+		       RATING,
+		       REVIEW_THUMBNAIL_ORIGIN,
+		       REVIEW_THUMBNAIL_CHANGE,
+		       REVIEW_DATE,
+		       STATUS,
+		       PRODUCT_NO
+	    	FROM REVIEW 
+	    	WHERE MEMBER_ID = #{memberId}
+	      AND STATUS = 'Y'
+	    ORDER BY REVIEW_DATE DESC
+	</select>
+
+	<select id="orderProductList" parameterType="string" resultMap="deliveryResultSet">
+	SELECT PD.PRODUCT_NAME,
+	       PD.PRODUCT_PRICE,
+	       P.PRODUCT_COUNT,
+	       PD.PRODUCT_CHANGE  
+	  FROM PAYMENT P
+	  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
+	 WHERE P.ORDER_IMPNO = #{orderImpNo}
+</select>
+
 		
 </mapper>

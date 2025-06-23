@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.soyo.member.model.dao.MemberDao;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
+import com.kh.soyo.review.model.vo.Review;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -96,6 +97,17 @@ public class MemberServiceImpl implements MemberService {
 	public String findEmail(Member m) {
 		
 		return memberDao.findEmail(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Review> myReview(String mi) {
+		// TODO Auto-generated method stub
+		return memberDao.myReview(sqlSession, mi);
+
+	public List<Product> orderProductList(String impNo) {
+		
+		return memberDao.orderProductList(sqlSession,impNo);
+
 	}
 
 }

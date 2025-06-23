@@ -2,6 +2,8 @@ package com.kh.soyo.member.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -131,6 +133,19 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("chart3")
+	public int chart3Data() {
+		
+		int result = memberService.memberListCount();
 	
+		return result;
+	}
+	
+	@GetMapping("chart1")
+	public List<Map<String, Object>> chart1Data() {
+		
+		return memberService.chart1Data();
+		
+	}
 	
 }

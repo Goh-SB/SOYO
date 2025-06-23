@@ -2,6 +2,8 @@ package com.kh.soyo.member.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -78,5 +80,11 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.filter", hm);
 	}
+
+	public List<Map<String, Object>> chart1Data(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("memberMapper.chart1Data");
+	}
+
 
 }

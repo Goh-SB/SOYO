@@ -160,6 +160,25 @@
         td > button:hover{
             background-color: rgba(126, 93, 158, 0.518);
         }
+        
+        a.order-link-button {
+		    display: inline-block;
+		    text-align: center;
+		    text-decoration: none;
+		    color: black;
+		    background-color: rgba(175, 128, 219, 0.518);
+		    border: none;
+		    border-radius: 5px;
+		    padding: 10px 20px;
+		    font-family: inherit;
+		    font-size: 14px;
+		    width: 100%;
+		    margin-top: 10px;
+		}
+		
+		a.order-link-button:hover {
+		    background-color: rgba(126, 93, 158, 0.518);
+		}
 </style>
 </head>
 <body>
@@ -172,12 +191,25 @@
 	<!-- 모달 창 -->
 	<div id="refundModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
 	    <div style="background:white; width:400px; padding:20px; border-radius:10px; margin:150px auto; position:relative;">				
-	        <div style="text-align:right; margin-top:20px;">
-	        	<input type="text" id="imp_uid" placeholder="주문번호 입력" required>
-				<input type="text" id="reason" placeholder="취소 사유" required>
-	        	<button onclick="closeModal()">취소</button>
-	            <button onclick="cancelPay()" style="margin-right:10px;">환불하기</button>
-	        </div>
+	        <div style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+			    <h3 style="margin-bottom: 20px;">환불 요청</h3>
+			    
+			    <div style="margin-bottom: 15px;">
+			        <label for="imp_uid" style="display: inline-block; width: 100px; font-weight: bold;">주문번호</label>
+			        <input type="text" id="imp_uid" placeholder="주문번호 입력" style="width: 250px; padding: 8px;" required>
+			    </div>
+			    
+			    <div style="margin-bottom: 20px;">
+			        <label for="reason" style="display: inline-block; width: 100px; font-weight: bold;">취소 사유</label>
+			        <input type="text" id="reason" placeholder="취소 사유 입력" style="width: 250px; padding: 8px;" required>
+			    </div>
+			    
+			    <div style="text-align: right;">
+			        <button onclick="closeModal()" style="padding: 8px 16px; margin-right: 10px;">취소</button>
+			        <button onclick="cancelPay()" style="padding: 8px 16px; background-color: #8156c2; color: white; border: none; border-radius: 5px;">환불하기</button>
+			    </div>
+			</div>
+
 	    </div>
 	</div>
 	<jsp:include page="../common/menubar.jsp" />
@@ -191,7 +223,7 @@
                 <ul id="left-MenuList">
                     <li><a href="./myOrderPage">주문/배송조회</a></li>
                     <li><a href="">찜한 상품</a></li>
-                    <li><a href="myPage-myreview">내 리뷰</a></li>
+                    <li><a href="../member/myPageMyReview">내 리뷰</a></li>
                     <li><a href="">배송지 관리</a></li>
                     <li><a href="../member/myInformation">내 정보</a></li>
                     <li><a href="">최근 본 상품</a></li>
@@ -203,9 +235,9 @@
                 padding: 15px;">내 주문 목록</div>
                     <div id="order-List">
                         <ul>
-                       <c:forEach var="p" items="${product}">
+                       <c:forEach var="o" items="${order}">
 						    <li>
-						        <form action="./orderProduct" method="get">
+						 
 						            <table class="order-table">
 						                <tr>
 						                    <th> 주문</th>
@@ -217,26 +249,30 @@
 						                    </td>
 						                    <td class="product-name">
 						                        <div>
-						                        	수령인 : ${p.receiverName} <br>
-						                        	배송지 : ${p.addressOther}<br>
-						                            ${p.productName} - 수량 ${p.productCount}개<br>
-						                            배송날짜 : ${p.deliveryDate }<br>
-						                            가격 : ${p.productPrice}<br>
-						                            주문번호 : ${p.orderImpno } 
+						                        	수령인 : ${o.receiverName} <br>
+						                        	배송지 : ${o.addressOther}<br>
+						                            배송날짜 : ${o.orderDate }<br>
+						                            가격 : ${o.totalPrice}<br>
+						                            주문번호 : ${o.orderImpNo } 
 						                            
-						                            <button type="button" onclick="copyImpUid('${p.orderImpno}')">복사</button>
+						                            <button type="button" onclick="copyImpUid('${o.orderImpNo}')">복사</button>
 						                        </div>
 						                    </td>
 						                    <td class="product-menu">
-						                        <button type="submit">상세 조회</button>
-						                        <button type="button">추가 주문</button>
+						                        <a href="./myOrderPage/detail?impNo=${o.orderImpNo}" class="order-link-button">
+						                        	상세 조회
+						                        </a>
+						                        <a href="<c:url value='/product/productList?type=all' />" class="order-link-button">
+						                        	추가 주문
+						                        </a>
 						                        <button type="button">리뷰 작성</button>
 						                    </td>
 						                </tr>
 						            </table>
-						        </form>
+						      
 						    </li>
 						</c:forEach>
+						</ul>
 						<button style="float: right; margin-right: 20px;"
 								onclick="openModal()">
 							전체 환불
@@ -288,6 +324,7 @@
 		    success: function (response) {
 		    	  if (response.success) {
 		    	    alert("✅ 환불 성공!");
+		    	    location.href = "/soyo";
 		    	  } else {
 		    	    alert("❌ 환불 실패: " + response.message);
 		    	  }

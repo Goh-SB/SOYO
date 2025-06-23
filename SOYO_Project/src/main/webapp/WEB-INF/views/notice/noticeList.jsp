@@ -245,8 +245,6 @@
 						// active 클래스 토글
 						document.querySelectorAll('.filter-btn').forEach(button => button.classList.remove('active'));
 						btn.classList.add('active');
-						
-						console.log($(btn).val());
 
 						// 이동할 url 및 data 생성
 						let noticeType = $(btn).val();
@@ -259,19 +257,34 @@
 								noticeType : noticeType
 							},
 							success : function(result) {
+								console.log($("#noticeList-area").html());
+								
 								let resultStr = "";
 
-								for(let i = 0; i < result.length; i++) {
-									 resultStr += "<tr>" + 
-												"<td>" + result[i].noticeNo + "</td>" +
-												"<td>" + result[i].noticeTitle  + "</td>"
-												+ "</tr>";
+								// 결과가 배열인지 확인 후 처리
+								for (let i = 0; i < result.list.length; i++) {
+									let item = result.list[i];
+
+									resultStr += "<tr>";
+									resultStr += "<td>" + item.noticeNo + "</td>";
+
+									if (!item.noticeImage) {
+										// 이미지가 없는 경우
+										resultStr += "<td class='title-col'>&#91;" + item.noticeType + "&#93; " + item.noticeTitle + "</td>";
+									} else {
+										// 이미지가 있는 경우
+										resultStr += "<td class='title-col'>&#91;" + item.noticeType + "&#93; " + item.noticeTitle + "&nbsp;" +
+													"<span class='material-symbols-outlined'>image</span></td>";
+									}
+
+									resultStr += "<td>" + item.noticeDate + "</td>";
+									resultStr += "</tr>";
 								}
 
 								$("#noticeList-area").html(resultStr);
 							},
 							error : function() {
-								alert("ajax 연동 실패!");
+								alert("ajax 요청 실패!");
 							}
 						});
 					}
@@ -300,10 +313,11 @@
 									<tr>
 										<!-- 번호/제목/날짜 -->
 										<td>${ i.noticeNo }</td>
-
+										
+										<!-- 글만 있는 경우와 이미지도 있는 경우를 구분 -->
 										<c:choose>
 											<c:when test="${ empty i.noticeImage }">
-												<td class="title-col">${ i.noticeType } ${ i.noticeTitle }</td>
+												<td class="title-col">&#91;${ i.noticeType }&#93; ${ i.noticeTitle }</td>
 											</c:when>
 
 											<c:otherwise>
@@ -327,8 +341,8 @@
 				<!-- 검색창이 들어갈 자리 -->
 				<div class="search-bar-area" id="search-area">
 					<select class="search-select" name="condition">
-						<option value="title">제목</option>
-						<option value="content">내용</option>
+						<option value="title" <c:if test="${condition == 'title'}">selected</c:if>>제목</option>
+						<option value="content" <c:if test="${condition == 'content'}">selected</c:if>>내용</option>
 					</select>
 					
 					<input class="search-input" type="search" name="keyword" required
@@ -448,13 +462,15 @@
 		<script>
 			$(function() {
 				// 게시글 하나를 나타내는 tr 요소에 클릭 이벤트 걸기
-				$(".list_area>tbody>tr").click(function() {
+				function NoticeClick() {
 					// 클릭된 공지사항의 글 번호(primary key) 추출 
 					let nno = $(this).children().eq(0).text();
 
 					// 공지사항 상세 조회 요청 시 아래 주소로 요청
-					location.href="/soyo/notice/noticeDetail/" + nno;
-				});
+					location.href = "/soyo/notice/noticeDetail/" + nno;
+				}
+
+				$(".list_area>tbody").on("click", "tr", NoticeClick);
 			});
 		</script>
 		<jsp:include page="../common/footer.jsp" />

@@ -75,5 +75,11 @@ public class CartServiceImpl implements CartService {
 		return cartDao.insertCart(sqlSession, cart);
 	}
 
+	@Override
+	public int insertPayment(Delivery delivery) {
+	    return cartDao.insertPayment(sqlSession, delivery);
+	}
+
+
 
 }
