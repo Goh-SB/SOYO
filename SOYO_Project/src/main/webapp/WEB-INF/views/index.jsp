@@ -579,6 +579,15 @@
                         <span class="price">426,000원</span>
                     </div>
                 </a>
+                
+                <a href="${pageContext.request.contextPath}/product/productDetail?no=22" class="product-card">
+                    <div class="product-card">
+                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/2025062310484038247.jpg" alt="상품3">
+                        <h3>극락정토 말기 뷔스티에 옥색</h3>
+                        <p>한복 말기, 코르셋 디테일을 감각적으로 재해석</p>
+                        <span class="price">430,000원</span>
+                    </div>
+                </a>
 
                 <a href="${pageContext.request.contextPath}/product/productDetail?no=24" class="product-card">
                     <div class="product-card">
@@ -589,14 +598,6 @@
                     </div>
                 </a>
 
-                <a href="${pageContext.request.contextPath}/product/productDetail?no=22" class="product-card">
-                    <div class="product-card">
-                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/2025062310484027487.jpg" alt="상품3">
-                        <h3>극락정토 말기 뷔스티에 옥색</h3>
-                        <p>한복 말기, 코르셋 디테일을 감각적으로 재해석</p>
-                        <span class="price">430,000원</span>
-                    </div>
-                </a>
             </div>
         </section>
         
