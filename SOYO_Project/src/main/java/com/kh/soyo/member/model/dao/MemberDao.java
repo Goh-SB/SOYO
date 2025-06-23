@@ -76,9 +76,15 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.findEmail", m);
 	}
 
+
 	public ArrayList<Review> myReview(SqlSessionTemplate sqlSession, String mi) {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.myReview", mi);
+
+	public List<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
+		
+		return sqlSession.selectList("memberMapper.orderProductList",impNo);
+
 	}
 
 }

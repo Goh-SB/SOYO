@@ -34,12 +34,16 @@ public class Product {
     private String productSort;		   // 상품 분류
     private String productTag; 		   // 상품 해시태그
     
-    private String orderImpno;
+    private String orderImpNo;
     private Date deliveryDate;
     private String orderStatus;
+    private Date orderDate;
     
     private String receiverName;
     private String memberName;
+    private String receiverPhone;
+    private String addressName;
+    private String totalPrice;
     
     private String addressOther;
 	

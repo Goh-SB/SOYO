@@ -140,6 +140,7 @@
         /* 상품 섹션 */
         .featured-products {
             padding: 5rem 10%;
+            padding-top: 55px;
             background-color: #fff;
         }
 
@@ -147,6 +148,8 @@
             text-align: center;
             color: var(--color1);
             margin-bottom: 3rem;
+            font-size: 30px;
+            font-family: 'NanumSquareRound', sans-serif;
         }
 
         .product-grid {
@@ -161,6 +164,7 @@
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            text-decoration: none;
         }
 
         .product-card:hover {
@@ -169,7 +173,6 @@
 
         .product-card img {
             width: 100%;
-            height: 300px;
             object-fit: cover;
         }
 
@@ -309,6 +312,7 @@
         /* 컬렉션 섹션 */
         .collections {
             padding: 5rem 10%;
+            padding-bottom: 90px;
             background-color: var(--primary-color);
             font-family: 'NanumSquareRound', sans-serif;
         }
@@ -567,24 +571,33 @@
         <section class="featured-products">
             <h2>추천 상품</h2>
             <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300" alt="상품1">
-                    <h3>모던 한복 세트</h3>
-                    <p>오방색의 현대적 재해석</p>
-                    <span class="price">1,500,000원</span>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300" alt="상품2">
-                    <h3>리본 장식 한복</h3>
-                    <p>세련된 디테일</p>
-                    <span class="price">1,200,000원</span>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300" alt="상품3">
-                    <h3>모던 치마저고리</h3>
-                    <p>일상적인 스타일</p>
-                    <span class="price">800,000원</span>
-                </div>
+                <a href="${pageContext.request.contextPath}/product/productDetail?no=23" class="product-card">
+                    <div class="product-card">
+                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/2025062310514752932.jpg" alt="상품1">
+                        <h3>오마주 적삼 자켓 블랙</h3>
+                        <p>적삼의 간결한 실루엣에서 영감을 받은 자켓</p>
+                        <span class="price">426,000원</span>
+                    </div>
+                </a>
+                
+                <a href="${pageContext.request.contextPath}/product/productDetail?no=22" class="product-card">
+                    <div class="product-card">
+                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/2025062310484038247.jpg" alt="상품3">
+                        <h3>극락정토 말기 뷔스티에 옥색</h3>
+                        <p>한복 말기, 코르셋 디테일을 감각적으로 재해석</p>
+                        <span class="price">430,000원</span>
+                    </div>
+                </a>
+
+                <a href="${pageContext.request.contextPath}/product/productDetail?no=24" class="product-card">
+                    <div class="product-card">
+                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/2025062312055694227.jpg" alt="상품2">
+                        <h3>극락정토 말기 뷔스티에 라벤더</h3>
+                        <p>문양의 디테일을 살린 은은한 라벤더색 뷔스티에</p>
+                        <span class="price">430,000원</span>
+                    </div>
+                </a>
+
             </div>
         </section>
         
@@ -618,7 +631,7 @@
 
 
         <section class="collections">
-            <h2>컬렉션</h2>
+            <h2>소요의 컬렉션</h2>
             <div class="collection-grid">
                 <div class="collection-card">
                     <img src="${pageContext.request.contextPath}/resources/images/collection-card/c-card1.png" alt="컬렉션1">

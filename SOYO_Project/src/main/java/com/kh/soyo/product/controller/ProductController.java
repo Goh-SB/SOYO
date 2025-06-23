@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.service.ReviewService;
@@ -50,36 +52,62 @@ public class ProductController {
 	@GetMapping("/productList")
 	public String showProductList(@RequestParam(value = "type", required = false, defaultValue = "all") String type,
 	                              @RequestParam(value = "search", required = false) String search,
+								  @RequestParam(value="cpage", defaultValue="1") int currentPage,
 	                              Model model) {
 
-	    List<Product> productList;
+		int listCount;
 
-	    // 검색어가 있을 경우 type + search 조건으로 필터링
 	    if (search != null && !search.trim().isEmpty()) {
-	        productList = productService.searchProductList(type, search);
+			listCount = productService.searchProductListCount(type, search);
 	    } else {
-	        // 검색어가 없으면 카테고리만 필터링
 	        switch (type) {
 	            case "mens":
-	                productList = productService.selectProductListByCategory("남성");
+					listCount = productService.selectProductListCountByCategory("남성");
 	                break;
 	            case "womens":
-	                productList = productService.selectProductListByCategory("여성");
+					listCount = productService.selectProductListCountByCategory("여성");
 	                break;
 	            case "kids":
-	                productList = productService.selectProductListByCategory("아동");
+					listCount = productService.selectProductListCountByCategory("아동");
 	                break;
 	            case "accessory":
-	                productList = productService.selectProductListByCategory("악세사리");
+					listCount = productService.selectProductListCountByCategory("악세사리");
 	                break;
 	            default:
-	                productList = productService.selectProductList();  // 전체 조회
+					listCount = productService.selectProductListCount();
 	        }
 	    }
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
+
+		List<Product> productList;
+
+		if (search != null && !search.trim().isEmpty()) {
+			productList = productService.searchProductList(type, search, pi);
+		} else {
+			switch (type) {
+				case "mens":
+					productList = productService.selectProductListByCategory("남성", pi);
+					break;
+				case "womens":
+					productList = productService.selectProductListByCategory("여성", pi);
+					break;
+				case "kids":
+					productList = productService.selectProductListByCategory("아동", pi);
+					break;
+				case "accessory":
+					productList = productService.selectProductListByCategory("악세사리", pi);
+					break;
+				default:
+					productList = productService.selectProductList(pi);
+			}
+		}
+
 
 	    model.addAttribute("productList", productList);
 	    model.addAttribute("type", type);
-	    model.addAttribute("search", search); // JSP에서 검색어 유지하려면 필요
+	    model.addAttribute("search", search); 
+		model.addAttribute("pi", pi);
 
 	    return "product/productList";
 	}

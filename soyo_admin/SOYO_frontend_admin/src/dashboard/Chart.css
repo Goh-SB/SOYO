@@ -1,0 +1,33 @@
+#chart_div3{
+    width : 500px;
+    height : 500px;
+}
+#chart_div2{
+    width : 600px;
+    float : left;
+}
+#chart_div2_area{
+    display: block;
+}
+#total-member{
+    border : 1px solid lightgray;
+    border-radius : 20px;
+    width : 200px;
+    height : 200px;
+    margin-top:50px;
+}
+#total-member>span{
+    font-size : 34px;
+    color : green;
+    margin-top: 50px;
+    margin-right : 25px;
+    display : block;
+
+
+}
+#total-member-area{
+    display : block;
+    
+}
+#chart_div3_area{
+}
