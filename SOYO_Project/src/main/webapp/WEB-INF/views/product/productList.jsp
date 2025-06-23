@@ -213,6 +213,41 @@
     font-size: 1rem;
     color: #b0b0b0;
   }
+  .paging-area {
+    margin-top: 30px;
+    margin-bottom: 35px;
+    text-align: center;
+  }
+  .pagination {
+    display: inline-flex;
+    list-style: none;
+    gap: 5px;
+  }
+  .page-item {
+    display: inline-block;
+  }
+  .page-link {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #495057;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  .page-link:hover {
+    background-color: #e9ecef;
+  }
+  .page-item.active .page-link {
+    background-color: #495057;
+    color: white;
+    border-color: #495057;
+  }
+  .page-item.disabled .page-link {
+    color: #adb5bd;
+    pointer-events: none;
+    background-color: #f8f9fa;
+  }
 
 </style>
 <script>
@@ -257,7 +292,7 @@
 	</c:choose>
 
     
-    <span class="product-count">총 <b>${fn:length(productList)}</b>개의 상품</span>
+    <span class="product-count">총 <b>${pi.listCount}</b>개의 상품</span>
     <div class="top-bar">
       <div class="sort-tabs">
         <button class="sort-tab active">인기순</button>
@@ -298,6 +333,56 @@
       </c:otherwise>
     </c:choose>
     </div>
+
+	<!-- 페이징바 -->
+	<div class="paging-area" align="center">
+		<ul class="pagination">
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq 1}">
+					<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item">
+						<c:url var="prevUrl" value="/product/productList">
+							<c:param name="cpage" value="${pi.currentPage - 1}" />
+							<c:if test="${not empty type and type ne 'all'}"><c:param name="type" value="${type}"/></c:if>
+							<c:if test="${not empty search}"><c:param name="search" value="${search}"/></c:if>
+						</c:url>
+						<a class="page-link" href="${prevUrl}">&laquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+				<c:url var="pageUrl" value="/product/productList">
+					<c:param name="cpage" value="${p}" />
+					<c:if test="${not empty type and type ne 'all'}"><c:param name="type" value="${type}"/></c:if>
+					<c:if test="${not empty search}"><c:param name="search" value="${search}"/></c:if>
+				</c:url>
+				<li class="page-item <c:if test='${p eq pi.currentPage}'>active</c:if>">
+					<a class="page-link" href="${pageUrl}">${p}</a>
+				</li>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq pi.maxPage or pi.maxPage eq 0}">
+					<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item">
+						<c:url var="nextUrl" value="/product/productList">
+							<c:param name="cpage" value="${pi.currentPage + 1}" />
+							<c:if test="${not empty type and type ne 'all'}"><c:param name="type" value="${type}"/></c:if>
+							<c:if test="${not empty search}"><c:param name="search" value="${search}"/></c:if>
+						</c:url>
+						<a class="page-link" href="${nextUrl}">&raquo;</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</div>
+
   </div>
 
   <jsp:include page="../common/footer.jsp" />
