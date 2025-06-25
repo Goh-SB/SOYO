@@ -22,6 +22,7 @@
             width: 1200px;
             margin: auto;
         }
+        
 
         #myTitle{
             width: 1200px;
@@ -219,7 +220,7 @@
 		}
 
 		.review-modal-header {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background: linear-gradient(135deg, #7a8fd8 0%, #8a6bb3 100%);
 			color: white;
 			padding: 24px 32px;
 			display: flex;
@@ -229,24 +230,25 @@
 
 		.review-modal-header h2 {
 			margin: 0;
-			font-size: 24px;
-			font-weight: 600;
+			font-size: 20px;
+			font-weight: 500;
 		}
 
 		.review-close-btn {
 			background: none;
 			border: none;
 			color: white;
-			font-size: 28px;
+			font-size: 35px;
 			cursor: pointer;
 			padding: 0;
-			width: 32px;
+			width: 35px;
 			height: 32px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			border-radius: 50%;
 			transition: background-color 0.2s;
+			margin-left: 5px;
 		}
 
 		.review-close-btn:hover {
@@ -276,17 +278,22 @@
 			padding: 12px 16px;
 			border: 2px solid #e1e5e9;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 16px;
 			transition: all 0.3s ease;
 			box-sizing: border-box;
 			font-family: inherit;
 		}
 
+		.form-group input[type="text"]::placeholder,
+		.form-group textarea::placeholder {
+			font-size: 16px;
+		}
+
 		.form-group input[type="text"]:focus,
 		.form-group textarea:focus {
 			outline: none;
-			border-color: #667eea;
-			box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+			border-color: #7a8fd8;
+			box-shadow: 0 0 0 3px rgba(122, 143, 216, 0.1);
 		}
 
 		.form-group textarea {
@@ -590,7 +597,7 @@
             // 모달창 제목에 상품명 표시
             const modalTitle = document.querySelector('.review-modal-header h2');
             if (modalTitle && productName) {
-                modalTitle.textContent = `리뷰 작성 - ${productName}`;
+                modalTitle.textContent = "리뷰 작성 - " + productName;
             }
             
             document.getElementById("reviewModal").style.display = "block";

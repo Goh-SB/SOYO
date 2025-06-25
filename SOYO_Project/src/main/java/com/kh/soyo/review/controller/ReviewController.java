@@ -94,4 +94,128 @@ public class ReviewController {
 		return response;
 	}
 	
+	@PostMapping("/update")
+	@ResponseBody
+	public Map<String, Object> updateReview(@RequestBody Review review, HttpSession session) {
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			// 세션에서 로그인한 사용자 정보 가져오기
+			Object loginUser = session.getAttribute("loginUser");
+			if (loginUser == null) {
+				response.put("success", false);
+				response.put("message", "로그인이 필요합니다.");
+				return response;
+			}
+			
+			// 사용자 ID 설정 (Member 객체에서 memberId 가져오기)
+			String memberId = null;
+			if (loginUser instanceof com.kh.soyo.member.model.vo.Member) {
+				memberId = ((com.kh.soyo.member.model.vo.Member) loginUser).getMemberId();
+			}
+			
+			if (memberId == null) {
+				response.put("success", false);
+				response.put("message", "사용자 정보를 찾을 수 없습니다.");
+				return response;
+			}
+			
+			review.setMemberId(memberId);
+			
+			int result = reviewService.updateReview(review);
+			
+			if (result > 0) {
+				response.put("success", true);
+				response.put("message", "리뷰가 성공적으로 수정되었습니다.");
+			} else {
+				response.put("success", false);
+				response.put("message", "리뷰 수정에 실패했습니다.");
+			}
+			
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "서버 오류가 발생했습니다: " + e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public Map<String, Object> deleteReview(@RequestBody Review review, HttpSession session) {
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			// 세션에서 로그인한 사용자 정보 가져오기
+			Object loginUser = session.getAttribute("loginUser");
+			if (loginUser == null) {
+				response.put("success", false);
+				response.put("message", "로그인이 필요합니다.");
+				return response;
+			}
+			
+			// 사용자 ID 설정 (Member 객체에서 memberId 가져오기)
+			String memberId = null;
+			if (loginUser instanceof com.kh.soyo.member.model.vo.Member) {
+				memberId = ((com.kh.soyo.member.model.vo.Member) loginUser).getMemberId();
+			}
+			
+			if (memberId == null) {
+				response.put("success", false);
+				response.put("message", "사용자 정보를 찾을 수 없습니다.");
+				return response;
+			}
+			
+			review.setMemberId(memberId);
+			
+			int result = reviewService.deleteReview(review);
+			
+			if (result > 0) {
+				response.put("success", true);
+				response.put("message", "리뷰가 성공적으로 삭제되었습니다.");
+			} else {
+				response.put("success", false);
+				response.put("message", "리뷰 삭제에 실패했습니다.");
+			}
+			
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "서버 오류가 발생했습니다: " + e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	@GetMapping("/detail")
+	@ResponseBody
+	public Map<String, Object> getReviewDetail(@RequestParam("reviewNo") int reviewNo, HttpSession session) {
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			// 세션에서 로그인한 사용자 정보 가져오기
+			Object loginUser = session.getAttribute("loginUser");
+			if (loginUser == null) {
+				response.put("success", false);
+				response.put("message", "로그인이 필요합니다.");
+				return response;
+			}
+			
+			Review review = reviewService.selectReviewByNo(reviewNo);
+			
+			if (review != null) {
+				response.put("success", true);
+				response.put("review", review);
+			} else {
+				response.put("success", false);
+				response.put("message", "리뷰를 찾을 수 없습니다.");
+			}
+			
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "서버 오류가 발생했습니다: " + e.getMessage());
+		}
+		
+		return response;
+	}
+	
 }

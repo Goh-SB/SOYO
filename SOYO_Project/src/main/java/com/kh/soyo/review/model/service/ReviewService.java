@@ -18,4 +18,10 @@ public interface ReviewService {
 	
 	int insertReview(Review review);
 	
+	int updateReview(Review review);
+	
+	int deleteReview(Review review);
+	
+	Review selectReviewByNo(int reviewNo);
+	
 }

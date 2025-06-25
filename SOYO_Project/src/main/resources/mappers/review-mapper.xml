@@ -123,4 +123,44 @@
 		)
 	</insert>
 
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW
+		SET REVIEW_TITLE = #{reviewTitle},
+			REVIEW_CONTENT = #{reviewContent},
+			RATING = #{rating}
+		WHERE REVIEW_NO = #{reviewNo}
+		  AND MEMBER_ID = #{memberId}
+		  AND STATUS = 'Y'
+	</update>
+
+	<update id="deleteReview" parameterType="review">
+		UPDATE REVIEW
+		SET STATUS = 'N'
+		WHERE REVIEW_NO = #{reviewNo}
+		  AND MEMBER_ID = #{memberId}
+		  AND STATUS = 'Y'
+	</update>
+
+	<select id="selectReviewByNo" parameterType="_int" resultMap="reviewResultMap">
+		SELECT
+			R.REVIEW_NO,
+			R.REVIEW_TITLE,
+			R.REVIEW_CONTENT,
+			R.RATING,
+			R.REVIEW_THUMBNAIL_ORIGIN,
+			R.REVIEW_THUMBNAIL_CHANGE,
+			R.REVIEW_DATE,
+			R.STATUS,
+			R.PRODUCT_NO,
+			R.MEMBER_ID,
+			M.MEMBER_NAME,
+			P.PRODUCT_NAME,
+			P.PRODUCT_CHANGE
+		FROM REVIEW R
+		JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+		JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+		WHERE R.REVIEW_NO = #{reviewNo}
+		  AND R.STATUS = 'Y'
+	</select>
+
 </mapper>
