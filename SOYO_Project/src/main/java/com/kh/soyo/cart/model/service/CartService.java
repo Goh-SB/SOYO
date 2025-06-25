@@ -27,6 +27,8 @@ public interface CartService {
 
 	int insertPayment(Delivery delivery);
 
+	int removeSingleItem(String memberId, int productNo, String productSize);
+
 
 
 }

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
@@ -77,15 +79,26 @@ public class MemberDao {
 	}
 
 
-	public ArrayList<Review> myReview(SqlSessionTemplate sqlSession, String mi) {
+	public ArrayList<Review> myReview(SqlSessionTemplate sqlSession, String mi, PageInfo pi) {
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.myReview", mi);
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.myReview", mi, rowBounds);
 
 	}
 	public List<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
 		
 		return sqlSession.selectList("memberMapper.orderProductList",impNo);
 
+	}
+
+	// 리뷰 총 갯수 조회
+	public int myReviewCount(SqlSessionTemplate sqlSession, String mi) {
+		
+		return sqlSession.selectOne("memberMapper.myReviewCount", mi);
 	}
 
 }

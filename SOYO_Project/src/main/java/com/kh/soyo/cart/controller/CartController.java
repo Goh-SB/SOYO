@@ -141,6 +141,22 @@ public class CartController {
 	    int result = cartService.insertCart(cart);
 	    return result > 0 ? "success" : "fail";
 	}
+	
+	
+	// 장바구니 담기 취소 시 한 개 삭제용
+	@PostMapping("/remove")
+	@ResponseBody
+	public String removeSingleCartItem(@RequestBody Cart cartItem, HttpSession session) {
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    if (loginUser == null) return "notLogin";
+
+	    String memberId = loginUser.getMemberId();
+
+	    int result = cartService.removeSingleItem(memberId, cartItem.getProductNo(), cartItem.getProductSize());
+
+	    return result > 0 ? "success" : "fail";
+	}
+
 
 	
 		

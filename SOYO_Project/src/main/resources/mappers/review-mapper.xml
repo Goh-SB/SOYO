@@ -97,5 +97,30 @@
 	    WHERE ROWNUM &lt;= 5
 	</select>
 
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO REVIEW (
+			REVIEW_NO,
+			REVIEW_TITLE,
+			REVIEW_CONTENT,
+			RATING,
+			REVIEW_THUMBNAIL_ORIGIN,
+			REVIEW_THUMBNAIL_CHANGE,
+			REVIEW_DATE,
+			STATUS,
+			PRODUCT_NO,
+			MEMBER_ID
+		) VALUES (
+			SEQ_REVIEW.NEXTVAL,
+			#{reviewTitle},
+			#{reviewContent},
+			#{rating},
+			NULL,
+			'default_review.jpg',
+			SYSDATE,
+			#{status},
+			#{productNo},
+			#{memberId}
+		)
+	</insert>
 
 </mapper>

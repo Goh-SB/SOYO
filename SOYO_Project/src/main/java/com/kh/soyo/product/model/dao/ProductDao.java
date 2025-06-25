@@ -1,6 +1,7 @@
 package com.kh.soyo.product.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,9 +20,9 @@ public class ProductDao {
         return (ArrayList)sqlSession.selectList("productMapper.selectProductList", null, rowBounds);
     }
 
-	public Product selectProductByNo(int productNo) {
-		return sqlSession.selectOne("productMapper.selectProductByNo", productNo);
-	}
+    public List<Product> selectProductByNo(int productNo) {
+        return sqlSession.selectList("productMapper.selectProductByNo", productNo);
+    }
 
 	public List<String> selectTagsByProductNo(int productNo) {
 	    return sqlSession.selectList("productMapper.selectTagsByProductNo", productNo);
@@ -47,11 +48,30 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.searchProductListCount", paramMap);
 	}
 	
-    public List<Product> selectSortedProductList(SqlSessionTemplate sqlSession, Map<String, Object> param) {
+    public List<Product> selectSortedProductList(SqlSessionTemplate sqlSession, Map<String, String> param) {
         return sqlSession.selectList("productMapper.selectSortedProductList", param);
     }
 
     public List<Product> selectSortedProductList(SqlSessionTemplate sqlSession, Map<String, Object> param, RowBounds rowBounds) {
         return sqlSession.selectList("productMapper.selectSortedProductList", param, rowBounds);
     }
+
+	public int selectInCartCount(String memberId, int productNo) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("memberId", memberId);
+        param.put("productNo", productNo);
+
+        return sqlSession.selectOne("productMapper.selectInCartCount", param);
+	}
+
+	public int getProductStock(int productNo, String productSize) {
+
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("productNo", productNo);
+	    param.put("productSize", productSize);
+	    
+	    return sqlSession.selectOne("productMapper.selectProductStock", param);
+	}
+
+
 }

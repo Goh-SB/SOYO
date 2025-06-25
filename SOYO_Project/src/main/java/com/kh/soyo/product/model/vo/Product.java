@@ -49,5 +49,9 @@ public class Product {
     
     private String productSubOrigin;   // 상품 상세페이지 이미지 원본명
     private String productSubChange;   // 상품 상세페이지 이미지 저장명
+    
+    private boolean inCart;
+    
+    private String productSize;
 	
 }

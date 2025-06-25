@@ -11,7 +11,7 @@ public interface ProductService {
 
 	ArrayList<Product> selectProductList(PageInfo pi);
 
-	Product selectProductByNo(int productNo);
+	List<Product> selectProductByNo(int productNo);
 
 	List<String> getTagsForProduct(int productNo);
 
@@ -28,4 +28,8 @@ public interface ProductService {
 	List<Product> selectSortedProductList(String category, String sort);
 	
 	List<Product> selectSortedProductList(String category, String sort, PageInfo pi);
+
+	boolean isInCart(String memberId, int productNo);
+
+	int getProductStock(int productNo, String productSize);
 }

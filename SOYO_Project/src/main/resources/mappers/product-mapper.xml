@@ -17,6 +17,7 @@
 	  <result property="productSubOrigin" column="PRODUCT_SUB_ORIGIN"/>
 	  <result property="productSubChange" column="PRODUCT_SUB_CHANGE"/>
 	  <result property="productCount" column="STOCK_COUNT"/>
+	  <result property="productSize" column="PRODUCT_SIZE"/>
 	</resultMap>
 
 
@@ -134,6 +135,20 @@
 	</select>
 
 
+	<select id="selectInCartCount" resultType="_int">
+	    SELECT COUNT(*) 
+	    FROM CART
+	    WHERE MEMBER_ID = #{memberId} 
+	      AND PRODUCT_NO = #{productNo}
+	</select>
+	
+	
+	<select id="selectProductStock" resultType="int">
+	    SELECT NVL(MAX(STOCK_COUNT), 0)
+	    FROM PRODUCT_SIZE
+	    WHERE PRODUCT_NO = #{productNo}
+	      AND TRIM(PRODUCT_SIZE) = #{productSize}
+	</select>
 
 
 

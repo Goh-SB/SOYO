@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.dao.MemberDao;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
@@ -100,14 +101,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<Review> myReview(String mi) {
-		return memberDao.myReview(sqlSession, mi);
+	public ArrayList<Review> myReview(String mi, PageInfo pi) {
+		return memberDao.myReview(sqlSession, mi, pi);
 	}
 	
 	public List<Product> orderProductList(String impNo) {
 		
 		return memberDao.orderProductList(sqlSession,impNo);
 
+	}
+
+	@Override
+	public int myReviewCount(String mi) {
+		
+		return memberDao.myReviewCount(sqlSession,mi);
 	}
 
 }

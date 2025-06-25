@@ -30,5 +30,5 @@ public class Review {
     private String memberName;
     private String productOrigin;      			// 상품) 원본 이미지명
     private String productChange;      			// 상품) 저장용 변경 이미지명
-    
+    private String productName;					// 상품) 제품 이름
 }

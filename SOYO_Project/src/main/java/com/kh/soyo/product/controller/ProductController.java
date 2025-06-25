@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.service.ReviewService;
 import com.kh.soyo.review.model.vo.Review;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -30,6 +33,19 @@ public class ProductController {
 	@Autowired
 	private ReviewService reviewService;
 
+	
+	@GetMapping("/stock")
+	@ResponseBody
+	public Map<String, Object> getProductStock(@RequestParam("productNo") int productNo,
+	                                           @RequestParam("size") String productSize) {
+		
+	    int stock = productService.getProductStock(productNo, productSize);
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("stock", stock);
+	    return result;
+	}
+
+	
 	@ResponseBody
 	@GetMapping("/sort")
 	public Map<String, Object> ajaxSortedList(@RequestParam String category,
@@ -69,18 +85,37 @@ public class ProductController {
 	
 
 	@GetMapping("/productDetail")
-	public String showProductDetail(@RequestParam("no") int productNo, Model model) {
-	    // 상품 상세 정보 조회
-	    Product product = productService.selectProductByNo(productNo);
+	public String showProductDetail(@RequestParam("no") int productNo, Model model, HttpSession session) {
+	    // 상품 상세 정보 리스트 조회
+	    List<Product> productList = productService.selectProductByNo(productNo);
 
-	    // 해당 상품에 연결된 태그 목록 조회
+	    if (productList == null || productList.isEmpty()) {
+	        // 예외 처리: 상품이 존재하지 않을 때
+	        return "common/errorPage"; // 에러 페이지로 리턴하거나 메시지 전달
+	    }
+
+	    // 첫 번째 상품 정보 사용 (대표 정보)
+	    Product product = productList.get(0);
+
+	    // 로그인한 회원 정보 가져오기
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    if (loginUser != null) {
+	        String memberId = loginUser.getMemberId();
+
+	        // 장바구니 담긴 상태 조회
+	        boolean inCart = productService.isInCart(memberId, productNo);
+
+	        // 상품 객체에 반영
+	        product.setInCart(inCart);
+	    }
+
+	    // 태그 및 리뷰 조회
 	    List<String> tagList = productService.getTagsForProduct(productNo);
-
-	    // 해당 상품 리뷰 목록 조회
 	    List<Review> reviewList = reviewService.selectReviewList(productNo);
-	    
-	    // 모델에 담아서 JSP로 전달
-	    model.addAttribute("product", product);
+
+	    // 모델에 담아서 전달
+	    model.addAttribute("product", product);           // 단일 상품 정보
+	    model.addAttribute("productList", productList);   // 사이즈별 상품 리스트
 	    model.addAttribute("tagList", tagList);
 	    model.addAttribute("reviewList", reviewList);
 
@@ -151,6 +186,8 @@ public class ProductController {
 
 	    return "product/productList";
 	}
+	
+	
 
 
 	

@@ -12,6 +12,7 @@
         <result property="productPrice" column="PRODUCT_PRICE" />
         <result property="productChange" column="PRODUCT_CHANGE" />
         <result property="orderImpNo" column="ORDER_IMPNO" />
+        <result property="productSize" column="PRODUCT_SIZE" />
     </resultMap>
 
     <select id="cartList" parameterType="string" resultMap="cartResultMap">
@@ -20,6 +21,7 @@
             C.PRODUCT_NO,
             C.PRODUCT_COUNT,
             C.MEMBER_ID,
+            C.PRODUCT_SIZE,
             P.PRODUCT_NAME,
             P.PRODUCT_PRICE,
             P.PRODUCT_CHANGE
@@ -28,12 +30,15 @@
         WHERE C.MEMBER_ID = #{memberId}
     </select>
 	
+	
 	<update id="updateCartCount" parameterType="map">
-    UPDATE CART
-  	  SET PRODUCT_COUNT = #{count}
-    WHERE PRODUCT_NO = #{productNo}
-      AND MEMBER_ID = #{memberId}
+	    UPDATE CART
+	    SET PRODUCT_COUNT = #{count}
+	    WHERE PRODUCT_NO = #{productNo}
+	      AND MEMBER_ID = #{memberId}
+	      AND PRODUCT_SIZE = #{productSize}
 	</update>
+	
 	
 	<select id="updateCart" parameterType="map"
 							resultMap="cartResultMap">
@@ -128,15 +133,26 @@
            PRODUCT_NO,
            PRODUCT_COUNT,
            CART_ENROLLDATE,
-           MEMBER_ID
+           MEMBER_ID,
+           PRODUCT_SIZE
        ) VALUES (
            SEQ_CART_NO.NEXTVAL,
            #{productNo},
            #{productCount},
            SYSDATE,
-           #{memberId}
+           #{memberId},
+           #{productSize}
        )
     </insert>
+    
+    
+	<delete id="deleteSingleItem" parameterType="map">
+	    DELETE FROM CART
+	    WHERE MEMBER_ID = #{memberId}
+	      AND PRODUCT_NO = #{productNo}
+	      AND PRODUCT_SIZE = #{productSize}
+	</delete>
+    
 	
 
 

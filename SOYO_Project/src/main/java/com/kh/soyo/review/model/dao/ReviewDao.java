@@ -31,5 +31,9 @@ public class ReviewDao {
 		List<Review> result = sqlSession.selectList("reviewMapper.selectReviewList", productNo);
         return result;
 	}
+	
+	public int insertReview(Review review) {
+		return sqlSession.insert("reviewMapper.insertReview", review);
+	}
     
 }
