@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
@@ -46,9 +47,11 @@ public interface MemberService {
 	String findEmail(Member m);
 
 
-	ArrayList<Review> myReview(String mi);
+	ArrayList<Review> myReview(String mi, PageInfo pi);
 
 	List<Product> orderProductList(String impNo);
+
+	int myReviewCount(String mi);
 
 
 	

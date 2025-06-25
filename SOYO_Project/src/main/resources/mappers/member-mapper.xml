@@ -46,6 +46,7 @@
 	    <result property="reviewDate" column="REVIEW_DATE"/>
 	    <result property="status" column="STATUS"/>
 	    <result property="productNo" column="PRODUCT_NO"/>
+	    <result property="productName" column="PRODUCT_NAME"/>
 	    <result property="memberId" column="MEMBER_ID"/>
 	    <result property="memberName" column="MEMBER_NAME"/>
 	    <result property="productChange" column="PRODUCT_CHANGE"/>
@@ -161,22 +162,32 @@
 		    AND STATUS = 'Y'
 	</select>
 	
+	<!-- 내 리뷰 총 갯수 가져오기 -->
+	<select id="myReviewCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW
+		    WHERE STATUS = 'Y'
+		      AND MEMBER_ID = #{memberId}
+	</select>
+	
 
 	<!-- 회원의 리뷰 가져오기 -->
 	<select id="myReview" parameterType="string" resultMap="reviewResultMap">
-		SELECT REVIEW_NO,
-		       REVIEW_TITLE,
-		       REVIEW_CONTENT,
-		       RATING,
-		       REVIEW_THUMBNAIL_ORIGIN,
-		       REVIEW_THUMBNAIL_CHANGE,
-		       REVIEW_DATE,
-		       STATUS,
-		       PRODUCT_NO
-	    	FROM REVIEW 
-	    	WHERE MEMBER_ID = #{memberId}
-	      AND STATUS = 'Y'
-	    ORDER BY REVIEW_DATE DESC
+		SELECT
+	        R.REVIEW_NO,
+	        R.REVIEW_TITLE,
+	        R.REVIEW_CONTENT,
+	        R.RATING,
+	        R.REVIEW_THUMBNAIL_ORIGIN,
+	        R.REVIEW_THUMBNAIL_CHANGE,
+	        R.REVIEW_DATE,
+	        R.STATUS,
+	        R.PRODUCT_NO,
+	        P.PRODUCT_NAME
+	    FROM REVIEW R
+	    JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+	    WHERE R.MEMBER_ID = #{memberd}
+	      AND R.STATUS = 'Y'
+	    ORDER BY R.REVIEW_DATE DESC
 	</select>
 
 	<select id="orderProductList" parameterType="string" resultMap="deliveryResultSet">

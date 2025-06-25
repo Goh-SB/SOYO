@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.common.template.XssDefencePolicy;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
@@ -138,7 +140,7 @@ public class MemberController {
 	
 	// 내 리뷰페이지 목록조회
 	@GetMapping("/myPageMyReview")
-	public String myReview(HttpSession session ,Model model) {
+	public String myReview(@RequestParam(value = "page", defaultValue = "1") int currentPage ,HttpSession session ,Model model) {
 		
 		// 세션에서 로그인한 사람의 정보 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
@@ -146,11 +148,26 @@ public class MemberController {
 		// 거기서 id 만 가져오기
 		String mi = loginUser.getMemberId();
 		
+		// 페이징바 제작
+		int listCount;
+		int pageLimit;
+		int boardLimt;
+		listCount = memberService.myReviewCount(mi);
+		
+		// 페이징바 페이지 최대갯수
+		pageLimit = 5;
+		
+		// 페이지당 보여질 갯수
+		boardLimt = 4;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimt);
+		
 		// 리뷰객체로 id값 넘기면서 내 리뷰 받아오기
-		ArrayList<Review>  myreview = memberService.myReview(mi);
+		ArrayList<Review>  myreview = memberService.myReview(mi , pi);
 		
 		// jsp 에서 쓰기위해 model 이용
 		model.addAttribute("myreview", myreview);
+		model.addAttribute("pi", pi);
 		
 		return "member/myPageMyReview";
 	}

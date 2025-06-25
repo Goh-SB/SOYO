@@ -124,21 +124,25 @@
                             <li>
                                 <table class="order-table">
                                     <tr>
-                                        <th>${r.productNo} &nbsp;&nbsp;&nbsp; <span class="ratingbar">
+                                        <th>${r.productName}</th>
+                                        <td>
+                                        	<span class="ratingbar">
 				                               <c:forEach begin="1" end="5" var="i">
 				                                   <c:choose>
 				                                       <c:when test="${i <= r.rating}">★</c:when>
 				                                       <c:otherwise>☆</c:otherwise>
 				                                   </c:choose>
 				                               </c:forEach>
-				                           </span> </th>
-                                        <td>${r.reviewTitle}</td>
+				                           </span>
+				                           &nbsp;&nbsp;&nbsp;
+				                           ${r.reviewTitle}
+                                        </td>
                                         <td>
                                         	${r.reviewDate}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="product-img"><img src="" alt=""></td>
+                                        <td class="product-img"><img src="${r.reviewThumbnailChange}" alt=""></td>
                                         <td class="product-name"><span>${r.reviewContent}</span></td>
                                         <td class="product-menu">
                                             <button>리뷰상세 보기</button>
