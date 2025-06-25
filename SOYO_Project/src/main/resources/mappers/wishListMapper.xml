@@ -6,8 +6,8 @@
 <mapper namespace="wishListMapper">
 
     <insert id="insertWish" parameterType="wish">
-        INSERT INTO WISH_LIST (MEMBER_ID, PRODUCT_NO)
-        VALUES (#{memberId}, #{productNo})
+        INSERT INTO WISH_LIST (MEMBER_ID, PRODUCT_NO, PRODUCT_SIZE)
+        VALUES (#{memberId}, #{productNo}, #{productSize})
     </insert>
 
     <select id="checkWishDuplicate" parameterType="wish" resultType="int">
