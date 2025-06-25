@@ -418,18 +418,13 @@
 		    <li><a href="<c:url value='/product/productList?type=womens' />">여성복</a></li>
 		    <li><a href="<c:url value='/product/productList?type=kids' />">아동복</a></li>
 		    <li><a href="<c:url value='/product/productList?type=accessory' />">액세서리</a></li>
-          <li><a href="#">맞춤 제작</a></li>
         </ul>
       </li>
       <li class="dropdown">
         <a id="menu" style="cursor: pointer;" href="<c:url value='/review/review' />">리뷰</a>
       </li>
       <li class="dropdown">
-        <a id="menu">갤러리</a>
-        <ul class="submenu">
-          <li><a href="#">룩북</a></li>
-          <li><a href="<c:url value='/celeb' />">셀러브리티</a></li>
-        </ul>
+        <a id="menu" href="<c:url value='/celeb' />">갤러리</a>
       </li>
       <li class="dropdown">
         <a id="menu" style="cursor: pointer;" href="<c:url value='/notice/noticeList'/>">공지사항</a>
