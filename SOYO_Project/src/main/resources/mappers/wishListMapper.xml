@@ -16,4 +16,10 @@
           AND PRODUCT_NO = #{productNo}
     </select>
 
+    <delete id="deleteWish" parameterType="wish">
+        DELETE FROM WISH_LIST
+        WHERE MEMBER_ID = #{memberId}
+          AND PRODUCT_NO = #{productNo}
+    </delete>
+
 </mapper>

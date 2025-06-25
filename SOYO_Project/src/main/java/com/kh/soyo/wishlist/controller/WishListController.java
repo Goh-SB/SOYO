@@ -34,4 +34,17 @@ public class WishListController {
         int result = wishListService.insertWish(wish);
         return result > 0 ? "success" : "fail";
     }
+
+    @PostMapping("/remove")
+    public String removeWish(@RequestBody Wish wish, HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            return "notLogin";
+        }
+        wish.setMemberId(loginUser.getMemberId());
+        int result = wishListService.deleteWish(wish);
+        return result > 0 ? "success" : "fail";
+    }
+    
 }

@@ -19,4 +19,8 @@ public class WishListDao {
     public int isWishAlreadyExists(Wish wish) {
         return sqlSession.selectOne("wishListMapper.checkWishDuplicate", wish);
     }
+
+    public int deleteWish(Wish wish) {
+        return sqlSession.delete("wishListMapper.deleteWish", wish);
+    }
 }

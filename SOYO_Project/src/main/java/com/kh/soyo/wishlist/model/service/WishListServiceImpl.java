@@ -21,4 +21,9 @@ public class WishListServiceImpl implements WishListService {
     public boolean isWishAlreadyExists(Wish wish) {
         return wishListDao.isWishAlreadyExists(wish) > 0;
     }
+
+    @Override
+    public int deleteWish(Wish wish) {
+        return wishListDao.deleteWish(wish);
+    }
 }

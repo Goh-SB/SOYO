@@ -687,7 +687,12 @@
 <div class="container">
     <div class="product-container" style="position:relative;">
         <button class="favorite-btn" id="favoriteBtn" aria-label="찜하기">
-            <span class="material-icons" id="favoriteIcon">favorite_border</span>
+            <span class="material-icons" id="favoriteIcon" data-wished="${isWished}">
+              <c:choose>
+                <c:when test="${isWished}">favorite</c:when>
+                <c:otherwise>favorite_border</c:otherwise>
+              </c:choose>
+            </span>
         </button>
         <div class="row">
         
@@ -1072,8 +1077,13 @@
 
 document.getElementById("favoriteBtn").addEventListener("click", function () {
     const productNo = "${product.productNo}";
+    const favoriteIcon = document.getElementById("favoriteIcon");
+    let isWished = favoriteIcon.getAttribute("data-wished") === "true";
+    const url = isWished
+        ? `${pageContext.request.contextPath}/wishlist/remove`
+        : `${pageContext.request.contextPath}/wishlist/insert`;
 
-    fetch("${pageContext.request.contextPath}/wishlist/insert", {
+    fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productNo: productNo })
@@ -1081,18 +1091,25 @@ document.getElementById("favoriteBtn").addEventListener("click", function () {
     .then(res => res.text())
     .then(msg => {
         if (msg === "success") {
-            alert("찜 목록에 추가되었습니다.");
-            document.getElementById("favoriteIcon").textContent = "favorite";
+            if (isWished) {
+                alert("찜 목록에서 삭제되었습니다.");
+                favoriteIcon.textContent = "favorite_border";
+                favoriteIcon.setAttribute("data-wished", "false");
+                isWished = false;
+            } else {
+                alert("찜 목록에 추가되었습니다.");
+                favoriteIcon.textContent = "favorite";
+                favoriteIcon.setAttribute("data-wished", "true");
+                isWished = true;
+            }
         } else if (msg === "notLogin") {
             alert("로그인 후 이용 가능합니다.");
         } else if (msg === "duplicated") {
             alert("이미 찜한 상품입니다.");
         } else {
-            alert("찜 목록 추가 실패");
+            alert(isWished ? "찜 취소 실패" : "찜 목록 추가 실패");
         }
     });
-
-    
 });
 
 </script>
