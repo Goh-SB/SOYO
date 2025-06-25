@@ -27,17 +27,18 @@
 	
 	<select id="reviewList" resultMap="reviewResultMap">
 		SELECT REVIEW_NO
-			 , REVIEW_TITLE
-			 , REVIEW_CONTENT
-			 , RATING
-			 , REVIEW_THUMBNAIL_ORIGIN 
-			 , REVIEW_THUMBNAIL_CHANGE
-			 , REVIEW_DATE
-			 , R.STATUS
-			 , R.PRODUCT_NO
-			 , R.MEMBER_ID
-             , P.PRODUCT_NAME
-             , M.MEMBER_NAME
+		     , REVIEW_TITLE
+		     , REVIEW_CONTENT
+		     , RATING
+		     , REVIEW_THUMBNAIL_ORIGIN 
+		     , REVIEW_THUMBNAIL_CHANGE
+		     , REVIEW_DATE
+		     , R.STATUS
+		     , R.PRODUCT_NO
+		     , R.MEMBER_ID
+		     , P.PRODUCT_NAME
+		     , p.PRODUCT_CHANGE
+		     , M.MEMBER_NAME
 		  FROM REVIEW R
 		  JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
 		  JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID

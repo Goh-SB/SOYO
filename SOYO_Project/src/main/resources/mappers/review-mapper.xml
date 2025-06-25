@@ -97,5 +97,70 @@
 	    WHERE ROWNUM &lt;= 5
 	</select>
 
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO REVIEW (
+			REVIEW_NO,
+			REVIEW_TITLE,
+			REVIEW_CONTENT,
+			RATING,
+			REVIEW_THUMBNAIL_ORIGIN,
+			REVIEW_THUMBNAIL_CHANGE,
+			REVIEW_DATE,
+			STATUS,
+			PRODUCT_NO,
+			MEMBER_ID
+		) VALUES (
+			SEQ_REVIEW.NEXTVAL,
+			#{reviewTitle},
+			#{reviewContent},
+			#{rating},
+			NULL,
+			'default_review.jpg',
+			SYSDATE,
+			#{status},
+			#{productNo},
+			#{memberId}
+		)
+	</insert>
+
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW
+		SET REVIEW_TITLE = #{reviewTitle},
+			REVIEW_CONTENT = #{reviewContent},
+			RATING = #{rating}
+		WHERE REVIEW_NO = #{reviewNo}
+		  AND MEMBER_ID = #{memberId}
+		  AND STATUS = 'Y'
+	</update>
+
+	<update id="deleteReview" parameterType="review">
+		UPDATE REVIEW
+		SET STATUS = 'N'
+		WHERE REVIEW_NO = #{reviewNo}
+		  AND MEMBER_ID = #{memberId}
+		  AND STATUS = 'Y'
+	</update>
+
+	<select id="selectReviewByNo" parameterType="_int" resultMap="reviewResultMap">
+		SELECT
+			R.REVIEW_NO,
+			R.REVIEW_TITLE,
+			R.REVIEW_CONTENT,
+			R.RATING,
+			R.REVIEW_THUMBNAIL_ORIGIN,
+			R.REVIEW_THUMBNAIL_CHANGE,
+			R.REVIEW_DATE,
+			R.STATUS,
+			R.PRODUCT_NO,
+			R.MEMBER_ID,
+			M.MEMBER_NAME,
+			P.PRODUCT_NAME,
+			P.PRODUCT_CHANGE
+		FROM REVIEW R
+		JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+		JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+		WHERE R.REVIEW_NO = #{reviewNo}
+		  AND R.STATUS = 'Y'
+	</select>
 
 </mapper>

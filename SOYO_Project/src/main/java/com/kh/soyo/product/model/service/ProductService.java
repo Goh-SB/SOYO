@@ -32,4 +32,8 @@ public interface ProductService {
 	boolean isInCart(String memberId, int productNo);
 
 	int getProductStock(int productNo, String productSize);
+
+	List<Product> selectProductListByTag(String string, PageInfo pi);
+
+	int selectProductListCountByTag(String string);
 }

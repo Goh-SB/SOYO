@@ -73,5 +73,13 @@ public class ProductDao {
 	    return sqlSession.selectOne("productMapper.selectProductStock", param);
 	}
 
+	public List<Product> selectProductListByTag(String string, RowBounds rowBounds) {
+		return sqlSession.selectList("productMapper.selectProductListByTag", string, rowBounds);
+	}
+
+	public int selectProductListCountByTag(String string) {
+		return sqlSession.selectOne("productMapper.selectProductListCountByTag", string);
+	}
+
 
 }

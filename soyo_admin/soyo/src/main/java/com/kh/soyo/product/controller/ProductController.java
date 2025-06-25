@@ -153,6 +153,7 @@ public class ProductController {
 		int pageLimit = 10;
 		int boardLimit = 8;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		// System.out.println(cate);
 		
 		ArrayList<Member> list = productService.filter(cate, pi);
 		

@@ -15,6 +15,7 @@ import lombok.ToString;
 public class Wish {
     private String memberId;
     private int productNo;
+
     
     // join 용
     private String productName;
@@ -24,4 +25,5 @@ public class Wish {
     private String productChange;
     private String productSize;
     private String stockCount;
+
 }

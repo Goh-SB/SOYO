@@ -105,20 +105,5 @@ public class NoticeController {
 		
 		return "notice/noticeDetail";
 	}
-	
-	// 공지사항 수정용 컨트롤러
-	@PostMapping("noticeUpdate")
-	public String updateNotice(@RequestBody Notice n) {
-		int result = noticeService.updateNotice(n);
-		
-		return (result > 0) ? "공지사항 수정에 성공했습니다." : "공지사항 수정에 실패했습니다.";
-	}
-	
-	// 공지사항 삭제용 컨트롤러
-	@PostMapping("noticeDelete")
-	public String deleteNotice(@RequestBody Notice n) {
-		int result = noticeService.deleteNotice(n.getNoticeNo());
-		
-		return (result > 0) ? "공지사항 삭제에 성공했습니다." : "공지사항 삭제에 실패했습니다.";
-	}
 }
+	

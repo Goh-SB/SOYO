@@ -121,6 +121,12 @@
             border-radius: 20px;
             display: inline-block;
             margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .product-category:hover {
+            filter: brightness(0.9);
         }
 
         .size-selector {
@@ -687,7 +693,12 @@
 <div class="container">
     <div class="product-container" style="position:relative;">
         <button class="favorite-btn" id="favoriteBtn" aria-label="찜하기">
-            <span class="material-icons" id="favoriteIcon">favorite_border</span>
+            <span class="material-icons" id="favoriteIcon" data-wished="${isWished}">
+              <c:choose>
+                <c:when test="${isWished}">favorite</c:when>
+                <c:otherwise>favorite_border</c:otherwise>
+              </c:choose>
+            </span>
         </button>
         <div class="row">
         
@@ -696,11 +707,15 @@
             </div>
             
             <div class="col s12 m6">
-                <span class="product-category">${product.productCategory}</span>
+                <span class="product-category" data-category="${product.productCategory}">
+                    ${product.productCategory}
+                </span>
                 <span id="product-sort" class="product-category">
 					<c:choose>
 					  <c:when test="${product.productSort eq 'top'}">상의</c:when>
 					  <c:when test="${product.productSort eq 'acc'}">장신구</c:when>
+					  <c:when test="${product.productSort eq 'bottom'}">하의</c:when>
+					  <c:when test="${product.productSort eq 'outer'}">외투</c:when>
 					  <c:otherwise>${product.productSort}</c:otherwise>
 					</c:choose>
 				</span>
@@ -896,6 +911,30 @@
 <jsp:include page="../common/footer.jsp" />
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const categoryMap = {
+        "여성": "womens",
+        "남성": "mens",
+        "아동": "kids",
+        "악세사리": "accessory",
+        "장신구" : "accessory",
+        "상의" : "top",
+        "하의" : "bottom",
+        "외투" : "outer"
+      };
+  
+      document.querySelectorAll(".product-category").forEach(span => {
+        span.addEventListener("click", function () {
+          const productCategoryKor = this.textContent.trim();
+          const productCategoryEng = categoryMap[productCategoryKor] || "all";
+          window.location.href = "/soyo/product/productList?type=" + productCategoryEng;
+        });
+      });
+    });
+  </script>
+  
+
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         const productNo = "${product.productNo}";
 
@@ -1031,6 +1070,13 @@
     const isInCart = button.dataset.inCart === "true";
     const productCount = document.getElementById("quantity").value;
     const productSize = document.querySelector(".size-btn.active").getAttribute("data-size");
+    const stock = parseInt(document.getElementById("stockCount").textContent);
+
+    // 재고가 0개일 때 장바구니 담기 불가
+    if (!isInCart && stock === 0) {
+        alert("해당 상품의 재고가 없습니다.");
+        return;
+    }
 
     const formData = {
         productNo: productNo,
@@ -1070,8 +1116,13 @@
 
 document.getElementById("favoriteBtn").addEventListener("click", function () {
     const productNo = "${product.productNo}";
+    const favoriteIcon = document.getElementById("favoriteIcon");
+    let isWished = favoriteIcon.getAttribute("data-wished") === "true";
+    const url = isWished
+        ? `${pageContext.request.contextPath}/wishlist/remove`
+        : `${pageContext.request.contextPath}/wishlist/insert`;
 
-    fetch("${pageContext.request.contextPath}/wishlist/insert", {
+    fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productNo: productNo })
@@ -1079,18 +1130,25 @@ document.getElementById("favoriteBtn").addEventListener("click", function () {
     .then(res => res.text())
     .then(msg => {
         if (msg === "success") {
-            alert("찜 목록에 추가되었습니다.");
-            document.getElementById("favoriteIcon").textContent = "favorite";
+            if (isWished) {
+                alert("찜 목록에서 삭제되었습니다.");
+                favoriteIcon.textContent = "favorite_border";
+                favoriteIcon.setAttribute("data-wished", "false");
+                isWished = false;
+            } else {
+                alert("찜 목록에 추가되었습니다.");
+                favoriteIcon.textContent = "favorite";
+                favoriteIcon.setAttribute("data-wished", "true");
+                isWished = true;
+            }
         } else if (msg === "notLogin") {
             alert("로그인 후 이용 가능합니다.");
         } else if (msg === "duplicated") {
             alert("이미 찜한 상품입니다.");
         } else {
-            alert("찜 목록 추가 실패");
+            alert(isWished ? "찜 취소 실패" : "찜 목록 추가 실패");
         }
     });
-
-    
 });
 
 </script>
