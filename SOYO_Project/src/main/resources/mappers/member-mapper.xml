@@ -22,17 +22,18 @@
 		<result property="receiverName" column="RECEIVER_NAME"/>
 		<result property="receiverPhone" column="RECEIVER_PHONE"/>
 		<result property="memberName" column="MEMBER_NAME"/>
-	    <result property="productChange" column="PRODUCT_CHANGE"/>
-	    <result property="productName" column="PRODUCT_NAME"/>
-	    <result property="productCount" column="PRODUCT_COUNT"/>
-	    <result property="productPrice" column="PRODUCT_PRICE"/>
-	    <result property="deliveryDate" column="DELIVERY_DATE"/>
-	    <result property="orderStatus" column="ORDER_STATUS"/>
-	    <result property="orderImpNo" column="ORDER_IMPNO"/>
-	    <result property="addressOther" column="ADDRESS_OTHER"/>
-	    <result property="addressName" column="ADDRESS_NAME"/>
-	    <result property="totalPrice" column="TOTAL_PRICE"/>
-	    <result property="orderDate" column="ORDER_DATE"/>
+		<result property="productNo" column="PRODUCT_NO"/>
+		<result property="productChange" column="PRODUCT_CHANGE"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productCount" column="PRODUCT_COUNT"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="deliveryDate" column="DELIVERY_DATE"/>
+		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="orderImpNo" column="ORDER_IMPNO"/>
+		<result property="addressOther" column="ADDRESS_OTHER"/>
+		<result property="addressName" column="ADDRESS_NAME"/>
+		<result property="totalPrice" column="TOTAL_PRICE"/>
+		<result property="orderDate" column="ORDER_DATE"/>
 	</resultMap>
 	
 	<!-- 리뷰용 resultmap -->
@@ -104,9 +105,16 @@
            D.ADDRESS_OTHER,
            O.TOTAL_PRICE,
            O.ORDER_DATE,
-           O.ORDER_IMPNO
+           O.ORDER_IMPNO,
+           P.PRODUCT_NO,
+           P.PRODUCT_CHANGE,
+           P.PRODUCT_NAME,
+           P.PRODUCT_PRICE,
+           PAY.PRODUCT_COUNT
     FROM ORDER_TB O
     JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
+    JOIN PAYMENT PAY ON PAY.ORDER_IMPNO = O.ORDER_IMPNO
+    JOIN PRODUCT P ON P.PRODUCT_NO = PAY.PRODUCT_NO
     WHERE O.MEMBER_ID = #{memberId}
       AND O.RECEIVER_NAME = D.RECEIVER_NAME
     ORDER BY O.ORDER_IMPNO DESC

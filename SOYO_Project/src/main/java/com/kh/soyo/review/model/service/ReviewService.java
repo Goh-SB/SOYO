@@ -16,4 +16,6 @@ public interface ReviewService {
 
 	List<Review> selectReviewList(int productNo);
 	
+	int insertReview(Review review);
+	
 }
