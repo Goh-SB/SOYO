@@ -449,6 +449,15 @@
 	  <c:when test="${param.type eq 'accessory'}">
 	    <div class="product-category">액세서리</div>
 	  </c:when>
+    <c:when test="${param.type eq 'outer'}">
+	    <div class="product-category">외투</div>
+	  </c:when>
+    <c:when test="${param.type eq 'bottom'}">
+	    <div class="product-category">하의</div>
+	  </c:when>
+    <c:when test="${param.type eq 'top'}">
+	    <div class="product-category">상의</div>
+	  </c:when>
 	  <c:otherwise>
 	    <div class="product-category">전체 상품</div>
 	  </c:otherwise>

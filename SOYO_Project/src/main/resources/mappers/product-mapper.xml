@@ -47,6 +47,12 @@
       AND STATUS = 'Y'
   </select>
   
+  <select id="selectProductListByTag" parameterType="String" resultMap="productMap">
+    SELECT * FROM PRODUCT
+    WHERE PRODUCT_TAG = #{productSort}
+      AND STATUS = 'Y'
+  </select>
+  
 	<select id="searchProductList" resultMap="productMap">
 	  SELECT * FROM PRODUCT
 	  WHERE STATUS = 'Y'
@@ -72,6 +78,13 @@
 		SELECT COUNT(*) 
 		FROM PRODUCT
 		WHERE PRODUCT_CATEGORY = #{productCategory}
+		AND STATUS = 'Y'
+	</select>
+	
+	<select id="selectProductListCountByTag" parameterType="String" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT
+		WHERE PRODUCT_TAG = #{productSort}
 		AND STATUS = 'Y'
 	</select>
   

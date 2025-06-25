@@ -55,5 +55,7 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.noticeDetail", nno);
 	}
 	
+	
+	
 
 }

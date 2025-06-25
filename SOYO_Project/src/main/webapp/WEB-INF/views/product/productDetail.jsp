@@ -121,6 +121,12 @@
             border-radius: 20px;
             display: inline-block;
             margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .product-category:hover {
+            filter: brightness(0.9);
         }
 
         .size-selector {
@@ -701,7 +707,9 @@
             </div>
             
             <div class="col s12 m6">
-                <span class="product-category">${product.productCategory}</span>
+                <span class="product-category" data-category="${product.productCategory}">
+                    ${product.productCategory}
+                </span>
                 <span id="product-sort" class="product-category">
 					<c:choose>
 					  <c:when test="${product.productSort eq 'top'}">상의</c:when>
@@ -903,6 +911,30 @@
 <jsp:include page="../common/footer.jsp" />
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const categoryMap = {
+        "여성": "womens",
+        "남성": "mens",
+        "아동": "kids",
+        "악세사리": "accessory",
+        "장신구" : "accessory",
+        "상의" : "top",
+        "하의" : "bottom",
+        "외투" : "outer"
+      };
+  
+      document.querySelectorAll(".product-category").forEach(span => {
+        span.addEventListener("click", function () {
+          const productCategoryKor = this.textContent.trim();
+          const productCategoryEng = categoryMap[productCategoryKor] || "all";
+          window.location.href = "/soyo/product/productList?type=" + productCategoryEng;
+        });
+      });
+    });
+  </script>
+  
+
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         const productNo = "${product.productNo}";
 
@@ -1038,6 +1070,13 @@
     const isInCart = button.dataset.inCart === "true";
     const productCount = document.getElementById("quantity").value;
     const productSize = document.querySelector(".size-btn.active").getAttribute("data-size");
+    const stock = parseInt(document.getElementById("stockCount").textContent);
+
+    // 재고가 0개일 때 장바구니 담기 불가
+    if (!isInCart && stock === 0) {
+        alert("해당 상품의 재고가 없습니다.");
+        return;
+    }
 
     const formData = {
         productNo: productNo,

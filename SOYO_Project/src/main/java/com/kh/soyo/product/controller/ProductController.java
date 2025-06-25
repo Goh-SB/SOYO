@@ -159,6 +159,15 @@ public class ProductController {
 	            case "accessory":
 					listCount = productService.selectProductListCountByCategory("악세사리");
 	                break;
+	            case "outer":
+	            	listCount = productService.selectProductListCountByTag("outer");
+	                break;
+	            case "top":
+	            	listCount = productService.selectProductListCountByTag("top");
+	                break;
+	            case "bottom":
+	            	listCount = productService.selectProductListCountByTag("bottom");
+	                break;
 	            default:
 					listCount = productService.selectProductListCount();
 	        }
@@ -183,6 +192,15 @@ public class ProductController {
 					break;
 				case "accessory":
 					productList = productService.selectProductListByCategory("악세사리", pi);
+					break;
+				case "outer":
+					productList = productService.selectProductListByTag("outer", pi);
+					break;
+				case "top":
+					productList = productService.selectProductListByTag("top", pi);
+					break;
+				case "bottom":
+					productList = productService.selectProductListByTag("bottom", pi);
 					break;
 				default:
 					productList = productService.selectProductList(pi);
