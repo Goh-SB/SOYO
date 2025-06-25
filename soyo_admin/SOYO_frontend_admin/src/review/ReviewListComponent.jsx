@@ -7,21 +7,19 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function ReviewListComponent() {
 
-    let navigate = useNavigate();
-
-    useEffect(() => {
-
-        reviewList();
-    }, []);
-
     let [dataList, setDataList] = useState([]);
 
     let [cpage, setCpage] = useState(1);
 
     let [pageList, setPageList] = useState([]);
 
+    useEffect(() => {
+
+        reviewList();
+    }, [cpage]);
+
+
     const reviewList = () => {
-        setCpage(1);
         let url = "http://192.168.40.32:8100/soyo/review/list";
         axios({
             url,
@@ -47,7 +45,7 @@ function ReviewListComponent() {
 
                     <tr className="trOb" key={index} >
                         <td width="20%">
-                            <img src={`http://192.168.40.32:8100/soyo/resources/product_upfile/${item.reviewThumbnailChange}`}
+                            <img src={`http://192.168.40.32:8100/soyo/resources/product_upfile/${item.productChange}`}
                                 width="200px"
                                 height="250px" />
                         </td>
@@ -76,7 +74,7 @@ function ReviewListComponent() {
 
                     <tr className="trOb" key={index} >
                         <td width="20%">
-                            <img src={`http://192.168.40.32:8100/soyo/resources/product_upfile/${item.reviewThumbnailChange}`}
+                            <img src={`http://192.168.40.32:8100/soyo/resources/product_upfile/${item.productChange}`}
                                 width="200px"
                                 height="250px" />
                         </td>
@@ -167,28 +165,28 @@ function ReviewListComponent() {
         let url = "http://192.168.40.32:8100/soyo/review/delete";
         axios({
             url,
-            method : "get",
-            params : {
+            method: "get",
+            params: {
                 reviewNo
             }
         }).then((response) => {
             alert(response.data);
             reviewList();
-        }).catch(() => {})
+        }).catch(() => { })
     }
 
     const repairBtn = (reviewNo) => {
         let url = "http://192.168.40.32:8100/soyo/review/repair";
         axios({
             url,
-            method : "get",
-            params : {
+            method: "get",
+            params: {
                 reviewNo
             }
         }).then((response) => {
             alert(response.data);
             reviewList();
-        }).catch(() => {});
+        }).catch(() => { });
     }
 
     return (

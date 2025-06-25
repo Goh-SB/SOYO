@@ -23,9 +23,4 @@ public interface NoticeService {
 	// 공지사항 상세 조회용 서비스
 	Notice noticeDetail(int nno);
 		
-	// 공지사항 수정용 서비스
-	int updateNotice(Notice n);
-
-	// 공지사항 삭제용 서비스
-	int deleteNotice(int noticeNo);
 }

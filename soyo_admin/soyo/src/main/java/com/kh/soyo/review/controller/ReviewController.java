@@ -28,9 +28,13 @@ public class ReviewController {
 	public HashMap<String, Object> reviewList(@RequestParam("cpage") int currentPage) {
 		
 		int listCount = reviewService.reviewListCount();
-		int pageLimit = 12;
+		int pageLimit = 8;
 		int boardLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		// System.out.println(listCount);
+		// System.out.println(currentPage);
+		
 		
 		ArrayList<Review> list = reviewService.reivewList(pi);
 		
@@ -42,12 +46,6 @@ public class ReviewController {
 		return hm;
 	}
 	
-	@GetMapping("detail")
-	public void reviewDetail(@PathVariable int index) {
-		
-		
-		
-	}
 	
 	@GetMapping("delete")
 	public String deleteBtn(Review review) {

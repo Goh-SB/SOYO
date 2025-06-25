@@ -106,8 +106,18 @@
  	
  		SELECT COUNT(*)
  		  FROM PRODUCT
- 		 WHERE PRODUCT_CATEGORY = #{cate} 
- 	
+ 		<if test="cate == '남성'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
+	 	   	<if test="cate == '여성'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
+	 	   	<if test="cate == '아동'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
+	 	   	<if test="cate == '악세사리'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
  	</select>
  	
  	<select id="filter" parameterType="hashmap"
@@ -125,7 +135,18 @@
 	 			   PRODUCT_CHANGE,
 	 			   STATUS
 	 		FROM PRODUCT
-	 	   WHERE PRODUCT_CATEGORY = #{cate}	
+	 		<if test="cate == '남성'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
+	 	   	<if test="cate == '여성'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
+	 	   	<if test="cate == '아동'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
+	 	   	<if test="cate == '악세사리'">
+	 	   	WHERE PRODUCT_CATEGORY = #{cate}
+	 	   	</if>
 	 	   ORDER BY PRODUCT_NO DESC ) A
 	 	   )
 	 	   WHERE RNUM BETWEEN #{startRow} AND #{endRow}
