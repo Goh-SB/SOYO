@@ -68,7 +68,7 @@ public class ProductDao {
 
 	    Map<String, Object> param = new HashMap<>();
 	    param.put("productNo", productNo);
-	    param.put("productSize", productSize); // ← 여기를 수정!
+	    param.put("productSize", productSize);
 	    
 	    return sqlSession.selectOne("productMapper.selectProductStock", param);
 	}

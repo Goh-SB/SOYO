@@ -123,8 +123,6 @@ public class ProductController {
 	}
 
 
-
-
 	
 	@GetMapping("/productList")
 	public String showProductList(@RequestParam(value = "type", required = false, defaultValue = "all") String type,

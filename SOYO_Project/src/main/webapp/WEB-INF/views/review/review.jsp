@@ -219,8 +219,8 @@
         color: #555;
         font-size: 14px;
         margin-bottom: 10px;
-        min-height: 38px;
-        max-height: 38px;
+        min-height: 42px;
+        max-height: 80px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
