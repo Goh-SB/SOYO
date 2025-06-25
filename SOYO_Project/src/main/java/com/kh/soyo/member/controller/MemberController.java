@@ -1,14 +1,11 @@
 package com.kh.soyo.member.controller;
 
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-
-import java.util.Map;
-
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,6 +27,7 @@ import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
+import com.kh.soyo.wishlist.model.vo.Wish;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -171,6 +169,44 @@ public class MemberController {
 		
 		return "member/myPageMyReview";
 	}
+	
+	// 내 찜 페이지 이동용 메소드
+    @GetMapping("/myWishList")
+    public String myWishList(@RequestParam(value = "page", defaultValue = "1") int currentPage ,HttpSession session, Model model) {
+    	
+    	Member loginUser = (Member)session.getAttribute("loginUser");
+    	
+    	String mi = loginUser.getMemberId();
+    	/*
+    	Wish mi = new Wish();
+    	mi.setMemberId(loginUser.getMemberId());
+    	
+    	
+    	String wSize = memberService.myWishListSize(loginUser.getMemberId());
+    	mi.setProductSize(wSize);
+    	
+    	
+    	int listCount;
+		int pageLimit;
+		int boardLimt;
+		listCount = memberService.myWishListCount(mi);
+		
+		// 페이징바 페이지 최대갯수
+		pageLimit = 5;
+		
+		// 페이지당 보여질 갯수
+		boardLimt = 4;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimt);
+
+		ArrayList<Wish> myWish = memberService.myWishList(mi, pi);
+		System.out.println(myWish);
+		model.addAttribute("myWish", myWish);
+		model.addAttribute("pi", pi);
+		*/
+    	return "wishList/myWishList";
+    	
+    }
 	
 	
 	// 로그인 요청 처리용 메서드

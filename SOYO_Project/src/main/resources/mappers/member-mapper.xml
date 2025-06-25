@@ -51,6 +51,18 @@
 	    <result property="memberName" column="MEMBER_NAME"/>
 	    <result property="productChange" column="PRODUCT_CHANGE"/>
 	</resultMap>
+	
+	<resultMap id="wishResultMap" type="wish">
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="productCategory" column="PRODUCT_CATEGORY"/>
+		<result property="productOrigin" column="PRODUCT_ORIGIN"/>
+		<result property="productChange" column="PRODUCT_CHANGE"/>
+		<result property="productSize" column="PRODUCT_SIZE"/>
+		<result property="stockCount" column="STOCK_COUNT"/>
+	</resultMap>
 
 	<!-- 로그인용 쿼리문 -->
 	<select id="loginMember" parameterType="member"
@@ -198,7 +210,32 @@
 	  FROM PAYMENT P
 	  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
 	 WHERE P.ORDER_IMPNO = #{orderImpNo}
-</select>
+	</select>
+	
+	<!-- 내 찜 목록 갯수 -->
+	<select id="myWishListCount" resultType="_int">
+		SELECT COUNT(*) FROM WISH_LIST
+		      WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 내 찜 목록 -->
+	<select id="myWishList" parameterType="string" resultMap="wishResultMap">
+		SELECT W.PRODUCT_NO
+		     , P.PRODUCT_NAME
+		     , P.PRODUCT_PRICE
+		     , P.PRODUCT_ORIGIN
+		     , P.PRODUCT_CHANGE
+		     , P.PRODUCT_CATEGORY
+		    FROM WISH_LIST W
+		    JOIN PRODUCT P ON W.PRODUCT_NO = P.PRODUCT_NO
+		    WHERE W.MEMBER_ID = #{memberId}
+	</select>
+	
+	<select id="myWishListSize" parameterType="wish" resultMap="wishResultMap">
+		SELECT PRODUCT_SIZE FROM WISH_LIST
+		    WHERE MEMBER_ID = #{memberId}
+		      AND PRODUCT_NO = #{productNo}
+	</select>
 
 		
 </mapper>

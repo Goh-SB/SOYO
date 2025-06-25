@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 리뷰</title>
 <style>
     .container{
         width: 1200px;
@@ -49,11 +49,6 @@
         }
 
         /* 주문목록 */
-        img{
-            width: 140px;
-            height: 140px;
-            border-radius: 5px;
-        }
 
         .product-name{
             width: 60%;
