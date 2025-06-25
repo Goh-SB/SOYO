@@ -30,10 +30,10 @@ public class ProductServiceImpl implements ProductService {
         return productDao.selectProductList(rowBounds);
     }
 
-	@Override
-	public Product selectProductByNo(int productNo) {
-		return productDao.selectProductByNo(productNo);
-	}
+    @Override
+    public List<Product> selectProductByNo(int productNo) {
+        return productDao.selectProductByNo(productNo);
+    }
 
 	@Override
 	public List<String> getTagsForProduct(int productNo) {
@@ -100,6 +100,12 @@ public class ProductServiceImpl implements ProductService {
     public boolean isInCart(String memberId, int productNo) {
         return productDao.selectInCartCount(memberId, productNo) > 0;
     }
+
+	@Override
+	public int getProductStock(int productNo, String productSize) {
+		return productDao.getProductStock(productNo, productSize);
+	}
+    
     
     
 }

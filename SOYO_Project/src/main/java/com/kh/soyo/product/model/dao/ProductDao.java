@@ -20,9 +20,9 @@ public class ProductDao {
         return (ArrayList)sqlSession.selectList("productMapper.selectProductList", null, rowBounds);
     }
 
-	public Product selectProductByNo(int productNo) {
-		return sqlSession.selectOne("productMapper.selectProductByNo", productNo);
-	}
+    public List<Product> selectProductByNo(int productNo) {
+        return sqlSession.selectList("productMapper.selectProductByNo", productNo);
+    }
 
 	public List<String> selectTagsByProductNo(int productNo) {
 	    return sqlSession.selectList("productMapper.selectTagsByProductNo", productNo);
@@ -63,4 +63,15 @@ public class ProductDao {
 
         return sqlSession.selectOne("productMapper.selectInCartCount", param);
 	}
+
+	public int getProductStock(int productNo, String productSize) {
+
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("productNo", productNo);
+	    param.put("productSize", productSize); // ← 여기를 수정!
+	    
+	    return sqlSession.selectOne("productMapper.selectProductStock", param);
+	}
+
+
 }

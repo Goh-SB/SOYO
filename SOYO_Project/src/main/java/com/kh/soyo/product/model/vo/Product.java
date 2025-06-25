@@ -51,5 +51,7 @@ public class Product {
     private String productSubChange;   // 상품 상세페이지 이미지 저장명
     
     private boolean inCart;
+    
+    private String productSize;
 	
 }

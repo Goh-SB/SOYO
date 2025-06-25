@@ -897,14 +897,26 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 사이즈 선택 버튼
+        const productNo = "${product.productNo}";
+
+        // 사이즈 선택 버튼 + 재고 조회
         const sizeBtns = document.querySelectorAll('.size-btn');
         sizeBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 sizeBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+
+                const selectedSize = this.dataset.size;
+
+                fetch("/soyo/product/stock?productNo=" + productNo + "&size=" + selectedSize)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("선택된 사이즈:", selectedSize);
+                        document.getElementById('stockCount').innerText = data.stock;
+                    });
             });
         });
+
 
         // 수량 컨트롤
         const quantityInput = document.getElementById('quantity');
@@ -1077,9 +1089,11 @@ document.getElementById("favoriteBtn").addEventListener("click", function () {
             alert("찜 목록 추가 실패");
         }
     });
+
+    
 });
 
-
 </script>
+
 </body>
 </html>
