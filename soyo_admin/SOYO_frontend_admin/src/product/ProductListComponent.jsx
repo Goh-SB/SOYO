@@ -17,7 +17,7 @@ function ProductListComponent() {
 
     let [keyword, setKeyword] = useState('');
 
-    let [selectCate, setSelectCate] = useState('');
+    let [selectCate, setSelectCate] = useState('모든상품');
 
     let category = ['모든상품', '남성', '여성', '아동', '악세사리'];
 
