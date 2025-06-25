@@ -8,6 +8,7 @@ import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
+import com.kh.soyo.wishlist.model.vo.Wish;
 
 public interface MemberService {
 
@@ -52,6 +53,12 @@ public interface MemberService {
 	List<Product> orderProductList(String impNo);
 
 	int myReviewCount(String mi);
+
+	int myWishListCount(String mi);
+
+	ArrayList<Wish> myWishList(String mi, PageInfo pi);
+
+	Wish myWishListSize(Wish mi);
 
 
 	

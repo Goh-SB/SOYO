@@ -14,6 +14,7 @@ import com.kh.soyo.member.model.dao.MemberDao;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
+import com.kh.soyo.wishlist.model.vo.Wish;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -115,6 +116,24 @@ public class MemberServiceImpl implements MemberService {
 	public int myReviewCount(String mi) {
 		
 		return memberDao.myReviewCount(sqlSession,mi);
+	}
+
+	@Override
+	public int myWishListCount(String mi) {
+		
+		return memberDao.myWishListCount(sqlSession, mi);
+	}
+
+	@Override
+	public ArrayList<Wish> myWishList(String mi, PageInfo pi) {
+		
+		return memberDao.myWishList(sqlSession, mi, pi);
+	}
+
+	@Override
+	public Wish myWishListSize(Wish mi) {
+		
+		return memberDao.myWishListSize(sqlSession, mi);
 	}
 
 }

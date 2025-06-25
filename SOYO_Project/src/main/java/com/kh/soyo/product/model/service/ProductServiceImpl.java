@@ -105,6 +105,18 @@ public class ProductServiceImpl implements ProductService {
 	public int getProductStock(int productNo, String productSize) {
 		return productDao.getProductStock(productNo, productSize);
 	}
+
+	@Override
+	public List<Product> selectProductListByTag(String string, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return productDao.selectProductListByTag(string, rowBounds);
+	}
+
+	@Override
+	public int selectProductListCountByTag(String string) {
+		return productDao.selectProductListCountByTag(string);
+	}
     
     
     

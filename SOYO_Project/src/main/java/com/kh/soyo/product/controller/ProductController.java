@@ -19,6 +19,8 @@ import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.service.ReviewService;
 import com.kh.soyo.review.model.vo.Review;
+import com.kh.soyo.wishlist.model.service.WishListService;
+import com.kh.soyo.wishlist.model.vo.Wish;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -32,6 +34,9 @@ public class ProductController {
 	
 	@Autowired
 	private ReviewService reviewService;
+
+	@Autowired
+	private WishListService wishListService;
 
 	
 	@GetMapping("/stock")
@@ -99,15 +104,21 @@ public class ProductController {
 
 	    // 로그인한 회원 정보 가져오기
 	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    boolean isWished = false;
 	    if (loginUser != null) {
 	        String memberId = loginUser.getMemberId();
 
 	        // 장바구니 담긴 상태 조회
 	        boolean inCart = productService.isInCart(memberId, productNo);
-
-	        // 상품 객체에 반영
 	        product.setInCart(inCart);
+
+	        // 찜 여부 조회
+	        Wish wish = new Wish();
+	        wish.setMemberId(memberId);
+	        wish.setProductNo(productNo);
+	        isWished = wishListService.isWishAlreadyExists(wish);
 	    }
+	    model.addAttribute("isWished", isWished);
 
 	    // 태그 및 리뷰 조회
 	    List<String> tagList = productService.getTagsForProduct(productNo);
@@ -148,6 +159,15 @@ public class ProductController {
 	            case "accessory":
 					listCount = productService.selectProductListCountByCategory("악세사리");
 	                break;
+	            case "outer":
+	            	listCount = productService.selectProductListCountByTag("outer");
+	                break;
+	            case "top":
+	            	listCount = productService.selectProductListCountByTag("top");
+	                break;
+	            case "bottom":
+	            	listCount = productService.selectProductListCountByTag("bottom");
+	                break;
 	            default:
 					listCount = productService.selectProductListCount();
 	        }
@@ -172,6 +192,15 @@ public class ProductController {
 					break;
 				case "accessory":
 					productList = productService.selectProductListByCategory("악세사리", pi);
+					break;
+				case "outer":
+					productList = productService.selectProductListByTag("outer", pi);
+					break;
+				case "top":
+					productList = productService.selectProductListByTag("top", pi);
+					break;
+				case "bottom":
+					productList = productService.selectProductListByTag("bottom", pi);
 					break;
 				default:
 					productList = productService.selectProductList(pi);

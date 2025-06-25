@@ -12,6 +12,7 @@ import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
+import com.kh.soyo.wishlist.model.vo.Wish;
 
 @Repository
 public class MemberDao {
@@ -99,6 +100,26 @@ public class MemberDao {
 	public int myReviewCount(SqlSessionTemplate sqlSession, String mi) {
 		
 		return sqlSession.selectOne("memberMapper.myReviewCount", mi);
+	}
+
+	public int myWishListCount(SqlSessionTemplate sqlSession, String mi) {
+		
+		return sqlSession.selectOne("memberMapper.myWishListCount", mi);
+	}
+
+	public ArrayList<Wish> myWishList(SqlSessionTemplate sqlSession, String mi, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.myWishList", mi, rowBounds);
+	}
+
+	public Wish myWishListSize(SqlSessionTemplate sqlSession, Wish mi) {
+		
+		return sqlSession.selectOne("memberMapper.myWishListSize", mi);
 	}
 
 }
