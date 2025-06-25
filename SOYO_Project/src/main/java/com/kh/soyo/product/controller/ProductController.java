@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
+import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.service.ReviewService;
 import com.kh.soyo.review.model.vo.Review;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -69,23 +72,34 @@ public class ProductController {
 	
 
 	@GetMapping("/productDetail")
-	public String showProductDetail(@RequestParam("no") int productNo, Model model) {
+	public String showProductDetail(@RequestParam("no") int productNo, Model model, HttpSession session) {
 	    // 상품 상세 정보 조회
 	    Product product = productService.selectProductByNo(productNo);
 
-	    // 해당 상품에 연결된 태그 목록 조회
-	    List<String> tagList = productService.getTagsForProduct(productNo);
+	    // 로그인한 회원 정보 가져오기
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    if (loginUser != null) {
+	    	String memberId = loginUser.getMemberId();
 
-	    // 해당 상품 리뷰 목록 조회
+	        // 장바구니 담긴 상태 조회
+	        boolean inCart = productService.isInCart(memberId, productNo);
+
+	        // 상품 객체에 반영
+	        product.setInCart(inCart);
+	    }
+
+	    // 태그 및 리뷰 조회
+	    List<String> tagList = productService.getTagsForProduct(productNo);
 	    List<Review> reviewList = reviewService.selectReviewList(productNo);
-	    
-	    // 모델에 담아서 JSP로 전달
+
+	    // 모델에 담아서 전달
 	    model.addAttribute("product", product);
 	    model.addAttribute("tagList", tagList);
 	    model.addAttribute("reviewList", reviewList);
 
 	    return "product/productDetail";
 	}
+
 
 
 	

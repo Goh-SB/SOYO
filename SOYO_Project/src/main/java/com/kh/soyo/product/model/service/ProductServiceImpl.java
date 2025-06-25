@@ -94,4 +94,12 @@ public class ProductServiceImpl implements ProductService {
         
         return productDao.selectSortedProductList(sqlSession, param, rowBounds);
     }
+    
+    
+    @Override
+    public boolean isInCart(String memberId, int productNo) {
+        return productDao.selectInCartCount(memberId, productNo) > 0;
+    }
+    
+    
 }

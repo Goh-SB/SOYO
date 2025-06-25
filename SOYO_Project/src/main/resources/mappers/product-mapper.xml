@@ -134,7 +134,12 @@
 	</select>
 
 
-
+	<select id="selectInCartCount" resultType="_int">
+	    SELECT COUNT(*) 
+	    FROM CART
+	    WHERE MEMBER_ID = #{memberId} 
+	      AND PRODUCT_NO = #{productNo}
+	</select>
 
 
 

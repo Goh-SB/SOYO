@@ -80,6 +80,12 @@ public class CartServiceImpl implements CartService {
 	    return cartDao.insertPayment(sqlSession, delivery);
 	}
 
+	
+	@Override
+	public int removeSingleItem(String memberId, int productNo, String productSize) {
+		return cartDao.deleteSingleItem(memberId, productNo, productSize);
+	}
+
 
 
 }

@@ -748,7 +748,32 @@
 
                 <p class="stock-info">상품 재고 : <span id="stockCount">${product.productCount}</span>개</p>
 
-                <button type="button" class="add-to-cart-btn waves-effect" onclick="insertCart()">장바구니 담기</button>
+
+
+                <c:choose>
+                    <c:when test="${product.inCart}">
+                        <button 
+                        type="button" 
+                        class="add-to-cart-btn waves-effect" 
+                        onclick="insertCart(this)" 
+                        data-product-no="${product.productNo}" 
+                        data-in-cart="true">
+                        장바구니 취소
+                        </button>
+                    </c:when>
+                    <c:otherwise>
+                        <button 
+                        type="button" 
+                        class="add-to-cart-btn waves-effect" 
+                        onclick="insertCart(this)" 
+                        data-product-no="${product.productNo}" 
+                        data-in-cart="false">
+                        장바구니 담기
+                        </button>
+                    </c:otherwise>
+                </c:choose>
+
+                
 
             </div>
         </div>
@@ -989,8 +1014,9 @@
     });
 
     // 장바구니 담기 버튼 클릭 시 작동 로직
-    function insertCart() {
-    const productNo = "${product.productNo}"; // EL로 바로 값 삽입
+    function insertCart(button) {
+    const productNo = button.dataset.productNo; // 버튼에서 가져옴
+    const isInCart = button.dataset.inCart === "true";
     const productCount = document.getElementById("quantity").value;
     const productSize = document.querySelector(".size-btn.active").getAttribute("data-size");
 
@@ -1000,18 +1026,35 @@
         productSize: productSize
     };
 
-    fetch("${pageContext.request.contextPath}/cart/insert", {
+    const url = isInCart 
+        ? "${pageContext.request.contextPath}/cart/remove" 
+        : "${pageContext.request.contextPath}/cart/insert";
+
+    fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
     })
     .then(res => res.text())
     .then(msg => {
-        if (msg === "success") alert("선택하신 상품이 장바구니에 담겼습니다.");
-        else if (msg === "notLogin") alert("로그인 후 이용 가능합니다.");
-        else alert("장바구니 담기에 실패했습니다.");
+        if (msg === "success") {
+            if (isInCart) {
+                alert("장바구니에서 삭제되었습니다.");
+                button.textContent = "장바구니 담기";
+                button.dataset.inCart = "false";
+            } else {
+                alert("선택하신 상품이 장바구니에 담겼습니다.");
+                button.textContent = "장바구니 취소";
+                button.dataset.inCart = "true";
+            }
+        } else if (msg === "notLogin") {
+            alert("로그인 후 이용 가능합니다.");
+        } else {
+            alert("요청 처리에 실패했습니다.");
+        }
     });
 }
+
 
 document.getElementById("favoriteBtn").addEventListener("click", function () {
     const productNo = "${product.productNo}";

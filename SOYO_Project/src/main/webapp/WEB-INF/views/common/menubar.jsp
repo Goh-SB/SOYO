@@ -239,7 +239,7 @@
     }
 
     #menu {
-      cursor: none;
+      cursor: pointer;
     }
 
     .modal {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.cart.model.vo.Cart;
@@ -14,6 +15,9 @@ import com.kh.soyo.cart.model.vo.Delivery;
 @Repository
 public class CartDao {
 
+	@Autowired
+	SqlSessionTemplate sqlSession;
+	
 	public ArrayList<Cart> cartList(SqlSessionTemplate sqlSession, String memberId) {
 		// select문(여러 행 조회)
 		return (ArrayList)sqlSession.selectList("cartMapper.cartList", memberId);
@@ -105,6 +109,14 @@ public class CartDao {
 	    System.out.println(delivery);
 
 	    return result;
+	}
+
+	public int deleteSingleItem(String memberId, int productNo, String productSize) {
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("memberId", memberId);
+	    paramMap.put("productNo", productNo);
+	    paramMap.put("productSize", productSize);
+	    return sqlSession.delete("cartMapper.deleteSingleItem", paramMap);
 	}
 
 
