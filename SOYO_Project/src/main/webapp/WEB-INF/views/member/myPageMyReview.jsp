@@ -481,7 +481,7 @@
         </div>
         <div id="myContent">
             <div class="content-header">
-                내 리뷰
+                내 리뷰 (디자인 수정 중)
             </div>
             <div id="order-List">
                 <c:choose>

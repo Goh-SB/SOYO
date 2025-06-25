@@ -701,6 +701,8 @@
 					<c:choose>
 					  <c:when test="${product.productSort eq 'top'}">상의</c:when>
 					  <c:when test="${product.productSort eq 'acc'}">장신구</c:when>
+					  <c:when test="${product.productSort eq 'bottom'}">하의</c:when>
+					  <c:when test="${product.productSort eq 'outer'}">외투</c:when>
 					  <c:otherwise>${product.productSort}</c:otherwise>
 					</c:choose>
 				</span>

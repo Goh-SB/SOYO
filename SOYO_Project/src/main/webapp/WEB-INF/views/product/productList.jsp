@@ -152,15 +152,53 @@
     flex-direction: column;
     align-items: center;
     padding: 0;
+    position: relative;
+    overflow: hidden;
   }
   .product-card:hover {
     transform: translateY(-4px);
   }
-  .product-card img {
+  .product-image-wrapper {
+    position: relative;
     width: 100%;
     aspect-ratio: 4/5;
-    object-fit: contain;
     margin-bottom: 16px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+  .product-image-overlay {
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .product-card:hover .product-image-overlay {
+    opacity: 1;
+  }
+  .product-card-title, .product-card-price {
+    position: static;
+    z-index: 3;
+    width: 100%;
+    text-align: left;
+    padding: 0 4px;
   }
   .product-card-title {
     font-size: 0.95rem;
@@ -172,17 +210,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
-    text-align: left;
-    padding: 0 4px;
   }
   .product-card-price {
     color: #000;
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: -0.02em;
-    text-align: left;
-    width: 100%;
-    padding: 0 4px;
   }
   .no-product-message {
     grid-column: 1 / -1;
@@ -344,12 +377,16 @@
           let productHTML = "";
           data.products.forEach(product => {
             const imageUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + product.productChange;
+            const subImageUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/" + product.productSubChange;
             const price = product.productPrice
               ? new Intl.NumberFormat('ko-KR').format(product.productPrice)
               : '0';
 
             productHTML += '<a href="/soyo/product/productDetail?no=' + product.productNo + '" class="product-card">' +
-              '<img class="product-image" src="' + imageUrl + '" alt="' + product.productName + '" />' +
+              '<div class="product-image-wrapper">' +
+                '<img class="product-image" src="' + imageUrl + '" alt="' + product.productName + '" />' +
+                '<div class="product-image-overlay" style="background-image:url(' + subImageUrl + ');"></div>' +
+              '</div>' +
               '<div class="product-card-title">' + product.productName + '</div>' +
               '<div class="product-card-price">₩' + price + '</div>' +
               '</a>';
@@ -440,29 +477,6 @@
     
     <!-- 상품 리스트 영역 -->
 
-    <!--
-    <div class="product-list">
-      <c:choose>
-        <c:when test="${fn:length(productList) == 0}">
-          <div class="no-product-message">
-            <span class="material-icons no-product-icon">inventory_2</span>
-            <div class="no-product-title">등록된 상품이 없습니다.</div>
-            <div class="no-product-sub">다른 카테고리나 검색어를 시도해보세요</div>
-          </div>
-        </c:when>
-        <c:otherwise>
-          <c:forEach var="product" items="${productList}">
-            <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
-              <img class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}" />
-              <div class="product-card-title">${product.productName}</div>
-              <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
-            </a>
-          </c:forEach>
-        </c:otherwise>
-      </c:choose>
-    </div>
-    -->
-
     <div class="product-list" id="productList">
       <c:choose>
         <c:when test="${fn:length(productList) == 0}">
@@ -475,7 +489,10 @@
         <c:otherwise>
           <c:forEach var="product" items="${productList}">
             <a href="/soyo/product/productDetail?no=${product.productNo}" class="product-card">
-              <img class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}" />
+              <div class="product-image-wrapper">
+                <img class="product-image" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productChange}" alt="${product.productName}" />
+                <div class="product-image-overlay" style="background-image:url('http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productSubChange}');"></div>
+              </div>
               <div class="product-card-title">${product.productName}</div>
               <div class="product-card-price">₩<fmt:formatNumber value="${product.productPrice}" pattern="#,###" /></div>
             </a>
