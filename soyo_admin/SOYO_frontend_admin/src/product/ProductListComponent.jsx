@@ -17,15 +17,19 @@ function ProductListComponent() {
 
     let [keyword, setKeyword] = useState('');
 
-    let category = ['남성', '여성', '아동', '악세사리'];
+    let [selectCate, setSelectCate] = useState('');
+
+    let category = ['모든상품', '남성', '여성', '아동', '악세사리'];
 
     useEffect(() => {
-        if (keyword == '') {
-            productList();
-        } else {
+        if (keyword !== '') {
             searchList();
+        } else if (selectCate != '' && selectCate != '모든상품') {
+            filterList();
+        } else {
+            productList();
         }
-    }, [keyword, cpage])
+    }, [keyword, cpage, selectCate])
 
     const productList = () => {
 
@@ -130,7 +134,7 @@ function ProductListComponent() {
 
     const searchList = () => {
 
-        let url = "http://192.168.40.32:/soyo/product/search";
+        let url = "http://192.168.40.32:8100/soyo/product/search";
         axios({
             url,
             method: "get",
@@ -149,22 +153,29 @@ function ProductListComponent() {
 
     const searchClick = (e) => {
         e.preventDefault();
+        setSelectCate('');
         let searchText = document.getElementById("product-searchText").value;
         setKeyword(searchText);
         setCpage(1);
     }
 
     const categoryFilter = (e) => {
-        // console.log(e.target.value);
-        let url = "http://192.168.40.32:8100/soyo/product/filtering";
         let cate = e.target.value;
+        setSelectCate(cate);
+        // console.log(selectCate)
+        setKeyword('');
         setCpage(1);
-        // console.log(cate);
+        document.getElementById("product-searchText").value = '';
+
+    }
+    const filterList = () => {
+        let url = "http://192.168.40.32:8100/soyo/product/filtering";
+        // console.log(selectCate)
         axios({
             url,
             method: "get",
             params: {
-                cate,
+                cate : selectCate,
                 cpage
             }
         }).then((response) => {
@@ -177,9 +188,7 @@ function ProductListComponent() {
     return (
 
         <div>
-
             <h2>상품 조회</h2>
-
             <br /><br />
             <div align="center" id="product-searchArea">
                 <div id="search-area">
@@ -198,6 +207,11 @@ function ProductListComponent() {
                             onClick={(e) => { categoryFilter(e) }}
                             className="product-categoryBtn"
                             value={item}
+                            style={{
+                                backgroundColor: selectCate == item ? "#E3E4FA" : "",
+                                borderRadius: selectCate == item ? "10px" : ""
+
+                            }}
                         >
                             {item}
                         </button>

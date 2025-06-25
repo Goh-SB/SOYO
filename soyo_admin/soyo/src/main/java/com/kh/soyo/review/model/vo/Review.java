@@ -30,5 +30,6 @@ public class Review {
 	private String memberId;
 	private String memberName;
 	private String productName;
+	private String productChange;
 	
 }

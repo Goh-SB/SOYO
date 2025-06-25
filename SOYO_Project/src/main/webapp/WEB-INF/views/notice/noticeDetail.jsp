@@ -137,7 +137,7 @@
 
 				<div class="notice-body">
 					<c:if test="${not empty requestScope.n.noticeImage}">
-						<img id="fileImg" src="http://192.168.40.17:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
+						<img id="fileImg" src="http://192.168.40.32:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
 					</c:if>
 					<p>${requestScope.n.noticeContent}</p>
 				</div>
