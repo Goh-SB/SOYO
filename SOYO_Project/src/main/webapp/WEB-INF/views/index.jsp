@@ -568,6 +568,14 @@
             </div>
         </div>
 
+        <!-- 테스트 영역 - 완료 후 삭제 -->
+        <div id="test-div" style="text-align: center;">
+            <br>
+            <button id="test-button"
+                style="font-size: 1.2rem; background-color: #7375b4; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;"
+                onclick="location.href='${pageContext.request.contextPath}/ai/recommend'">소요 AI - 테스트 페이지 이동</button>
+        </div>
+
         <section class="featured-products">
             <h2>추천 상품</h2>
             <div class="product-grid">

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="aiMapper">
+
+	<resultMap id="ProductResultMap" type="com.kh.soyo.product.model.vo.Product">
+		<id property="productNo" column="PRODUCT_NO"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="productCategory" column="PRODUCT_CATEGORY"/>
+		<result property="productCaption" column="PRODUCT_CAPTION"/>
+		<result property="productSubCaption" column="PRODUCT_SUB_CAPTION"/>
+		<result property="productOrigin" column="PRODUCT_ORIGIN"/>
+		<result property="productChange" column="PRODUCT_CHANGE"/>
+		<result property="productRegisteredDate" column="PRODUCT_REGISTERED_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="productSubOrigin" column="PRODUCT_SUB_ORIGIN"/>
+		<result property="productSubChange" column="PRODUCT_SUB_CHANGE"/>
+		<result property="productTag" column="PRODUCT_TAG"/>
+		<result property="productSort" column="PRODUCT_TAG"/>
+		<result property="productCount" column="STOCK_COUNT"/>
+		<result property="productSize" column="PRODUCT_SIZE"/>
+	</resultMap>
+
+	<select id="selectBestProductByTags" parameterType="map" resultMap="ProductResultMap">
+	  SELECT *
+	    FROM (
+	      SELECT p.*
+	        FROM PRODUCT p
+	        JOIN (
+	          SELECT pt.PRODUCT_NO, COUNT(*) AS match_count
+	            FROM PRODUCT_TAG pt
+	           WHERE pt.TAG_NAME IN
+	             <foreach item="tag" collection="tags" open="(" separator="," close=")">
+	               #{tag}
+	             </foreach>
+	           GROUP BY pt.PRODUCT_NO
+	           ORDER BY match_count DESC
+	        ) best
+	          ON p.PRODUCT_NO = best.PRODUCT_NO
+	      ORDER BY best.match_count DESC
+	    )
+	   WHERE ROWNUM = 1
+	</select>
+
+</mapper> 
