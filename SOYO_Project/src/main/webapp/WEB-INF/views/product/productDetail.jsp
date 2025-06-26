@@ -374,19 +374,24 @@
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
         }
 
         .review-content-wrapper {
             display: flex;
-            gap: 2rem;
-            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .review-info {
-            flex: 1;
+        .review-header {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-title-section {
+            flex: 1;
         }
 
         .review-title {
@@ -396,10 +401,24 @@
             color: #333;
         }
 
+        .review-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+
+        .review-separator {
+            color: #b3b3b3d8;
+            font-size: 0.8rem;
+        }
+
         .review-rating {
             display: flex;
             gap: 2px;
-            margin-bottom: 1rem;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
         }
 
         .review-rating .material-icons {
@@ -408,9 +427,13 @@
         }
 
         .review-text {
-            margin: 1rem 0;
+            margin-bottom: 10px;
             line-height: 1.6;
             color: #555;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-pink);
         }
 
         .review-footer {
@@ -423,20 +446,6 @@
             border-top: 1px solid #eee;
         }
 
-        .review-thumbnail {
-            flex: 0 0 200px;
-            width: 200px;
-            height: 200px;
-            margin-left: 2rem;
-        }
-
-        .review-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
         @media (max-width: 768px) {
             .review-content-wrapper {
                 flex-direction: column;
@@ -446,12 +455,15 @@
             .review-info {
                 width: 100%;
             }
-            
-            .review-thumbnail {
-                width: 100%;
-                height: 200px;
-                margin-left: 0;
-                margin-top: 1rem;
+
+            .review-rating {
+                position: static;
+                margin-bottom: 1rem;
+            }
+
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
@@ -828,8 +840,15 @@
 	    <c:forEach var="review" items="${reviewList}">
 	        <div class="review-card">
 	            <div class="review-content-wrapper">
-	                <div class="review-info">
-	                    <h6 class="review-title">${review.reviewTitle}</h6>
+	                <div class="review-header">
+	                    <div class="review-title-section">
+	                        <h6 class="review-title">${review.reviewTitle}</h6>
+	                        <div class="review-meta">
+	                            <span class="review-author">${review.memberName}</span>
+	                            <span class="review-separator">•</span>
+	                            <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
+	                        </div>
+	                    </div>
 	                    <div class="review-rating">
 	                        <c:forEach var="i" begin="1" end="5">
 	                            <c:choose>
@@ -845,16 +864,9 @@
 	                            </c:choose>
 	                        </c:forEach>
 	                    </div>
-	                    <div class="review-text">
-	                        <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
-	                    </div>
-	                    <div class="review-footer">
-	                        <span class="review-author">${review.memberName}</span>
-	                        <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
-	                    </div>
 	                </div>
-	                <div class="review-thumbnail">
-	                    <img src="${pageContext.request.contextPath}/resources/review_upfile/${review.reviewThumbnailChange}" alt="리뷰 이미지">
+	                <div class="review-text">
+	                    <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
 	                </div>
 	            </div>
 	        </div>
