@@ -17,9 +17,9 @@
     }
 
     @font-face {
-        font-family: 'SUITE-Regular';
-        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
-        font-weight: 400;
+        font-family: 'LINESeedKR-Bd';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+        font-weight: 700;
         font-style: normal;
     }
 
@@ -71,11 +71,12 @@
     .content-header {
         background: linear-gradient(135deg, #f3e8f9 0%, #e7dcf4 100%);
         color: #7e4f8b85;
-        padding: 15px 20px;
-        font-size: 24px;
+        padding-top: 15px;
+        padding-bottom: 8px;
+        font-size: 25px;
         font-weight: 600;
         text-align: center;
-        font-family: 'SUITE-Regular';
+        font-family: 'LINESeedKR-Bd';
         text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
@@ -591,9 +592,8 @@
                     // 별점 설정
                     $('input[name="rating"]').prop('checked', false);
                     $(`input[name="rating"][value="${review.rating}"]`).prop('checked', true);
-                    
-                    // 모달창 제목에 상품명 표시
-                    $('.review-modal-header h2').text('리뷰 수정 - ' + review.productName);
+
+                    $('.review-modal-header h2').text('작성 리뷰 수정');
                     
                     // 모달창 열기
                     $('#reviewModal').show();
