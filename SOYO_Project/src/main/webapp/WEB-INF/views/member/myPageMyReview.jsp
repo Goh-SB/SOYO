@@ -16,8 +16,15 @@
         box-sizing: border-box;
     }
 
+    @font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'ChosunGu';
         background-color: #f8f9fa;
         color: #333;
     }
@@ -62,12 +69,14 @@
     }
 
     .content-header {
-        background: linear-gradient(135deg, #fce3ec 0%, #fccde2 100%);
-        color: #df7b99;
-        padding: 25px 30px;
-        font-size: 28px;
+        background: linear-gradient(135deg, #f3e8f9 0%, #e7dcf4 100%);
+        color: #7e4f8b85;
+        padding: 15px 20px;
+        font-size: 24px;
         font-weight: 600;
         text-align: center;
+        font-family: 'SUITE-Regular';
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
     #order-List {
@@ -82,10 +91,10 @@
         background: white;
         border: 2px solid #e9ecef;
         border-radius: 12px;
-        padding: 25px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
+        padding: 23px;
         transition: all 0.3s ease;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     }
 
     #order-List > ul > li:hover {
@@ -126,7 +135,7 @@
 
     .product-img img {
         width: 100%;
-        height: 160px;
+        height: 175px;
         border-radius: 10px;
         object-fit: cover;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -146,19 +155,23 @@
     .ratingbar {
         color: #ffd700;
         font-size: 18px;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 
     .review-text {
         color: #6c757d;
         line-height: 1.6;
         margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e9ecef;
+        font-size: 16px;
     }
 
     .review-actions {
         display: flex;
         justify-content: right;
-        gap: 10px;
+        gap: 15px;
+        margin-top: 15px;
     }
 
     .btn-edit, .btn-delete {
@@ -196,8 +209,8 @@
 
     #page {
         text-align: center;
-        margin-top: 30px;
         padding: 20px;
+        padding-bottom: 50px;
     }
 
     #page > button {
@@ -487,7 +500,7 @@
         </div>
         <div id="myContent">
             <div class="content-header">
-                내 리뷰 (디자인 수정 중)
+                MY REVIEW
             </div>
             <div id="order-List">
                 <c:choose>
@@ -522,8 +535,8 @@
                                             <div class="review-title">${r.reviewTitle}</div>
                                             <div class="review-text">${r.reviewContent}</div>
                                             <div class="review-actions">
-                                                <button class="btn-edit" onclick="openReviewModal(${r.reviewNo})">리뷰 수정</button>
-                                                <button class="btn-delete" onclick="deleteReview(${r.reviewNo})">리뷰 삭제</button>
+                                                <button class="btn-edit" onclick="openReviewModal('${r.reviewNo}')">리뷰 수정</button>
+                                                <button class="btn-delete" onclick="deleteReview('${r.reviewNo}')">리뷰 삭제</button>
                                             </div>
                                         </div>
                                     </div>
@@ -542,7 +555,7 @@
                     
                     <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
                         <button onclick="location.href='?page=${p}'" 
-                                style="${p == pi.currentPage ? 'background: #667eea; color: white; border-color: #667eea;' : ''}">
+                                <c:if test="${p == pi.currentPage}">style="background: #667eea; color: white; border-color: #667eea;"</c:if>>
                             ${p}
                         </button>
                     </c:forEach>
