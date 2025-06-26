@@ -202,7 +202,8 @@
 	        R.REVIEW_DATE,
 	        R.STATUS,
 	        R.PRODUCT_NO,
-	        P.PRODUCT_NAME
+	        P.PRODUCT_NAME,
+	        P.PRODUCT_CHANGE
 	    FROM REVIEW R
 	    JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
 	    WHERE R.MEMBER_ID = #{memberd}

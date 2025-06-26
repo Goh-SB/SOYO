@@ -28,6 +28,8 @@ public interface ProductService {
 	List<Product> selectSortedProductList(String category, String sort);
 	
 	List<Product> selectSortedProductList(String category, String sort, PageInfo pi);
+	
+	List<Product> selectSortedProductList(String category, String tagFilter, String sort, PageInfo pi);
 
 	boolean isInCart(String memberId, int productNo);
 
@@ -36,4 +38,10 @@ public interface ProductService {
 	List<Product> selectProductListByTag(String string, PageInfo pi);
 
 	int selectProductListCountByTag(String string);
+
+	int selectProductListCountForSort(String category, String tagFilter);
+
+	List<Product> searchProductList(String category, String tag, String keyword, PageInfo pi);
+
+	int searchProductListCount(String category, String tag, String keyword);
 }

@@ -57,28 +57,44 @@ public class ProductController {
 	                                    @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
 	                                    @RequestParam(value = "page", defaultValue = "1") int currentPage) {
 		
-	    // category 파라미터를 DB에 맞게 한글로 변환
+	    String dbCategory = null;
+	    String tagFilter = null;
+	    
+	    // category 파라미터를 DB에 맞게 변환
 	    switch (category) {
 	        case "womens":
-	            category = "여성";
+	            dbCategory = "여성";
 	            break;
 	        case "mens":
-	            category = "남성";
+	            dbCategory = "남성";
 	            break;
 	        case "kids":
-	            category = "아동";
+	            dbCategory = "아동";
 	            break;
 	        case "accessory":
-	            category = "악세사리";
+	            dbCategory = "악세사리";
 	            break;
+	        case "outer":
+	        case "top":
+	        case "bottom":
+	            tagFilter = category; // 태그 기반 필터링
+	            break;
+	        case "all":
 	        default:
-	            category = null; // SQL WHERE 조건에서 null이면 매칭 안 됨
+	            dbCategory = null; // 전체 상품
+	            break;
 	    }
 
-	    int listCount = productService.selectProductListCountByCategory(category);
+	    int listCount;
+	    if (tagFilter != null) {
+	        listCount = productService.selectProductListCountByTag(tagFilter);
+	    } else {
+	        listCount = productService.selectProductListCountForSort(dbCategory, tagFilter);
+	    }
+	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 8);
 	    
-	    List<Product> products = productService.selectSortedProductList(category, sort, pi);
+	    List<Product> products = productService.selectSortedProductList(dbCategory, tagFilter, sort, pi);
 	    
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("products", products);
@@ -142,34 +158,42 @@ public class ProductController {
 	                              Model model) {
 
 		int listCount;
+		String category = null;
+		String tag = null;
+
+	    // type 파라미터를 카테고리와 태그로 분리
+	    switch (type) {
+	        case "mens":
+	            category = "남성";
+	            break;
+	        case "womens":
+	            category = "여성";
+	            break;
+	        case "kids":
+	            category = "아동";
+	            break;
+	        case "accessory":
+	            category = "악세사리";
+	            break;
+	        case "outer":
+	        case "top":
+	        case "bottom":
+	            tag = type;
+	            break;
+	        default:
+	            // 전체 상품
+	            break;
+	    }
 
 	    if (search != null && !search.trim().isEmpty()) {
-			listCount = productService.searchProductListCount(type, search);
+			listCount = productService.searchProductListCount(category, tag, search);
 	    } else {
-	        switch (type) {
-	            case "mens":
-					listCount = productService.selectProductListCountByCategory("남성");
-	                break;
-	            case "womens":
-					listCount = productService.selectProductListCountByCategory("여성");
-	                break;
-	            case "kids":
-					listCount = productService.selectProductListCountByCategory("아동");
-	                break;
-	            case "accessory":
-					listCount = productService.selectProductListCountByCategory("악세사리");
-	                break;
-	            case "outer":
-	            	listCount = productService.selectProductListCountByTag("outer");
-	                break;
-	            case "top":
-	            	listCount = productService.selectProductListCountByTag("top");
-	                break;
-	            case "bottom":
-	            	listCount = productService.selectProductListCountByTag("bottom");
-	                break;
-	            default:
-					listCount = productService.selectProductListCount();
+	        if (tag != null) {
+	            listCount = productService.selectProductListCountByTag(tag);
+	        } else if (category != null) {
+	            listCount = productService.selectProductListCountByCategory(category);
+	        } else {
+	            listCount = productService.selectProductListCount();
 	        }
 	    }
 		
@@ -178,35 +202,16 @@ public class ProductController {
 		List<Product> productList;
 
 		if (search != null && !search.trim().isEmpty()) {
-			productList = productService.searchProductList(type, search, pi);
+			productList = productService.searchProductList(category, tag, search, pi);
 		} else {
-			switch (type) {
-				case "mens":
-					productList = productService.selectProductListByCategory("남성", pi);
-					break;
-				case "womens":
-					productList = productService.selectProductListByCategory("여성", pi);
-					break;
-				case "kids":
-					productList = productService.selectProductListByCategory("아동", pi);
-					break;
-				case "accessory":
-					productList = productService.selectProductListByCategory("악세사리", pi);
-					break;
-				case "outer":
-					productList = productService.selectProductListByTag("outer", pi);
-					break;
-				case "top":
-					productList = productService.selectProductListByTag("top", pi);
-					break;
-				case "bottom":
-					productList = productService.selectProductListByTag("bottom", pi);
-					break;
-				default:
-					productList = productService.selectProductList(pi);
+			if (tag != null) {
+				productList = productService.selectProductListByTag(tag, pi);
+			} else if (category != null) {
+				productList = productService.selectProductListByCategory(category, pi);
+			} else {
+				productList = productService.selectProductList(pi);
 			}
 		}
-
 
 	    model.addAttribute("productList", productList);
 	    model.addAttribute("type", type);

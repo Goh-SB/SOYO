@@ -383,7 +383,7 @@ memberPwd.addEventListener("blur", function(){
     if(!pwdCondition.test(memberPwd.value)){
         // 정규 표현식에 안맞을 경우
         pwdMsgTd.style.display = "table-cell";
-        pwdMsg.textContent = "조건에 맞지 않은 비밀번호입니다.";
+        pwdMsg.innerHTML = "조건에 맞지 않은 비밀번호입니다.<br>(영문, 숫자, 특수문자를 포함한 8글자 이상)";
         pwdMsg.style.color = "red";
 
     } else {
@@ -424,7 +424,7 @@ function checkId(){
 			
             // 아이디가 빈 문자열이거나 정규표현식에 맞지 않을경우
             if(result == "NNNNT"){
-                alert("제대로된 아이디를 입력해주세요.");
+                alert("조건에 맞는 아이디를 입력해주세요.\n(영문, 숫자를 포함한 6~20 글자)");
                 
                     // 아이디 재입력
                     $memberId.css("border", "1px solid red");

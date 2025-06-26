@@ -348,12 +348,13 @@
 
     // 정렬된 상품 로드 함수
     function loadSortedProducts(sortValue, page) {
-      const validTypes = ['womens', 'mens', 'kids', 'accessory'];
-      let rawType = new URLSearchParams(window.location.search).get('type') || 'womens';
+      const validTypes = ['womens', 'mens', 'kids', 'accessory', 'outer', 'top', 'bottom'];
+      let rawType = new URLSearchParams(window.location.search).get('type') || 'all';
       let type = rawType.split(':')[0];
 
-      if (!validTypes.includes(type)) {
-        type = 'womens';
+      // 전체 상품인 경우 'all'로 설정
+      if (!validTypes.includes(type) || type === 'all' || type === '') {
+        type = 'all';
       }
 
       fetch('/soyo/product/sort?category=' + type + '&sort=' + sortValue + '&page=' + page)

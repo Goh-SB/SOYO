@@ -70,7 +70,7 @@
 	<br><br><br><br>
 
     <div class="celeb-container">
-        <h1 id="celeb-title">CELEBRITY</h1>
+        <h1 id="celeb-title">GALLERY</h1>
         <br>
         <div class="celeb-grid">
             

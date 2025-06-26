@@ -41,6 +41,7 @@
         .login-section {
             flex: 1;
             display: flex;
+            min-height: 675px;
             justify-content: center;
             align-items: center;
         }

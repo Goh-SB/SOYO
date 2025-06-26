@@ -374,19 +374,24 @@
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
         }
 
         .review-content-wrapper {
             display: flex;
-            gap: 2rem;
-            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .review-info {
-            flex: 1;
+        .review-header {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-title-section {
+            flex: 1;
         }
 
         .review-title {
@@ -396,10 +401,24 @@
             color: #333;
         }
 
+        .review-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+
+        .review-separator {
+            color: #b3b3b3d8;
+            font-size: 0.8rem;
+        }
+
         .review-rating {
             display: flex;
             gap: 2px;
-            margin-bottom: 1rem;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
         }
 
         .review-rating .material-icons {
@@ -408,9 +427,13 @@
         }
 
         .review-text {
-            margin: 1rem 0;
+            margin-bottom: 10px;
             line-height: 1.6;
             color: #555;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-pink);
         }
 
         .review-footer {
@@ -423,20 +446,6 @@
             border-top: 1px solid #eee;
         }
 
-        .review-thumbnail {
-            flex: 0 0 200px;
-            width: 200px;
-            height: 200px;
-            margin-left: 2rem;
-        }
-
-        .review-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
         @media (max-width: 768px) {
             .review-content-wrapper {
                 flex-direction: column;
@@ -446,12 +455,15 @@
             .review-info {
                 width: 100%;
             }
-            
-            .review-thumbnail {
-                width: 100%;
-                height: 200px;
-                margin-left: 0;
-                margin-top: 1rem;
+
+            .review-rating {
+                position: static;
+                margin-bottom: 1rem;
+            }
+
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
@@ -828,8 +840,15 @@
 	    <c:forEach var="review" items="${reviewList}">
 	        <div class="review-card">
 	            <div class="review-content-wrapper">
-	                <div class="review-info">
-	                    <h6 class="review-title">${review.reviewTitle}</h6>
+	                <div class="review-header">
+	                    <div class="review-title-section">
+	                        <h6 class="review-title">${review.reviewTitle}</h6>
+	                        <div class="review-meta">
+	                            <span class="review-author">${review.memberName}</span>
+	                            <span class="review-separator">•</span>
+	                            <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
+	                        </div>
+	                    </div>
 	                    <div class="review-rating">
 	                        <c:forEach var="i" begin="1" end="5">
 	                            <c:choose>
@@ -845,16 +864,9 @@
 	                            </c:choose>
 	                        </c:forEach>
 	                    </div>
-	                    <div class="review-text">
-	                        <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
-	                    </div>
-	                    <div class="review-footer">
-	                        <span class="review-author">${review.memberName}</span>
-	                        <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy.MM.dd"/></span>
-	                    </div>
 	                </div>
-	                <div class="review-thumbnail">
-	                    <img src="${pageContext.request.contextPath}/resources/review_upfile/${review.reviewThumbnailChange}" alt="리뷰 이미지">
+	                <div class="review-text">
+	                    <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
 	                </div>
 	            </div>
 	        </div>
@@ -1114,42 +1126,48 @@
 }
 
 
-document.getElementById("favoriteBtn").addEventListener("click", function () {
-    const productNo = "${product.productNo}";
-    const favoriteIcon = document.getElementById("favoriteIcon");
-    let isWished = favoriteIcon.getAttribute("data-wished") === "true";
-    const url = isWished
-        ? `${pageContext.request.contextPath}/wishlist/remove`
-        : `${pageContext.request.contextPath}/wishlist/insert`;
+   document.getElementById("favoriteBtn").addEventListener("click", function () {
+       const productNo = "${product.productNo}";
+       const productSize = document.querySelector(".size-btn.active").getAttribute("data-size");
+       const favoriteIcon = document.getElementById("favoriteIcon");
+       let isWished = favoriteIcon.getAttribute("data-wished") === "true";
+       
+       const url = isWished
+           ? `${pageContext.request.contextPath}/wishlist/remove`
+           : `${pageContext.request.contextPath}/wishlist/insert`;
 
-    fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productNo: productNo })
-    })
-    .then(res => res.text())
-    .then(msg => {
-        if (msg === "success") {
-            if (isWished) {
-                alert("찜 목록에서 삭제되었습니다.");
-                favoriteIcon.textContent = "favorite_border";
-                favoriteIcon.setAttribute("data-wished", "false");
-                isWished = false;
-            } else {
-                alert("찜 목록에 추가되었습니다.");
-                favoriteIcon.textContent = "favorite";
-                favoriteIcon.setAttribute("data-wished", "true");
-                isWished = true;
-            }
-        } else if (msg === "notLogin") {
-            alert("로그인 후 이용 가능합니다.");
-        } else if (msg === "duplicated") {
-            alert("이미 찜한 상품입니다.");
-        } else {
-            alert(isWished ? "찜 취소 실패" : "찜 목록 추가 실패");
-        }
-    });
-});
+       fetch(url, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify({
+               productNo: productNo,
+               productSize: productSize
+           })
+       })
+       .then(res => res.text())
+       .then(msg => {
+           if (msg === "success") {
+               if (isWished) {
+                   alert("찜 목록에서 삭제되었습니다.");
+                   favoriteIcon.textContent = "favorite_border";
+                   favoriteIcon.setAttribute("data-wished", "false");
+                   isWished = false;
+               } else {
+                   alert("찜 목록에 추가되었습니다.");
+                   favoriteIcon.textContent = "favorite";
+                   favoriteIcon.setAttribute("data-wished", "true");
+                   isWished = true;
+               }
+           } else if (msg === "notLogin") {
+               alert("로그인 후 이용 가능합니다.");
+           } else if (msg === "duplicated") {
+               alert("이미 찜한 상품입니다.");
+           } else {
+               alert(isWished ? "찜 취소 실패" : "찜 목록 추가 실패");
+           }
+       });
+   });
+
 
 </script>
 
