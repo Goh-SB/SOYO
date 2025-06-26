@@ -21,8 +21,6 @@ function ProductEnrollFormComponent() {
       [{ 'font': [] }],
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-
-
       ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],        // toggled buttons
       ['link', 'image'],
 
@@ -48,7 +46,7 @@ function ProductEnrollFormComponent() {
   const [tag, setTag] = useState([]);
   const [productCaption, setProductCaption] = useState('');
   const [productSubTag, setProductSubTag] = useState([]);
-  const [productTag, setProductTag] = useState('');
+  const [productTag, setProductTag] = useState('outer');
 
   const sizes = ['S', 'M', 'L'];
   const subTag = ['자켓', '셔츠', '조끼', '도포', '저고리', '드레스', '원피스', '악세사리', '크롭티', '시스루', '맨투맨'
@@ -104,7 +102,12 @@ function ProductEnrollFormComponent() {
 
       await axios.post(
         url, formData,
-        { headers: { 'content-type': 'multipart/form-data' } }
+        {
+          headers: {
+            'content-type': 'multipart/form-data',
+            Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+          }
+        }
       ).then((response) => {
         if (response.data.success) {
           console.log("이미지 업로드 성공", response.data);
@@ -176,7 +179,10 @@ function ProductEnrollFormComponent() {
     axios({
       url,
       method: "post",
-      data: data
+      data: data,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+      }
     }).then((response) => {
       alert(response.data)
       navigate("/product/list");

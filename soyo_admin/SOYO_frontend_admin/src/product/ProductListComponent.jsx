@@ -39,6 +39,9 @@ function ProductListComponent() {
             method: "get",
             params: {
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data);
@@ -141,6 +144,9 @@ function ProductListComponent() {
             params: {
                 cpage,
                 keyword
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             setState(response.data)
@@ -175,8 +181,11 @@ function ProductListComponent() {
             url,
             method: "get",
             params: {
-                cate : selectCate,
+                cate: selectCate,
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             setState(response.data);

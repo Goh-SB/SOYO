@@ -37,6 +37,9 @@ function MemberListComponent() {
             method: "get",
             params: {
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data.list);
@@ -158,6 +161,9 @@ function MemberListComponent() {
             method: "get",
             params: {
                 memberId
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data)
@@ -179,6 +185,9 @@ function MemberListComponent() {
             method: "get",
             params: {
                 memberId
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data);
@@ -206,6 +215,9 @@ function MemberListComponent() {
                 searchMenu,
                 searchText,
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data)
@@ -253,6 +265,9 @@ function MemberListComponent() {
             params: {
                 cpage: 1,
                 item
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data);

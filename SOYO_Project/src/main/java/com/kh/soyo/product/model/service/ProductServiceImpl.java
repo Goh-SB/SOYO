@@ -49,11 +49,13 @@ public class ProductServiceImpl implements ProductService {
 	
     @Override
     public List<Product> searchProductList(String type, String keyword, PageInfo pi) {
-        Map<String, String> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("type", type);
         paramMap.put("keyword", keyword);
-		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
         return productDao.searchProductList(paramMap, rowBounds);
     }
 
@@ -69,10 +71,32 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int searchProductListCount(String type, String keyword) {
-		Map<String, String> paramMap = new HashMap<>();
+		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("type", type);
 		paramMap.put("keyword", keyword);
 		return productDao.searchProductListCount(paramMap);
+	}
+	
+	@Override
+	public int searchProductListCount(String category, String tag, String keyword) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("category", category);
+		paramMap.put("tag", tag);
+		paramMap.put("keyword", keyword);
+		return productDao.searchProductListCount(paramMap);
+	}
+	
+	@Override
+	public List<Product> searchProductList(String category, String tag, String keyword, PageInfo pi) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("category", category);
+		paramMap.put("tag", tag);
+		paramMap.put("keyword", keyword);
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return productDao.searchProductList(paramMap, rowBounds);
 	}
 	
     @Override
@@ -87,6 +111,19 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> selectSortedProductList(String category, String sort, PageInfo pi) {
         Map<String, Object> param = new HashMap<>();
         param.put("category", category);
+        param.put("sort", sort);
+        
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
+        return productDao.selectSortedProductList(sqlSession, param, rowBounds);
+    }
+    
+    @Override
+    public List<Product> selectSortedProductList(String category, String tagFilter, String sort, PageInfo pi) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("category", category);
+        param.put("tagFilter", tagFilter);
         param.put("sort", sort);
         
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -116,6 +153,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int selectProductListCountByTag(String string) {
 		return productDao.selectProductListCountByTag(string);
+	}
+	
+	@Override
+	public int selectProductListCountForSort(String category, String tagFilter) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("category", category);
+		param.put("tagFilter", tagFilter);
+		return productDao.selectProductListCountForSort(param);
 	}
     
     

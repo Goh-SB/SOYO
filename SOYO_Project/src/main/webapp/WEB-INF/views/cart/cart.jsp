@@ -12,320 +12,511 @@
 
         <!-- 온라인 방식으로 jQuery 연동 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
 
     <style>
-        /* 좌우 여백 */
-        #container {
-            padding-left: 140px;
-            padding-right: 140px;
-        }
-        
-        /* 최상단 문구 관련 스타일 */
-        #default_title {
-            text-align: center;
-            font-size: 40px;
-        }
-
-        /* th 부분 관련 스타일 */
-        table.xans-order thead tr th {
-            border-bottom: 3px inset lightgray;
-
-        }
-
-        table.xans-order th {
-            padding: 30px 0 15px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        /* th 부분 중 '전체선택' 부분 관련 스타일 */
-        table.xans-order th:nth-child(1) {
-            text-align: left;
-            padding: 15px 0 30px;
-        }
-
-        table.xans-order th:nth-child(1) input {
-            margin-right: 10px;
-        }
-
-        /* th 부분 중 '상품명' 관련 스타일 */
-        table.xans-order th:nth-child(2) {
-            text-align: left;
-            padding-left: 65px;
-        }
-
-        /* td 부분 관련 스타일 */
-        table.xans-order td {
-            vertical-align: middle;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        /* td 부분 중 '상품 이미지' 관련 스타일 */
-        table.xans-order th:nth-child(2) {
-            text-align: left;
-            padding-left: 65px;
-        }
-
-        /* td 부분 중 '상품명' 관련 스타일 */
-        table.xans-order td:nth-child(3) {
-            text-align: left;
-            padding-left: 35px;
-        }
-
-        table.xans-order td .ec-product-name {
-            font-size: 18px;
-            line-height: 26px;
-            color: #000000;
-            margin-bottom: 10px;
-        }
-
-        /* td 부분 중 '수량' 관련 스타일 */
-        table.xans-order td .ec-base-qty {
-            position: relative;
-            border: 1px solid #ddd;
-            overflow: hidden;
-            width: 120px;
-            display: flex;
-            align-items: center;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        table.xans-order td .ec-base-qty>button {
-            border: 0;
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #f7f8fa 0%, #e9eaf3 100%);
+            min-height: 100vh;
+            color: #444;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 컨테이너 스타일 */
+        #container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 18px 32px 18px;
             background: #fff;
-            color: #000;
-            width: 30px;
-            height: 30px;
-            font-size: 12px;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(180,180,200,0.08);
+            margin-top: 28px;
+            margin-bottom: 28px;
         }
 
-        table.xans-order td>div>input {
-            border: 1px solid #ddd;
-            border-width: 0 1px !important;
-            height: 30px !important;
-            margin: 0 !important;
-            display: block;
-            width: 100%;
-            padding: 0;
-            flex-grow: 1;
-            flex-basis: 0;
+        /* 페이지 제목 */
+        #default_title {
             text-align: center;
+            margin-bottom: 36px;
+            position: relative;
         }
 
-        /* td 부분 중 '상품 금액' 관련 스타일 */
-        table.xans-order td:last-child strong {
-            font-size: 20px;
-            font-weight: 400;
+        #default_title strong {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #9e9edc 0%, #f4a9d7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* 체크박스 크기 조절 */
-        table.xans-order input[type="checkbox"] {
+        #default_title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 2.5px;
+            background: linear-gradient(90deg, #e3e3f7 0%, #f7c6e6 100%);
+            border-radius: 2px;
+        }
+
+        /* 테이블 스타일 */
+        .xans-order {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #fafaff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(200,200,220,0.07);
+            margin-bottom: 24px;
+        }
+
+        /* 테이블 헤더 */
+        .xans-order thead {
+            background: linear-gradient(90deg, #e3e3f7 0%, #f7c6e6 100%);
+            color: #666666d7;
+        }
+
+        .xans-order th {
+            padding: 16px 10px;
+            font-size: 18.5px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            letter-spacing: 0.5px;
+            font-family: 'NanumSquareRound';
+        }
+
+        .xans-order th:first-child {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .xans-order th:nth-child(2),
+        .xans-order td:nth-child(2) {
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        /* 테이블 바디 */
+        .xans-order td {
+            padding: 18px 10px;
+            text-align: center;
+            border-bottom: 1px solid #f0f1f7;
+            vertical-align: middle;
+            background: #fff;
+        }
+
+        .xans-order td:first-child {
+            text-align: left;
+            padding-left: 18px;
+        }
+
+        .xans-order td:nth-child(3) {
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        /* 상품명 스타일 */
+        .ec-product-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        /* 수량 조절 버튼 */
+        .ec-base-qty {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid #e3e3f7;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 100px;
+            margin: 0 auto;
+            background: #f7f8fa;
+            transition: border 0.2s;
+        }
+
+        .ec-base-qty button {
+            border: none;
+            background: #f7f8fa;
+            color: #b6b6e5;
+            width: 28px;
+            height: 28px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .ec-base-qty button:hover {
+            background: #e3e3f7;
+            color: #a48fd1;
+        }
+
+        .ec-base-qty input {
+            border: none;
+            height: 28px;
+            width: 38px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            background: #f7f8fa;
+            outline: none;
+        }
+
+        /* 가격 스타일 */
+        .xans-order td strong {
+            font-size: 16px;
+            font-weight: 600;
+            color: #a48fd1;
+        }
+
+        /* 체크박스 스타일 */
+        .xans-order input[type="checkbox"] {
             width: 18px;
-            height: 18px;   
+            height: 18px;
+            accent-color: #b6b6e5;
+            cursor: pointer;
         }
 
-        /* 선택상품 삭제 버튼 관련 스타일 */
-        .xans-order-selectorder li {
+        /* 선택상품 삭제 버튼 */
+        .xans-order-selectorder {
+            margin-bottom: 18px;
+        }
+
+        .xans-order-selectorder ul {
+            display: flex;
+            justify-content: flex-end;
             list-style: none;
         }
 
         .xans-order-selectorder a {
-            padding: 5px 10px;
-            border: 1px solid lightgray;
-            color: black;
-
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 20px;
+            background: #ffe3e3;
+            color: #d16d6d;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px rgba(255, 200, 200, 0.08);
         }
 
-        /* 결제예정 건수 관련 스타일 */
+        .xans-order-selectorder a:hover {
+            background: #ffd6d6;
+            color: #b94a4a;
+        }
+
+        /* 결제 예정 금액 섹션 */
+        .xans-order-totalsummary {
+            background: #f7f8fa;
+            border-radius: 16px;
+            padding: 24px 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(200,200,220,0.06);
+        }
+
         .xans-order-totalsummary table {
-            width: 90%;
-            border-top: 1px solid #000;
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .xans-order-totalsummary table th {
-            padding: 15px 20px;
+        .xans-order-totalsummary th {
+            padding: 12px 0;
             text-align: left;
-            font-size: 16px;
-            color: #000;
-            border-bottom: 1px solid #ddd;
+            font-size: 17px;
+            font-weight: 600;
+            color: #444;
+            border-bottom: 1px solid #ececf3;
         }
 
-        .xans-order-totalsummary table th span {
+        .xans-order-totalsummary th span {
+            color: #a48fd1;
             font-weight: 700;
-            color: #00CCCB;
         }
 
-        /* 결제예정금액 관련 스타일 */
-        .xans-order-totalsummary table td:nth-child(1) {
-            width: 160px;
-            padding-left: 250px;
-        }
-
-        .xans-order-totalsummary table td:nth-child(2) {
-            width: 130px;
-        }
-
-        .xans-order-totalsummary table td:last-child {
-            width: 50%;
+        .xans-order-totalsummary td {
+            padding: 14px 0;
             text-align: right;
-            padding-right: 280px;
+            border-bottom: 1px solid #ececf3;
+            font-size: 15px;
         }
 
-        .xans-order-totalsummary table td p {
-            font-size: 14px;
-            line-height: 20px;
-            color: #555555;
-            margin-bottom: 10px;
+        .xans-order-totalsummary td:first-child {
+            text-align: left;
         }
 
-        .xans-order-totalsummary table td strong .sp--font {
-            font-weight: 400;
-            font-size: 22px;
-            line-height: 32px;
+        .xans-order-totalsummary p {
+            font-size: 15px;
+            color: #888;
+            margin-bottom: 6px;
         }
 
-        .xans-order-totalsummary table td #total_order_price_front {
+        .xans-order-totalsummary strong {
+            font-size: 18px;
             font-weight: 700;
-            font-size: 26px;
-            line-height: 38px;
-            color: #e2a6f8;
+            color: #a48fd1;
         }
 
-        /* 주문 버튼 관련 스타일 */
+        /* 주문 버튼 섹션 */
+        .xans-order-totalorder {
+            margin-top: 40px;
+        }
+
         .xans-order-totalorder ul {
-            position: relative;
-            padding-top: 30px;
+            list-style: none;
         }
 
-        .xans-order-totalorder .order-btn {
+        .order-btn {
             display: flex;
             justify-content: center;
-            width: 100%;
-            column-gap: 10px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
-        .xans-order-totalorder .order-btn a {
-            width: 240px;
-            height: 60px;
-            display: flex;
+        .order-btn a {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            line-height: 26px;
-            font-weight: 700;
+            gap: 8px;
+            width: 220px;
+            height: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 24px;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(180,180,200,0.08);
         }
 
-        .xans-order-totalorder .order-btn a:nth-child(1) {
-            background-color: #F3D1F4;
-            color: #fff;
+        .order-btn a:first-child {
+            background: linear-gradient(90deg, #e3e3f7 0%, #f7c6e6 100%);
+            color: #666;
+            border: none;
         }
 
-        .xans-order-totalorder .order-btn a:nth-child(2) {
-            border: 1px solid  #e2a6f8;
-            color:  #e2a6f8;
+        .order-btn a:first-child:hover {
+            background: #f7c6e6;
+            color: #a48fd1;
         }
 
-        /* 버튼 기본 스타일 제거 */
-        div>div>ul>li>a {
-            text-decoration : none;
+        .order-btn a:last-child {
+            background: #fff;
+            color: #a48fd1;
+            border: 1.5px solid #e3e3f7;
+        }
+
+        .order-btn a:last-child:hover {
+            background: #f7f8fa;
+            color: #a48fd1;
+        }
+
+        /* 상품 이미지 스타일 */
+        .product-image {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(200,200,220,0.08);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            #container {
+                margin: 8px;
+                padding: 10px;
+            }
+
+            #default_title strong {
+                font-size: 1.3rem;
+            }
+
+            .xans-order {
+                font-size: 13px;
+            }
+
+            .xans-order th,
+            .xans-order td {
+                padding: 10px 4px;
+            }
+
+            .order-btn {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .order-btn a {
+                width: 100%;
+                max-width: 220px;
+            }
+        }
+
+        /* 애니메이션 효과 */
+        .cart-item {
+            transition: background 0.2s;
+        }
+
+        .cart-item:hover {
+            background: #f7f8fa;
+        }
+
+        /* 로딩 상태 */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* 빈 장바구니 상태 */
+        .empty-cart {
+            text-align: center;
+            padding: 40px 10px;
+            color: #aaa;
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            color: #e3e3f7;
+            margin-bottom: 14px;
+        }
+
+        .empty-cart h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #888;
         }
     </style>
 
     <body>
-    	<script>
-    		
-    	</script>
-        
         <jsp:include page="../common/menubar.jsp" />
         
-        <br><br><br><br>
-        
+        <br><br><br>
+
         <div id="container">
             <div id="default_title">
-                <strong>장바구니</strong>
+                <strong><i class="fas fa-shopping-cart"></i> 장바구니</strong>
             </div>
 
-            <!-- 여백 -->
-            <p space="3xl"></p>
-
             <div id="orderListArea">
-			 <form action="/soyo/cart/paymentCheck" method="get" id="paymentCheck">
-                <table class="xans-element- xans-order xans-order-normnormal xans-record-">
-                    <colgroup>
-                        <col style="width:80px">
-                        <col style="width:120px">
-                        <col style="width:640px">
-                        <col style="width:120px">
-                        <col style="width:120px">
-                        <col style="width:160px">
-                    </colgroup>
+                <form action="/soyo/cart/paymentCheck" method="get" id="paymentCheck">
+                    <table class="xans-order">
+                        <colgroup>
+                            <col style="width:80px">
+                            <col style="width:120px">
+                            <col style="width:auto">
+                            <col style="width:120px">
+                            <col style="width:120px">
+                            <col style="width:160px">
+                        </colgroup>
 
-                    <thead>
-                        <tr>
-                            <th scope="col" colspan="2">
-                            <input type="checkbox" name='animal' onclick="selectAll(this)">전체선택
-                            <th scope="col" direction="left">상품명</th>
-                            <th scope="col">수량</th>
-                            <th scope="col">상품가격</th>
-                            <th scope="col">총 가격</th>
-                        </tr>
-                    </thead>
-                    
-                       <tbody>
-                       	 
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 200px; text-align: left;">
+                                    <div style="display: flex; justify-content: left; align-items: center; gap: 6px;">
+                                        <input type="checkbox" name="animal" onclick="selectAll(this)">
+                                        <span style="margin-left: 5px;">전체선택</span>
+                                    </div>
+                                </th>
+                                <th scope="col">상품이미지</th>
+                                <th scope="col">상품명</th>
+                                <th scope="col">수량</th>
+                                <th scope="col">상품가격</th>
+                                <th scope="col">총 가격</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
                             <c:forEach var="cart" items="${cartList}">
                                 <tr class="cart-item">
-                                
-                                <!-- 체크박스 -->
-                                <td><input type="checkbox" name="productId" value="${cart.productNo}" /></td>
-								<td>${cart.productChange}</td>
-                                <!-- 상품명 -->
-                                <td>${cart.productName}</td>
+                                    <!-- 체크박스 -->
+                                    <td>
+                                        <input type="checkbox" name="productId" value="${cart.productNo}" />
+                                    </td>
+                                    
+                                    <!-- 상품 이미지 -->
+                                    <td>
+                                        <img src="${cart.productChange}" alt="상품이미지" class="product-image" onerror="this.src='https://via.placeholder.com/80x80?text=이미지없음'">
+                                    </td>
+                                    
+                                    <!-- 상품명 -->
+                                    <td>
+                                        <div class="ec-product-name">${cart.productName}</div>
+                                    </td>
 
-                                <!-- 수량 -->
-                               <td>
-                                	<div class="ec-base-qty">
-	                                    <button type="button" onclick="count('minus', this)">－</button>
-	                                 	   <input type="number" name="pop_out" class="pop_out" value="1"/>
-	                                    <button type="button" onclick="count('plus', this)">＋</button>
-	                                </div>
-	                            </td>
+                                    <!-- 수량 -->
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <button type="button" onclick="count('minus', this)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" name="pop_out" class="pop_out" value="1" min="1"/>
+                                            <button type="button" onclick="count('plus', this)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </td>
 
-                                <!-- 옵션 -->
-                                <td>${cart.productPrice }원</td>
+                                    <!-- 상품가격 -->
+                                    <td>
+                                        <strong>${cart.productPrice}원</strong>
+                                    </td>
 
-                                <!-- 상품금액 = 수량 * 단가 -->
-                                
-                                <td>
-						            <strong class="item-total-price">0원</strong>
-						        </td>
-														
+                                    <!-- 총 가격 -->
+                                    <td>
+                                        <strong class="item-total-price">0원</strong>
+                                    </td>
                                 </tr>
                             </c:forEach>
-                           
-                         </tbody>
-                      </table>
-                      </form>
-    
-                <div class="xans-element- xans-order xans-order-selectorder">
+                        </tbody>
+                    </table>
+                </form>
+
+                <!-- 선택상품 삭제 버튼 -->
+                <div class="xans-order-selectorder">
                     <ul>
-                        <li flex="0">
-					      <a href="#none" onclick="deleteSelected()">
-							    <span>선택상품 삭제</span>
-							</a>
+                        <li>
+                            <a href="#none" onclick="deleteSelected()">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>선택상품 삭제</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
-                <br>                    
+
                 <!-- 결제 예정 금액 표시 -->
-                <div class="xans-element- xans-order xans-order-totalsummary">
-                    <table class="sp--table">
+                <div class="xans-order-totalsummary">
+                    <table>
                         <thead>                       
                             <tr>
-                                <th scope="col" colspan="4" class="xans-element- xans-order xans-order-normtitle">
-                                    결제예정 총 <span>${fn:length(cartList)}</span>건
+                                <th scope="col" colspan="2">
+                                    <i class="fas fa-receipt"></i> 결제예정 총 <span>${fn:length(cartList)}</span>건
                                 </th>
                             </tr>                        
                         </thead>
@@ -333,21 +524,19 @@
                             <tr>
                                 <td>
                                     <div class="box shipping txt16">
+                                        <p>배송비</p>
                                         <strong>
-                                            <span id="total_delv_price_front" class="sp--font" scale="3xl">
-                                                <span class="total_delv_price_front"></span> </span>
+                                            <span id="total_delv_price_front">
+                                                <span class="total_delv_price_front">무료</span>
+                                            </span>
                                         </strong>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="sp--font">
-                                        <p>
-                                            결제예정금액
-                                        </p>
+                                    <div>
+                                        <p>결제예정금액</p>
                                         <strong>
-                                            <span id="total_order_price_front" class="sp--font" scale="3xl">
-                                             원
-                                            </span>
+                                            <span id="total_order_price_front">0원</span>
                                         </strong>
                                     </div>
                                 </td>
@@ -356,201 +545,204 @@
                     </table>
                 </div>
 
-                <!-- 결제 예정 금액 표시 -->
-                <div class="xans-element- xans-order xans-order-totalorder">
+                <!-- 주문 버튼 -->
+                <div class="xans-order-totalorder">
                     <ul>
                         <li class="order-btn">
-						 	<a href="#none" onclick="submitAll()">
-                           		전체상품 주문
-                           	</a>
-
-                           <a href="#none" onclick="submitSelect(event)">
-                           		선택상품 주문
-                           	</a>
+                            <a href="#none" onclick="submitAll()">
+                                <i class="fas fa-shopping-bag"></i>
+                                전체상품 주문
+                            </a>
+                            <a href="#none" onclick="submitSelect(event)">
+                                <i class="fas fa-check-circle"></i>
+                                선택상품 주문
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-         <br><br><br>
-         <jsp:include page="../common/footer.jsp" />
-    </body>
 
-    <script>
-        /* 상품 수량 증감용 함수 */
-		function count(type, ths) {
-	    const $input = $(ths).closest("td").find(".pop_out");
-	    let currentCount = $input.val();
+        <br>
 
-	    // 수량 증감
-	    if (type === 'plus') {
-	        currentCount++;
-	        updateSelectedTotal();
-	    } else {
-	        if (currentCount > 1) currentCount--;
-	        updateSelectedTotal();
-	    }
-	
-	    $input.val(currentCount); // input에 새 값 반영
-	
-	    const $row = $(ths).closest("tr");
-	    const productNo = parseInt($row.find("input[name='productId']").val());
-	
-	    
-	    // AJAX로 수량만 업데이트 (가격은 반영 안 함)
-	    $.ajax({
-	        type: "POST",
-	        url: "/soyo/cart/update",
-	        data: {
-	            productNo: productNo,
-	            productCount: currentCount
-	        },
+        <jsp:include page="../common/footer.jsp" />
 
-	        success: function (result) {
-	        	
-	        	updateSelectedTotal();
+        <script>
+            // 기존 JavaScript 코드는 그대로 유지
+            /* 상품 수량 증감용 함수 */
+            function count(type, ths) {
+                const $input = $(ths).closest("td").find(".pop_out");
+                let currentCount = $input.val();
 
-	        },
-	        error: function () {
-	            console.log("ajax통신실패");
-	        }
-	    });
-	
-	    // 선택된 상품 총합 갱신
-	    updateSelectedTotal();
-	}
-		
-
-        /* 전체 체크용 함수 */
-        function selectAll(selectAll)  {
-        	 const checkboxes = document.querySelectorAll('input[name="productId"]');
+                // 수량 증감
+                if (type === 'plus') {
+                    currentCount++;
+                    updateSelectedTotal();
+                } else {
+                    if (currentCount > 1) currentCount--;
+                    updateSelectedTotal();
+                }
             
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = selectAll.checked;
-            })
+                $input.val(currentCount); // input에 새 값 반영
             
-            updateSelectedTotal();
-        }
-        
-        $(document).ready(function () {
-            $('input[name="productId"]').on('change', function () {
+                const $row = $(ths).closest("tr");
+                const productNo = parseInt($row.find("input[name='productId']").val());
+            
+                
+                // AJAX로 수량만 업데이트 (가격은 반영 안 함)
+                $.ajax({
+                    type: "POST",
+                    url: "/soyo/cart/update",
+                    data: {
+                        productNo: productNo,
+                        productCount: currentCount
+                    },
+
+                    success: function (result) {
+                        updateSelectedTotal();
+                    },
+                    error: function () {
+                        console.log("ajax통신실패");
+                    }
+                });
+            
+                // 선택된 상품 총합 갱신
+                updateSelectedTotal();
+            }
+
+            /* 전체 체크용 함수 */
+            function selectAll(selectAll)  {
+                 const checkboxes = document.querySelectorAll('input[name="productId"]');
+                    
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = selectAll.checked;
+                })
+                
+                updateSelectedTotal();
+            }
+            
+            $(document).ready(function () {
+                $('input[name="productId"]').on('change', function () {
+                    updateSelectedTotal();
+                });
+                
+                // 페이지 로드 시 초기 계산
                 updateSelectedTotal();
             });
-        });
-        
-        function updateSelectedTotal() {
-            let total = 0;
-            let details = "";
-			
-		
-            $('input[name="productId"]:checked').each(function () {
-                const $row = $(this).closest("tr");
-                const priceText = $row.find("td").eq(4).text();
-                //console.log(priceText);
-                const cartCount = parseInt($row.find("td>div input").val());
-                const numericPrice = parseInt(priceText.replace(/[^0-9]/g, ""));
-                //console.log(numericPrice);
+            
+            function updateSelectedTotal() {
+                let total = 0;
+                let details = "";
                 
-                let itemTotal = numericPrice * cartCount;
-                total += itemTotal;
-                
-                $row.find(".item-total-price").text(itemTotal.toLocaleString('ko-KR') + "원");
+                $('input[name="productId"]:checked').each(function () {
+                    const $row = $(this).closest("tr");
+                    const priceText = $row.find("td").eq(4).text();
+                    const cartCount = parseInt($row.find("td>div input").val());
+                    const numericPrice = parseInt(priceText.replace(/[^0-9]/g, ""));
+                    
+                    let itemTotal = numericPrice * cartCount;
+                    total += itemTotal;
+                    
+                    $row.find(".item-total-price").text(itemTotal.toLocaleString('ko-KR') + "원");
+                    
+                    // 가격 상세 항목
+                    details += "<p>"+ itemTotal.toLocaleString('ko-KR') + "원" + "</p>"
+                    $(".totalPrice").html(details);
+                });
 
-                
-                // 가격 상세 항목
-              	details += "<p>"+ itemTotal.toLocaleString('ko-KR') + "원" + "</p>"
-                $(".totalPrice").html(details);
-                
-            });
-
-            $('#total_order_price_front').text(total.toLocaleString('ko-KR') + ' 원');                    
-        }
-        
-        function deleteSelected() {
-            let productNoList = [];
-
-            $('input[name="productId"]:checked').each(function () {
-                productNoList.push($(this).val());
-            });
-
-            if (productNoList.length === 0) {
-                alert("삭제할 상품을 선택하세요");
-                return;
+                $('#total_order_price_front').text(total.toLocaleString('ko-KR') + ' 원');                    
             }
+            
+            function deleteSelected() {
+                let productNoList = [];
 
-            if (!confirm("선택한 상품을 삭제하시겠습니까?")) return;
+                $('input[name="productId"]:checked').each(function () {
+                    productNoList.push($(this).val());
+                });
 
-            $.ajax({
-                type: "POST",
-                url: "/soyo/cart/delete",
-                traditional: true,
-                data: { 
-                    productNoList: productNoList 
-                },
-                success: function(result) {
-                    if (result === "성공") {
-                        $('input[name="productId"]:checked').each(function () {
-                            $(this).closest("tr").remove();
-                        });
-                        updateSelectedTotal();
-                        alert("선택된 상품이 삭제되었습니다");
-                    } else {
-                        alert("서버에서 삭제에 실패했습니다.");
-                    }
-                },
-                error: function () {
-                    console.log("ajax통신실패");
+                if (productNoList.length === 0) {
+                    alert("삭제할 상품을 선택하세요");
+                    return;
                 }
-            });
-        }
-        
-        function submitSelect(event){     	
-            event.preventDefault();
 
-            let productNoList = [];
-            let productCountList = [];
+                if (!confirm("선택한 상품을 삭제하시겠습니까?")) return;
 
-            $('input[name="productId"]:checked').each(function () {
-                const $row = $(this).closest("tr");
-                const count = parseInt($row.find(".pop_out").val());
+                $.ajax({
+                    type: "POST",
+                    url: "/soyo/cart/delete",
+                    traditional: true,
+                    data: { 
+                        productNoList: productNoList 
+                    },
+                    success: function(result) {
+                        if (result === "성공") {
+                            $('input[name="productId"]:checked').each(function () {
+                                $(this).closest("tr").remove();
+                            });
+                            updateSelectedTotal();
+                            alert("선택된 상품이 삭제되었습니다");
+                        } else {
+                            alert("서버에서 삭제에 실패했습니다.");
+                        }
+                    },
+                    error: function () {
+                        console.log("ajax통신실패");
+                    }
+                });
+            }
+            
+            function submitSelect(event){     	
+                event.preventDefault();
 
-                productNoList.push($(this).val());
-                productCountList.push(count);
-            });
+                let productNoList = [];
+                let productCountList = [];
 
-            if (productNoList.length === 0) {
-                alert("구매할 상품을 선택하세요");
-                return;
+                $('input[name="productId"]:checked').each(function () {
+                    const $row = $(this).closest("tr");
+                    const count = parseInt($row.find(".pop_out").val());
+
+                    productNoList.push($(this).val());
+                    productCountList.push(count);
+                });
+
+                if (productNoList.length === 0) {
+                    alert("구매할 상품을 선택하세요");
+                    return;
+                }
+
+                $('#paymentCheck input[name="productNoList"]').remove();
+                $('#paymentCheck input[name="productCountList"]').remove();
+
+                // 상품 번호 input 추가
+                productNoList.forEach(function(productNo) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'productNoList',
+                        value: productNo
+                    }).appendTo('#paymentCheck');
+                });
+
+                // 상품 수량 input 추가
+                productCountList.forEach(function(count) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'productCountList',
+                        value: count
+                    }).appendTo('#paymentCheck');
+                });
+
+                $('#paymentCheck').submit(); 
             }
 
-            $('#paymentCheck input[name="productNoList"]').remove();
-            $('#paymentCheck input[name="productCountList"]').remove();
-
-            // 상품 번호 input 추가
-            productNoList.forEach(function(productNo) {
-                $('<input>').attr({
-                    type: 'hidden',
-                    name: 'productNoList',
-                    value: productNo
-                }).appendTo('#paymentCheck');
-            });
-
-            // 상품 수량 input 추가 ✅
-            productCountList.forEach(function(count) {
-                $('<input>').attr({
-                    type: 'hidden',
-                    name: 'productCountList',
-                    value: count
-                }).appendTo('#paymentCheck');
-            });
-
-            $('#paymentCheck').submit(); 
-        }
-
-        
-        
-
-    </script>
+            // 전체상품 주문 함수 (기존 기능 유지)
+            function submitAll() {
+                // 모든 상품을 선택하고 주문 진행
+                $('input[name="productId"]').prop('checked', true);
+                updateSelectedTotal();
+                submitSelect(new Event('click'));
+            }
+        </script>
+    </body>
 </html>
 
 

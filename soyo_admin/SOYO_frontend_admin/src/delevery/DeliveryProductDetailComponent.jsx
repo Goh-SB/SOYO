@@ -20,7 +20,10 @@ function DeliveryProductDetailComponent(){
 
         axios({
             url,
-            method:"get"
+            method:"get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
         }).then((response)=>{
             console.log(response.data);
             setProduct(response.data); 

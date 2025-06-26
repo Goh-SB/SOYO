@@ -35,9 +35,9 @@ function NoticeEnrollFormComponent() {
             method: "post",
             data: formData,
             headers: {
-                "Content-Type": "multipart/form-data"
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
-
         }).then((response) => {
             console.log(response.data);
             navigate("/notice/list");

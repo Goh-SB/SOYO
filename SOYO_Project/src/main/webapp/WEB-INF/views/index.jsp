@@ -624,7 +624,7 @@
                 <div class="hero-content">
                     <h2>한복의 새로운 스타일</h2>
                     <p>오방색의 아름다움을 감각적으로 재해석해<br>당신의 일상에 부드럽게 스며든 한복 컬렉션</p>
-                    <a href="#collections" class="cta-button">컬렉션 보기</a>
+                    <a href="<c:url value='/celeb' />" class="cta-button">컬렉션 보기</a>
                 </div>
             </div>
         </section>

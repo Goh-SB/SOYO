@@ -16,7 +16,10 @@ function OrderDetailComponent() {
 
         axios({
             url,
-            method : "get"
+            method : "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
         }).then((response)=>{
             console.log(response);
             setOrder(response.data[0]);

@@ -1,4 +1,4 @@
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./DeliveryComponent.css";
@@ -22,6 +22,9 @@ function DeliveryComponent() {
             method: "get",
             params: {
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data);
@@ -41,6 +44,9 @@ function DeliveryComponent() {
             params: {
                 orderNo,
                 orderStatus
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response);

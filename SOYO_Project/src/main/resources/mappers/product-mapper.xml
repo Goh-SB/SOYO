@@ -54,18 +54,23 @@
   </select>
   
 	<select id="searchProductList" resultMap="productMap">
-	  SELECT * FROM PRODUCT
-	  WHERE STATUS = 'Y'
-	  <if test="type != null and type != '' and type != 'all'">
-	    AND PRODUCT_CATEGORY = 
-	    <choose>
-	      <when test="type == 'mens'"> '남성' </when>
-	      <when test="type == 'womens'"> '여성' </when>
-	      <when test="type == 'kids'"> '아동' </when>
-	      <when test="type == 'accessory'"> '악세사리' </when>
-	    </choose>
-	  </if>
-	  AND PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+		SELECT * FROM PRODUCT
+		WHERE STATUS = 'Y'
+		<if test="category != null and category != ''">
+			AND PRODUCT_CATEGORY = #{category}
+		</if>
+		<if test="tag != null and tag != ''">
+			AND PRODUCT_TAG = #{tag}
+		</if>
+		<if test="type != null and type != '' and type != 'all'">
+			<choose>
+				<when test="type eq 'mens'">AND PRODUCT_CATEGORY = '남성'</when>
+				<when test="type eq 'womens'">AND PRODUCT_CATEGORY = '여성'</when>
+				<when test="type eq 'kids'">AND PRODUCT_CATEGORY = '아동'</when>
+				<when test="type eq 'accessory'">AND PRODUCT_CATEGORY = '악세사리'</when>
+			</choose>
+		</if>
+		AND PRODUCT_NAME LIKE CONCAT(CONCAT('%', #{keyword}), '%')
 	</select>
 
 	<select id="selectProductListCount" resultType="_int">
@@ -88,21 +93,39 @@
 		AND STATUS = 'Y'
 	</select>
   
+	<select id="selectProductListCountForSort" parameterType="map" resultType="_int">
+		SELECT COUNT(*) 
+		FROM PRODUCT
+		WHERE STATUS = 'Y'
+		<if test="category != null">
+			AND PRODUCT_CATEGORY = #{category}
+		</if>
+		<if test="tagFilter != null">
+			AND PRODUCT_TAG = #{tagFilter}
+		</if>
+	</select>
+	
 	<select id="searchProductListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM PRODUCT
 		WHERE STATUS = 'Y'
+		<if test="category != null and category != ''">
+			AND PRODUCT_CATEGORY = #{category}
+		</if>
+		<if test="tag != null and tag != ''">
+			AND PRODUCT_TAG = #{tag}
+		</if>
 		<if test="type != null and type != '' and type != 'all'">
-			AND PRODUCT_CATEGORY =
 			<choose>
-				<when test="type == 'mens'"> '남성' </when>
-				<when test="type == 'womens'"> '여성' </when>
-				<when test="type == 'kids'"> '아동' </when>
-				<when test="type == 'accessory'"> '악세사리' </when>
+				<when test="type eq 'mens'">AND PRODUCT_CATEGORY = '남성'</when>
+				<when test="type eq 'womens'">AND PRODUCT_CATEGORY = '여성'</when>
+				<when test="type eq 'kids'">AND PRODUCT_CATEGORY = '아동'</when>
+				<when test="type eq 'accessory'">AND PRODUCT_CATEGORY = '악세사리'</when>
 			</choose>
 		</if>
-		AND PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+		AND PRODUCT_NAME LIKE CONCAT(CONCAT('%', #{keyword}), '%')
 	</select>
+
 	
 	
 	<select id="selectSortedProductList" resultMap="productMap" parameterType="map">
@@ -126,8 +149,13 @@
 	        FROM WISH_LIST
 	        GROUP BY PRODUCT_NO
 	    ) L ON P.PRODUCT_NO = L.PRODUCT_NO
-	    WHERE P.PRODUCT_CATEGORY = #{category}
-	      AND P.STATUS = 'Y'
+	    WHERE P.STATUS = 'Y'
+	    <if test="category != null">
+	      AND P.PRODUCT_CATEGORY = #{category}
+	    </if>
+	    <if test="tagFilter != null">
+	      AND P.PRODUCT_TAG = #{tagFilter}
+	    </if>
 	    <choose>
 	        <when test="sort == 'popular'">
 	            ORDER BY NVL(L.LIKE_COUNT, 0) DESC

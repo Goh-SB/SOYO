@@ -20,8 +20,12 @@ function Chart1() {
         let url = "http://192.168.40.32:8100/soyo/member/chart1";
         axios({
             url,
-            method: "get"
-        }).then((response) => { const data = response.data;
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
+        }).then((response) => {
+            const data = response.data;
             const chartData = [['분기별 회원가입', '가입 수']];
 
             data.forEach(item => {
@@ -134,7 +138,10 @@ function Chart3() {
         let url = "http://192.168.40.32:8100/soyo/member/chart3";
         axios({
             url,
-            method: "get"
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
         }).then((response) => {
             setMemberData(response.data);
         }).catch(() => { })

@@ -26,6 +26,9 @@ function ReviewListComponent() {
             method: "get",
             params: {
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
 
         }).then((response) => {
@@ -168,6 +171,9 @@ function ReviewListComponent() {
             method: "get",
             params: {
                 reviewNo
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             alert(response.data);
@@ -182,6 +188,9 @@ function ReviewListComponent() {
             method: "get",
             params: {
                 reviewNo
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             alert(response.data);
