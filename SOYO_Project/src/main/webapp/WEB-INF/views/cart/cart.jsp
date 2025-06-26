@@ -34,6 +34,13 @@
             color: #444;
         }
 
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         /* 컨테이너 스타일 */
         #container {
             max-width: 1100px;
@@ -89,21 +96,22 @@
         /* 테이블 헤더 */
         .xans-order thead {
             background: linear-gradient(90deg, #e3e3f7 0%, #f7c6e6 100%);
-            color: #666;
+            color: #666666d7;
         }
 
         .xans-order th {
             padding: 16px 10px;
-            font-size: 17px;
-            font-weight: 500;
+            font-size: 18.5px;
+            font-weight: 600;
             text-align: center;
             border: none;
             letter-spacing: 0.5px;
+            font-family: 'NanumSquareRound';
         }
 
         .xans-order th:first-child {
             text-align: left;
-            padding-left: 18px;
+            padding-left: 20px;
         }
 
         .xans-order th:nth-child(2),
@@ -244,7 +252,7 @@
         .xans-order-totalsummary th {
             padding: 12px 0;
             text-align: left;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
             color: #444;
             border-bottom: 1px solid #ececf3;
@@ -267,7 +275,7 @@
         }
 
         .xans-order-totalsummary p {
-            font-size: 13px;
+            font-size: 15px;
             color: #888;
             margin-bottom: 6px;
         }
@@ -433,7 +441,7 @@
                                 <th scope="col" style="width: 200px; text-align: left;">
                                     <div style="display: flex; justify-content: left; align-items: center; gap: 6px;">
                                         <input type="checkbox" name="animal" onclick="selectAll(this)">
-                                        <span>전체선택</span>
+                                        <span style="margin-left: 5px;">전체선택</span>
                                     </div>
                                 </th>
                                 <th scope="col">상품이미지</th>
