@@ -32,7 +32,7 @@ public class ProductDao {
 		return sqlSession.selectList("productMapper.selectProductListByCategory", category, rowBounds);
 	}
 
-    public List<Product> searchProductList(Map<String, String> paramMap, RowBounds rowBounds) {
+    public List<Product> searchProductList(Map<String, Object> paramMap, RowBounds rowBounds) {
         return sqlSession.selectList("productMapper.searchProductList", paramMap, rowBounds);
     }
 
@@ -44,7 +44,7 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectProductListCountByCategory", category);
 	}
 
-	public int searchProductListCount(Map<String, String> paramMap) {
+	public int searchProductListCount(Map<String, Object> paramMap) {
 		return sqlSession.selectOne("productMapper.searchProductListCount", paramMap);
 	}
 	
@@ -81,5 +81,8 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectProductListCountByTag", string);
 	}
 
+	public int selectProductListCountForSort(Map<String, Object> param) {
+		return sqlSession.selectOne("productMapper.selectProductListCountForSort", param);
+	}
 
 }

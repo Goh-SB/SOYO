@@ -125,8 +125,8 @@
     }
 
     .product-img img {
-        width: 120px;
-        height: 120px;
+        width: 100%;
+        height: 160px;
         border-radius: 10px;
         object-fit: cover;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -157,6 +157,7 @@
 
     .review-actions {
         display: flex;
+        justify-content: right;
         gap: 10px;
     }
 
@@ -507,7 +508,7 @@
                                     </div>
                                     <div class="review-content-wrapper">
                                         <div class="product-img">
-                                            <img src="${r.reviewThumbnailChange}" alt="${r.productName}">
+                                            <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${r.productChange}" alt="${r.productName}">
                                         </div>
                                         <div class="review-details">
                                             <div class="ratingbar">
