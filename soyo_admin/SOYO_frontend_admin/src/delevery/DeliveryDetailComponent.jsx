@@ -24,7 +24,10 @@ function DeliveryDetailComponent(){
 
         axios({
             url,
-            method: "get"
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
 
         }).then((response) => {
 

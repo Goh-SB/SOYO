@@ -25,46 +25,50 @@ function App() {
 
   // sessionStorage 에 있던 값을 뽑아서 state 변수로 셋팅
   let [loginUser, setLoginUser]
-      = useState(sessionStorage.getItem("loginUser"));
-  
+    = useState(sessionStorage.getItem("loginUser"));
 
-  // return 구문
-  return (
-    <div id="main">
-     
-      {/* 메뉴 */}
-      <MenuComponent />
-      {/* content */}
-      <br />
-      <Routes>
-        <Route path="/" element={<Home loginUser={ loginUser } setLoginUser={ setLoginUser } />} />
-        <Route path="/member/list" element={<MemberListComponent />} />
-        <Route path="/notice/list" element={<NoticeListComponent />} />
-        <Route path="/member/detail/:memberId" element={<MemberDetailComponent />} /> 
-        <Route path="/notice/detail/:noticeNo" element={<NoticeDetailComponent />} />
-        <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent /> } />
-        <Route path="/delivery" element={<DeliveryComponent/>} />
-        <Route path="/product/list" element={ <ProductListComponent/>} />
-        <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent/>} />
-        <Route path="/product/enrollForm" element={ <ProductEnrollFormComponent /> }/>
-        <Route path="/order/list" element={<OrderListComponent/>}/>
-        <Route path="/product/detail" element={<ProductDetailComponent />} />
-        <Route path="/product/detail/:productNo" element={<ProductDetailComponent />} />
-        <Route path="/order/:memberId/:productNo" element={<OrderDetailComponent />} />
-        <Route path="/order/:memberId" element={ <OrderDetailComponent/>}/>
-        <Route path="/review/list" element={ <ReviewListComponent />} />
-      </Routes> 
-      {/* footer? */}
+  if (loginUser == null) {
 
-
-
-      <div>
-
-       
+    // return 구문
+    return (
+      <div id="main">
+        {/* 메뉴 */}
+        <MenuComponent />
+        {/* content */}
+        <br />
+        <Routes>
+          <Route path="/" element={<Home loginUser={loginUser} setLoginUser={setLoginUser} />} />
+        </Routes>
+        {/* footer? */}
       </div>
-
-    </div>
-  )
+    )
+  }
+  else {
+    return (
+      <div id="main">
+        <MenuComponent loginUser={loginUser} setLoginUser={setLoginUser}/>
+        <br />
+        <Routes>
+          <Route path="/" element={<Home loginUser={loginUser} setLoginUser={setLoginUser} />} />
+          <Route path="/member/list" element={<MemberListComponent />} />
+          <Route path="/notice/list" element={<NoticeListComponent />} />
+          <Route path="/member/detail/:memberId" element={<MemberDetailComponent />} />
+          <Route path="/notice/detail/:noticeNo" element={<NoticeDetailComponent />} />
+          <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent />} />
+          <Route path="/delivery" element={<DeliveryComponent />} />
+          <Route path="/product/list" element={<ProductListComponent />} />
+          <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent />} />
+          <Route path="/product/enrollForm" element={<ProductEnrollFormComponent />} />
+          <Route path="/order/list" element={<OrderListComponent />} />
+          <Route path="/product/detail" element={<ProductDetailComponent />} />
+          <Route path="/product/detail/:productNo" element={<ProductDetailComponent />} />
+          <Route path="/order/:memberId/:productNo" element={<OrderDetailComponent />} />
+          <Route path="/order/:memberId" element={<OrderDetailComponent />} />
+          <Route path="/review/list" element={<ReviewListComponent />} />
+        </Routes>
+      </div>
+    )
+  }
 }
 
 export default App

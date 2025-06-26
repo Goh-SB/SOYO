@@ -20,7 +20,10 @@ function MemberDetailComponent() {
 
         axios({
             url,
-            method: "get"
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
 
         }).then((response) => {
             // console.log(response.data);
@@ -71,6 +74,9 @@ function MemberDetailComponent() {
                 phone,
                 address,
                 email
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             alert(response.data);

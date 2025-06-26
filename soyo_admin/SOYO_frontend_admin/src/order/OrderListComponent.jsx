@@ -13,7 +13,10 @@ function OrderListComponent(){
 
         axios({
             url,
-            method : "get"
+            method : "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
         }).then((response)=>{
  
             setDataList(response.data);
@@ -30,6 +33,9 @@ function OrderListComponent(){
             method : "get",
             params : {
                 memberName
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response)=>{
             setDataList(response.data);

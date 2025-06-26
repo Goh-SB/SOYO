@@ -19,7 +19,10 @@ function NoticeDetailComponent() {
 
         axios({
             url,
-            method: "get"
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
         }).then((response) => {
 
             // selectNotice(response.data);
@@ -75,16 +78,12 @@ function NoticeDetailComponent() {
                             <img id="fileImg" src={`http://192.168.40.32:8100/soyo/resources/notice_upfile/${dataList.noticeImage}`} />
                             <br /><br />
                             <p id="noticeContent">{dataList.noticeContent}
-
                             </p>
                         </td>
                     </tr>
                 </tbody>
-
-
             </table>
             <br /><br />
-
         </div>
 
     );

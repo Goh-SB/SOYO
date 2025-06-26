@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { Chart1, Chart2, Chart3} from './dashboard/Chart';
 import './Home.css';
+import { useState } from 'react';
 
 function Home (props) {
 
@@ -57,17 +58,17 @@ function Home (props) {
     };
 
     // 로그아웃 버튼 클릭 시 실행할 함수
-    const logout = () => {
+    // const logout = () => {
 
-        alert("로그아웃 되었습니다.");
+    //     alert("로그아웃 되었습니다.");
 
-        // sessionStorage 에 담긴 로그인한 회원 정보 제거
-        sessionStorage.removeItem("loginUser");
+    //     // sessionStorage 에 담긴 로그인한 회원 정보 제거
+    //     sessionStorage.removeItem("loginUser");
 
-        // 반대로 로그인 전 화면이 보여져야 하므로
-        setLoginUser(null);
+    //     // 반대로 로그인 전 화면이 보여져야 하므로
+    //     setLoginUser(null);
 
-    };
+    // };
 
     // return 구문
     if(loginUser != null) {
@@ -79,10 +80,10 @@ function Home (props) {
 
                 <br />
 
-                <button id='logout-btn' className="btn btn-primary btn-bg btn-block"
+                {/* <button id='logout-btn' className="btn btn-primary btn-bg btn-block"
                         onClick={ logout }>
                     로그아웃
-                </button>
+                </button> */}
 
                 <br /><br />
 

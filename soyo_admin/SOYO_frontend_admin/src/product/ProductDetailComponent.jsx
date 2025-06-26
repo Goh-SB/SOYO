@@ -51,7 +51,7 @@ function ProductDetailComponent() {
   const [tag, setTag] = useState([]);
   const [productCaption, setProductCaption] = useState('');
   const [productSubTag, setProductSubTag] = useState([]);
-  const [productTag, setProductTag] = useState('');
+  const [productTag, setProductTag] = useState('outer');
 
   const sizes = ['S', 'M', 'L'];
   const subTag = ['자켓', '셔츠', '조끼', '도포', '저고리', '드레스', '원피스', '악세사리', '크롭티', '시스루', '맨투맨'
@@ -113,7 +113,10 @@ function ProductDetailComponent() {
 
         await axios
           .post(uploadUrl, formData, {
-            headers: { "content-type": "multipart/form-data" },
+            headers: {
+              "content-type": "multipart/form-data",
+              Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+            }
           })
           .then((response) => {
             if (response.data.success) {
@@ -169,25 +172,28 @@ function ProductDetailComponent() {
     thumbnail.files.length && data.append('thumbnail', thumbnail.files[0]);
     subThumbnail.files.length && data.append('subThumbnail', subThumbnail.files[0]);
 
-    console.log("최종본 : ", data);
+    // console.log("최종본 : ", data);
 
-    console.log("이거이거", thumbnail.files.length)
-    console.log("productPrice", productPrice)
-    console.log("productName", productName)
-    console.log("productSubCaption", endContent)
-    console.log("productStock", productStock)
-    console.log("productSize", productSize)
-    console.log("productCategory", productCategory)
-    console.log("imageList", urlArray)
-    console.log("productTag", productTag);
-    console.log('subThumbnail', subThumbnail.files.length);
-    console.log("productSubTag", productSubTag);
+    // console.log("이거이거", thumbnail.files.length)
+    // console.log("productPrice", productPrice)
+    // console.log("productName", productName)
+    // console.log("productSubCaption", endContent)
+    // console.log("productStock", productStock)
+    // console.log("productSize", productSize)
+    // console.log("productCategory", productCategory)
+    // console.log("imageList", urlArray)
+    // console.log("productTag", productTag);
+    // console.log('subThumbnail', subThumbnail.files.length);
+    // console.log("productSubTag", productSubTag);
 
     let url = "http://192.168.40.32:8100/soyo/product/update";
     axios({
       url,
       method: "post",
-      data: data
+      data: data,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+      }
     }).then((response) => {
       console.log(response.data);
       alert(response.data);
@@ -213,7 +219,7 @@ function ProductDetailComponent() {
 
   }, [productSize]);
 
-  useEffect(()=>{
+  useEffect(() => {
     tagfunc();
   }, [productSubTag]);
 
@@ -222,7 +228,10 @@ function ProductDetailComponent() {
     let url = "http://192.168.40.32:8100/soyo/product/detail/" + productNo;
     axios({
       url,
-      method: "get"
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
+      }
     }).then((response) => {
 
       // console.log(response.data)
@@ -245,7 +254,9 @@ function ProductDetailComponent() {
         params: {
           productNo,
           productSize
-
+        },
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
         }
       }).then((response) => {
         // console.log(response.data.productStock);
@@ -292,8 +303,8 @@ function ProductDetailComponent() {
       return (
         <label className="form-check-label" key={index}>
           <input type="checkbox" className="form-check-input" value={item}
-          checked={productSubTag.includes(item)}
-          onChange={subTagChange} />
+            checked={productSubTag.includes(item)}
+            onChange={subTagChange} />
           {item}
         </label>
       );
