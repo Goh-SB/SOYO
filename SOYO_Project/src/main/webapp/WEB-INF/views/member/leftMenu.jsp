@@ -48,7 +48,6 @@
      <img width="150px" src="/soyo/resources/images/real-soyo-logo.png" alt="">
      <ul id="left-MenuList">
          <li><a href="../member/myOrderPage">주문/배송조회</a></li>
-         <li><a href="../member/myWishList">찜한 상품</a></li>
          <li><a href="../member/myPageMyReview">내 리뷰</a></li>
          <li><a href="">배송지 관리</a></li>
          <li><a href="../member/myInformation">내 정보</a></li>

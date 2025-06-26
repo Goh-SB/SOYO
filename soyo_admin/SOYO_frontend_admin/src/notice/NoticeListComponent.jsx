@@ -34,6 +34,9 @@ function NoticeListComponent() {
             method: "get",
             params: {
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
 
@@ -165,6 +168,9 @@ function NoticeListComponent() {
             method: "get",
             params: {
                 noticeNo
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             console.log("삭제 성공")
@@ -181,6 +187,9 @@ function NoticeListComponent() {
             method: "get",
             params: {
                 noticeNo
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data);
@@ -219,6 +228,9 @@ function NoticeListComponent() {
             params: {
                 item,
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => { 
             setState(response.data);
@@ -237,6 +249,9 @@ function NoticeListComponent() {
                 keyword,
                 noticeMenu,
                 cpage
+            },
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response.data);

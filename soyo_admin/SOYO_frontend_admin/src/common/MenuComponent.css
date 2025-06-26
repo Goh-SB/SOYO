@@ -76,12 +76,17 @@
 }
 
 #hide-side-menu:hover,
-#chat-alram:hover {
+#chat-alram:hover,
+#go-shop,
+#logout {
     cursor: pointer;
 
 }
 
-#hide-side-menu, #chat-alram{
+#hide-side-menu, 
+#chat-alram,
+#go-shop,
+#logout{
     font-size : 60px;
 }
 
