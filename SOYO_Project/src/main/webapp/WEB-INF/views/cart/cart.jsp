@@ -462,7 +462,7 @@
                                     
                                     <!-- 상품 이미지 -->
                                     <td>
-                                        <img src="${cart.productChange}" alt="상품이미지" class="product-image" onerror="this.src='https://via.placeholder.com/80x80?text=이미지없음'">
+                                        <img src="http://localhost:8100/soyo/resources/product_upfile/${cart.productChange}" alt="상품이미지" class="product-image" onerror="this.src='https://via.placeholder.com/80x80?text=이미지없음'">
                                     </td>
                                     
                                     <!-- 상품명 -->
