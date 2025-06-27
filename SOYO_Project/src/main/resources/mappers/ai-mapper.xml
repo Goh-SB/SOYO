@@ -24,25 +24,37 @@
 		<result property="productSize" column="PRODUCT_SIZE"/>
 	</resultMap>
 
+	<!-- 테스트용 쿼리: 전체 상품 조회 -->
+	<select id="selectAllProducts" resultMap="ProductResultMap">
+		SELECT p.*, 0 as STOCK_COUNT
+		FROM PRODUCT p
+		WHERE p.STATUS = 'Y'
+		ORDER BY p.PRODUCT_NO
+	</select>
+
 	<select id="selectBestProductByTags" parameterType="map" resultMap="ProductResultMap">
-	  SELECT *
-	    FROM (
-	      SELECT p.*
-	        FROM PRODUCT p
-	        JOIN (
-	          SELECT pt.PRODUCT_NO, COUNT(*) AS match_count
-	            FROM PRODUCT_TAG pt
-	           WHERE pt.TAG_NAME IN
-	             <foreach item="tag" collection="tags" open="(" separator="," close=")">
-	               #{tag}
-	             </foreach>
-	           GROUP BY pt.PRODUCT_NO
-	           ORDER BY match_count DESC
-	        ) best
-	          ON p.PRODUCT_NO = best.PRODUCT_NO
-	      ORDER BY best.match_count DESC
-	    )
-	   WHERE ROWNUM = 1
+		SELECT *
+		FROM (
+			SELECT p.*, 0 as STOCK_COUNT
+			FROM PRODUCT p
+			WHERE p.STATUS = 'Y'
+			<if test="tags != null and tags.size() > 0">
+			AND (
+				<!-- PRODUCT_CATEGORY 매칭 -->
+				p.PRODUCT_CATEGORY IN
+				<foreach item="tag" collection="tags" open="(" separator="," close=")">
+					#{tag}
+				</foreach>
+				OR
+				<!-- PRODUCT_TAG 컬럼 매칭 -->
+				<foreach item="tag" collection="tags" open="(" separator=" OR " close=")">
+					p.PRODUCT_TAG LIKE '%' || #{tag} || '%'
+				</foreach>
+			)
+			</if>
+			ORDER BY p.PRODUCT_REGISTERED_DATE DESC
+		)
+		WHERE ROWNUM = 1
 	</select>
 
 </mapper> 

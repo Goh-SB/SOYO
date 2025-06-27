@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface AiDao {
     Product selectBestProductByTags(List<String> tags);
+    List<Product> selectAllProducts();
 } 

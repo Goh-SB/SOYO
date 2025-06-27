@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface AiService {
     Product getBestProductByTags(List<String> tags);
+    List<String> processKeywords(List<String> tags, String inputText);
+    List<Product> getAllProducts();
 } 

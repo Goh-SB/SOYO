@@ -411,9 +411,10 @@
         </ul>
         </li>
       <li class="dropdown">
-        <a id="menu">상품</a>
+        <a href="<c:url value='/product/productList?type=all' />" id="menu" >상품</a>
         <ul class="submenu">
-        	<li><a href="<c:url value='/product/productList?type=all' />">ALL</a></li>
+        <!-- <li><a href="<c:url value='/product/productList?type=all' />">ALL</a></li> -->
+        <li><a href="<c:url value='/ai/recommend' />" style="color: #4e8ca7de;">AI 추천</a></li>
 		    <li><a href="<c:url value='/product/productList?type=mens' />">남성복</a></li>
 		    <li><a href="<c:url value='/product/productList?type=womens' />">여성복</a></li>
 		    <li><a href="<c:url value='/product/productList?type=kids' />">아동복</a></li>
