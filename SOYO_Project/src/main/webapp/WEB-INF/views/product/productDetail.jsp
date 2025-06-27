@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
     <style>
         :root {
             --main-color: #E3E4FA;
@@ -922,6 +925,9 @@
 
 <jsp:include page="../common/footer.jsp" />
 
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
       const categoryMap = {
@@ -1086,7 +1092,19 @@
 
     // 재고가 0개일 때 장바구니 담기 불가
     if (!isInCart && stock === 0) {
-        alert("해당 상품의 재고가 없습니다.");
+        Swal.fire({
+            icon: 'warning',
+            title: '재고 부족',
+            text: '해당 상품의 재고가 없습니다.',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#F4A6A6',
+            background: '#fff',
+            customClass: {
+                popup: 'swal2-custom-popup',
+                title: 'swal2-custom-title',
+                content: 'swal2-custom-content'
+            }
+        });
         return;
     }
 
@@ -1109,18 +1127,52 @@
     .then(msg => {
         if (msg === "success") {
             if (isInCart) {
-                alert("장바구니에서 삭제되었습니다.");
+                Swal.fire({
+                    icon: 'success',
+                    title: '장바구니 삭제 완료',
+                    text: '장바구니에서 삭제되었습니다.',
+                    confirmButtonText: '확인',
+                    confirmButtonColor: '#F4A6A6',
+                    background: '#fff',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
                 button.textContent = "장바구니 담기";
                 button.dataset.inCart = "false";
             } else {
-                alert("선택하신 상품이 장바구니에 담겼습니다.");
+                Swal.fire({
+                    icon: 'success',
+                    title: '장바구니 추가 완료',
+                    text: '선택하신 상품이 장바구니에 담겼습니다.',
+                    confirmButtonText: '확인',
+                    confirmButtonColor: '#F4A6A6',
+                    background: '#fff',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
                 button.textContent = "장바구니 취소";
                 button.dataset.inCart = "true";
             }
         } else if (msg === "notLogin") {
-            alert("로그인 후 이용 가능합니다.");
+            Swal.fire({
+                icon: 'info',
+                title: '로그인 필요',
+                text: '로그인 후 이용 가능합니다.',
+                confirmButtonText: '확인',
+                confirmButtonColor: '#A8C5DA',
+                background: '#fff'
+            });
         } else {
-            alert("요청 처리에 실패했습니다.");
+            Swal.fire({
+                icon: 'error',
+                title: '처리 실패',
+                text: '요청 처리에 실패했습니다.',
+                confirmButtonText: '확인',
+                confirmButtonColor: '#F4A6A6',
+                background: '#fff'
+            });
         }
     });
 }
@@ -1148,22 +1200,63 @@
        .then(msg => {
            if (msg === "success") {
                if (isWished) {
-                   alert("찜 목록에서 삭제되었습니다.");
+                   Swal.fire({
+                       icon: 'success',
+                       title: '찜 목록 삭제',
+                       text: '찜 목록에서 삭제되었습니다.',
+                       confirmButtonText: '확인',
+                       confirmButtonColor: '#F4A6A6',
+                       background: '#fff',
+                       timer: 2000,
+                       timerProgressBar: true,
+                       showConfirmButton: false
+                   });
                    favoriteIcon.textContent = "favorite_border";
                    favoriteIcon.setAttribute("data-wished", "false");
                    isWished = false;
                } else {
-                   alert("찜 목록에 추가되었습니다.");
+                   Swal.fire({
+                       icon: 'success',
+                       title: '찜 목록 추가',
+                       text: '찜 목록에 추가되었습니다.',
+                       confirmButtonText: '확인',
+                       confirmButtonColor: '#F4A6A6',
+                       background: '#fff',
+                       timer: 2000,
+                       timerProgressBar: true,
+                       showConfirmButton: false
+                   });
                    favoriteIcon.textContent = "favorite";
                    favoriteIcon.setAttribute("data-wished", "true");
                    isWished = true;
                }
            } else if (msg === "notLogin") {
-               alert("로그인 후 이용 가능합니다.");
+               Swal.fire({
+                   icon: 'info',
+                   title: '로그인 필요',
+                   text: '로그인 후 이용 가능합니다.',
+                   confirmButtonText: '확인',
+                   confirmButtonColor: '#A8C5DA',
+                   background: '#fff'
+               });
            } else if (msg === "duplicated") {
-               alert("이미 찜한 상품입니다.");
+               Swal.fire({
+                   icon: 'warning',
+                   title: '중복 추가',
+                   text: '이미 찜한 상품입니다.',
+                   confirmButtonText: '확인',
+                   confirmButtonColor: '#F6E5AC',
+                   background: '#fff'
+               });
            } else {
-               alert(isWished ? "찜 취소 실패" : "찜 목록 추가 실패");
+               Swal.fire({
+                   icon: 'error',
+                   title: '처리 실패',
+                   text: isWished ? '찜 취소 실패' : '찜 목록 추가 실패',
+                   confirmButtonText: '확인',
+                   confirmButtonColor: '#F4A6A6',
+                   background: '#fff'
+               });
            }
        });
    });
