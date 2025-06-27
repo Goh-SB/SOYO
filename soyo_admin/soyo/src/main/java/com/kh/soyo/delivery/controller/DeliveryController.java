@@ -24,7 +24,7 @@ import com.kh.soyo.product.model.vo.Product;
 
 
 @RestController
-@CrossOrigin(origins="http://192.168.40.32:5173")
+@CrossOrigin(origins={"http://192.168.40.32:5173", "http://192.168.40.23:5173"})
 @RequestMapping("delivery")
 public class DeliveryController {
 	
@@ -44,7 +44,7 @@ public class DeliveryController {
 		ArrayList<Delivery> list = deliveryService.deliveryList(pi);
 		
 		HashMap<String, Object> hm = new HashMap<>();
-		
+
 		hm.put("list", list);
 		hm.put("pi", pi);
 	
@@ -62,7 +62,7 @@ public class DeliveryController {
 	
 	@GetMapping("product/{orderNo}")
 	public List<Product> deliveryProduct(@PathVariable int orderNo) {
-		
+		System.out.println(deliveryService.deliveryProduct(orderNo));
 		return deliveryService.deliveryProduct(orderNo);		
 	}
 	
@@ -88,17 +88,16 @@ public class DeliveryController {
 		return deliveryService.searchMember(memberName);
 	}
 	
-	@GetMapping("memberInfo/{memberId}")
-	public Member memberInfo(@PathVariable String memberId) {
-		
-		return deliveryService.memberInfo(memberId);
+	@GetMapping("memberInfo/{orderNo}")
+	public Delivery memberInfo(@PathVariable int orderNo) {
+		// System.out.println(orderNo);
+		return deliveryService.memberInfo(orderNo);
 	}
 	
-	@GetMapping("orderInfo/{memberId}/{productNo}")
-	public List<Payment> orderInfo(@PathVariable String memberId,
-								   @PathVariable int productNo){
+	@GetMapping("order/{orderNo}")
+	public List<Payment> orderInfo(@PathVariable int orderNo){
 		
-		return deliveryService.orderInfo(memberId,productNo);
+		return deliveryService.orderInfo(orderNo);
 	}
 }	
 

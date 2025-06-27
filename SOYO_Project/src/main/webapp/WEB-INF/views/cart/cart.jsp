@@ -141,11 +141,12 @@
 
         /* 상품명 스타일 */
         .ec-product-name {
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 20px;
+            font-weight: 400;
             color: #555;
             margin-bottom: 6px;
             line-height: 1.4;
+            padding-left : 30px;
         }
 
         /* 수량 조절 버튼 */
@@ -341,8 +342,8 @@
 
         /* 상품 이미지 스타일 */
         .product-image {
-            width: 64px;
-            height: 64px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 1px 4px rgba(200,200,220,0.08);
@@ -412,6 +413,10 @@
             margin-bottom: 8px;
             color: #888;
         }
+        #stock {
+        	font-size : 13px;
+        	color : gray;
+        }
     </style>
 
     <body>
@@ -438,10 +443,9 @@
 
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 200px; text-align: left;">
+                                <th scope="col" style="width: 80px; text-align: left;">
                                     <div style="display: flex; justify-content: left; align-items: center; gap: 6px;">
                                         <input type="checkbox" name="animal" onclick="selectAll(this)">
-                                        <span style="margin-left: 5px;">전체선택</span>
                                     </div>
                                 </th>
                                 <th scope="col">상품이미지</th>
@@ -457,12 +461,16 @@
                                 <tr class="cart-item">
                                     <!-- 체크박스 -->
                                     <td>
+                                    	<input type="hidden" name="memberId" value="${ sessionScope.loginUser.memberId }"/>
                                         <input type="checkbox" name="productId" value="${cart.productNo}" />
+                                        <input type="hidden" name="productSize" id="productSize" value="${cart.productSize}" />
                                     </td>
                                     
                                     <!-- 상품 이미지 -->
                                     <td>
-                                        <img src="http://localhost:8100/soyo/resources/product_upfile/${cart.productChange}" alt="상품이미지" class="product-image" onerror="this.src='https://via.placeholder.com/80x80?text=이미지없음'">
+                                        <img src="http://localhost:8100/soyo/resources/product_upfile/${cart.productChange}" alt="상품이미지" 
+                                        class="product-image" onerror="this.src='https://via.placeholder.com/80x80?text=이미지없음'"
+                                        >
                                     </td>
                                     
                                     <!-- 상품명 -->
@@ -476,12 +484,15 @@
                                             <button type="button" onclick="count('minus', this)">
                                                 <i class="fas fa-minus"></i>
                                             </button>
-                                            <input type="number" name="pop_out" class="pop_out" value="1" min="1"/>
+                                            <input type="number" name="pop_out" class="pop_out" value="${cart.productCount}" min="1"/>
                                             <button type="button" onclick="count('plus', this)">
                                                 <i class="fas fa-plus"></i>
                                             </button>
+                                            <br>
                                         </div>
+                                            상품재고 : <span id="stock">${cart.stockCount }</span>
                                     </td>
+
 
                                     <!-- 상품가격 -->
                                     <td>
@@ -572,21 +583,28 @@
             /* 상품 수량 증감용 함수 */
             function count(type, ths) {
                 const $input = $(ths).closest("td").find(".pop_out");
-                let currentCount = $input.val();
+                let currentCount = parseInt($input.val());
+                const $stock =  $(ths).closest("td").find("#stock").text();
+               
+                
+                //console.log($stock);
 
                 // 수량 증감
-                if (type === 'plus') {
-                    currentCount++;
-                    updateSelectedTotal();
-                } else {
-                    if (currentCount > 1) currentCount--;
-                    updateSelectedTotal();
+                if (type === 'plus'&& (currentCount<$stock)) {
+                    ++currentCount    	
                 }
+                else if(type === 'minus'){
+                    if (currentCount > 1) 
+                    	currentCount--;
+                } 
             
+                //console.log(currentCount);
                 $input.val(currentCount); // input에 새 값 반영
             
                 const $row = $(ths).closest("tr");
                 const productNo = parseInt($row.find("input[name='productId']").val());
+                const productSize = $row.find("input[name='productSize']").val();
+                const memberId = $row.find("input[name='memberId']").val();
             
                 
                 // AJAX로 수량만 업데이트 (가격은 반영 안 함)
@@ -595,7 +613,9 @@
                     url: "/soyo/cart/update",
                     data: {
                         productNo: productNo,
-                        productCount: currentCount
+                        productCount: currentCount,
+                        productSize: productSize,
+                        memberId:memberId
                     },
 
                     success: function (result) {
@@ -607,7 +627,7 @@
                 });
             
                 // 선택된 상품 총합 갱신
-                updateSelectedTotal();
+             
             }
 
             /* 전체 체크용 함수 */
@@ -736,11 +756,46 @@
 
             // 전체상품 주문 함수 (기존 기능 유지)
             function submitAll() {
-                // 모든 상품을 선택하고 주문 진행
-                $('input[name="productId"]').prop('checked', true);
-                updateSelectedTotal();
-                submitSelect(new Event('click'));
-            }
+			    // 모든 체크박스를 체크
+			    $('input[name="productId"]').prop('checked', true);
+			
+			    // 수량/상품번호 수집
+			    let productNoList = [];
+			    let productCountList = [];
+			
+			    $('input[name="productId"]').each(function () {
+			        const $row = $(this).closest("tr");
+			        const count = parseInt($row.find(".pop_out").val());
+			
+			        productNoList.push($(this).val());
+			        productCountList.push(count);
+			    });
+			
+			    // 기존 hidden input 제거
+			    $('#paymentCheck input[name="productNoList"]').remove();
+			    $('#paymentCheck input[name="productCountList"]').remove();
+			
+			    // 새 hidden input 추가
+			    productNoList.forEach(function(productNo) {
+			        $('<input>').attr({
+			            type: 'hidden',
+			            name: 'productNoList',
+			            value: productNo
+			        }).appendTo('#paymentCheck');
+			    });
+			
+			    productCountList.forEach(function(count) {
+			        $('<input>').attr({
+			            type: 'hidden',
+			            name: 'productCountList',
+			            value: count
+			        }).appendTo('#paymentCheck');
+			    });
+			
+			    // 폼 제출
+			    $('#paymentCheck').submit();
+			}
+
         </script>
     </body>
 </html>

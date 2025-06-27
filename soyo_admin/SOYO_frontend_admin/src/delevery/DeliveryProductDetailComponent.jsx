@@ -48,9 +48,9 @@ function DeliveryProductDetailComponent(){
                     <tr align="center" key={index}>
                     <td width="250px">
                         <img
-                        src={item.productImage || "/img/no-image.png"}
+                        src={`http://192.168.40.32:8100/soyo/resources/product_upfile/${item.productChange}`}
                         width="100"
-                        alt="상품 이미지"
+                       
                         />
                     </td>
                     <td width="600px">{item.productName}</td>

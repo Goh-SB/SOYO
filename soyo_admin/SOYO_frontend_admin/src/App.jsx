@@ -62,13 +62,13 @@ function App() {
           <Route path="/order/list" element={<OrderListComponent />} />
           <Route path="/product/detail" element={<ProductDetailComponent />} />
           <Route path="/product/detail/:productNo" element={<ProductDetailComponent />} />
-          <Route path="/order/:memberId/:productNo" element={<OrderDetailComponent />} />
+          <Route path="/order/:orderNo" element={<OrderDetailComponent />} />
           <Route path="/order/:memberId" element={<OrderDetailComponent />} />
           <Route path="/review/list" element={<ReviewListComponent />} />
         </Routes>
       </div>
     )
   }
-}
+ }
 
 export default App

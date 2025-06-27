@@ -233,6 +233,7 @@
 			  const addrDetail = document.querySelector("input[name='addrDetail']").value;
 			  const requestMsg = document.querySelector("input[name='requestMsg']").value;
 			  const totalPrice = document.querySelector("input[name='totalPrice']").value;
+			  const addressAlias = document.querySelector("input[name='addressName']").value;
 			  const addressName = document.querySelector("input[name='addressName']").value;
 			  const fullAddress = address + " " + addrDetail;
 			  
@@ -273,8 +274,8 @@
 		    			    orderImpNo : rsp.imp_uid,  
 		    			    receiverName: memberName,
 		    			    receiverPhone: phone,
-		    			    addressName: addressName,
 		    			    addressOther: fullAddress,
+		    			    addressAlias: addressAlias,
 		    			    requestMsg: requestMsg,
 		    			    totalPrice: parseInt(totalPrice), // 
 		    			    selectedProductList: selectedProductList,

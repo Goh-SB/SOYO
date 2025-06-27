@@ -23,14 +23,10 @@ public class CartDao {
 		return (ArrayList)sqlSession.selectList("cartMapper.cartList", memberId);
 	}
 
-	public int updateCartCount(SqlSessionTemplate sqlSession, String memberId, int productNo, int count) {
+	public int updateCartCount(SqlSessionTemplate sqlSession, Cart cart) {
 		
-		 Map<String, Object> param = new HashMap<>();
-		    param.put("memberId", memberId);
-		    param.put("productNo", productNo);
-		    param.put("count", count);
 
-		    return sqlSession.update("cartMapper.updateCartCount", param);
+		    return sqlSession.update("cartMapper.updateCartCount", cart);
 	}
 
 	public Cart updateCart(SqlSessionTemplate sqlSession, String memberId, int productNo, int productCount) {
