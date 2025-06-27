@@ -13,27 +13,31 @@
         <result property="productChange" column="PRODUCT_CHANGE" />
         <result property="orderImpNo" column="ORDER_IMPNO" />
         <result property="productSize" column="PRODUCT_SIZE" />
+        <result property="stockCount" column="STOCK_COUNT"/>
     </resultMap>
 
     <select id="cartList" parameterType="string" resultMap="cartResultMap">
-        SELECT 
-            C.CART_NO,
-            C.PRODUCT_NO,
-            C.PRODUCT_COUNT,
-            C.MEMBER_ID,
-            C.PRODUCT_SIZE,
-            P.PRODUCT_NAME,
-            P.PRODUCT_PRICE,
-            P.PRODUCT_CHANGE
-        FROM CART C
-        JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
-        WHERE C.MEMBER_ID = #{memberId}
+       SELECT 
+		    C.CART_NO,
+		    C.PRODUCT_NO,
+		    C.PRODUCT_COUNT,
+		    C.MEMBER_ID,
+		    C.PRODUCT_SIZE,
+		    P.PRODUCT_NAME,
+		    P.PRODUCT_PRICE,
+		    P.PRODUCT_CHANGE,
+		    PS.STOCK_COUNT
+		FROM CART C
+		JOIN PRODUCT P ON P.PRODUCT_NO = C.PRODUCT_NO
+		JOIN PRODUCT_SIZE PS ON P.PRODUCT_NO = PS.PRODUCT_NO 
+		AND C.PRODUCT_SIZE = PS.PRODUCT_SIZE 
+		WHERE C.MEMBER_ID = #{memberId}
     </select>
 	
 	
-	<update id="updateCartCount" parameterType="map">
+	<update id="updateCartCount" parameterType="cart">
 	    UPDATE CART
-	    SET PRODUCT_COUNT = #{count}
+	    SET PRODUCT_COUNT = #{productCount}
 	    WHERE PRODUCT_NO = #{productNo}
 	      AND MEMBER_ID = #{memberId}
 	      AND PRODUCT_SIZE = #{productSize}
@@ -68,13 +72,13 @@
       </foreach>
 	</select>
 	
-	<insert id="insertOrder" parameterType="Delivery">
+	<insert id="insertOrder" parameterType="delivery">
     INSERT INTO ORDER_TB (
         ORDER_NO, MEMBER_ID, RECEIVER_NAME, RECEIVER_PHONE,
-        REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE
+        REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE, ADDRESS, ADDRESS_ALIAS
     ) VALUES (
         ORDER_SEQ.NEXTVAL, #{memberId}, #{receiverName}, #{receiverPhone},
-        #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE
+        #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE, #{addressOther}, #{addressAlias}
     )
 </insert>
 
@@ -86,8 +90,7 @@
         IS_DEFAULT,
         RECEIVER_NAME,
         RECEIVER_PHONE,
-        MEMBER_ID,
-        ORDER_IMPNO
+        MEMBER_ID
     ) VALUES (
         SEQ_DELIVERY_ADDRESS.NEXTVAL,
         #{addressName},
@@ -95,8 +98,7 @@
         'N',
         #{receiverName},
         #{receiverPhone},
-        #{memberId},
-        #{orderImpNo}
+        #{memberId}
     )
 </insert>
 

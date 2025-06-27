@@ -697,6 +697,7 @@ public class MemberController {
 		
 		model.addAttribute("product",product);
 		
+		System.out.println(product);
 	    return "member/orderDetail";
 	}
 	

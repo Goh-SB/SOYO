@@ -6,10 +6,10 @@ import React from 'react';
 function OrderDetailMemberComponent(){
 
     const [order,setOrder]=useState({});
-    const memberId= useParams().memberId;
+    const orderNo= useParams().orderNo;
     const orderMember = () =>{
     
-        let url = "http://192.168.40.32:8100/soyo/delivery/memberInfo/"+memberId;
+        let url = "http://192.168.40.32:8100/soyo/delivery/memberInfo/"+orderNo;
 
         axios({
             url,
@@ -41,20 +41,36 @@ function OrderDetailMemberComponent(){
         align="left">
          <tbody align="center">
                     <tr>
-                        <th>이름</th>
+                        <th>구매자</th>
                         <td>{order.memberName}</td>
                     </tr>
                     <tr>
-                        <th>이메일</th>
-                        <td>{order.email}</td>
+                        <th>구매자 번호</th>
+                        <td>{order.phone}</td>
                     </tr>
                     <tr>
-                        <th>전화번호</th>
-                        <td>{order.phone}</td>
+                        <th>수령인</th>
+                        <td>{order.receiverName}</td>
+                    </tr>
+                    <tr>
+                        <th>수령인 번호</th>
+                        <td>{order.receiverPhone}</td>
+                    </tr>
+                    <tr>
+                        <th>배송지명</th>
+                        <td>{order.addressAlias}</td>
                     </tr>
                     <tr>
                         <th>배송지</th>
                         <td>{order.addressOther}</td>
+                    </tr>
+                     <tr>
+                        <th>요청사항</th>
+                        <td>{order.requestMsg}</td>
+                    </tr>
+                    <tr>
+                        <th>총 가격</th>
+                        <td>{order.totalPrice}</td>
                     </tr>
                 </tbody>
 

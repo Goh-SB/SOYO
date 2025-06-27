@@ -24,7 +24,7 @@ import com.kh.soyo.product.model.vo.Product;
 
 
 @RestController
-@CrossOrigin(origins="http://192.168.40.32:5173")
+@CrossOrigin(origins="http://localhost:5173")
 @RequestMapping("delivery")
 public class DeliveryController {
 	

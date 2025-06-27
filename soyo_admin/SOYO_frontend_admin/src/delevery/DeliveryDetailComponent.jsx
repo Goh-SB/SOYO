@@ -32,6 +32,7 @@ function DeliveryDetailComponent(){
         }).then((response) => {
 
             setDelivery(response.data); 
+            console.log(response.data);
               
         }).catch(() => {
             console.log("ajax 요청 실패");
@@ -75,7 +76,7 @@ function DeliveryDetailComponent(){
                         </td>
                     </tr>
                     <tr>
-                        <th>배송완료일</th>
+                        <th>상품발송일</th>
                         <td>{delivery.deliveryDate}</td>
                     </tr>
                     <tr>

@@ -38,6 +38,7 @@ public class CartController {
 	    String memberId = loginUser.getMemberId();
 	    List<Cart> cartList = cartService.cartList(memberId);
 
+	    //System.out.println(cartList);
 	    model.addAttribute("cartList", cartList);
 	    return "cart/cart";
 	}
@@ -48,7 +49,7 @@ public class CartController {
 						  HttpSession session,
 						  Model model) {
 		
-		
+		System.out.println(cart);
 		 Member loginUser = (Member) session.getAttribute("loginUser");
 		    if (loginUser == null) {
 		    	model.addAttribute("fail","로그인 후 이용바랍니다");
@@ -58,10 +59,13 @@ public class CartController {
 		    String memberId = loginUser.getMemberId();
 
 		    // 장바구니 수량 업데이트
-		    int result=  cartService.updateCartCount(loginUser.getMemberId(),cart.getProductNo(),cart.getProductCount());
+		    int result=  cartService.updateCartCount(cart);
 		    
 		    Cart c = cartService.updateCart(memberId,cart.getProductNo(),cart.getProductCount());
 
+		  
+		    cart.setMemberId(loginUser.getMemberId());
+		    
 		    
 		    
 		    model.addAttribute("c",c);
