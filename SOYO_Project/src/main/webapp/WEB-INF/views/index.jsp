@@ -141,6 +141,7 @@
         .featured-products {
             padding: 5rem 10%;
             padding-top: 55px;
+            padding-bottom: 65px;
             background-color: #fff;
         }
 
@@ -312,7 +313,7 @@
         /* 컬렉션 섹션 */
         .collections {
             padding: 5rem 10%;
-            padding-bottom: 90px;
+            padding-bottom: 100px;
             background-color: var(--primary-color);
             font-family: 'NanumSquareRound', sans-serif;
         }
@@ -568,14 +569,6 @@
             </div>
         </div>
 
-        <!-- 테스트 영역 - 완료 후 삭제 -->
-        <div id="test-div" style="text-align: center;">
-            <br>
-            <button id="test-button"
-                style="font-size: 1.2rem; background-color: #7375b4; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;"
-                onclick="location.href='${pageContext.request.contextPath}/ai/recommend'">소요 AI - 테스트 페이지 이동</button>
-        </div>
-
         <section class="featured-products">
             <h2>추천 상품</h2>
             <div class="product-grid">
@@ -605,8 +598,36 @@
                         <span class="price">430,000원</span>
                     </div>
                 </a>
+                
 
             </div>
+            
+            	<br>
+		        <div id="test-div" style="text-align: center;">
+		            <br>
+                    <button id="test-button"
+                    style="
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        background: linear-gradient(135deg, #8e8dfa, #a275e3);
+                        color: white;
+                        padding: 12px 28px;
+                        border: none;
+                        border-radius: 12px;
+                        cursor: pointer;
+                        font-family: 'NEXON Lv2 Gothic', 'Noto Sans KR', sans-serif;
+                        box-shadow: 0 4px 10px rgba(130, 130, 250, 0.25);
+                        transition: all 0.3s ease;
+                    "
+                    onclick="location.href='${pageContext.request.contextPath}/ai/recommend'"
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 14px rgba(130, 130, 250, 0.35)'"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 10px rgba(130, 130, 250, 0.25)'"
+                >
+                    소요 AI - 상품 추천
+                </button>
+                
+		        </div>
+		        
         </section>
         
         <section class="about">

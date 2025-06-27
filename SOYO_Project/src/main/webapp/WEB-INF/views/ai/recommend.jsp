@@ -528,20 +528,42 @@
     allTags.forEach(function(tag){
       if(text.includes(tag) && !tags.includes(tag)) tags.push(tag);
     });
+    
+    console.log("=== AJAX 요청 시작 ===");
+    console.log("선택된 태그:", tags);
+    console.log("입력 텍스트:", text);
+    
+    // 빈 배열이면 기본값 설정
+    if (tags.length === 0) {
+      tags = ["기본"];
+    }
+    
+    /*
     if(tags.length === 0) {
       alert("최소 1개 이상의 태그를 선택하거나 입력해주세요.");
       return;
     }
+    */
     $.ajax({
       url: "${pageContext.request.contextPath}/ai/recommend",
       type: "POST",
-      data: { tags: tags },
+      data: { 
+        tags: tags,
+        inputText: text
+      },
       traditional: true,
       dataType: "json",
       success: function(data) {
+        console.log("=== AJAX 응답 성공 ===");
+        console.log("응답 데이터:", data);
+        console.log("처리된 태그:", data.processedTags);
         renderRecommendModal(data.product);
       },
-      error: function() {
+      error: function(xhr, status, error) {
+        console.log("=== AJAX 응답 실패 ===");
+        console.log("상태:", status);
+        console.log("에러:", error);
+        console.log("응답 텍스트:", xhr.responseText);
         $("#ai-modalContent").html("<div style='color:red;'>추천 결과를 불러오지 못했습니다.</div>");
         $("#ai-modal-bg").addClass("active");
       }
