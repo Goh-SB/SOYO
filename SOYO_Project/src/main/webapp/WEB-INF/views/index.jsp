@@ -313,7 +313,7 @@
         /* 컬렉션 섹션 */
         .collections {
             padding: 5rem 10%;
-            padding-bottom: 90px;
+            padding-bottom: 100px;
             background-color: var(--primary-color);
             font-family: 'NanumSquareRound', sans-serif;
         }
