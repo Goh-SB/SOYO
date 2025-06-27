@@ -91,6 +91,56 @@ public class AiServiceImpl implements AiService {
                     System.out.println("상품 태그 매핑: acc 추가");
                 }
             }
+            
+            // 특정 상품 키워드 매핑 (PRODUCT_TAG 테이블의 태그들)
+            if (containsAny(lowerText, Arrays.asList("드레스", "원피스"))) {
+                if (!processedTags.contains("드레스")) {
+                    processedTags.add("드레스");
+                    System.out.println("상품 태그 매핑: 드레스 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("모던한복", "모던", "한복"))) {
+                if (!processedTags.contains("모던한복")) {
+                    processedTags.add("모던한복");
+                    System.out.println("상품 태그 매핑: 모던한복 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("데일리한복", "데일리", "일상한복"))) {
+                if (!processedTags.contains("데일리한복")) {
+                    processedTags.add("데일리한복");
+                    System.out.println("상품 태그 매핑: 데일리한복 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("스트릿한복", "스트릿"))) {
+                if (!processedTags.contains("스트릿한복")) {
+                    processedTags.add("스트릿한복");
+                    System.out.println("상품 태그 매핑: 스트릿한복 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("여름한복", "여름"))) {
+                if (!processedTags.contains("여름한복")) {
+                    processedTags.add("여름한복");
+                    System.out.println("상품 태그 매핑: 여름한복 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("겨울한복", "겨울"))) {
+                if (!processedTags.contains("겨울한복")) {
+                    processedTags.add("겨울한복");
+                    System.out.println("상품 태그 매핑: 겨울한복 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("사계절용", "사계절"))) {
+                if (!processedTags.contains("사계절용")) {
+                    processedTags.add("사계절용");
+                    System.out.println("상품 태그 매핑: 사계절용 추가");
+                }
+            }
+            if (containsAny(lowerText, Arrays.asList("남녀공용", "공용"))) {
+                if (!processedTags.contains("남녀공용")) {
+                    processedTags.add("남녀공용");
+                    System.out.println("상품 태그 매핑: 남녀공용 추가");
+                }
+            }
         }
         
         System.out.println("처리된 태그: " + processedTags);

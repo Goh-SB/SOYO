@@ -50,9 +50,20 @@
 				<foreach item="tag" collection="tags" open="(" separator=" OR " close=")">
 					p.PRODUCT_TAG LIKE '%' || #{tag} || '%'
 				</foreach>
+				OR
+				<!-- PRODUCT_TAG 테이블 매칭 -->
+				EXISTS (
+					SELECT 1 
+					FROM PRODUCT_TAG pt 
+					WHERE pt.PRODUCT_NO = p.PRODUCT_NO 
+					AND pt.TAG_NAME IN
+					<foreach item="tag" collection="tags" open="(" separator="," close=")">
+						#{tag}
+					</foreach>
+				)
 			)
 			</if>
-			ORDER BY p.PRODUCT_REGISTERED_DATE DESC
+			ORDER BY DBMS_RANDOM.VALUE()
 		)
 		WHERE ROWNUM = 1
 	</select>
