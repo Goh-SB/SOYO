@@ -62,12 +62,10 @@ public class CartServiceImpl implements CartService {
 	@Transactional
 	public int deliveryInfo(Delivery delivery) {
 	    int result1 = cartDao.insertOrder(sqlSession, delivery);  
-	    
-	    int result2 = cartDao.insertAddress(sqlSession, delivery); 
-	   
+	     
 	    int result3 = cartDao.deleteCartProduct(sqlSession,delivery);
 
-	    return result1 * result2 * result3;
+	    return result1 * result3;
 	}
 
 	@Override

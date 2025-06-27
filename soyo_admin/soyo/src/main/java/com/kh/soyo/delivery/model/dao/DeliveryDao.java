@@ -53,14 +53,14 @@ public class DeliveryDao {
 		return sqlSession.selectList("deliveryMapper.searchMember",memberName);
 	}
 
-	public Member memberInfo(SqlSessionTemplate sqlSession, String memberId) {
+	public Delivery memberInfo(SqlSessionTemplate sqlSession, int orderNo) {
 		
-		return sqlSession.selectOne("deliveryMapper.memberInfo",memberId);
+		return sqlSession.selectOne("deliveryMapper.memberInfo", orderNo);
 	}
 
-	public List<Payment> orderInfo(SqlSessionTemplate sqlSession, Map<String, Object> param) {
+	public List<Payment> orderInfo(SqlSessionTemplate sqlSession, int orderNo) {
 		
-	    return sqlSession.selectList("deliveryMapper.orderInfo", param);
+	    return sqlSession.selectList("deliveryMapper.orderInfo", orderNo);
 	}
 
 	public int deliveryListCount(SqlSessionTemplate sqlSession) {

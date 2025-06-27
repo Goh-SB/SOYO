@@ -32,6 +32,7 @@ function DeliveryDetailComponent(){
         }).then((response) => {
 
             setDelivery(response.data); 
+            console.log(response.data)
               
         }).catch(() => {
             console.log("ajax 요청 실패");

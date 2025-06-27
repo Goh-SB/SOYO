@@ -23,10 +23,10 @@ public interface DeliveryService {
 
 	List<Payment> searchMember(String memberName);
 
-	Member memberInfo(String memberId);
-
-	List<Payment> orderInfo(String memberId,int productNo);
-
+	Delivery memberInfo(int orderNo);
+	
 	int deliveryListCount();
+
+	List<Payment> orderInfo(int orderNo);
 
 }

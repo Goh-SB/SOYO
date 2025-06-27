@@ -71,35 +71,14 @@
 	<insert id="insertOrder" parameterType="Delivery">
     INSERT INTO ORDER_TB (
         ORDER_NO, MEMBER_ID, RECEIVER_NAME, RECEIVER_PHONE,
-        REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE
+        REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE, ADDRESS, ADDRESS_ALIAS
     ) VALUES (
         ORDER_SEQ.NEXTVAL, #{memberId}, #{receiverName}, #{receiverPhone},
-        #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE
+        #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE, #{addressOther}, #{addressAlias}
     )
 </insert>
 
- 	<insert id="insertAddress" parameterType="Delivery">
-    INSERT INTO DELIVERY_ADDRESS (
-        ADDRESS_NO,
-        ADDRESS_NAME,
-        ADDRESS_OTHER,
-        IS_DEFAULT,
-        RECEIVER_NAME,
-        RECEIVER_PHONE,
-        MEMBER_ID,
-        ORDER_IMPNO
-    ) VALUES (
-        SEQ_DELIVERY_ADDRESS.NEXTVAL,
-        #{addressName},
-        #{addressOther},
-        'N',
-        #{receiverName},
-        #{receiverPhone},
-        #{memberId},
-        #{orderImpNo}
-    )
-</insert>
-
+ 
 	<delete id="deleteCartProduct" parameterType="Delivery">
 	    DELETE FROM CART
 	    WHERE MEMBER_ID = #{memberId}

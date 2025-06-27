@@ -60,17 +60,15 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public Member memberInfo(String memberId) {
-
-		return deliveryDao.memberInfo(sqlSession,memberId);
+	public Delivery memberInfo(int orderNo) {
+		 System.out.println(deliveryDao.memberInfo(sqlSession, orderNo));
+		return deliveryDao.memberInfo(sqlSession, orderNo);
 	}
 
 	@Override
-	public List<Payment> orderInfo(String memberId, int productNo) {
-	    Map<String, Object> param = new HashMap<>();
-	    param.put("memberId", memberId);
-	    param.put("productNo", productNo);
-	    return deliveryDao.orderInfo(sqlSession, param);
+	public List<Payment> orderInfo(int orderNo) {
+
+	    return deliveryDao.orderInfo(sqlSession, orderNo);
 	}
 
 	@Override
