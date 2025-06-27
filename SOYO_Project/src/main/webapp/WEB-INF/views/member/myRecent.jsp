@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>최근 본 상품</title>
 <style>
     .container {
         width: 1200px;

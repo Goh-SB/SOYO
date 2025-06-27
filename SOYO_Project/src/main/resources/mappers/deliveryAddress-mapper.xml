@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="deliveryAddressMapper">
+	<resultMap id="deliveryAddressResultMap" type="deliveryAddress">
+		<result property="addressNo" column="ADDRESS_NO" />
+		<result property="addressName" column="ADDRESS_NAME" />
+		<result property="addressOther" column="ADDRESS_OTHER" />
+		<result property="isDefault" column="IS_DEFAULT" />
+		<result property="receiverName" column="RECEIVER_NAME" />
+		<result property="receiverPhone" column="RECEIVER_PHONE" />
+		<result property="memberId" column="MEMBER_ID" />
+	</resultMap>
+	
+	<select id="selectDelivery" parameterType="string" resultMap="deliveryAddressResultMap">
+		SELECT * FROM DELIVERY_ADDRESS
+		    WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+</mapper>
