@@ -44,6 +44,7 @@ public class AiController {
 		Product product = aiService.getBestProductByTags(processedTags);
 		Map<String, Object> result = new HashMap<>();
 		result.put("product", product);
+		result.put("processedTags", processedTags);
 		return result;
 	}
 	
@@ -64,6 +65,19 @@ public class AiController {
 	public Map<String, Object> testSimpleRecommend() {
 		// 여성 카테고리로 테스트
 		List<String> testTags = Arrays.asList("여성");
+		Product product = aiService.getBestProductByTags(testTags);
+		Map<String, Object> result = new HashMap<>();
+		result.put("product", product);
+		result.put("testTags", testTags);
+		return result;
+	}
+	
+	// 드레스 테스트용 엔드포인트
+	@GetMapping("/test-dress")
+	@ResponseBody
+	public Map<String, Object> testDressRecommend() {
+		// 여성 + 드레스 태그로 테스트
+		List<String> testTags = Arrays.asList("여성", "드레스");
 		Product product = aiService.getBestProductByTags(testTags);
 		Map<String, Object> result = new HashMap<>();
 		result.put("product", product);

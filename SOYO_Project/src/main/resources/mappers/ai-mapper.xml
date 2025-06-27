@@ -35,7 +35,29 @@
 	<select id="selectBestProductByTags" parameterType="map" resultMap="ProductResultMap">
 		SELECT *
 		FROM (
-			SELECT p.*, 0 as STOCK_COUNT
+			SELECT p.*, 0 as STOCK_COUNT,
+			       CASE 
+			           WHEN p.PRODUCT_CATEGORY IN 
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           THEN 1 ELSE 0 END as category_match,
+			       CASE 
+			           WHEN EXISTS (
+			               SELECT 1 
+			               FROM PRODUCT_TAG pt 
+			               WHERE pt.PRODUCT_NO = p.PRODUCT_NO 
+			               AND pt.TAG_NAME IN
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           ) THEN 1 ELSE 0 END as tag_match,
+			       CASE 
+			           WHEN p.PRODUCT_TAG IN
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           THEN 1 ELSE 0 END as product_tag_match
 			FROM PRODUCT p
 			WHERE p.STATUS = 'Y'
 			<if test="tags != null and tags.size() > 0">
@@ -63,7 +85,7 @@
 				)
 			)
 			</if>
-			ORDER BY DBMS_RANDOM.VALUE()
+			ORDER BY (category_match + tag_match + product_tag_match) DESC, DBMS_RANDOM.VALUE()
 		)
 		WHERE ROWNUM = 1
 	</select>

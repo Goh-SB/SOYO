@@ -556,6 +556,7 @@
       success: function(data) {
         console.log("=== AJAX 응답 성공 ===");
         console.log("응답 데이터:", data);
+        console.log("처리된 태그:", data.processedTags);
         renderRecommendModal(data.product);
       },
       error: function(xhr, status, error) {

@@ -92,7 +92,7 @@ public class AiServiceImpl implements AiService {
                 }
             }
             
-            // 특정 상품 키워드 매핑 (PRODUCT_TAG 테이블의 태그들)
+            // 특정 상품 키워드 매핑 (PRODUCT_TAG 테이블의 태그들) - 우선순위 높음
             if (containsAny(lowerText, Arrays.asList("드레스", "원피스"))) {
                 if (!processedTags.contains("드레스")) {
                     processedTags.add("드레스");
