@@ -38,6 +38,7 @@
 
     .myWishList {
         width: 800px;
+        min-height: 500px;
     }
 
     .productImg {
@@ -91,36 +92,47 @@
             </div>
 
             <div class="myWishList">
-                <form action="../member/wishGo" method="post">
-                    <table class="wishTable">
-                        <tr>
-                            <th><input type="checkbox" id="checkAll" /></th>
-                            <th style="width: 85px;">전체선택</th>
-                            <th style="width: 520px;"></th>
-                            <th style="width: 80px;"></th>
-                            <th style="width: 70px;"></th>
-                        </tr>
-                        <c:forEach var="w" items="${myWish}" varStatus="status">
-                            <tr>
-                                <th>
-                                    <!-- 체크박스를 선택하면 다른 히든 두개의 값이 넘어가도록 함 -->
-                                    <input type="checkbox"  name="selected" class="itemCheckbox" value="${status.index}" />
-                                    <input type="hidden" id="productNo" name="productNo_${status.index}" value="${w.productNo}" />
-                                    <input type="hidden" id="productSize" name="productSize_${status.index}" value="${w.productSize}" />
-                                </th>
-                                <td><img class="productImg" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${w.productChange}" alt=""></td>
-                                <td><span>${w.productName} 사이즈 : ${w.productSize}</span></td>
-                                <td><span>${w.productPrice} 원</span></td>
-                                <td>
-                                    <a href="../product/productDetail?no=${w.productNo}">상세보기</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                    <div>
-                        <button type="submit">장바구니 담기</button>
-                    </div>
-                </form>
+                <c:choose>
+            		<c:when test="${not empty myWish}">
+                        <form action="../member/wishGo" method="post">
+                            <table class="wishTable">
+                                <tr>
+                                    <th><input type="checkbox" id="checkAll" /></th>
+                                    <th style="width: 85px;">전체선택</th>
+                                    <th style="width: 520px;"></th>
+                                    <th style="width: 80px;"></th>
+                                    <th style="width: 70px;"></th>
+                                </tr>
+                                <c:forEach var="w" items="${myWish}" varStatus="status">
+                                    <tr>
+                                        <th>
+                                            <!-- 체크박스를 선택하면 다른 히든 두개의 값이 넘어가도록 함 -->
+                                            <input type="checkbox"  name="selected" class="itemCheckbox" value="${status.index}" />
+                                            <input type="hidden" id="productNo" name="productNo${status.index}" value="${w.productNo}" />
+                                            <input type="hidden" id="productSize" name="productSize${status.index}" value="${w.productSize}" />
+                                        </th>
+                                        <td><img class="productImg" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${w.productChange}" alt=""></td>
+                                        <td><span>${w.productName} 사이즈 : ${w.productSize}</span></td>
+                                        <td><span>${w.productPrice} 원</span></td>
+                                        <td>
+                                            <a href="../product/productDetail?no=${w.productNo}">상세보기</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                            <div>
+                                <button type="submit">장바구니 담기</button>
+                            </div>
+                        </form>
+                    </c:when>
+                        <c:otherwise>
+                            <div style="height: 500px; text-align: center;" >
+                                <span>
+                                    찜한 상품이 없습니다.
+                                </span>
+                            </div>
+                        </c:otherwise>
+                </c:choose>
             </div>
             
             <!-- 페이지네이션은 필요 시 주석 해제 -->

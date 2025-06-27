@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.soyo.cart.model.service.CartService;
+import com.kh.soyo.cart.model.vo.Cart;
+import com.kh.soyo.cart.controller.CartController;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.common.template.XssDefencePolicy;
@@ -38,11 +41,16 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/member")
 public class MemberController {
 
+    private final CartController cartController;
+
 	@Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private CartService cartService;
 	
 	// 인증번호를 담아둘 해시맵 생성 (전역변수)
 	// key : 인증할 email 주소, value : 인증번호
@@ -51,8 +59,9 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-    MemberController(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    MemberController(BCryptPasswordEncoder bCryptPasswordEncoder, CartController cartController) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.cartController = cartController;
     }
 	
 	@GetMapping("/login")
@@ -217,29 +226,72 @@ public class MemberController {
     	
     }
     
+    
+    // 내 찜 목록 장바구니 담기
     @PostMapping("/wishGo")
     public String wishGo(@RequestParam(value = "selected", required = false) List<Integer> selected,
-                         HttpServletRequest request, HttpSession session) {
+                         HttpServletRequest request, HttpSession session, Cart cart , Model model) {
+    	
+    	int result = 0;
     	
         if (selected != null) {
         	
+        	// 반복문 돌려서 넣기
             for (int index : selected) {
             	
-                String productNo = request.getParameter("productNo_" + index);
-                String productSize = request.getParameter("productSize_" + index);
+            	// int 타입으로 바꾸기
+            	String productNoStr = request.getParameter("productNo" + index);
+            	int productNo = Integer.parseInt(productNoStr);
+            	
+                String productSize = request.getParameter("productSize" + index);
 
-                System.out.println("상품번호: " + productNo);
-                System.out.println("사이즈: " + productSize);               
+                Member loginUser = (Member)session.getAttribute("loginUser");
+                String memberId = loginUser.getMemberId();
                 
+                // 상품번호: productNo
+                //사이즈: productSize 
+                
+                cart.setMemberId(memberId);
+                cart.setProductNo(productNo);
+                cart.setProductSize(productSize);
+                
+                // 카트에 넣기전 이미 들어가있는지 확인 사이즈, 아이디, 상품번호로
+                int check = cartService.checkCart(cart);
+                
+                if(check > 0) {
+                	// 하나라도 들어가있다면 중지시킴
+                	
+                	session.setAttribute("alertMsg", "이미 들어가있는 제품이 있습니다.");
+                	
+                	return myWishList(1, session, model);
+                	
+                } else {
+                	// 안들어가있다면 장바구니에 추가
+                	result = cartService.insertCart(cart);
+                }
+                
+                     
+            }
+            if(result > 0) {
+            		
+                session.setAttribute("alertMsg", "장바구니 담기 성공.");
+                
+                return cartController.showCartPage(model, session);
+                
+            } else {
+                
+            	session.setAttribute("alertMsg", "상품을 선택해주세요.");
+            	
+            	return myWishList(1, session, model);
             }
             
-            return "wishList/myWishList";
+            
             
         } else {
         	
-        	session.setAttribute("alertMsg", "장바구니 담기 실패");
+        	session.setAttribute("alertMsg", "상품을 선택해주세요.");
         	
-        	return "redirect:/";
+        	return myWishList(1, session, model);
         }
         
     }

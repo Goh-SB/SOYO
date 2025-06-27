@@ -119,5 +119,10 @@ public class CartDao {
 	    return sqlSession.delete("cartMapper.deleteSingleItem", paramMap);
 	}
 
+	public int checkCart(SqlSessionTemplate sqlSession, Cart cart) {
+		
+		return sqlSession.selectOne("cartMapper.checkCart", cart);
+	}
+
 
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="recentMapper">
+	<resultMap id="recentResultMap" type="recent">
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="viewDate" column="VIEW_DATE" />
+		<result property="productName" column="PRODUCT_NAME" />
+		<result property="productPrice" column="PRODUCT_PRICE" />
+		<result property="productOrigin" column="PRODUCT_ORIGIN" />
+		<result property="productChange" column="PRODUCT_CHANGE" />
+	</resultMap>
+	
+	<!-- 최근본 상품 등록 -->
+	<insert id="insertRecent" parameterType="recent">
+		INSERT INTO RECENT_VIEW(VIEW_DATE
+                      , MEMBER_ID
+                      , PRODUCT_NO)
+            VALUES(SYSDATE
+                , #{memberId}
+                , #{productNo})
+	</insert>
+	
+	<!-- 중복상품 검사 -->
+	<select id="selectRecentProductNo" parameterType="recent" resultType="string">
+		SELECT * FROM RECENT_VIEW
+		    WHERE MEMBER_ID = #{memberId}
+		      AND PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 최근본 상품 목록조회 -->
+	<select id="selectRecent" parameterType="string" resultMap="recentResultMap">
+		SELECT R.VIEW_DATE
+		     , R.PRODUCT_NO
+		     , P.PRODUCT_NAME
+		     , P.PRODUCT_PRICE
+		     , P.PRODUCT_ORIGIN
+		     , P.PRODUCT_CHANGE
+		    FROM RECENT_VIEW R
+		    JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+		    WHERE R.MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 최근 본 상품 갯수 -->
+	<select id="selectRecentCount" parameterType="recent" resultType="_int">
+		SELECT COUNT(*) FROM RECENT_VIEW
+		    WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 최근 날짜중 가장 오래된 컬럼 하나 제거 -->
+	<delete id="deleteRecent" parameterType="recent">
+	DELETE FROM RECENT_VIEW
+	    WHERE ROWID IN (
+	        SELECT R FROM (
+	            SELECT ROWID AS R
+	                FROM RECENT_VIEW
+	                WHERE MEMBER_ID = #{memberId}
+	                ORDER BY VIEW_DATE ASC
+	        	)WHERE ROWNUM = 1
+			)
+	</delete>
+	
+</mapper>

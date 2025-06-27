@@ -86,6 +86,12 @@ public class CartServiceImpl implements CartService {
 		return cartDao.deleteSingleItem(memberId, productNo, productSize);
 	}
 
+	@Override
+	public int checkCart(Cart cart) {
+		
+		return cartDao.checkCart(sqlSession, cart);
+	}
+
 
 
 }

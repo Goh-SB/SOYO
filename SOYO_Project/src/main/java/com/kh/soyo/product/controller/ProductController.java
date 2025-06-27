@@ -1,8 +1,8 @@
 package com.kh.soyo.product.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,8 @@ import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.service.ProductService;
 import com.kh.soyo.product.model.vo.Product;
+import com.kh.soyo.recent.model.service.RecentService;
+import com.kh.soyo.recent.model.vo.Recent;
 import com.kh.soyo.review.model.service.ReviewService;
 import com.kh.soyo.review.model.vo.Review;
 import com.kh.soyo.wishlist.model.service.WishListService;
@@ -37,6 +39,9 @@ public class ProductController {
 
 	@Autowired
 	private WishListService wishListService;
+	
+	@Autowired
+	private RecentService recentService;
 
 	
 	@GetMapping("/stock")
@@ -106,7 +111,7 @@ public class ProductController {
 	
 
 	@GetMapping("/productDetail")
-	public String showProductDetail(@RequestParam("no") int productNo, Model model, HttpSession session) {
+	public String showProductDetail(@RequestParam("no") int productNo, Model model, HttpSession session, Recent r) {
 	    // 상품 상세 정보 리스트 조회
 	    List<Product> productList = productService.selectProductByNo(productNo);
 
@@ -114,16 +119,22 @@ public class ProductController {
 	        // 예외 처리: 상품이 존재하지 않을 때
 	        return "common/errorPage"; // 에러 페이지로 리턴하거나 메시지 전달
 	    }
-
+	    
 	    // 첫 번째 상품 정보 사용 (대표 정보)
 	    Product product = productList.get(0);
 
 	    // 로그인한 회원 정보 가져오기
 	    Member loginUser = (Member) session.getAttribute("loginUser");
+
+	    
 	    boolean isWished = false;
 	    if (loginUser != null) {
+	    	
 	        String memberId = loginUser.getMemberId();
-
+	        r.setMemberId(memberId);
+	        r.setProductNo(productNo);
+	        recentService.updateRecent(r);
+	        
 	        // 장바구니 담긴 상태 조회
 	        boolean inCart = productService.isInCart(memberId, productNo);
 	        product.setInCart(inCart);

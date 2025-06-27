@@ -51,7 +51,7 @@
          <li><a href="../member/myPageMyReview">내 리뷰</a></li>
          <li><a href="">배송지 관리</a></li>
          <li><a href="../member/myInformation">내 정보</a></li>
-         <li><a href="">최근 본 상품</a></li>
+         <li><a href="../recent/myRecent">최근 본 상품</a></li>
      </ul>
 </body>
 </html>

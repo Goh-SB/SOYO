@@ -29,6 +29,8 @@ public interface CartService {
 
 	int removeSingleItem(String memberId, int productNo, String productSize);
 
+	int checkCart(Cart cart);
+
 
 
 }
