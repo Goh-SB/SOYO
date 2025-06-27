@@ -404,7 +404,7 @@
 	</div>
     <ul class="nav-links">
     <li class="dropdown">
-        <a id="menu">소개</a>
+        <a href="<c:url value='/brand' />" id="menu">소개</a>
         <ul class="submenu">
             <li><a href="<c:url value='/brand' />">브랜드 소개</a></li>
             <li><a href="<c:url value='/guide' />">쇼핑 가이드</a></li>
@@ -431,7 +431,7 @@
         <a id="menu" style="cursor: pointer;" href="<c:url value='/notice/noticeList'/>">공지사항</a>
       </li>
       <li class="dropdown">
-        <a id="menu">문의</a>
+        <a href="<c:url value='/faq' />" id="menu">문의</a>
         <ul class="submenu">
           <li><a href="<c:url value='/faq' />">FAQ</a></li>
           <li><a href="#" id="admin-contact">관리자 문의</a></li>
