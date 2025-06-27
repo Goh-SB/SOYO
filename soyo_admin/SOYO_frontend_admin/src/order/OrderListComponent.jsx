@@ -82,22 +82,23 @@ function OrderListComponent(){
                 <thead>
                     <tr align="center">
                         <th width="100px">결제날짜</th>
-                        <th width="150px">이름</th>
-                        <th width="200px">구매상품</th>
+                        <th width="150px">구매자</th>
+                        <th width="150px">수령인</th>
                         <th width="200px">가격</th>
-                        <th width="200px">비고</th>
+                        <th width="100px">비고</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     {dataList.map((item, index) => (
                         <tr 
-                        onClick={()=> navigate("/order/"+item.memberId+"/"+item.productNo)}
+                        onClick={()=> navigate("/order/"+item.orderNo)}
                         key={index} align="center">
                             <td>{item.orderDate}</td>
                             <td>{item.memberName}</td>
-                            <td>{item.productName}</td>
-                            <td>{item.productPrice.toLocaleString()}원</td>
-                            <td>{item.cancelStatus}</td>
+                            <td>{item.receiverName}</td>
+                            <td>{item.totalPrice.toLocaleString()}원</td>
+                            <td>{item.orderStatus}</td>
                         </tr>
                     ))}
                 </tbody>

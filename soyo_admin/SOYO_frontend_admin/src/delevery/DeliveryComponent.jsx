@@ -37,16 +37,13 @@ function DeliveryComponent() {
 
 
     const changeStatus = (orderNo, orderStatus) => {
-        let url = "http://192.168.40.32:8100/soyo/delivery/changeStatus";
+        let url = "http://localhost:8100/soyo/delivery/changeStatus";
         axios({
             url,
             method: "get",
             params: {
                 orderNo,
                 orderStatus
-            },
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
             }
         }).then((response) => {
             // console.log(response);

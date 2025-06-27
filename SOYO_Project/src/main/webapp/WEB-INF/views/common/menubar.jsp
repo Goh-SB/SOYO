@@ -404,16 +404,17 @@
 	</div>
     <ul class="nav-links">
     <li class="dropdown">
-        <a id="menu">소개</a>
+        <a href="<c:url value='/brand' />" id="menu">소개</a>
         <ul class="submenu">
             <li><a href="<c:url value='/brand' />">브랜드 소개</a></li>
             <li><a href="<c:url value='/guide' />">쇼핑 가이드</a></li>
         </ul>
         </li>
       <li class="dropdown">
-        <a id="menu">상품</a>
+        <a href="<c:url value='/product/productList?type=all' />" id="menu" >상품</a>
         <ul class="submenu">
-        	<li><a href="<c:url value='/product/productList?type=all' />">ALL</a></li>
+        <!-- <li><a href="<c:url value='/product/productList?type=all' />">ALL</a></li> -->
+        <li><a href="<c:url value='/ai/recommend' />" style="color: #4e8ca7de;">AI 추천</a></li>
 		    <li><a href="<c:url value='/product/productList?type=mens' />">남성복</a></li>
 		    <li><a href="<c:url value='/product/productList?type=womens' />">여성복</a></li>
 		    <li><a href="<c:url value='/product/productList?type=kids' />">아동복</a></li>
@@ -430,7 +431,7 @@
         <a id="menu" style="cursor: pointer;" href="<c:url value='/notice/noticeList'/>">공지사항</a>
       </li>
       <li class="dropdown">
-        <a id="menu">문의</a>
+        <a href="<c:url value='/faq' />" id="menu">문의</a>
         <ul class="submenu">
           <li><a href="<c:url value='/faq' />">FAQ</a></li>
           <li><a href="#" id="admin-contact">관리자 문의</a></li>
@@ -475,7 +476,7 @@
 	          <li><a href="<c:url value='/member/memberEnrollForm' />">회원가입</a></li>
 	        </ul>
 	      </div>
-	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
+	      <a href="<c:url value='/member/myWishList' />" class="heart-icon"><i class="fas fa-heart"></i></a>
 	      <a href="${pageContext.request.contextPath}/cart/cart"><i class="fas fa-shopping-cart"></i></a>
 	    </div>
 	</c:when>
@@ -508,7 +509,7 @@
             -->
 	        </ul>
 	      </div>
-	      <a href="#heart" class="heart-icon"><i class="fas fa-heart"></i></a>
+	      <a href="<c:url value='/member/myWishList' />" class="heart-icon"><i class="fas fa-heart"></i></a>
 	      <a href="<c:url value='/cart/cart' />"><i class="fas fa-shopping-cart"></i></a> 
 	    </div>
     </c:otherwise>

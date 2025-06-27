@@ -23,5 +23,7 @@ public class Cart {
     private int productPrice;         // 상품 가격
     private String productChange;     // 상품 사진
     private String productSize; 	  // 선택한 사이즈
+    
+    private int stockCount; 
 
 }

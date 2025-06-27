@@ -23,6 +23,7 @@ public class Delivery {
     private String requestMsg;
     private int totalPrice;
     private String orderImpNo;
+    private String addressAlias;
 
     private List<Integer> selectedProductList; 
     private List<Integer> selectedProductCountList;

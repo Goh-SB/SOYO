@@ -82,9 +82,9 @@
         <div class="footer-section">
             <h3>SNS</h3>
             <div class="social-links">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/happly_hanbokbeagle/" target="blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/leeslecom/?locale=ko_KR" target="blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://kh-academy.co.kr/upload/teacher/ghkim1121_teacher_photo.png" target="blank"><i class="fab fa-twitter"></i></a>
             </div>
         </div>
     </div>

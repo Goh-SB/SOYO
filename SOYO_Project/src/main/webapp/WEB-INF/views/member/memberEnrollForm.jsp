@@ -13,128 +13,248 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <style>
-
-    @font-face {
-    font-family: 'GowunDodum-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    /* 고운 바탕 이동용버튼과 제목 */
-    @font-face {
-    font-family: 'GowunBatang-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    }
-
-    body{
-        background-image: url('/soyo/resources/images/memberEnrollForm.jpg');
+    body {
+        font-family: 'Noto Sans KR', sans-serif;
+        background: url('/soyo/resources/images/soyo-bg.jpg') no-repeat center center fixed;
         background-size: cover;
+        min-height: 100vh;
+        margin: 0;
     }
 
-    .container{
-        width: 900px;
-        margin: auto;
+    .container {
+        max-width: 480px;
+        margin: 40px auto;
+        margin-top: 110px;
+        padding: 0 20px;
     }
 
-    #myTitle{
-        width: 900px;
-        height: 200px;
-        font-size: 40px;
+    .page-title {
         text-align: center;
-        vertical-align: middle;
+        margin-bottom: 20px;
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    #content{
-        width: 900px;
-        height: 1400px; /* 여기 조절하기 */
+    .form-container {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        padding: 40px 30px 30px 30px;
+        margin-bottom: 40px;
     }
 
-    #content>div{
-        float: left;
+    .form-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .form-subtitle {
+        color: #666;
+        font-size: 0.9rem;
+        font-weight: 400;
+    }
+
+    .form-grid, .form-column {
         display: block;
     }
 
+    .form-group {
+        margin-bottom: 22px;
+        width: 100%;
+    }
 
-    #myContent{
-        width: 800px;
-            /*border: 2px solid rgb(122, 64, 126);*/
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 7px;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .input-field {
+        width: 100%;
+        min-width: 0;
+        padding: 14px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #333;
         box-sizing: border-box;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        border-radius: 50px;
-        vertical-align: middle;
-        background-color: rgba(246, 250, 255, 0.905);
     }
 
-    .btndivform{
-        margin-top: 50px;
-        margin-bottom: 50px;
+    .input-group .input-field {
+        flex: 1 1 0;
     }
 
-
-    table{
-        text-align: left;
-        margin: auto;
-    }
-
-    td>input {
-        width: 400px;
-        height: 40px;
-        margin-bottom: 15px;
-        font-size: 15px;
-        padding: 5px;
-        cursor: default;
-        
-    }
-
-    .inputText{
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    .btn {
+        padding: 14px 0;
         border: none;
-        cursor: text;
-        width: 490px;
-        height: 50px;
-        border-radius: 9px;
-        font-size: 17px;
-    }
-
-    /* 바탕용 폰트 */
-    .fontGowunD{
-    font-family: 'GowunBatang-Regular';
-    font-size: 25px;
-    color: #546E7A;
-    text-decoration: none;
-    }
-
-    .fontGowunB{
-        font-family: 'GowunDodum-Regular';
-    }
-
-    .buttonStyle{
-        border: none;
-        width: 150px;
-        height: 40px;
-        border-radius: 9px;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 500;
         cursor: pointer;
-        font-size: 18px;
+        transition: all 0.3s ease;
+        width: 120px;
+        min-width: 120px;
         text-align: center;
-        background-color: #E3E4FA;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-    .inputGender{
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+    }
+
+    .btn-secondary {
+        background: #f8f9fa;
+        color: #666;
+        border: 2px solid #e1e5e9;
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        padding: 8px 0;
+    }
+
+    .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
         cursor: pointer;
     }
 
-    .textsize20{
-        font-size: 20px;
+    .radio-item input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #667eea;
     }
 
-    .textsize25{
-        font-size: 25px;
+    .radio-item label {
+        font-size: 1rem;
+        color: #333;
+        cursor: pointer;
     }
 
+    .message {
+        font-size: 0.9rem;
+        margin-top: 5px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        display: none;
+    }
+
+    .message.error {
+        background: #fee;
+        color: #e74c3c;
+        border: 1px solid #fadbd8;
+    }
+
+    .message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e1e5e9;
+    }
+
+    .form-actions .btn {
+        min-width: 100px;
+        padding: 12px 25px;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 600px) {
+        .container {
+            max-width: 98vw;
+            padding: 0 5vw;
+        }
+        .form-container {
+            padding: 20px 5vw;
+        }
+        .btn {
+            width: 100%;
+            min-width: 0;
+        }
+        .form-actions {
+            flex-direction: column;
+        }
+    }
+
+    /* 애니메이션 효과 */
+    .form-container {
+        animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .input-field.error {
+        border-color: #e74c3c;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+
+    .input-field.success {
+        border-color: #27ae60;
+        box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+    }
 </style>
 <script>
 // 도로명주소
@@ -151,118 +271,125 @@ function execDaumPostcode() {
 <body>
 <jsp:include page="../common/menubar.jsp" />
 <div class="container">
-        <div class="fontGowunD" id="myTitle">
-            회원가입
-        </div>
-        <div class="" id="content">
-            <div class="" id="myContent">
-                <div style="height: 5%; font-size: 40px; text-align: center; margin: auto;
-                padding: 15px;" class="fontGowunD">회원가입</div>
-                <div class="fontGowunD" style="text-align: center; color: rgb(183, 148, 183);">모두 필수로 입력해주세요</div>
-                <form id="myinsertForm" action="../member/insert" align="center" method="post" onsubmit="return insertMember()">
-                    <table class="fontGowunB">
-                        <tr>
-                            <td colspan="2"><span class="textsize20">아이디</span></td>
-                        </tr>
-                        <tr>
-                            <td width="500px"><input type="text" class="fontGowunB inputText" name="memberId" maxlength="20" placeholder="영문, 숫자를 포함한 6~20 글자" required></td>
-                            <td width="100px"><input type="button" class="fontGowunB buttonStyle" onclick="checkId();" value="중복확인"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><span class="textsize20">비밀번호</span></td>
-                        </tr>
-                        <tr>
-                            <td><input type="password" class="fontGowunB inputText" id="memberPwd" name="memberPwd" placeholder="영문, 숫자, 특수기호를 포함한 8 ~ 20글자" maxlength="20" required></td>
-                        </tr>
-                        <tr>
-
-                            <td colspan="2" style="display: none;"><span id="pwdMsg" class="fontGowunB textsize20">올바른 비밀번호를 입력해주세요.</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">비밀번호 확인</span></td>
-                        </tr>
-                        <tr>
-                            <td><input type="password" class="fontGowunB inputText" id="memberPwdCheck" name="memberPwdCheck" maxlength="20" required></td>
-                        </tr>
-                        <tr>
-
-                            <td style="display: none;"><span id="checkPwdMsg" style="color: red;" class="fontGowunB textsize20">비밀번호가 다릅니다.</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">이름</span></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" name="memberName" class="fontGowunB inputText" maxlength="9" required></td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">성별</span></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; font-size: 17px;">
-                        		<input id="genderM" name="gender" class="fontGowunB inputGender" type="radio" style="width: 20px; height: 20px;" value="M" required>&nbsp;남
-                                <input id="genderF" name="gender" class="fontGowunB inputGender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F" required>&nbsp;여
-                        	</td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">생년월일</span></td>
-                        </tr>
-                        <tr>
-                            <td><input name="birthDate" class="fontGowunB inputText" type="date" required>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">이메일</span></td>
-                        </tr>
-                        <tr>
-                            <td><input id="email" class="fontGowunB inputText" name="email" type="email" maxlength="30"></td>
-                            <td style="padding-bottom: 15px;"><button type="button" class="fontGowunB buttonStyle" id="sert" onclick="cert()">인증번호 발급</button></td>
-                        </tr>
-                        <tr style="display: none;">
-                            <td><input type="text" class="fontGowunB inputText" id="emailCheck" placeholder="인증번호"></td>
-                            <td style="padding-bottom: 15px;"><button type="button" class="fontGowunB buttonStyle" id="validate" onclick="valid();">인증</button></td>
-                        </tr>
-                        <tr>
-                            <td><span id="emailMsg" class="fontGowunB textsize20"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">전화번호</span></td>
-                        </tr>
-                        <tr>
-                            <td><input name="phone" class="fontGowunB inputText" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required></td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">주소</span></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" id="address" class="fontGowunB inputText"  name="address" maxlength="66" required></td>
-                            <td><input type="button" class="fontGowunB buttonStyle" onClick="execDaumPostcode()" value="주소검색"></td>
-                        </tr>
-                        <tr>
-                            <td><span class="textsize20">상세주소</span></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" id="addrDetail" class="fontGowunB inputText" name="addrDetail"  maxlength="66"></td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td><span id="submitMsg" class="fontGowunB textsize20"></span></td>
-                        </tr>
-                    </table>
-
-                    <div class="btndivform">
-                        <button type="submit" class="fontGowunB buttonStyle" disabled>가입하기</button>
-                        <button type="button" class="fontGowunB buttonStyle" onclick="history.back();">취소</button>
-                    </div>
-                    
-                </form>
-                    
-                
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
     
+    <div class="form-container">
+        <div class="form-header">
+            <h2 class="form-title">소요 - 회원가입</h2>
+            <p class="form-subtitle">모든 항목은 필수로 입력해주세요</p>
+        </div>
+        
+        <form id="myinsertForm" action="../member/insert" method="post" onsubmit="return insertMember()">
+            <div class="form-grid">
+                <!-- 왼쪽 열 -->
+                <div class="form-column">
+                    <!-- 아이디 -->
+                    <div class="form-group">
+                        <label class="form-label">아이디</label>
+                        <div class="input-group">
+                            <input type="text" class="input-field" name="memberId" maxlength="20" placeholder="영문, 숫자를 포함한 6~20 글자" required>
+                            <button type="button" class="btn btn-primary" onclick="checkId();">중복확인</button>
+                        </div>
+                    </div>
+
+                    <!-- 비밀번호 -->
+                    <div class="form-group">
+                        <label class="form-label">비밀번호</label>
+                        <input type="password" class="input-field" id="memberPwd" name="memberPwd" placeholder="영문, 숫자, 특수기호를 포함한 8 ~ 20글자" maxlength="20" required>
+                        <div id="pwdMsg" class="message hidden"></div>
+                    </div>
+
+                    <!-- 비밀번호 확인 -->
+                    <div class="form-group">
+                        <label class="form-label">비밀번호 확인</label>
+                        <input type="password" class="input-field" id="memberPwdCheck" name="memberPwdCheck" maxlength="20" required>
+                        <div id="checkPwdMsg" class="message error hidden">비밀번호가 다릅니다.</div>
+                    </div>
+
+                    <!-- 이름 -->
+                    <div class="form-group">
+                        <label class="form-label">이름</label>
+                        <input type="text" name="memberName" class="input-field" maxlength="9" required>
+                    </div>
+
+                    <!-- 성별 -->
+                    <div class="form-group">
+                        <label class="form-label">성별</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input id="genderM" name="gender" type="radio" value="M" required>
+                                <label for="genderM">남성</label>
+                            </div>
+                            <div class="radio-item">
+                                <input id="genderF" name="gender" type="radio" value="F" required>
+                                <label for="genderF">여성</label>
+                            </div>
+                            <div class="radio-item">
+                                <input id="genderX" name="gender" type="radio" value="X" required>
+                                <label for="genderX">선택 안 함</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 생년월일 -->
+                    <div class="form-group">
+                        <label class="form-label">생년월일</label>
+                        <input name="birthDate" class="input-field" type="date" required>
+                    </div>
+                </div>
+
+                <!-- 오른쪽 열 -->
+                <div class="form-column">
+                    <!-- 이메일 -->
+                    <div class="form-group">
+                        <label class="form-label">이메일</label>
+                        <div class="input-group">
+                            <input id="email" class="input-field" name="email" type="email" maxlength="30" placeholder="이메일 주소를 입력하세요">
+                            <button type="button" class="btn btn-primary" id="sert" onclick="cert()">인증번호 발급</button>
+                        </div>
+                        <div id="emailCheckGroup" class="input-group hidden" style="margin-top: 8px;">
+                            <input type="text" class="input-field" id="emailCheck" placeholder="인증번호를 입력하세요">
+                            <button type="button" class="btn btn-primary" id="validate" onclick="valid();">인증</button>
+                        </div>
+                        <div id="emailMsg" class="message hidden"></div>
+                    </div>
+
+                    <!-- 전화번호 -->
+                    <div class="form-group">
+                        <label class="form-label">전화번호</label>
+                        <input name="phone" class="input-field" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required>
+                    </div>
+
+                    <!-- 주소 -->
+                    <div class="form-group">
+                        <label class="form-label">주소</label>
+                        <div class="input-group">
+                            <input type="text" id="address" class="input-field" name="address" maxlength="66" placeholder="주소를 검색하세요" required>
+                            <button type="button" class="btn btn-primary" onClick="execDaumPostcode()">주소검색</button>
+                        </div>
+                    </div>
+
+                    <!-- 상세주소 -->
+                    <div class="form-group">
+                        <label class="form-label">상세주소</label>
+                        <input type="text" id="addrDetail" class="input-field" name="addrDetail" maxlength="66" placeholder="상세주소를 입력하세요">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 제출 메시지 -->
+            <div id="submitMsg" class="message hidden"></div>
+
+            <!-- 버튼 그룹 -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" disabled>가입하기</button>
+                <button type="button" class="btn btn-secondary" onclick="history.back();">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <jsp:include page="../common/footer.jsp" />
+
 <script>
 let goInsert = 0;
 
@@ -274,11 +401,9 @@ const memberPwdCheck = document.getElementById("memberPwdCheck");
 
 // 비밀번호 메세지
 const pwdMsg = document.getElementById("pwdMsg");
-const pwdMsgTd = pwdMsg.parentElement; // td 태그 선택
 
 // 비밀번호 확인 메세지
 const checkPwdMsg = document.getElementById("checkPwdMsg");
-const checkPwdMsgTd = checkPwdMsg.parentElement; // td태그 선택
 
 // 정규표현식 영어,숫자,특수문자를 포함한 8글자 이상
 const pwdCondition = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
@@ -291,16 +416,26 @@ submitMsg.textContent = "";
 const emailMsg = document.getElementById("emailMsg");
 emailMsg.textContent = "";
 
+// 메시지 표시 함수
+function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = `message ${type}`;
+    element.style.display = 'block';
+}
+
+function hideMessage(element) {
+    element.style.display = 'none';
+}
+
 // 이메일 인증번호 발급을 위한 함수
 function cert() {
     let email = $("#email").val();
 
     const emailCheck = document.getElementById("emailCheck");
-    const emailTr = emailCheck.parentElement.parentElement; // tr 태크 지목
+    const emailCheckGroup = document.getElementById("emailCheckGroup");
 
     if(email == "" || !email.includes("@")){
-        emailMsg.textContent = "유효한 이메일을 입력해주세요";
-        emailMsg.style.color = "red";
+        showMessage(emailMsg, "유효한 이메일을 입력해주세요", "error");
         return false;
     }
 
@@ -313,14 +448,14 @@ function cert() {
             alert(result);
 
             // 숨겨져있던 인증 요소 활성화 및 이메일 입력관련 요소 비활성화
-            $("#emailCheck").closest("tr").css("display", "table-row");
+            emailCheckGroup.classList.remove("hidden");
 
             $("#emailCheck").val("").attr("disabled", false);
             $("#validate").attr("disabled", false);
 
             $("#email").attr("readonly", true);
             $("#sert").attr("disabled", true);
-            emailMsg.textContent = "";
+            hideMessage(emailMsg);
         },
         error : function() {
 
@@ -346,11 +481,10 @@ function valid() {
         success : function(result) {
             
             if(result == "인증성공") {
-                emailMsg.textContent = "";
+                hideMessage(emailMsg);
                 $("#emailCheck").attr("readonly", true);
                 $("#validate").attr("disabled", true);
-                emailMsg.textContent = "인증성공";
-                emailMsg.style.color = "green";
+                showMessage(emailMsg, "인증성공", "success");
                 goInsert = 1;
                 
                 
@@ -363,8 +497,7 @@ function valid() {
                 $("#email").val("").attr("readonly", false);
                 $("#sert").attr("disabled", false);
                 goInsert = 0;
-                emailMsg.textContent = "인증실패";
-                emailMsg.style.color = "red";
+                showMessage(emailMsg, "인증실패", "error");
             }
             
         }, 
@@ -382,16 +515,15 @@ memberPwd.addEventListener("blur", function(){
     // 정규표현식 검사
     if(!pwdCondition.test(memberPwd.value)){
         // 정규 표현식에 안맞을 경우
-        pwdMsgTd.style.display = "table-cell";
-        pwdMsg.innerHTML = "조건에 맞지 않은 비밀번호입니다.<br>(영문, 숫자, 특수문자를 포함한 8글자 이상)";
-        pwdMsg.style.color = "red";
+        showMessage(pwdMsg, "조건에 맞지 않은 비밀번호입니다. (영문, 숫자, 특수문자를 포함한 8글자 이상)", "error");
+        memberPwd.classList.add("error");
+        memberPwd.classList.remove("success");
 
     } else {
 
-        // pwdMsgTd.style.display = "none";
-        pwdMsgTd.style.display = "table-cell";
-        pwdMsg.textContent = "올바른 비밀번호입니다.";
-        pwdMsg.style.color = "green";
+        showMessage(pwdMsg, "올바른 비밀번호입니다.", "success");
+        memberPwd.classList.remove("error");
+        memberPwd.classList.add("success");
 
     }
 
@@ -402,10 +534,14 @@ memberPwdCheck.addEventListener("blur", function(){
     
     if(memberPwd.value != memberPwdCheck.value){
         // 만약 비밀번호가 다르다면
-        checkPwdMsgTd.style.display = "table-cell"; // 보이게하기
+        checkPwdMsg.style.display = "block";
+        memberPwdCheck.classList.add("error");
+        memberPwdCheck.classList.remove("success");
     } else {
         // 같다면
-        checkPwdMsgTd.style.display = "none"; // 숨김
+        checkPwdMsg.style.display = "none";
+        memberPwdCheck.classList.remove("error");
+        memberPwdCheck.classList.add("success");
     }
 });
 
@@ -427,7 +563,7 @@ function checkId(){
                 alert("조건에 맞는 아이디를 입력해주세요.\n(영문, 숫자를 포함한 6~20 글자)");
                 
                     // 아이디 재입력
-                    $memberId.css("border", "1px solid red");
+                    $memberId.addClass("error");
                     
             } else {
 
@@ -436,7 +572,7 @@ function checkId(){
                     alert("이미 사용중이거나 탈퇴한 회원의 아이디 입니다.");
                 
                     // 아이디 재입력
-                    $memberId.css("border", "1px solid red");
+                    $memberId.addClass("error");
                 } else {
                     
                     if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
@@ -445,14 +581,14 @@ function checkId(){
                         $memberId.attr("readonly", true);
                         
                         // 테두리 되돌리기
-                        $memberId.css("border", "");
+                        $memberId.removeClass("error").addClass("success");
                         
                         // 회원가입 버튼 키기
                         $("#myinsertForm button[type=submit]").removeAttr("disabled");
 
                     } else {
                         // 아이디 입력창 테두리 색칠하기
-                        $memberId.css("border", "1px solid red");
+                        $memberId.addClass("error");
                     }
                 }
             }
@@ -472,24 +608,24 @@ function insertMember(){
     
     if(memberPwd.value != memberPwdCheck.value){
         // 비밀번호와 비밀번호 확인 값이 다르다면
-        submitMsg.textContent = "비밀번호가 다릅니다.";
+        showMessage(submitMsg, "비밀번호가 다릅니다.", "error");
         return false;
     }
 
     if(!memberPwd.value || !memberPwdCheck.value){
         // 비밀번호와 비밀번호 확인창이 비어있을경우
-        submitMsg.textContent = "비밀번호를 입력해주세요."
+        showMessage(submitMsg, "비밀번호를 입력해주세요.", "error");
         return false;
     }
 
     if(!pwdCondition.test(memberPwd.value)){
         // 비밀번호가 정규표현식에 맞게 작성되었는지 확인
-        submitMsg.textContent = "조건에 맞춰 비밀번호를 입력해주세요."
+        showMessage(submitMsg, "조건에 맞춰 비밀번호를 입력해주세요.", "error");
         return false;
     } 
 
     if(goInsert != 1){
-        submitMsg.textContent = "이메일 인증을 해주세요."
+        showMessage(submitMsg, "이메일 인증을 해주세요.", "error");
         return false;
     } else {
         return confirm("회원가입 하시겠습니까?")

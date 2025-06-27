@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="aiMapper">
+
+	<resultMap id="ProductResultMap" type="com.kh.soyo.product.model.vo.Product">
+		<id property="productNo" column="PRODUCT_NO"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="productCategory" column="PRODUCT_CATEGORY"/>
+		<result property="productCaption" column="PRODUCT_CAPTION"/>
+		<result property="productSubCaption" column="PRODUCT_SUB_CAPTION"/>
+		<result property="productOrigin" column="PRODUCT_ORIGIN"/>
+		<result property="productChange" column="PRODUCT_CHANGE"/>
+		<result property="productRegisteredDate" column="PRODUCT_REGISTERED_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="productSubOrigin" column="PRODUCT_SUB_ORIGIN"/>
+		<result property="productSubChange" column="PRODUCT_SUB_CHANGE"/>
+		<result property="productTag" column="PRODUCT_TAG"/>
+		<result property="productSort" column="PRODUCT_TAG"/>
+		<result property="productCount" column="STOCK_COUNT"/>
+		<result property="productSize" column="PRODUCT_SIZE"/>
+	</resultMap>
+
+	<!-- 테스트용 쿼리: 전체 상품 조회 -->
+	<select id="selectAllProducts" resultMap="ProductResultMap">
+		SELECT p.*, 0 as STOCK_COUNT
+		FROM PRODUCT p
+		WHERE p.STATUS = 'Y'
+		ORDER BY p.PRODUCT_NO
+	</select>
+
+	<select id="selectBestProductByTags" parameterType="map" resultMap="ProductResultMap">
+		SELECT *
+		FROM (
+			SELECT p.*, 0 as STOCK_COUNT,
+			       CASE 
+			           WHEN p.PRODUCT_CATEGORY IN 
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           THEN 1 ELSE 0 END as category_match,
+			       CASE 
+			           WHEN EXISTS (
+			               SELECT 1 
+			               FROM PRODUCT_TAG pt 
+			               WHERE pt.PRODUCT_NO = p.PRODUCT_NO 
+			               AND pt.TAG_NAME IN
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           ) THEN 1 ELSE 0 END as tag_match,
+			       CASE 
+			           WHEN p.PRODUCT_TAG IN
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           THEN 1 ELSE 0 END as product_tag_match
+			FROM PRODUCT p
+			WHERE p.STATUS = 'Y'
+			<if test="tags != null and tags.size() > 0">
+			AND (
+				<!-- PRODUCT_CATEGORY 매칭 -->
+				p.PRODUCT_CATEGORY IN
+				<foreach item="tag" collection="tags" open="(" separator="," close=")">
+					#{tag}
+				</foreach>
+				OR
+				<!-- PRODUCT_TAG 컬럼 매칭 -->
+				<foreach item="tag" collection="tags" open="(" separator=" OR " close=")">
+					p.PRODUCT_TAG LIKE '%' || #{tag} || '%'
+				</foreach>
+				OR
+				<!-- PRODUCT_TAG 테이블 매칭 -->
+				EXISTS (
+					SELECT 1 
+					FROM PRODUCT_TAG pt 
+					WHERE pt.PRODUCT_NO = p.PRODUCT_NO 
+					AND pt.TAG_NAME IN
+					<foreach item="tag" collection="tags" open="(" separator="," close=")">
+						#{tag}
+					</foreach>
+				)
+			)
+			</if>
+			ORDER BY (category_match + tag_match + product_tag_match) DESC, DBMS_RANDOM.VALUE()
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+</mapper> 

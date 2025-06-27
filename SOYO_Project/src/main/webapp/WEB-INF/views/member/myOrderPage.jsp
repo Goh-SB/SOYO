@@ -120,6 +120,11 @@
             width: 25%;
             padding-top: 10px;
         }
+        .product-img>img{
+            border-radius : 8px;
+        	width : 150px;
+        	height : 150px;
+        }
 
         #page{
 
@@ -458,9 +463,8 @@
                 padding: 15px;">내 주문 목록</div>
                     <div id="order-List">
                         <ul>
-                       <c:forEach var="o" items="${order}">
+                       <c:forEach var="p" items="${order}">
 						    <li>
-						 
 						            <table class="order-table">
 						                <tr>
 						                    <th> 주문</th>
@@ -468,29 +472,26 @@
 						                <tr></tr>
 						                <tr>
 						                    <td class="product-img">
-						                        <img src="${pageContext.request.contextPath}/resources/product_upfile/${o.productChange}" alt="">
+						                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${p.productChange}" >
 						                    </td>
 						                    <td class="product-name">
 						                        <div>
-						                        	수령인 : ${o.receiverName} <br>
-						                        	배송지 : ${o.addressOther}<br>
-						                            배송날짜 : ${o.orderDate }<br>
-						                            가격 : ${o.totalPrice}<br>
-						                            주문번호 : ${o.orderImpNo }<br>
+						                        	수령인 : ${p.receiverName} <br>
+						                        	배송지 : ${p.addressOther}<br>
+						                            가격 : ${p.totalPrice}<br>
+						                            상품명 : ${p.productName }<br>
+						                            <!--배송날짜 : ${o.orderDate }<br> 
 						                            상품번호 : ${o.productNo }<br>
-						                            상품명 : ${o.productName }<br>
+						                            주문번호 : ${o.orderImpNo }<br> -->
 						                            
-						                            <button type="button" onclick="copyImpUid('${o.orderImpNo}')">복사</button>
+						                            <button type="button" onclick="copyImpUid('${p.orderImpNo}')">복사</button>
 						                        </div>
 						                    </td>
 						                    <td class="product-menu">
-						                        <a href="./myOrderPage/detail?impNo=${o.orderImpNo}" class="order-link-button">
+						                        <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
 						                        	상세 조회
 						                        </a>
-						                        <a href="<c:url value='/product/productList?type=all' />" class="order-link-button">
-						                        	추가 주문
-						                        </a>
-						                        <button class="review-button" type="button" onclick="openReviewModal('${o.productNo}', '${o.productName}')">리뷰 작성</button>
+						                        <button class="review-button" type="button" onclick="openReviewModal('${p.productNo}', '${p.productName}')">리뷰 작성</button>
 						                    </td>
 						                </tr>
 						            </table>

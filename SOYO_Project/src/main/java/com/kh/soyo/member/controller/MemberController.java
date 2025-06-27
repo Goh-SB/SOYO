@@ -30,6 +30,7 @@ import com.kh.soyo.review.model.vo.Review;
 import com.kh.soyo.wishlist.model.vo.Wish;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -174,40 +175,74 @@ public class MemberController {
     @GetMapping("/myWishList")
     public String myWishList(@RequestParam(value = "page", defaultValue = "1") int currentPage ,HttpSession session, Model model) {
     	
-    	Member loginUser = (Member)session.getAttribute("loginUser");
-    	
-    	String mi = loginUser.getMemberId();
-    	/*
-    	Wish mi = new Wish();
-    	mi.setMemberId(loginUser.getMemberId());
-    	
-    	
-    	String wSize = memberService.myWishListSize(loginUser.getMemberId());
-    	mi.setProductSize(wSize);
-    	
-    	
-    	int listCount;
-		int pageLimit;
-		int boardLimt;
-		listCount = memberService.myWishListCount(mi);
-		
-		// 페이징바 페이지 최대갯수
-		pageLimit = 5;
-		
-		// 페이지당 보여질 갯수
-		boardLimt = 4;
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimt);
-
-		ArrayList<Wish> myWish = memberService.myWishList(mi, pi);
-		System.out.println(myWish);
-		model.addAttribute("myWish", myWish);
-		model.addAttribute("pi", pi);
-		*/
-    	return "wishList/myWishList";
+	    Member loginUser = (Member)session.getAttribute("loginUser");
+	    
+	    if(loginUser != null) {	
+	    	
+	    	String mi = loginUser.getMemberId();
+	    	
+	    	/*
+	    	Wish mi = new Wish();
+	    	mi.setMemberId(loginUser.getMemberId());
+	    	
+	    	
+	    	String wSize = memberService.myWishListSize(loginUser.getMemberId());
+	    	mi.setProductSize(wSize);
+	    	
+	    	*/
+	    	int listCount; // 총 상품수
+			int pageLimit; // 페이징바의 페이지 최대 갯수
+			int boardLimit; // 한페이지에 보여질 게시글 최대 갯수
+			listCount = memberService.myWishListCount(mi);
+			
+			// 페이징바 페이지 최대갯수
+			pageLimit = 5;
+			
+			// 페이지당 보여질 갯수
+			boardLimit = 500;
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+	
+			ArrayList<Wish> myWish = memberService.myWishList(mi, pi);
+			
+			model.addAttribute("myWish", myWish);
+			model.addAttribute("pi", pi);
+			
+	    	return "wishList/myWishList";
+    	} else {
+    		
+    		session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+    		return "member/loginPage";
+    	}
     	
     }
-	
+    
+    @PostMapping("/wishGo")
+    public String wishGo(@RequestParam(value = "selected", required = false) List<Integer> selected,
+                         HttpServletRequest request, HttpSession session) {
+    	
+        if (selected != null) {
+        	
+            for (int index : selected) {
+            	
+                String productNo = request.getParameter("productNo_" + index);
+                String productSize = request.getParameter("productSize_" + index);
+
+                System.out.println("상품번호: " + productNo);
+                System.out.println("사이즈: " + productSize);               
+                
+            }
+            
+            return "wishList/myWishList";
+            
+        } else {
+        	
+        	session.setAttribute("alertMsg", "장바구니 담기 실패");
+        	
+        	return "redirect:/";
+        }
+        
+    }
 	
 	// 로그인 요청 처리용 메서드
 	@PostMapping("/login")
@@ -662,6 +697,7 @@ public class MemberController {
 		
 		model.addAttribute("product",product);
 		
+		System.out.println(product);
 	    return "member/orderDetail";
 	}
 	

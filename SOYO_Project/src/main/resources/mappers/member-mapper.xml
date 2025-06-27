@@ -111,25 +111,31 @@
 	</select>
 	
 	<select id="orderProduct" parameterType="string" resultMap="deliveryResultSet">
-    SELECT D.RECEIVER_NAME,
-           D.RECEIVER_PHONE,
-           D.ADDRESS_NAME,
-           D.ADDRESS_OTHER,
-           O.TOTAL_PRICE,
-           O.ORDER_DATE,
-           O.ORDER_IMPNO,
-           P.PRODUCT_NO,
-           P.PRODUCT_CHANGE,
-           P.PRODUCT_NAME,
-           P.PRODUCT_PRICE,
-           PAY.PRODUCT_COUNT
+    SELECT *
+FROM (
+    SELECT 
+        O.ORDER_IMPNO,
+        D.RECEIVER_NAME,
+        D.RECEIVER_PHONE,
+        D.ADDRESS_NAME,
+        D.ADDRESS_OTHER,
+        O.TOTAL_PRICE,
+        O.ORDER_DATE,
+        P.PRODUCT_NO,
+        P.PRODUCT_NAME,
+        P.PRODUCT_PRICE,
+        P.PRODUCT_CHANGE,
+        PAY.PRODUCT_COUNT,
+        ROW_NUMBER() OVER (PARTITION BY O.ORDER_IMPNO ORDER BY P.PRODUCT_NO) AS RN
     FROM ORDER_TB O
     JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
     JOIN PAYMENT PAY ON PAY.ORDER_IMPNO = O.ORDER_IMPNO
     JOIN PRODUCT P ON P.PRODUCT_NO = PAY.PRODUCT_NO
     WHERE O.MEMBER_ID = #{memberId}
       AND O.RECEIVER_NAME = D.RECEIVER_NAME
-    ORDER BY O.ORDER_IMPNO DESC
+) A
+WHERE A.RN = 1
+ORDER BY A.ORDER_IMPNO DESC
 </select>
 	
 	<!-- 회원가입용 쿼리문 -->
@@ -213,9 +219,11 @@
 
 	<select id="orderProductList" parameterType="string" resultMap="deliveryResultSet">
 	SELECT PD.PRODUCT_NAME,
+		   PD.PRODUCT_NO,
 	       PD.PRODUCT_PRICE,
 	       P.PRODUCT_COUNT,
-	       PD.PRODUCT_CHANGE  
+	       PD.PRODUCT_CHANGE,
+	       P.ORDER_IMPNO
 	  FROM PAYMENT P
 	  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
 	 WHERE P.ORDER_IMPNO = #{orderImpNo}
@@ -235,8 +243,11 @@
 		     , P.PRODUCT_ORIGIN
 		     , P.PRODUCT_CHANGE
 		     , P.PRODUCT_CATEGORY
-		    FROM WISH_LIST W
-		    JOIN PRODUCT P ON W.PRODUCT_NO = P.PRODUCT_NO
+		     , W.PRODUCT_SIZE
+		     , NVL(S.STOCK_COUNT, 0)
+		    FROM PRODUCT P
+		    JOIN WISH_LIST W ON P.PRODUCT_NO = W.PRODUCT_NO
+		    LEFT OUTER JOIN PRODUCT_SIZE S ON W.PRODUCT_NO = S.PRODUCT_NO AND W.PRODUCT_SIZE = S.PRODUCT_SIZE
 		    WHERE W.MEMBER_ID = #{memberId}
 	</select>
 	

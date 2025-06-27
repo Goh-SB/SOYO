@@ -76,7 +76,7 @@ function DeliveryDetailComponent(){
                         </td>
                     </tr>
                     <tr>
-                        <th>배송완료일</th>
+                        <th>상품발송일</th>
                         <td>{delivery.deliveryDate}</td>
                     </tr>
                     <tr>

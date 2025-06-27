@@ -52,7 +52,7 @@ public class ReviewController {
 	@ResponseBody
 	public Map<String, Object> insertReview(@RequestBody Review review, HttpSession session) {
 	    Map<String, Object> response = new HashMap<>();
-	    
+//	    System.out.println(review);
 	    try {
 	        Object loginUser = session.getAttribute("loginUser");
 	        if (loginUser == null) {
