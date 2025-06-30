@@ -197,13 +197,15 @@
         box-sizing: border-box;
     }
     .best-review-img {
-        width: 100%;
-        object-fit: contain;
-        border-radius: 8px;
-        border: 1px solid #eee;
-        background: #fafafa;
-        margin-bottom: 12px;
-    }
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            background: #fafafa;
+            margin-bottom: 12px;
+        }
+
 
     .best-review-subject {
         font-weight: 600;
@@ -319,7 +321,7 @@
             <c:forEach var="review" items="${bestReviewList}" varStatus="status">
                 <c:if test="${status.index lt 5}">
                     <div class="best-review-card">
-                        <img src="http://localhost:8100/soyo/resources/product_upfile/${review.productChange}" class="best-review-img" alt="리뷰 이미지">
+                        <img src="http://192.168.40.32:8100/soyo/resources/review_upfile/${review.reviewThumbnailOrigin}" class="best-review-img" alt="리뷰 이미지">
                         <div class="best-review-subject">${review.reviewTitle}</div>
                         <div class="best-review-content">${review.reviewContent}</div>
                         <div class="best-review-rating">
@@ -335,6 +337,11 @@
                             <span class="best-review-shop">
                                 <b>TOP-${status.index + 1}</b>
                             </span>
+                            <!--
+                            <span style="margin-left: auto; display: flex; align-items: center; gap: 3px; font-size: 15px; color: #eb4d4b;">
+                                <span style="font-size:17px;">&#10084;</span> ${review.likeCount}
+                            </span>
+                            -->
                         </div>
                     </div>
                 </c:if>
