@@ -165,7 +165,7 @@
 		    FROM CART
 		    WHERE PRODUCT_NO = #{productNo}
 		      AND MEMBER_ID = #{memberId}
-		      AND PRODUCT_SIZE = #{productSize}
+		      
     </select>
     
     <select id="changeStock" parameterType="delivery"

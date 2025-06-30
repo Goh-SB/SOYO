@@ -30,6 +30,42 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 		return deliveryAddress.newDeliveryAddress(sqlSession, da);
 	}
 
+	@Override
+	public ArrayList<DeliveryAddress> selectDeliveryDefault(String memberId) {
+		
+		return deliveryAddress.selectDeliveryDefault(sqlSession, memberId);
+	}
+
+	@Override
+	public ArrayList<DeliveryAddress> selectDeliveryNotDefault(String memberId) {
+		
+		return deliveryAddress.selectDeliveryNotDeault(sqlSession, memberId);
+	}
+
+	@Override
+	public void updateDefault(DeliveryAddress d) {
+		
+		// 기존의 기본배송지 삭제
+		deliveryAddress.newUpdateDefault(sqlSession, d);
+		
+		// 기본 배송지 등록
+		deliveryAddress.updateDefault(sqlSession, d);
+	}
+
+	@Override
+	public int updateAddress(DeliveryAddress d) {
+		
+		return deliveryAddress.updateAddress(sqlSession, d);
+	}
+
+	@Override
+	public int deleteAddress(DeliveryAddress d) {
+		
+		return deliveryAddress.deleteAddress(sqlSession, d);
+	}
+
+
+
 	
 	
 }

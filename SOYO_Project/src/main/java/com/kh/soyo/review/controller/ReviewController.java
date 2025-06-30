@@ -227,4 +227,92 @@ public class ReviewController {
 		return response;
 	}
 	
+	@PostMapping("/addLike")
+	@ResponseBody
+	public String addLike(@RequestBody Map<String, Object> requestData, HttpSession session) {
+		try {
+			Object loginUser = session.getAttribute("loginUser");
+			if (loginUser == null) {
+				return "notLogin";
+			}
+			
+			String memberId = null;
+			if (loginUser instanceof com.kh.soyo.member.model.vo.Member) {
+				memberId = ((com.kh.soyo.member.model.vo.Member) loginUser).getMemberId();
+			}
+			
+			if (memberId == null) {
+				return "error";
+			}
+			
+			int reviewNo = Integer.parseInt(requestData.get("reviewNo").toString());
+			
+			// 이미 좋아요를 눌렀는지 확인
+			Map<String, Object> checkData = new HashMap<>();
+			checkData.put("reviewNo", reviewNo);
+			checkData.put("memberId", memberId);
+			
+			int existingLike = reviewService.checkExistingLike(checkData);
+			if (existingLike > 0) {
+				return "duplicated";
+			}
+			
+			// 좋아요 추가
+			Map<String, Object> likeData = new HashMap<>();
+			likeData.put("reviewNo", reviewNo);
+			likeData.put("memberId", memberId);
+			
+			int result = reviewService.addLike(likeData);
+			
+			if (result > 0) {
+				return "success";
+			} else {
+				return "error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	@PostMapping("/removeLike")
+	@ResponseBody
+	public String removeLike(@RequestBody Map<String, Object> requestData, HttpSession session) {
+		try {
+			Object loginUser = session.getAttribute("loginUser");
+			if (loginUser == null) {
+				return "notLogin";
+			}
+			
+			String memberId = null;
+			if (loginUser instanceof com.kh.soyo.member.model.vo.Member) {
+				memberId = ((com.kh.soyo.member.model.vo.Member) loginUser).getMemberId();
+			}
+			
+			if (memberId == null) {
+				return "error";
+			}
+			
+			int reviewNo = Integer.parseInt(requestData.get("reviewNo").toString());
+			
+			// 좋아요 삭제
+			Map<String, Object> likeData = new HashMap<>();
+			likeData.put("reviewNo", reviewNo);
+			likeData.put("memberId", memberId);
+			
+			int result = reviewService.removeLike(likeData);
+			
+			if (result > 0) {
+				return "success";
+			} else {
+				return "error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
 }

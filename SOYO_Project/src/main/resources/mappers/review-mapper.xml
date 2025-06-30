@@ -15,6 +15,8 @@
 	    <result property="memberId" column="MEMBER_ID"/>
 	    <result property="memberName" column="MEMBER_NAME"/>
 	    <result property="productChange" column="PRODUCT_CHANGE"/>
+	    <result property="likeCount" column="LIKE_COUNT"/>
+	    <result property="productName" column="PRODUCT_NAME"/>
 	</resultMap>
 	
 	<select id="selectReviewList" parameterType="_int" resultMap="reviewResultMap">
@@ -63,7 +65,8 @@
 		            R.PRODUCT_NO,
 		            R.MEMBER_ID,
 		            M.MEMBER_NAME,
-		            P.PRODUCT_CHANGE
+		            P.PRODUCT_CHANGE,
+		            P.PRODUCT_NAME
 		        FROM REVIEW R
 		        JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
 		        JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
@@ -89,12 +92,18 @@
 	            R.PRODUCT_NO,
 	            R.MEMBER_ID,
 	            M.MEMBER_NAME,
-	            P.PRODUCT_CHANGE
+	            P.PRODUCT_CHANGE,
+	            NVL(LIKE_TBL.LIKE_COUNT, 0) AS LIKE_COUNT
 	        FROM REVIEW R
 	        JOIN MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
 	        JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
+	        LEFT JOIN (
+	            SELECT REVIEW_NO, COUNT(*) AS LIKE_COUNT
+	            FROM TB_LIKE
+	            GROUP BY REVIEW_NO
+	        ) LIKE_TBL ON R.REVIEW_NO = LIKE_TBL.REVIEW_NO
 	        WHERE R.STATUS = 'Y'
-	        ORDER BY R.RATING DESC, R.REVIEW_DATE DESC
+	        ORDER BY LIKE_COUNT DESC, R.RATING DESC, R.REVIEW_DATE DESC
 	    )
 	    WHERE ROWNUM &lt;= 5
 	</select>
@@ -163,6 +172,36 @@
 		JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
 		WHERE R.REVIEW_NO = #{reviewNo}
 		  AND R.STATUS = 'Y'
+	</select>
+
+	<!-- 좋아요 관련 쿼리들 -->
+	<select id="checkExistingLike" parameterType="map" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_LIKE
+		WHERE REVIEW_NO = #{reviewNo}
+		  AND MEMBER_ID = #{memberId}
+	</select>
+
+	<insert id="addLike" parameterType="map">
+		INSERT INTO TB_LIKE (
+			REVIEW_NO,
+			MEMBER_ID
+		) VALUES (
+			#{reviewNo},
+			#{memberId}
+		)
+	</insert>
+
+	<delete id="removeLike" parameterType="map">
+		DELETE FROM TB_LIKE
+		WHERE REVIEW_NO = #{reviewNo}
+		  AND MEMBER_ID = #{memberId}
+	</delete>
+
+	<select id="getLikeCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_LIKE
+		WHERE REVIEW_NO = #{reviewNo}
 	</select>
 
 </mapper>

@@ -47,5 +47,22 @@ public class ReviewDao {
 	public Review selectReviewByNo(int reviewNo) {
 		return sqlSession.selectOne("reviewMapper.selectReviewByNo", reviewNo);
 	}
+	
+	// 좋아요 관련 메서드들
+	public int checkExistingLike(SqlSessionTemplate sqlSession, java.util.Map<String, Object> likeData) {
+		return sqlSession.selectOne("reviewMapper.checkExistingLike", likeData);
+	}
+	
+	public int addLike(SqlSessionTemplate sqlSession, java.util.Map<String, Object> likeData) {
+		return sqlSession.insert("reviewMapper.addLike", likeData);
+	}
+	
+	public int removeLike(SqlSessionTemplate sqlSession, java.util.Map<String, Object> likeData) {
+		return sqlSession.delete("reviewMapper.removeLike", likeData);
+	}
+	
+	public int getLikeCount(SqlSessionTemplate sqlSession, int reviewNo) {
+		return sqlSession.selectOne("reviewMapper.getLikeCount", reviewNo);
+	}
     
 }

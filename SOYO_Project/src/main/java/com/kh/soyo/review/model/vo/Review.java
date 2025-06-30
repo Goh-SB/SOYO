@@ -31,4 +31,8 @@ public class Review {
     private String productOrigin;      			// 상품) 원본 이미지명
     private String productChange;      			// 상품) 저장용 변경 이미지명
     private String productName;					// 상품) 제품 이름
+    
+    // 좋아요 관련 필드
+    private boolean liked;                      // 현재 사용자가 좋아요를 눌렀는지 여부
+    private int likeCount;                      // 좋아요 개수
 }

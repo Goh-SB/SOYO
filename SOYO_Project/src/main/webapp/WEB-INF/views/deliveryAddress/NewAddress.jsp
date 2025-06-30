@@ -91,11 +91,11 @@
                         <form action="../deliveryAddress/newDeliveryAddress" method="post" align="center">
                             <table class="addressTable">
                                 <tr>
-                                    <td><input name="addressName" type="text" class="inputStyle" placeholder="배송지 이름" required></td>
+                                    <td><input name="addressName" type="text" class="inputStyle" placeholder="배송지 이름" maxlength="10" required></td>
                                     
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="receiverName" placeholder="수령인" class="inputStyle" required></td>
+                                    <td><input type="text" name="receiverName" placeholder="수령인" class="inputStyle" maxlength="4" required></td>
                                 </tr>
                                 <tr>
                                     <td><input type="text" name="receiverPhone" class="inputStyle" maxlength="11" placeholder="- 없는 전화번호" required></td>

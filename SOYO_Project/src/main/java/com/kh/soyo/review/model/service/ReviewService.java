@@ -24,4 +24,13 @@ public interface ReviewService {
 	
 	Review selectReviewByNo(int reviewNo);
 	
+	// 좋아요 관련 메서드들
+	int checkExistingLike(java.util.Map<String, Object> likeData);
+	
+	int addLike(java.util.Map<String, Object> likeData);
+	
+	int removeLike(java.util.Map<String, Object> likeData);
+	
+	int getLikeCount(int reviewNo);
+	
 }
