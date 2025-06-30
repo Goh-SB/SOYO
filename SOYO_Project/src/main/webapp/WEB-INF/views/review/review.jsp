@@ -477,7 +477,8 @@
                         contentRow.classList.remove('active');
                     } else {
                         // 다른 열린 리뷰 닫기 (하나만 열리게 하려면 아래 주석 해제)
-                        //document.querySelectorAll('.review-content-row.active').forEach(function(row){ row.classList.remove('active'); });
+                        /* document.querySelectorAll('.review-content-row.active')
+                        .forEach(function(row){ row.classList.remove('active'); }); */
                         contentRow.classList.add('active');
                     }
                 });
