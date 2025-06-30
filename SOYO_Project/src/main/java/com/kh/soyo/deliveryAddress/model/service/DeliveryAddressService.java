@@ -10,4 +10,14 @@ public interface DeliveryAddressService {
 
 	int newDeliveryAddress(DeliveryAddress da);
 
+	ArrayList<DeliveryAddress> selectDeliveryDefault(String memberId);
+
+	ArrayList<DeliveryAddress> selectDeliveryNotDefault(String memberId);
+
+	void updateDefault(DeliveryAddress d);
+
+	int updateAddress(DeliveryAddress d);
+
+	int deleteAddress(DeliveryAddress d);
+
 }

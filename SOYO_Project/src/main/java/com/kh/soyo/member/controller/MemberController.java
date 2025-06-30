@@ -30,6 +30,7 @@ import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
+import com.kh.soyo.wishlist.model.service.WishListService;
 import com.kh.soyo.wishlist.model.vo.Wish;
 
 import jakarta.servlet.http.Cookie;
@@ -51,6 +52,9 @@ public class MemberController {
 	
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private WishListService wishListService;
 	
 	// 인증번호를 담아둘 해시맵 생성 (전역변수)
 	// key : 인증할 email 주소, value : 인증번호
@@ -230,7 +234,7 @@ public class MemberController {
     // 내 찜 목록 장바구니 담기
     @PostMapping("/wishGo")
     public String wishGo(@RequestParam(value = "selected", required = false) List<Integer> selected,
-                         HttpServletRequest request, HttpSession session, Cart cart , Model model) {
+                         HttpServletRequest request, HttpSession session, Cart cart , Model model, Wish wish) {
     	
     	int result = 0;
     	
@@ -255,7 +259,7 @@ public class MemberController {
                 cart.setProductNo(productNo);
                 cart.setProductSize(productSize);
                 
-                // 카트에 넣기전 이미 들어가있는지 확인 사이즈, 아이디, 상품번호로
+                // 카트에 넣기전 이미 들어가있는지 확인 아이디, 상품번호로
                 int check = cartService.checkCart(cart);
                 
                 if(check > 0) {
@@ -268,6 +272,11 @@ public class MemberController {
                 } else {
                 	// 안들어가있다면 장바구니에 추가
                 	result = cartService.insertCart(cart);
+                	
+                	// 장바구니에 추가 성공했다면 찜 리스트에서 삭제
+                	wish.setMemberId(memberId);
+                	wish.setProductNo(productNo);
+                	wishListService.deleteWish(wish);
                 }
                 
                      
