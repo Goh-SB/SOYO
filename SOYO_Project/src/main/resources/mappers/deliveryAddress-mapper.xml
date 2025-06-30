@@ -16,4 +16,22 @@
 		    WHERE MEMBER_ID = #{memberId}
 	</select>
 	
+	<!-- 배송지 등록 쿼리문 -->
+	<insert id="insertDelivery" parameterType="deliveryAddress">
+		INSERT INTO DELIVERY_ADDRESS(ADDRESS_NO
+                           , ADDRESS_NAME
+                           , ADDRESS_OTHER
+                           , IS_DEFAULT
+                           , RECEIVER_NAME
+                           , RECEIVER_PHONE
+                           , MEMBER_ID)
+                    VALUES(DELIVERY_ADDRESS_SEQ.NEXTVAL
+                         , #{addressName}
+                         , #{addressOther}
+                         , 'N'
+                         , #{receiverName}
+                         , #{receiverPhone}
+                         , #{memberId})
+	</insert>
+	
 </mapper>
