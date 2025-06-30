@@ -8,4 +8,6 @@ public interface DeliveryAddressService {
 
 	ArrayList<DeliveryAddress> selectDelivery(String memberId);
 
+	int newDeliveryAddress(DeliveryAddress da);
+
 }
