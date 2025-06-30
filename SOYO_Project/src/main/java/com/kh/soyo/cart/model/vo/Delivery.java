@@ -24,7 +24,13 @@ public class Delivery {
     private int totalPrice;
     private String orderImpNo;
     private String addressAlias;
+    
+    private int productNo;
+    private String productSize;
+    private int cartNo;
+    private int productCount;
 
     private List<Integer> selectedProductList; 
     private List<Integer> selectedProductCountList;
+    private List<String> selectedProductSizeList;
 }

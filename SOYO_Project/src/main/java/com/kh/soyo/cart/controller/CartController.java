@@ -121,13 +121,40 @@ public class CartController {
 	public int insertOrder(@RequestBody Delivery delivery) {
 
 		System.out.println(delivery);
-	    // 1. 배송 + 주문 정보 저장
-	    int result1 = cartService.deliveryInfo(delivery); // insertOrder + insertAddress
+		int result1 = 0;
+		int result2 = 1;
+		// 장바구니 정보 불러오기
+		for(int i=0; i<delivery.getSelectedProductList().size(); i++) {
+			
+			delivery.setProductNo(delivery.getSelectedProductList().get(i)); 
+			delivery.setProductSize(delivery.getSelectedProductSizeList().get(i));
+			delivery.setProductCount(delivery.getSelectedProductCountList().get(i));
+			
+//			Cart c = cartService.loadInfo(delivery);
+			
+			
+			// 2. 결제 테이블 저장 (단순화: 반복 insert 아님)
+			result2 *= cartService.insertPayment(delivery);
+		}
+		
+		// 1. 배송 + 주문 정보 저장
+		result1 = cartService.deliveryInfo(delivery); // insertOrder + insertAddress
+	    
+		int result3 = 1;
+		
+		// 3. 결제 후 장바구니 삭제
+		for(int i =0; i < delivery.getSelectedProductList().size(); i ++) {
+			
+			delivery.setProductNo(delivery.getSelectedProductList().get(i)); 
+			delivery.setProductSize(delivery.getSelectedProductSizeList().get(i));
+			
+			result3 *= cartService.deleteCartProduct(delivery);
+		}
+	    System.out.println( "1 번" + result1);
+	    System.out.println(" 2번 "+ result2);
+	    System.out.println("3번"+result3);
 
-	    // 2. 결제 테이블 저장 (단순화: 반복 insert 아님)
-	    int result2 = cartService.insertPayment(delivery);
-
-	    return (result1 > 0 && result2 > 0) ? 1 : 0;
+	    return (result1 * result2 * result3) >= 1 ? 1 : 0;
 	}
 	
 	
@@ -161,7 +188,15 @@ public class CartController {
 	    return result > 0 ? "success" : "fail";
 	}
 
-
+	@PostMapping("changeStock")
+	@ResponseBody
+	public int changeStock(Delivery delivery) {
+		
+		int result = cartService.changeStock(delivery);
+		System.out.println(result);
+		System.out.println(delivery);
+		return result;
+	}
 	
 		
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,6 +123,16 @@
             background-color: aliceblue;
             border-radius: 8px;
         }
+        #paymentInfo{
+        	width : 200px;
+        	height : 300px;
+        	margin-left : 20px;
+        	padding : 5px;
+        	border: none;
+        	border-radius: 8px;
+        	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        	background-color: rgba(255, 242, 253, 0.663);
+        }
 
 </style>
 </head>
@@ -197,12 +208,12 @@
           
 		            </div>
 		            
-		            <div>
+		            <div id="paymentInfo">
 		         	 <h2>결제 정보</h2>
 					 <p>총 결제 금액: <strong>${totalPrice}</strong>원</p>
 		     	    </div>
 		     	   
-		     	   <!-- 체크된 상품번호 가져오기 -->
+		     	   <!-- 체크된 상품번호 가져오기
 		     	    <c:forEach var="productNo" items="${paramValues.productNoList}">
 					    <input type="hidden" name="productNoList" value="${productNo}" />
 					</c:forEach>
@@ -210,6 +221,18 @@
 					<c:forEach var="productCount" items="${paramValues.productCountList}">
 					    <input type="hidden" name="productCountList" value="${productCount}" />
 					</c:forEach>
+					
+					
+					<c:forEach var="productSize" items="${paramValues.productSize}">
+					    <input type="hidden" name="productSize" value="${productSize}" />
+					</c:forEach>
+					 -->
+					 <c:forEach var="i" begin="0" end="${fn:length(paramValues.productNoList) - 1}">
+						  <input type="hidden" name="productNoList" value="${paramValues.productNoList[i]}" />
+						  <input type="hidden" name="productCountList" value="${paramValues.productCountList[i]}" />
+						  <input type="hidden" name="productSize" value="${paramValues.productSize[i]}" />
+						</c:forEach>
+					 
           
     			</div>
     <jsp:include page="../common/footer.jsp" />
@@ -243,9 +266,11 @@
 			  const fullAddress = address + " " + addrDetail;
 			  
 			  
+			  
 			  const selectedProductList = [];
 			  const selectedProductCountList = []; 
-
+			  const selectedProductSizeList = [];
+			  
 			  const countInputs = document.querySelectorAll("input[name='productCountList']");
 			  countInputs.forEach(function(input){
 			    selectedProductCountList.push(parseInt(input.value));
@@ -255,6 +280,14 @@
 			  selectedProducts.forEach(function(input){
 			    selectedProductList.push(parseInt(input.value));
 			  });
+			  
+			  const selectedProductSize = document.querySelectorAll("input[name='productSize']");
+			  selectedProductSize.forEach(function(input){
+			    selectedProductSizeList.push(input.value);  
+			  });
+
+			  // console.log(selectedProductSizeList);
+			  
 
 			  
 		    IMP.request_pay({
@@ -284,9 +317,10 @@
 		    			    requestMsg: requestMsg,
 		    			    totalPrice: parseInt(totalPrice), // 
 		    			    selectedProductList: selectedProductList,
-		    			    selectedProductCountList: selectedProductCountList	    			    
+		    			    selectedProductCountList: selectedProductCountList,
+		    			    selectedProductSizeList : selectedProductSizeList
+		    			    
 		    			};
-		    		 console.log(JSON.stringify(orderInfo));
 		    	 $.ajax({
 		    		    type: "POST",
 		    		    url: "/soyo/cart/insertOrder", // 컨트롤러에 맞게 URL 조정

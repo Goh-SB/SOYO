@@ -62,10 +62,8 @@ public class CartServiceImpl implements CartService {
 	@Transactional
 	public int deliveryInfo(Delivery delivery) {
 	    int result1 = cartDao.insertOrder(sqlSession, delivery);  
-	   
-	    int result3 = cartDao.deleteCartProduct(sqlSession,delivery);
 
-	    return result1 * result3;
+	    return result1;
 	}
 
 	@Override
@@ -88,6 +86,28 @@ public class CartServiceImpl implements CartService {
 	public int checkCart(Cart cart) {
 		
 		return cartDao.checkCart(sqlSession, cart);
+	}
+	
+	
+	@Override
+	public int deleteCartProduct(Delivery delivery) {
+		
+		
+		return cartDao.deleteCartProduct(sqlSession, delivery);
+		
+		 
+	}
+
+	@Override
+	public Cart loadInfo(Delivery delivery) {
+		
+		return cartDao.loadInfo(sqlSession,delivery);
+	}
+
+	@Override
+	public int changeStock(Delivery delivery) {
+		
+		return cartDao.changeStock(sqlSession,delivery);
 	}
 
 

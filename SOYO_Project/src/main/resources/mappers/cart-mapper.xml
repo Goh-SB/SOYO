@@ -15,6 +15,8 @@
         <result property="productSize" column="PRODUCT_SIZE" />
         <result property="stockCount" column="STOCK_COUNT"/>
     </resultMap>
+    
+    
 
     <select id="cartList" parameterType="string" resultMap="cartResultMap">
        SELECT 
@@ -76,39 +78,60 @@
     INSERT INTO ORDER_TB (
         ORDER_NO, MEMBER_ID, RECEIVER_NAME, RECEIVER_PHONE,
         REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE, ADDRESS, ADDRESS_ALIAS
+ 
     ) VALUES (
         ORDER_SEQ.NEXTVAL, #{memberId}, #{receiverName}, #{receiverPhone},
         #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE, #{addressOther}, #{addressAlias}
+        
     )
 </insert>
 
  
 	<delete id="deleteCartProduct" parameterType="Delivery">
-	    DELETE FROM CART
-	    WHERE MEMBER_ID = #{memberId}
-	    AND PRODUCT_NO IN
-	    <foreach item="productNo" collection="selectedProductList" open="(" separator="," close=")">
-	        #{productNo}
-	    </foreach>
-	</delete>
+	  DELETE
+	  FROM CART
+	 WHERE MEMBER_ID =  #{memberId}
+	   AND PRODUCT_NO = #{productNo}
+	   AND PRODUCT_SIZE =  #{productSize}
+		</delete>
 	
-	<insert id="insertPayment" parameterType="map">
+	<insert id="insertPayment" parameterType="delivery">
 	    INSERT INTO PAYMENT (
 	        ORDER_IMPNO,
 	        PRODUCT_NO,
 	        PRODUCT_COUNT,
 	        CANCEL_STATUS,
-	        CANCEL_REASON
+	        CANCEL_REASON,
+	        PRODUCT_SIZE
 	    ) VALUES (
 	        #{orderImpNo},
 	        #{productNo},
 	        #{productCount},
 	        '결제완료',
-	        NULL
+	        NULL,
+	        #{productSize}
 	    )
 	</insert>
 	
+	<update id="updateStock" parameterType ="delivery">
+	UPDATE PRODUCT_SIZE
+	   SET STOCK_COUNT = STOCK_COUNT - #{productCount}
+	 WHERE PRODUCT_NO = #{productNo}
+	   AND PRODUCT_SIZE = #{productSize}
+	</update>
 	
+	<select id="loadInfo" parameterType="delivery"
+						  resultMap="cartResultMap">
+	SELECT PRODUCT_SIZE,
+	       PRODUCT_NO,
+	       CART_NO,
+	       PRODUCT_COUNT
+	  FROM CART 
+	 WHERE MEMBER_ID = #{memberId}
+	   AND PRODUCT_NO = #{productNo}
+	   AND PRODUCT_SIZE = #{productSize}
+	
+	</select>
 	
     <insert id="insertCart" parameterType="cart">
        INSERT INTO CART (
@@ -143,6 +166,17 @@
 		    WHERE PRODUCT_NO = #{productNo}
 		      AND MEMBER_ID = #{memberId}
 		      AND PRODUCT_SIZE = #{productSize}
+    </select>
+    
+    <select id="changeStock" parameterType="delivery"
+    						resultType="_int">
+   SELECT NVL((
+    SELECT STOCK_COUNT
+    FROM PRODUCT_SIZE
+    WHERE PRODUCT_NO = #{productNo} AND PRODUCT_SIZE = #{productSize}
+	), 0) AS COUNT
+FROM DUAL
+    
     </select>
 	
 

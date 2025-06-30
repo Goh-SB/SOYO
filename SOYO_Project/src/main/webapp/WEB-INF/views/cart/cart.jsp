@@ -450,6 +450,7 @@
                                 </th>
                                 <th scope="col">상품이미지</th>
                                 <th scope="col">상품명</th>
+                                <th scope="col">사이즈</th>
                                 <th scope="col">수량</th>
                                 <th scope="col">상품가격</th>
                                 <th scope="col">총 가격</th>
@@ -477,7 +478,14 @@
                                     <td>
                                         <div class="ec-product-name">${cart.productName}</div>
                                     </td>
-
+                                    
+                                    <td>
+										<select id="productSize" name="productSize" onchange="changeStock(this)" >
+										    <option value="L" ${cart.productSize == 'L' ? 'selected' : ''}>L</option>
+										    <option value="M" ${cart.productSize == 'M' ? 'selected' : ''}>M</option>
+										    <option value="S" ${cart.productSize == 'S' ? 'selected' : ''}>S</option>
+										</select>
+									</td>
                                     <!-- 수량 -->
                                     <td>
                                         <div class="ec-base-qty">
@@ -629,7 +637,38 @@
                 // 선택된 상품 총합 갱신
              
             }
+			
+            //사이즈 변경시 재고 수량 변경함수
+            function changeStock(selectElement){
+            	
+            	const $select = $(selectElement); // DOM 객체 보존
+                const $row = $select.closest("tr");
+                const productSize = $select.val();
+                
+                const stock = $row.find("#stock");
+                const $count = $row.find(".pop_out");
 
+                const productNo = parseInt($row.find("input[name='productId']").val());
+ 
+                 $.ajax({
+                     type: "POST",
+                     url: "/soyo/cart/changeStock",
+                     data: { 
+                         productNo : productNo,
+                         productSize : productSize
+                     },
+                     success: function(result) {
+                        stock.text(result);
+                        console.log(result);
+                        if(result==0){
+                        	$count.val(0)
+                        }
+                     },
+                     error: function () {
+                         console.log("ajax통신실패");
+                     }
+                 });
+            }
             /* 전체 체크용 함수 */
             function selectAll(selectAll)  {
                  const checkboxes = document.querySelectorAll('input[name="productId"]');
@@ -656,7 +695,7 @@
                 
                 $('input[name="productId"]:checked').each(function () {
                     const $row = $(this).closest("tr");
-                    const priceText = $row.find("td").eq(4).text();
+                    const priceText = $row.find("td").eq(5).text();
                     const cartCount = parseInt($row.find("td>div input").val());
                     const numericPrice = parseInt(priceText.replace(/[^0-9]/g, ""));
                     
@@ -716,22 +755,26 @@
 
                 let productNoList = [];
                 let productCountList = [];
+                let productSizeList = [];
 
                 $('input[name="productId"]:checked').each(function () {
                     const $row = $(this).closest("tr");
                     const count = parseInt($row.find(".pop_out").val());
+                    const productSize = $row.find("#productSize").val();
 
                     productNoList.push($(this).val());
                     productCountList.push(count);
+                    productSizeList.push(productSize);
                 });
 
                 if (productNoList.length === 0) {
                     alert("구매할 상품을 선택하세요");
                     return;
                 }
-
+				
                 $('#paymentCheck input[name="productNoList"]').remove();
                 $('#paymentCheck input[name="productCountList"]').remove();
+                $('#paymentCheck input[name="productSizeList"]').remove();
 
                 // 상품 번호 input 추가
                 productNoList.forEach(function(productNo) {
@@ -750,6 +793,15 @@
                         value: count
                     }).appendTo('#paymentCheck');
                 });
+                
+                // 상품 사이즈 input 추가
+                productSizeList.forEach(function(productSize) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'productSizeList',
+                        value: productSize
+                    }).appendTo('#paymentCheck');
+                });
 
                 $('#paymentCheck').submit(); 
             }
@@ -762,19 +814,23 @@
 			    // 수량/상품번호 수집
 			    let productNoList = [];
 			    let productCountList = [];
+			    let productSizeList = [];
 			
 			    $('input[name="productId"]').each(function () {
-			        const $row = $(this).closest("tr");
-			        const count = parseInt($row.find(".pop_out").val());
-			
-			        productNoList.push($(this).val());
-			        productCountList.push(count);
+                    const $row = $(this).closest("tr");
+                    const count = parseInt($row.find(".pop_out").val());
+                    const productSize = $row.find("#productSize").val();
+
+                    productNoList.push($(this).val());
+                    productCountList.push(count);
+                    productSizeList.push(productSize);
 			    });
 			
 			    // 기존 hidden input 제거
 			    $('#paymentCheck input[name="productNoList"]').remove();
 			    $('#paymentCheck input[name="productCountList"]').remove();
-			
+			    $('#paymentCheck input[name="productSizeList"]').remove();
+			    
 			    // 새 hidden input 추가
 			    productNoList.forEach(function(productNo) {
 			        $('<input>').attr({
@@ -791,6 +847,15 @@
 			            value: count
 			        }).appendTo('#paymentCheck');
 			    });
+			    
+			 // 상품 사이즈 input 추가
+                productSizeList.forEach(function(productSize) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'productSizeList',
+                        value: productSize
+                    }).appendTo('#paymentCheck');
+                });
 			
 			    // 폼 제출
 			    $('#paymentCheck').submit();

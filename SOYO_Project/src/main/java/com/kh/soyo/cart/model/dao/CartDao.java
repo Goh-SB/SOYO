@@ -81,6 +81,8 @@ public class CartDao {
 	public int deleteCartProduct(SqlSessionTemplate sqlSession, Delivery delivery) {
 		
 		return sqlSession.delete("cartMapper.deleteCartProduct",delivery);
+		
+		
 	}
 
 	public int insertCart(SqlSessionTemplate sqlSession, Cart cart) {
@@ -88,19 +90,23 @@ public class CartDao {
 	}
 
 	public int insertPayment(SqlSessionTemplate sqlSession, Delivery delivery) {
-	    int result = 0;
+	    int result = 1;
 
-	    List<Integer> productList = delivery.getSelectedProductList();
-	    List<Integer> countList = delivery.getSelectedProductCountList();
-
-	    for (int i = 0; i < productList.size(); i++) {
-	        Map<String, Object> param = new HashMap<>();
-	        param.put("orderImpNo", delivery.getOrderImpNo());
-	        param.put("productNo", productList.get(i));
-	        param.put("productCount", countList.get(i));
-	        System.out.println(param);
-	        result += sqlSession.insert("cartMapper.insertPayment", param);
-	    }
+//	    List<Integer> productList = delivery.getSelectedProductList();
+//	    List<Integer> countList = delivery.getSelectedProductCountList();
+//	    List<String> sizeList = delivery.getSelectedProductSizeList();
+//	    
+// 	    for (int i = 0; i < productList.size(); i++) {
+//	    	    	
+//	        Map<String, Object> param = new HashMap<>();
+//	        param.put("orderImpNo", delivery.getOrderImpNo());
+//	        param.put("productNo", productList.get(i));
+//	        param.put("productCount", countList.get(i));
+//	        param.put("productSize", sizeList.get(i));
+//	        System.out.println(param);
+	        result *= sqlSession.insert("cartMapper.insertPayment", delivery);
+	        result *= sqlSession.update("cartMapper.updateStock",delivery);
+//	    }
 	    
 	    System.out.println(delivery);
 
@@ -118,6 +124,16 @@ public class CartDao {
 	public int checkCart(SqlSessionTemplate sqlSession, Cart cart) {
 		
 		return sqlSession.selectOne("cartMapper.checkCart", cart);
+	}
+
+	public Cart loadInfo(SqlSessionTemplate sqlSession, Delivery delivery) {
+		
+		return sqlSession.selectOne("cartMapper.loadInfo",delivery);
+	}
+
+	public int changeStock(SqlSessionTemplate sqlSession2, Delivery delivery) {
+		
+		return sqlSession.selectOne("cartMapper.changeStock",delivery);
 	}
 
 

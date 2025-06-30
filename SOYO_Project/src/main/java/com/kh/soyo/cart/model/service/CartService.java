@@ -31,6 +31,12 @@ public interface CartService {
 
 	int checkCart(Cart cart);
 
+	int deleteCartProduct(Delivery delivery);
+
+	Cart loadInfo(Delivery delivery);
+
+	int changeStock(Delivery delivery);
+
 
 
 }
