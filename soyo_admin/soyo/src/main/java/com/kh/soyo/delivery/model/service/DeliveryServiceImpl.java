@@ -48,9 +48,9 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public List<Payment> paymentList() {
+	public List<Payment> paymentList(PageInfo pi) {
 		
-		return deliveryDao.paymentList(sqlSession);
+		return deliveryDao.paymentList(sqlSession, pi);
 	}
 
 	@Override
@@ -61,7 +61,6 @@ public class DeliveryServiceImpl implements DeliveryService{
 
 	@Override
 	public Delivery memberInfo(int orderNo) {
-		 System.out.println(deliveryDao.memberInfo(sqlSession, orderNo));
 		return deliveryDao.memberInfo(sqlSession, orderNo);
 	}
 
@@ -75,6 +74,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 	public int deliveryListCount() {
 		
 		return deliveryDao.deliveryListCount(sqlSession);
+	}
+
+	@Override
+	public int paymentListCount() {
+
+		return deliveryDao.paymentListCount(sqlSession);
 	}
 
 

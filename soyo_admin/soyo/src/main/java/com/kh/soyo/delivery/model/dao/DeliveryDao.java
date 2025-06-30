@@ -43,9 +43,15 @@ public class DeliveryDao {
 	    return sqlSession.update("deliveryMapper.changeStatus", param);
 	}
 
-	public List<Payment> paymentList(SqlSessionTemplate sqlSession) {
+	public List<Payment> paymentList(SqlSessionTemplate sqlSession,  PageInfo pi) {
 		
-		return sqlSession.selectList("deliveryMapper.paymentList");
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		 
+		return sqlSession.selectList("deliveryMapper.paymentList", hm);
 	}
 
 	public List<Payment> searchMember(SqlSessionTemplate sqlSession, String memberName) {
@@ -66,6 +72,11 @@ public class DeliveryDao {
 	public int deliveryListCount(SqlSessionTemplate sqlSession) {
 
 		return sqlSession.selectOne("deliveryMapper.deliveryListCount");	
+	}
+
+	public int paymentListCount(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectOne("deliveryMapper.paymentListCount");
 	}
 
 

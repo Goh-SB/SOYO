@@ -19,7 +19,7 @@ public interface DeliveryService {
 
 	int changeStatus(int orderNo, String orderStatus);
 
-	List<Payment> paymentList();
+	List<Payment> paymentList(PageInfo pi);
 
 	List<Payment> searchMember(String memberName);
 
@@ -28,5 +28,7 @@ public interface DeliveryService {
 	int deliveryListCount();
 
 	List<Payment> orderInfo(int orderNo);
+
+	int paymentListCount();
 
 }

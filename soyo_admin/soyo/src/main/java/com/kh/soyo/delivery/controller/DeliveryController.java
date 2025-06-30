@@ -18,7 +18,6 @@ import com.kh.soyo.common.model.vo.Payment;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.delivery.model.service.DeliveryService;
 import com.kh.soyo.delivery.model.vo.Delivery;
-import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 
 
@@ -48,7 +47,6 @@ public class DeliveryController {
 		hm.put("list", list);
 		hm.put("pi", pi);
 	
-		
 		return hm;
 	}
 	
@@ -56,13 +54,11 @@ public class DeliveryController {
 	public Delivery deliveryDetail(@PathVariable int orderNo) {
 		
 		Delivery d = deliveryService.deliveryDetail(orderNo);
-		
 		return d;
 	}
 	
 	@GetMapping("product/{orderNo}")
 	public List<Product> deliveryProduct(@PathVariable int orderNo) {
-		System.out.println(deliveryService.deliveryProduct(orderNo));
 		return deliveryService.deliveryProduct(orderNo);		
 	}
 	
@@ -76,9 +72,23 @@ public class DeliveryController {
 	}
 	
 	@GetMapping("payment")
-	public List<Payment> paymentList(){
+	public HashMap<String, Object> paymentList(@RequestParam (value="cpage") int currentPage){
 		
-		return deliveryService.paymentList();
+		int listCount = deliveryService.paymentListCount();
+		int pageLimit = 10;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		List<Payment> list = deliveryService.paymentList(pi);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		
+		hm.put("list", list);
+		hm.put("pi", pi);
+		
+		return hm;
+
 	}
 	
 	@GetMapping("searchMember")
@@ -90,13 +100,12 @@ public class DeliveryController {
 	
 	@GetMapping("memberInfo/{orderNo}")
 	public Delivery memberInfo(@PathVariable int orderNo) {
-		// System.out.println(orderNo);
+		System.out.println(deliveryService.memberInfo(orderNo));
 		return deliveryService.memberInfo(orderNo);
 	}
 	
 	@GetMapping("order/{orderNo}")
 	public List<Payment> orderInfo(@PathVariable int orderNo){
-		
 		return deliveryService.orderInfo(orderNo);
 	}
 }	

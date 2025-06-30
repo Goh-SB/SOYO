@@ -165,7 +165,6 @@
 				 <if test="item == '비활성화'">
 				 WHERE STATUS = 'N'
 				 </if>
-				 
 				 ORDER BY ENROLL_DATE DESC
 				 ) A
 			) 

@@ -16,7 +16,7 @@
 	    <result property="memberId" column="MEMBER_ID" />
 	    
 	    <result property="addressAlias" column="ADDRESS_ALIAS" />
-	    <result property="addressOther" column="ADDRESS"/>
+	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	    
 	    <result property="memberName" column="MEMBER_NAME" />
 	    <result property="productName" column="PRODUCT_NAME" />
@@ -48,7 +48,7 @@
 	</resultMap>
 
 	<select id="deliveryList" resultMap="deliveryResultSet">
-	   SELECT  
+	  SELECT  
 			    O.ORDER_IMPNO,
 			    MAX(O.ORDER_NO) AS ORDER_NO,
 			    MAX(O.RECEIVER_NAME) AS RECEIVER_NAME,
@@ -58,7 +58,8 @@
 			    MAX(O.ORDER_STATUS) AS ORDER_STATUS,
 			    MAX(M.MEMBER_ID) AS MEMBER_ID,
 			    MAX(D.ADDRESS_NAME) AS ADDRESS_NAME,
-			    MAX(D.ADDRESS_OTHER) AS ADDRESS_OTHER
+			    MAX(D.ADDRESS_OTHER) AS ADDRESS_OTHER,
+                MAX(O.ORDER_DATE) AS ORDER_DATE
 			FROM ORDER_TB O
 			JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
 			JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID  
@@ -105,7 +106,10 @@
 	 WHERE ORDER_NO = #{orderNo}
 	</update>
 	
-	<select id="paymentList" resultMap="deliveryResultSet">
+	<select id="paymentListCount" resultType="_int">
+	
+	SELECT COUNT(*)
+	  FROM (
 		SELECT ORDER_IMPNO
 		     , ORDER_NO
 		     , TOTAL_PRICE
@@ -116,6 +120,29 @@
 		  FROM ORDER_TB O
 		  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID
 		  ORDER BY ORDER_NO DESC
+		  )
+	</select>
+	
+	
+	<select id="paymentList" resultMap="deliveryResultSet"
+							parameterType="hashmap">
+	SELECT *
+	  FROM (
+		SELECT ROWNUM RNUM, A.*
+		  FROM (
+			SELECT ORDER_IMPNO
+			     , ORDER_NO
+			     , TOTAL_PRICE
+			     , RECEIVER_NAME
+			     , ORDER_STATUS
+			     , MEMBER_NAME
+			     , ORDER_DATE
+			  FROM ORDER_TB O
+			  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID
+			  ORDER BY ORDER_NO DESC
+			  ) A
+		 )
+		 WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 	<select id="searchMember" resultMap="paymentResultSet">
@@ -140,7 +167,7 @@
 		     , RECEIVER_NAME
 		     , RECEIVER_PHONE
 		     , ADDRESS_ALIAS
-		     , O.ADDRESS
+		     , O.ADDRESS AS ADDRESS_OTHER
 		     , REQUEST_MSG
 		     , TOTAL_PRICE
 		  FROM ORDER_TB O 
@@ -157,9 +184,23 @@
 	
 	<select id="deliveryListCount" resultType="_int">
 	SELECT COUNT(*)
-      FROM ORDER_TB O
-      JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
-      JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
+		FROM
+		(SELECT  
+		    O.ORDER_IMPNO,
+		    MAX(O.ORDER_NO) AS ORDER_NO,
+		    MAX(O.RECEIVER_NAME) AS RECEIVER_NAME,
+		    MAX(O.RECEIVER_PHONE) AS RECEIVER_PHONE,
+		    MAX(O.REQUEST_MSG) AS REQUEST_MSG,
+		    MAX(O.DELIVERY_DATE) AS DELIVERY_DATE,
+		    MAX(O.ORDER_STATUS) AS ORDER_STATUS,
+		    MAX(M.MEMBER_ID) AS MEMBER_ID,
+		    MAX(D.ADDRESS_NAME) AS ADDRESS_NAME,
+		    MAX(D.ADDRESS_OTHER) AS ADDRESS_OTHER,
+		    MAX(O.ORDER_DATE) AS ORDER_DATE
+		FROM ORDER_TB O
+		JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
+		JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID  
+		GROUP BY O.ORDER_IMPNO)
 	</select>
 
 </mapper> 
