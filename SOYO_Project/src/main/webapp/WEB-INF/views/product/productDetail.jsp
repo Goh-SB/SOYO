@@ -437,6 +437,55 @@
             padding: 1rem;
             border-radius: 8px;
             border-left: 4px solid var(--accent-pink);
+            position: relative;
+            padding-right: 80px;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+        }
+
+        .review-like-btn {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 32px;
+            background: #f8f8f8;
+            border: none;
+            border-radius: 20px;
+            box-shadow: none;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+            padding: 0;
+        }
+
+        .review-like-btn .material-icons {
+            font-size: 1.2rem;
+            margin: 0 4px 0 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .review-like-btn .like-count {
+            min-width: 16px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .review-like-btn.liked {
+            background: #fde6e6;
+            color: var(--accent-pink);
         }
 
         .review-footer {
@@ -868,9 +917,23 @@
 	                        </c:forEach>
 	                    </div>
 	                </div>
-	                <div class="review-text">
-	                    <p><c:out value="${review.reviewContent}" escapeXml="true"/></p>
-	                </div>
+                    
+                    <div class="review-text">
+                        <div class="review-content">
+                            <c:out value="${review.reviewContent}" escapeXml="true"/>
+                        </div>
+                        <button class="review-like-btn" data-review-no="${review.reviewNo}" data-liked="${review.liked}">
+                            <span class="material-icons">
+                                <c:choose>
+                                    <c:when test="${review.liked}">thumb_up</c:when>
+                                    <c:otherwise>thumb_up_outlined</c:otherwise>
+                                </c:choose>
+                            </span>
+                            <span class="like-count">${review.likeCount}</span>
+                        </button>
+                    </div>
+                    
+
 	            </div>
 	        </div>
 	    </c:forEach>
@@ -928,7 +991,7 @@
 <!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
+ <script>
     document.addEventListener("DOMContentLoaded", function () {
       const categoryMap = {
         "여성": "womens",
@@ -1080,6 +1143,94 @@
             });
         }
         document.querySelectorAll('.tab-nav-material').forEach(handleTabNav);
+
+        // 리뷰 좋아요 버튼 초기 상태 설정
+        document.querySelectorAll('.review-like-btn').forEach(btn => {
+            const isLiked = btn.getAttribute('data-liked') === 'true';
+            if (isLiked) {
+                btn.classList.add('liked');
+            }
+        });
+
+        // 리뷰 좋아요 버튼 기능
+        document.querySelectorAll('.review-like-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const reviewNo = this.getAttribute('data-review-no');
+                const isLiked = this.getAttribute('data-liked') === 'true';
+                const likeCountSpan = this.querySelector('.like-count');
+                const iconSpan = this.querySelector('.material-icons');
+                
+                const url = isLiked 
+                    ? "${pageContext.request.contextPath}/review/removeLike"
+                    : "${pageContext.request.contextPath}/review/addLike";
+
+                fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        reviewNo: reviewNo
+                    })
+                })
+                .then(res => res.text())
+                .then(msg => {
+                    if (msg === "success") {
+                        if (isLiked) {
+                            // 좋아요 취소
+                            this.classList.remove('liked');
+                            this.setAttribute('data-liked', 'false');
+                            iconSpan.textContent = 'thumb_up_outlined';
+                            let currentCount = parseInt(likeCountSpan.textContent);
+                            likeCountSpan.textContent = Math.max(0, currentCount - 1);
+                        } else {
+                            // 좋아요 추가
+                            this.classList.add('liked');
+                            this.setAttribute('data-liked', 'true');
+                            iconSpan.textContent = 'thumb_up';
+                            let currentCount = parseInt(likeCountSpan.textContent);
+                            likeCountSpan.textContent = currentCount + 1;
+                        }
+                    } else if (msg === "notLogin") {
+                        Swal.fire({
+                            icon: 'info',
+                            title: '로그인 필요',
+                            text: '로그인 후 이용 가능합니다.',
+                            confirmButtonText: '확인',
+                            confirmButtonColor: '#A8C5DA',
+                            background: '#fff'
+                        });
+                    } else if (msg === "duplicated") {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '중복 좋아요',
+                            text: '이미 좋아요를 누른 리뷰입니다.',
+                            confirmButtonText: '확인',
+                            confirmButtonColor: '#F6E5AC',
+                            background: '#fff'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '처리 실패',
+                            text: isLiked ? '좋아요 취소 실패' : '좋아요 추가 실패',
+                            confirmButtonText: '확인',
+                            confirmButtonColor: '#F4A6A6',
+                            background: '#fff'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: '오류 발생',
+                        text: '요청 처리 중 오류가 발생했습니다.',
+                        confirmButtonText: '확인',
+                        confirmButtonColor: '#F4A6A6',
+                        background: '#fff'
+                    });
+                });
+            });
+        });
     });
 
     // 장바구니 담기 버튼 클릭 시 작동 로직
