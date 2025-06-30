@@ -70,14 +70,13 @@ function DeliveryDetailComponent(){
                     </tr>
                     <tr>
                         <th>배송지</th>
-                        <td>
-                         
+                        <td>                       
                             {delivery.addressOther}
                         </td>
                     </tr>
                     <tr>
                         <th>상품발송일</th>
-                        <td>{delivery.deliveryDate}</td>
+                        <td>{delivery.orderStatus}</td>
                     </tr>
                     <tr>
                         <th>요청사항</th>

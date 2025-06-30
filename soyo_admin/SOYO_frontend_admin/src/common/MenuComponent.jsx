@@ -88,7 +88,7 @@ function MenuComponent(props) {
                         구매내역
                     </div>
                     <div className='side-menu-content'
-                        onClick={() => { navigate("/delivery") }}>
+                        onClick={() => { navigate("/delivery/list") }}>
                         배송정보
                     </div>
                 </div>

@@ -55,7 +55,7 @@ function App() {
           <Route path="/member/detail/:memberId" element={<MemberDetailComponent />} />
           <Route path="/notice/detail/:noticeNo" element={<NoticeDetailComponent />} />
           <Route path="/notice/enrollForm" element={<NoticeEnrollFormComponent />} />
-          <Route path="/delivery" element={<DeliveryComponent />} />
+          <Route path="/delivery/list" element={<DeliveryComponent />} />
           <Route path="/product/list" element={<ProductListComponent />} />
           <Route path="/delivery/:orderNo" element={<DeliveryDetailComponent />} />
           <Route path="/product/enrollForm" element={<ProductEnrollFormComponent />} />

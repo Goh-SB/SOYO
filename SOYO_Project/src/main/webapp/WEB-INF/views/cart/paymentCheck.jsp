@@ -149,6 +149,7 @@
                         <tr>
                         	<td colspan="3"><input type="hidden" class="fontsize20 updateInput" name="memberId" value="${ sessionScope.loginUser.memberId }" ></td>
                         </tr>
+                        
                         <tr>
                             <th width="200px"><span class="fontsize20">수령인</span></th>
                             <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
@@ -158,6 +159,7 @@
                             <th><span class="fontsize20">휴대전화번호</span></th>
                             <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ></td>
                         </tr>
+                        
                         <tr>
                             <th><span class="fontsize20">주소</span></th>
                             <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required></td>
@@ -168,14 +170,15 @@
                         </tr>
                         
                         <tr>
+                            <th><span>상세주소</span></th>
+                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required></td>                
+                        </tr>
+                        
+                        <tr>
 						  <th><span>배송지 이름</span></th>
 						  <td><input type="text" class="updateInput" name="addressName" placeholder="예: 집, 회사, 친구집"></td>
 						</tr>
 						                        
-                        <tr>
-                            <th><span>상세주소</span></th>
-                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required></td>                
-                        </tr>
                         <tr>
                         	<th><span>요청사항</span></th>
                         	<td><input type="text" class="updateInput" id="requestMsg" name="requestMsg" maxlength="66" placeholder="부재 시 경비실에 맡겨주세요"></td>
@@ -193,6 +196,8 @@
                     </div>
           
 		            </div>
+		            
+		            <div>
 		         	 <h2>결제 정보</h2>
 					 <p>총 결제 금액: <strong>${totalPrice}</strong>원</p>
 		     	    </div>

@@ -13,7 +13,6 @@ function DeliveryComponent() {
     let [pageList, setPageList] = useState([]);
 
     const selectDelivery = () => {
-        setCpage(1);
 
         let url = "http://192.168.40.32:8100/soyo/delivery/list";
 
@@ -21,7 +20,8 @@ function DeliveryComponent() {
             url,
             method: "get",
             params: {
-                cpage
+
+                cpage 
             },
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("loginUser")}`
@@ -60,7 +60,7 @@ function DeliveryComponent() {
             return (
                 <tr align="center" key={index} >
                     <td onClick={() => navigate("/delivery/" + item.orderNo)}>{item.orderNo}</td>
-                    <td onClick={() => navigate("/delivery/" + item.orderNo)}>{item.memberName}</td>
+                    <td onClick={() => navigate("/delivery/" + item.orderNo)}>{item.receiverName}</td>
                     <td onClick={() => navigate("/delivery/" + item.orderNo)}>{item.receiverPhone}</td>
                     <td onClick={() => navigate("/delivery/" + item.orderNo)}>{item.orderDate}</td>
                     <td>
@@ -159,7 +159,7 @@ function DeliveryComponent() {
                 <thead>
                     <tr align="center">
                         <th width="100px">주문번호</th>
-                        <th width="150px">이름</th>
+                        <th width="150px">수령인</th>
                         <th width="200px">전화 번호</th>
                         <th width="200px">결제 날짜</th>
                         <th width="200px">배송 상태</th>
