@@ -151,6 +151,24 @@ public class ProductController {
 	    List<String> tagList = productService.getTagsForProduct(productNo);
 	    List<Review> reviewList = reviewService.selectReviewList(productNo);
 
+	    // 모든 리뷰에 대해 좋아요 개수 세팅 (로그인 여부와 무관)
+	    for (Review review : reviewList) {
+	        int likeCount = reviewService.getLikeCount(review.getReviewNo());
+	        review.setLikeCount(likeCount);
+	    }
+
+	    // 로그인한 사용자의 좋아요 정보 추가 (liked 필드만)
+	    if (loginUser != null) {
+	        String memberId = loginUser.getMemberId();
+	        for (Review review : reviewList) {
+	            java.util.Map<String, Object> likeData = new HashMap<>();
+	            likeData.put("reviewNo", review.getReviewNo());
+	            likeData.put("memberId", memberId);
+	            boolean isLiked = reviewService.checkExistingLike(likeData) > 0;
+	            review.setLiked(isLiked);
+	        }
+	    }
+
 	    // 모델에 담아서 전달
 	    model.addAttribute("product", product);           // 단일 상품 정보
 	    model.addAttribute("productList", productList);   // 사이즈별 상품 리스트

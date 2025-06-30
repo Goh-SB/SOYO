@@ -62,4 +62,24 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.selectReviewByNo(reviewNo);
 	}
 
+	@Override
+	public int checkExistingLike(java.util.Map<String, Object> likeData) {
+		return reviewDao.checkExistingLike(sqlSession, likeData);
+	}
+
+	@Override
+	public int addLike(java.util.Map<String, Object> likeData) {
+		return reviewDao.addLike(sqlSession, likeData);
+	}
+
+	@Override
+	public int removeLike(java.util.Map<String, Object> likeData) {
+		return reviewDao.removeLike(sqlSession, likeData);
+	}
+
+	@Override
+	public int getLikeCount(int reviewNo) {
+		return reviewDao.getLikeCount(sqlSession, reviewNo);
+	}
+
 }
