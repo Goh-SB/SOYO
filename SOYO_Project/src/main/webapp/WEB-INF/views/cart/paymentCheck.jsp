@@ -111,7 +111,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .btnSubmit{
+        .btnSubmit {
             width: 100px;
             height: 40px;
             padding: 5px;
@@ -123,6 +123,21 @@
             border-radius: 8px;
         }
 
+        #infodiv {
+            background-color: rgba(241, 241, 221, 0.651);
+            margin-left: 50px;
+            margin-right: 50px;
+            padding: 20px;
+            border-radius: 15px;
+            width: 606px;
+            margin: auto;
+            text-align: center;
+        }
+
+        #buttondiv {
+            display: flex;
+            justify-content: center;    /* 가로 중앙 정렬 */
+        }
 </style>
 </head>
 <body>
@@ -189,29 +204,37 @@
                         <tr>
                     
                     </table>
+                    <br>
+
+                    <div id="infodiv">
+                        <h3>총 결제 금액: <span id="total-price" style="color: darkgreen;">${totalPrice}</span>원</h3>
+                    </div>
 
                     <div id="buttondiv">
                         <button onclick="requestPay()" class="btnSubmit">결제</button>
                         <button type="button" class="btnSubmit" onclick="history.back();">취소</button>
                     </div>
-          
-		            </div>
-		            
-		            <div>
-		         	 <h2>결제 정보</h2>
-					 <p>총 결제 금액: <strong>${totalPrice}</strong>원</p>
-		     	    </div>
+
+                    <script>
+                        const span = document.getElementById('total-price');
+
+                        // 숫자로 변환
+                        const number = parseInt(span.textContent, 10);
+
+                        // 콤마 추가
+                        span.textContent = number.toLocaleString('ko-KR');
+                    </script>
+		        </div>
 		     	   
-		     	   <!-- 체크된 상품번호 가져오기 -->
-		     	    <c:forEach var="productNo" items="${paramValues.productNoList}">
-					    <input type="hidden" name="productNoList" value="${productNo}" />
-					</c:forEach>
+		     	<!-- 체크된 상품번호 가져오기 -->
+		     	<c:forEach var="productNo" items="${paramValues.productNoList}">
+					<input type="hidden" name="productNoList" value="${productNo}" />
+				</c:forEach>
 					
-					<c:forEach var="productCount" items="${paramValues.productCountList}">
-					    <input type="hidden" name="productCountList" value="${productCount}" />
-					</c:forEach>
-          
-    			</div>
+				<c:forEach var="productCount" items="${paramValues.productCountList}">
+					<input type="hidden" name="productCountList" value="${productCount}" />
+				</c:forEach>
+    		</div>
     <jsp:include page="../common/footer.jsp" />
 </body>
 		<script>
