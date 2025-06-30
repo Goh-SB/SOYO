@@ -472,7 +472,9 @@
             font-size: 1.2rem;
             margin: 0 4px 0 0;
             display: flex;
+            width : 19px;
             align-items: center;
+         
         }
 
         .review-like-btn .like-count {
