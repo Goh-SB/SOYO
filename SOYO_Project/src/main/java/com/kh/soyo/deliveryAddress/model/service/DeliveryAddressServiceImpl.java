@@ -24,6 +24,12 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 		return deliveryAddress.selectDelivery(sqlSession, memberId);
 	}
 
+	@Override
+	public int newDeliveryAddress(DeliveryAddress da) {
+		
+		return deliveryAddress.newDeliveryAddress(sqlSession, da);
+	}
+
 	
 	
 }

@@ -15,6 +15,11 @@ public class DeliveryAddressDao {
 		return (ArrayList)sqlSession.selectList("deliveryAddressMapper.selectDelivery", memberId);
 	}
 
+	public int newDeliveryAddress(SqlSessionTemplate sqlSession, DeliveryAddress da) {
+		
+		return sqlSession.insert("deliveryAddressMapper.insertDelivery", da);
+	}
+
 	
 	
 }

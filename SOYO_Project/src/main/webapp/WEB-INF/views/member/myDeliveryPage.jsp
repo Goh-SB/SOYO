@@ -108,6 +108,11 @@
                                             </tr>
         
                                         </c:forEach>
+                                        <tr>
+                                            <td>
+                                                <button type="button" onclick="addDelivery()">배송지 등록</button>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </form>
                                 
@@ -121,7 +126,7 @@
                                             등록된 배송지가 없습니다.
                                         </span>
                                         <br>
-                                        <button type="button">배송지 등록</button>
+                                        <button type="button" onclick="addDelivery()">배송지 등록</button>
                                     </div>
                                 </c:otherwise>
                         </c:choose>
@@ -188,6 +193,10 @@
 
     });
   });
+
+  function addDelivery(){
+    location.href = "../deliveryAddress/newAddress";
+  }
 </script>
 </body>
 </html>
