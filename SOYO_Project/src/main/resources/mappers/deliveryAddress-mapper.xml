@@ -16,6 +16,18 @@
 		    WHERE MEMBER_ID = #{memberId}
 	</select>
 	
+	<select id="selectDeliveryDefault" parameterType="string" resultMap="deliveryAddressResultMap">
+		SELECT * FROM DELIVERY_ADDRESS
+		    WHERE MEMBER_ID = #{memberId}
+		      AND IS_DEFAULT = 'Y'
+	</select>
+	
+	<select id="selectDeliveryNotDefault" parameterType="string" resultMap="deliveryAddressResultMap">
+		SELECT * FROM DELIVERY_ADDRESS
+		    WHERE MEMBER_ID = #{memberId}
+		      AND IS_DEFAULT = 'N'
+	</select>
+	
 	<!-- 배송지 등록 쿼리문 -->
 	<insert id="insertDelivery" parameterType="deliveryAddress">
 		INSERT INTO DELIVERY_ADDRESS(ADDRESS_NO
@@ -33,5 +45,35 @@
                          , #{receiverPhone}
                          , #{memberId})
 	</insert>
+	
+	<!-- 기본 배송지 설정 쿼리문 -->
+	<update id="updateDefault" parameterType="deliveryAddress">
+		UPDATE DELIVERY_ADDRESS SET IS_DEFAULT = 'Y'
+		    WHERE MEMBER_ID = #{memberId}
+              AND ADDRESS_NO = #{addressNo}
+		      AND IS_DEFAULT = 'N'
+	</update>
+	
+	<!-- 기본배송지 해제 쿼리문 -->
+	<update id="newUpdateDefault" parameterType="deliveryAddress">
+		UPDATE DELIVERY_ADDRESS SET IS_DEFAULT = 'N'
+		    WHERE MEMBER_ID = #{memberId}
+		      AND IS_DEFAULT = 'Y'
+	</update>
+	
+	<!-- 배송지 수정용 쿼리문 -->
+	<update id="updateAddress" parameterType="deliveryAddress">
+		UPDATE DELIVERY_ADDRESS SET ADDRESS_NAME = #{addressName}
+                          , ADDRESS_OTHER = #{addressOther}
+                          , RECEIVER_NAME = #{receiverName}
+                          , RECEIVER_PHONE = #{receiverPhone}
+                          WHERE ADDRESS_NO = #{addressNo}
+	</update>
+	
+	<!-- 배송지 삭제 쿼리문 -->
+	<delete id="deleteAddress" parameterType="deliveryAddress">
+		DELETE FROM DELIVERY_ADDRESS
+    		WHERE ADDRESS_NO = #{addressNo}
+	</delete>
 	
 </mapper>

@@ -100,6 +100,13 @@
         min-width: 220px;
         max-width: 320px;
         text-align: left;
+        cursor: pointer;
+    }
+    .review-product:hover .review-thumbnail {
+        transform: scale(1.10);
+        box-shadow: 0 4px 16px rgba(176, 122, 255, 0.18);
+        transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s;
+        z-index: 2;
     }
     .review-thumbnail {
         width: 60px;
@@ -109,6 +116,7 @@
         border: 1px solid #eee;
         background: #fafafa;
         flex-shrink: 0;
+        transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s;
     }
     .review-product-name {
         font-weight: 500;
@@ -128,6 +136,14 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        transition: color 0.22s, font-size 0.22s, text-shadow 0.22s;
+    }
+    .review-subject:hover {
+        color: #8971aec6;
+        font-size: 17px;
+        text-shadow: 0 2px 8px rgba(176,122,255,0.08);
+        font-weight: 600;
+        cursor: pointer;
     }
     .review-writer {
         color: #444;
@@ -307,6 +323,25 @@
 		pointer-events: none;
 		background-color: #f8f9fa;
 	}
+
+    .review-content-anim {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s;
+        background: #f9f9f9;
+        color: #444;
+        font-size: 15px;
+        padding: 0 24px;
+        border-left: 4px solid #b07aff;
+        border-radius: 0 0 8px 8px;
+        box-sizing: border-box;
+        margin: 0;
+    }
+    .review-content-row.active .review-content-anim {
+        max-height: 300px;
+        padding: 18px 24px;
+        margin-bottom: 8px;
+    }
 </style>
 </head>
 <body>
@@ -363,19 +398,18 @@
             </thead>
 
             <tbody>
-                <c:forEach var="review" items="${reviewList}">
+                <c:forEach var="review" items="${reviewList}" varStatus="status">
                     <tr>
                         <td style="text-align:left;">
-                            <div class="review-product">
-                                <img src="http://localhost:8100/soyo/resources/product_upfile/${review.productChange}" class="review-thumbnail">
-                                <span class="review-product-name">${review.reviewTitle}</span>
-                            </div>
+                            <a href="http://192.168.40.17:8888/soyo/product/productDetail?no=${review.productNo}" style="text-decoration:none; color:inherit;">
+                                <div class="review-product">
+                                    <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${review.productChange}" class="review-thumbnail">
+                                    <span class="review-product-name">${review.productName}</span>
+                                </div>
+                            </a>
                         </td>
-                        <td class="review-subject" style="text-align:left;">
-                            <!--
-                            <span class="review-photo-icon">&#128247;</span>
-                            -->
-                            ${review.reviewContent}
+                        <td class="review-subject" style="text-align:left; cursor:pointer; position:relative;" data-index="${status.index}">
+                            ${review.reviewTitle}
                         </td>
                         <td class="review-no">
                             <fmt:formatDate value="${review.reviewDate}" pattern="yyyy-MM-dd"/>
@@ -390,6 +424,13 @@
                                     </c:choose>
                                 </c:forEach>
                             </span>
+                        </td>
+                    </tr>
+                    <tr class="review-content-row" data-index="${status.index}">
+                        <td colspan="5" style="background:#f9f9f9; text-align:left; color:#444; padding:0; border-bottom:1px solid #f0f0f0;">
+                            <div class="review-content-anim">
+                                ${review.reviewContent}
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>
@@ -424,6 +465,25 @@
     </div>
 
     <jsp:include page="../common/footer.jsp" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const subjects = document.querySelectorAll('.review-subject');
+            subjects.forEach(function(subject) {
+                subject.addEventListener('click', function() {
+                    const idx = subject.getAttribute('data-index');
+                    const contentRow = document.querySelector('.review-content-row[data-index="' + idx + '"]');
+                    if(contentRow.classList.contains('active')) {
+                        contentRow.classList.remove('active');
+                    } else {
+                        // 다른 열린 리뷰 닫기 (하나만 열리게 하려면 아래 주석 해제)
+                        //document.querySelectorAll('.review-content-row.active').forEach(function(row){ row.classList.remove('active'); });
+                        contentRow.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
