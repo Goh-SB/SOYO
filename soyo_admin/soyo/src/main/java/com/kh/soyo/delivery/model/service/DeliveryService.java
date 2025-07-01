@@ -31,4 +31,13 @@ public interface DeliveryService {
 
 	int paymentListCount();
 
+	int filterListCount(String orderStatus);
+
+	ArrayList<Delivery> filterList(PageInfo pi, String orderStatus);
+
+	ArrayList<Delivery> paymentCount(int orderNo);
+
+	Delivery paymentList(Delivery d2);
+
+
 }

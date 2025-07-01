@@ -492,7 +492,7 @@
                 padding: 15px;">상품 리스트</div>
                     <div id="order-List">
                         <ul>
-                       <c:forEach var="p" items="${product}">
+                       <c:forEach var="p" items="${requestScope.result}">
 						    <li>						 
 					            <table class="order-table">
 					                <tr>
@@ -508,7 +508,7 @@
 										        상품명: ${p.productName}<br>  
 										        가격: ${p.productPrice}원<br>
 										        주문번호: ${p.orderImpNo}<br>
-										        배송상태: ${p.orderStatus}
+
 										    </div>
 					                 <button class="review-button" type="button" onclick="openReviewModal('${p.productNo}', '${p.productName}')">리뷰 작성</button>
 										</td>

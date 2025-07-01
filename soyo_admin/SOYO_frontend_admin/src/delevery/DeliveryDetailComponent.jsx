@@ -61,8 +61,20 @@ function DeliveryDetailComponent(){
                    align="left">
                 <tbody align="center">
                     <tr>
+                        <th>구매자</th>
+                        <td>{delivery.memberName}</td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td>{delivery.phone}</td>
+                    </tr>
+                    <tr>
                         <th>수령인</th>
                         <td>{delivery.receiverName}</td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td>{delivery.receiverPhone}</td>
                     </tr>
                     <tr>
                         <th>주문번호</th>
@@ -75,8 +87,8 @@ function DeliveryDetailComponent(){
                         </td>
                     </tr>
                     <tr>
-                        <th>상품발송일</th>
-                        <td>{delivery.orderStatus}</td>
+                        <th>배송완료일</th>
+                        <td>{delivery.deliveryDate}</td>
                     </tr>
                     <tr>
                         <th>요청사항</th>
@@ -85,7 +97,7 @@ function DeliveryDetailComponent(){
                 </tbody>
             </table>
 
-            <img src={  delivery.orderStatus == '배송전'
+            <img src={  delivery.orderStatus == '주문완료'
             ? '/img/배송전1.png'
             : delivery.orderStatus == '배송중'
             ? '/img/배송중1.png'

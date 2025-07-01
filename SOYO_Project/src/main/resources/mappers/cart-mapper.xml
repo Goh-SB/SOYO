@@ -76,12 +76,28 @@
 	
 	<insert id="insertOrder" parameterType="delivery">
     INSERT INTO ORDER_TB (
-        ORDER_NO, MEMBER_ID, RECEIVER_NAME, RECEIVER_PHONE,
-        REQUEST_MSG, TOTAL_PRICE, ORDER_IMPNO, ORDER_DATE, ADDRESS, ADDRESS_ALIAS
+        ORDER_NO, 
+        MEMBER_ID, 
+        RECEIVER_NAME, 
+        RECEIVER_PHONE,
+        REQUEST_MSG, 
+        TOTAL_PRICE, 
+        ORDER_IMPNO, 
+        ORDER_DATE, 
+        ADDRESS, 
+        ADDRESS_ALIAS
  
     ) VALUES (
-        ORDER_SEQ.NEXTVAL, #{memberId}, #{receiverName}, #{receiverPhone},
-        #{requestMsg}, #{totalPrice}, #{orderImpNo}, SYSDATE, #{addressOther}, #{addressAlias}
+        ORDER_SEQ.NEXTVAL, 
+        #{memberId}, 
+        #{receiverName}, 
+        #{receiverPhone},
+        #{requestMsg}, 
+        #{totalPrice}, 
+        #{orderImpNo}, 
+        SYSDATE, 
+        #{addressOther}, 
+        #{addressAlias}
         
     )
 </insert>
@@ -92,7 +108,6 @@
 	  FROM CART
 	 WHERE MEMBER_ID =  #{memberId}
 	   AND PRODUCT_NO = #{productNo}
-	   AND PRODUCT_SIZE =  #{productSize}
 		</delete>
 	
 	<insert id="insertPayment" parameterType="delivery">

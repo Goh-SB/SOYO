@@ -14,16 +14,19 @@
 	    <result property="orderDate" column="ORDER_DATE" />
 	    <result property="orderStatus" column="ORDER_STATUS" />
 	    <result property="memberId" column="MEMBER_ID" />
-	    
+	    <result property="productNo" column="PRODUCT_NO" />
 	    <result property="addressAlias" column="ADDRESS_ALIAS" />
 	    <result property="addressOther" column="ADDRESS_OTHER"/>
 	    
+	    <result property="productPrice" column="PRODUCT_PRICE"/>
 	    <result property="memberName" column="MEMBER_NAME" />
 	    <result property="productName" column="PRODUCT_NAME" />
 	    <result property="productCount" column="PRODUCT_COUNT" />
 	    <result property="productPrice" column="PRODUCT_PRICE" />
+	    <result property="productName" column="PRODUCT_ NAME"/>
 	    <result property="phone" column="PHONE" />
 	    <result property="productChange" column="PRODUCT_CHANGE" />
+	    <result property="cancelStatus" column="CANCEL_STATUS" />
 	</resultMap>
 	
 	<resultMap id="paymentResultSet" type="Payment">
@@ -36,8 +39,7 @@
     <result property="cancelDate" column="CANCEL_DATE"/>
     <result property="cancelReason" column="CANCEL_REASON"/>
      <result property="productNo" column="PRODUCT_NO"/>
-     <result property="orderImpNo" column="ORDER_IMPNO" />
-     
+     <result property="orderImpNo" column="ORDER_IMPNO"/>
 </resultMap>
 	
 	<resultMap id="memberResultSet" type="Member">
@@ -48,42 +50,38 @@
 	</resultMap>
 
 	<select id="deliveryList" resultMap="deliveryResultSet">
-	  SELECT  
-			    O.ORDER_IMPNO,
-			    MAX(O.ORDER_NO) AS ORDER_NO,
-			    MAX(O.RECEIVER_NAME) AS RECEIVER_NAME,
-			    MAX(O.RECEIVER_PHONE) AS RECEIVER_PHONE,
-			    MAX(O.REQUEST_MSG) AS REQUEST_MSG,
-			    MAX(O.DELIVERY_DATE) AS DELIVERY_DATE,
-			    MAX(O.ORDER_STATUS) AS ORDER_STATUS,
-			    MAX(M.MEMBER_ID) AS MEMBER_ID,
-			    MAX(D.ADDRESS_NAME) AS ADDRESS_NAME,
-			    MAX(D.ADDRESS_OTHER) AS ADDRESS_OTHER,
-                MAX(O.ORDER_DATE) AS ORDER_DATE
-			FROM ORDER_TB O
-			JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
-			JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID  
-			GROUP BY O.ORDER_IMPNO
+	 	SELECT ORDER_NO
+		     , MEMBER_NAME
+		     , TOTAL_PRICE
+		     , ORDER_DATE
+		     , ORDER_STATUS
+		     , CANCEL_STATUS
+		  FROM ORDER_TB O
+		  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID
+		  LEFT JOIN (
+		    SELECT ORDER_IMPNO
+		        , MAX(CANCEL_STATUS) AS CANCEL_STATUS
+		    FROM PAYMENT 
+		    GROUP BY ORDER_IMPNO 
+		    ) P ON P.ORDER_IMPNO = O.ORDER_IMPNO
+		   ORDER BY ORDER_NO DESC
 	</select>
 								
 	<select id="deliveryDetail" parameterType="_int"
 								resultMap="deliveryResultSet">
-		    SELECT  
-			    O.ORDER_IMPNO,
-			    MAX(O.ORDER_NO) AS ORDER_NO,
-			    MAX(O.RECEIVER_NAME) AS RECEIVER_NAME,
-			    MAX(O.RECEIVER_PHONE) AS RECEIVER_PHONE,
-			    MAX(O.REQUEST_MSG) AS REQUEST_MSG,
-			    MAX(O.DELIVERY_DATE) AS DELIVERY_DATE,
-			    MAX(O.ORDER_STATUS) AS ORDER_STATUS,
-			    MAX(M.MEMBER_ID) AS MEMBER_ID,
-			    MAX(D.ADDRESS_NAME) AS ADDRESS_NAME,
-			    MAX(D.ADDRESS_OTHER) AS ADDRESS_OTHER
-			FROM ORDER_TB O
-			JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
-			JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID  
-			WHERE O.ORDER_NO = #{orderNo} 
-			GROUP BY O.ORDER_IMPNO
+		SELECT ORDER_NO
+		     , ORDER_IMPNO
+		     , RECEIVER_NAME
+		     , RECEIVER_PHONE
+		     , O.ADDRESS AS ADDRESS_OTHER
+		     , REQUEST_MSG
+		     , MEMBER_NAME
+		     , ORDER_STATUS
+		     , DELIVERY_DATE
+		     , PHONE
+		  FROM ORDER_TB O
+		  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID
+		 WHERE ORDER_NO = #{orderNo}
 	
 	</select>
 
@@ -100,10 +98,15 @@
 		  WHERE ORDER_NO=#{orderNo}
 	</select>
 	
-	<update id="changeStatus" parameterType="Delivery">
+	<update id="changeStatus" parameterType="map">
+
 	UPDATE ORDER_TB
 	   SET ORDER_STATUS = #{orderStatus}
+	 <if test="orderStatus == '배송완료'">
+	   , DELIVERY_DATE = SYSDATE
+	 </if>
 	 WHERE ORDER_NO = #{orderNo}
+
 	</update>
 	
 	<select id="paymentListCount" resultType="_int">
@@ -175,34 +178,102 @@
 		 WHERE ORDER_NO = #{orderNo}
 	</select>
 	
-	<select id="orderInfo" parameterType="_int"
-							resultMap="paymentResultSet">
-		
-	
-	</select>
-	
 	
 	<select id="deliveryListCount" resultType="_int">
 	SELECT COUNT(*)
 		FROM
-		(SELECT  
-		    O.ORDER_IMPNO,
-		    MAX(O.ORDER_NO) AS ORDER_NO,
-		    MAX(O.RECEIVER_NAME) AS RECEIVER_NAME,
-		    MAX(O.RECEIVER_PHONE) AS RECEIVER_PHONE,
-		    MAX(O.REQUEST_MSG) AS REQUEST_MSG,
-		    MAX(O.DELIVERY_DATE) AS DELIVERY_DATE,
-		    MAX(O.ORDER_STATUS) AS ORDER_STATUS,
-		    MAX(M.MEMBER_ID) AS MEMBER_ID,
-		    MAX(D.ADDRESS_NAME) AS ADDRESS_NAME,
-		    MAX(D.ADDRESS_OTHER) AS ADDRESS_OTHER,
-		    MAX(O.ORDER_DATE) AS ORDER_DATE
-		FROM ORDER_TB O
-		JOIN MEMBER M ON M.MEMBER_ID = O.MEMBER_ID
-		JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID  
-		GROUP BY O.ORDER_IMPNO)
+		(SELECT ORDER_NO
+		     , MEMBER_NAME
+		     , TOTAL_PRICE
+		     , ORDER_DATE
+		     , ORDER_STATUS
+		     , CANCEL_STATUS
+		  FROM ORDER_TB O
+		  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID
+		  LEFT JOIN (
+		    SELECT ORDER_IMPNO
+		        , MAX(CANCEL_STATUS) AS CANCEL_STATUS
+		    FROM PAYMENT 
+		    GROUP BY ORDER_IMPNO 
+		    ) P ON P.ORDER_IMPNO = O.ORDER_IMPNO
+		   ORDER BY ORDER_NO DESC)
 	</select>
 
+
+	<select id="filterListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM ORDER_TB
+		  <if test="orderStatus == '주문완료'">
+		 WHERE ORDER_STATUS = #{orderStatus}
+		  </if>
+		  <if test="orderStatus == '배송중'">
+		 WHERE ORDER_STATUS = #{orderStatus}
+		  </if>
+		  <if test="orderStatus == '배송완료'">
+		 WHERE ORDER_STATUS = #{orderStatus}
+		  </if>
+	</select>
+	
+	<select id="filterList" parameterType="hashmap"  resultMap="deliveryResultSet">
+	  SELECT *
+	   FROM
+	   (
+	   SELECT ROWNUM RNUM, A.*
+	   FROM (
+			   SELECT ORDER_NO
+			   		, ORDER_DATE
+			   		, ORDER_STATUS
+                    , CANCEL_STATUS
+                    , TOTAL_PRICE
+                    , MEMBER_NAME
+				  FROM ORDER_TB O
+                  JOIN MEMBER M ON O.MEMBER_ID = M.MEMBER_ID
+                  LEFT JOIN (
+                    SELECT ORDER_IMPNO
+                        , MAX(CANCEL_STATUS) AS CANCEL_STATUS
+                    FROM PAYMENT 
+                    GROUP BY ORDER_IMPNO 
+                    ) P ON P.ORDER_IMPNO = O.ORDER_IMPNO
+                    <if test="orderStatus == '주문완료'" >
+                         WHERE ORDER_STATUS = #{orderStatus}
+                    </if>
+                    <if test="orderStatus == '배송중'" >
+                         WHERE ORDER_STATUS = #{orderStatus}
+                    </if>
+                    <if test="orderStatus == '배송완료'" >
+                         WHERE ORDER_STATUS = #{orderStatus}
+                    </if>
+                         ORDER BY ORDER_NO DESC
+				  ) A
+			)
+			WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+
+	</select>
+	
+	<select id="paymentCount" parameterType="_int"
+								resultMap="deliveryResultSet">
+		SELECT PRODUCT_NO
+		     , O.ORDER_IMPNO
+		  FROM ORDER_TB O
+		  JOIN PAYMENT P ON O.ORDER_IMPNO = P.ORDER_IMPNO
+		 WHERE ORDER_NO = #{orderNo}
+	
+	</select>
+
+	<select id="paymentList2" parameterType="Delivery"
+								resultMap="deliveryResultSet">
+		SELECT ORDER_IMPNO
+		     , P.PRODUCT_NO
+		     , PRODUCT_NAME
+		     , PRODUCT_PRICE
+		     , PRODUCT_COUNT
+		     , PRODUCT_CHANGE
+		  FROM PAYMENT P
+		  JOIN PRODUCT PT ON P.PRODUCT_NO = PT.PRODUCT_NO
+		  WHERE ORDER_IMPNO = #{orderImpNo}
+		    AND P.PRODUCT_NO = #{productNo}
+	</select>
+	
 </mapper> 
 
 

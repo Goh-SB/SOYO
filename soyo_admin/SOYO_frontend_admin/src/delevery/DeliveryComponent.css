@@ -1,36 +1,28 @@
-.filter-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 20px 0;
-    padding-right: 20px;
+
+#dilivery-filterArea{
+   display: flex;
+  align-items: center;
+  gap: 30px;
+
+
+  justify-self: end;  /* 오른쪽 정렬 */
+
 }
 
-.filter-container h4 {
-    margin-bottom: 10px;
-    color: #333;
+.delivery-filterBtn{
+ grid-column: 3;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  border : none;
+  background-color: white;
+  font-size : 22px;
+
+
 }
 
-.filter-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.filter-btn {
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-    background-color: #f0f0f0;
-}
-
-.filter-btn.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
+.delivery-filterBtn:hover{
+      background-Color:#E3E4FA;
+     border-Radius:  10px;
 }

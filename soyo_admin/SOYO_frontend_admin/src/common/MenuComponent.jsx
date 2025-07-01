@@ -83,13 +83,13 @@ function MenuComponent(props) {
                         onClick={() => { navigate("/notice/list") }}>
                         공지사항
                     </div>
-                    <div className='side-menu-content'
+                    {/* <div className='side-menu-content'
                         onClick={() => { navigate("/order/list") }}>
                         구매내역
-                    </div>
+                    </div> */}
                     <div className='side-menu-content'
                         onClick={() => { navigate("/delivery/list") }}>
-                        배송정보
+                        배송/결제 
                     </div>
                 </div>
             </div>

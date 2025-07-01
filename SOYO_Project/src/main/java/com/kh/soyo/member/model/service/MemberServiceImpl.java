@@ -67,9 +67,9 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDao.checkId(sqlSession, checkId);
 	}
-	public List<Product> orderProduct(String memberId) {
+	public List<Product> orderProduct(String memberId,PageInfo pi) {
 		
-		return memberDao.orderProduct(sqlSession,memberId);
+		return memberDao.orderProduct(sqlSession,memberId,pi);
 
 	}
 
@@ -106,7 +106,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.myReview(sqlSession, mi, pi);
 	}
 	
-	public List<Product> orderProductList(String impNo) {
+	public ArrayList<Product> orderProductList(String impNo) {
 		
 		return memberDao.orderProductList(sqlSession,impNo);
 
@@ -135,5 +135,21 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDao.myWishListSize(sqlSession, mi);
 	}
+
+	@Override
+	public int listPageCount(Member loginUser) {
+		return memberDao.listPageCount(sqlSession,loginUser);
+	}
+
+	@Override
+	public int productCount(String impNo) {
+		return memberDao.productCount(sqlSession,impNo);
+	}
+
+	@Override
+	public Product myProduct(Product p1) {
+		return memberDao.myProduct(sqlSession,p1);
+	}
+
 
 }
