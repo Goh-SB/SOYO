@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
+import org.checkerframework.checker.units.qual.h;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -78,6 +79,36 @@ public class DeliveryDao {
 
 		return sqlSession.selectOne("deliveryMapper.paymentListCount");
 	}
+
+	public int filterListCount(SqlSessionTemplate sqlSession, String orderStatus) {
+
+		return sqlSession.selectOne("deliveryMapper.filterListCount", orderStatus);
+	}
+
+	public ArrayList<Delivery> filterList(SqlSessionTemplate sqlSession, PageInfo pi, String orderStatus) {
+
+		
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		hm.put("orderStatus", orderStatus);
+		
+		
+		return (ArrayList)sqlSession.selectList("deliveryMapper.filterList", hm);
+	}
+
+	public ArrayList<Delivery> paymentCount(SqlSessionTemplate sqlSession, int orderNo) {
+
+		return (ArrayList)sqlSession.selectList("deliveryMapper.paymentCount", orderNo);
+	}
+
+	public Delivery paymentList(SqlSessionTemplate sqlSession, Delivery d2) {
+
+		return sqlSession.selectOne("deliveryMapper.paymentList2", d2);
+	}
+
 
 
 

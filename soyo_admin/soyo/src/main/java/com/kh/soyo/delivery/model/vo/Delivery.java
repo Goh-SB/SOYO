@@ -37,7 +37,10 @@ public class Delivery {
 	private String productName;
 	private int productCount;
 	private int productPrice;
+	private int productNo;
+	
 	
 	private String phone;
+	private String cancelStatus;
 	
 }
