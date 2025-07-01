@@ -162,7 +162,7 @@
             background-color: rgba(126, 93, 158, 0.518);
         }
         
-        a.order-link-button {
+        .order-link-button {
 		    display: inline-block;
 		    text-align: center;
 		    text-decoration: none;
@@ -177,7 +177,7 @@
 		    margin-top: 10px;
 		}
 		
-		a.order-link-button:hover {
+		.order-link-button:hover {
 		    background-color: rgba(126, 93, 158, 0.518);
 		}
 
@@ -471,27 +471,29 @@
 						                </tr>
 						                <tr></tr>
 						                <tr>
-						                    <td class="product-img">
-						                        <img src="http://192.168.40.32:8100/soyo/resources/product_upfile/${p.productChange}" >
-						                    </td>
+	
 						                    <td class="product-name">
 						                        <div>
 						                        	수령인 : ${p.receiverName} <br>
 						                        	배송지 : ${p.addressOther}<br>
 						                            가격 : ${p.totalPrice}<br>
-						                            상품명 : ${p.productName }<br>
-						                            <!--배송날짜 : ${o.orderDate }<br> 
-						                            상품번호 : ${o.productNo }<br>
-						                            주문번호 : ${o.orderImpNo }<br> -->
+						                            주문번호 : ${p.orderImpNo }<br>
+						                            상품도착일 : ${p.deliveryDate }<br> 
+						                          
+						          
 						                            
-						                            <button type="button" onclick="copyImpUid('${p.orderImpNo}')">복사</button>
+						                            <button type="button" onclick="copyImpUid('${p.orderImpNo}')
+						                            							   openModal()"
+						                            							   class="order-link-button">
+						                            							   환불하기
+						                            </button>
 						                        </div>
 						                    </td>
 						                    <td class="product-menu">
 						                        <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
 						                        	상세 조회
 						                        </a>
-						                        <button class="review-button" type="button" onclick="openReviewModal('${p.productNo}', '${p.productName}')">리뷰 작성</button>
+						           
 						                    </td>
 						                </tr>
 						            </table>
@@ -499,10 +501,6 @@
 						    </li>
 						</c:forEach>
 						</ul>
-						<button style="float: right; margin-right: 20px;"
-								onclick="openModal()">
-							전체 환불
-						</button>
                         <div id="page">
 		                    <button>&lt;</button>
 		                    <button>1</button>
@@ -519,7 +517,7 @@
 
     function copyImpUid(orderNo) {
         document.getElementById("imp_uid").value = orderNo;
-        alert("주문번호가 복사되었습니다!");
+        
     }
 
     function openModal() {
@@ -567,31 +565,7 @@
 
         // 리뷰 모달창 관련 함수들
         let currentProductNo = null;
-
-        function openReviewModal(productNo, productName) {
-            console.log('openReviewModal called with productNo:', productNo);
-            console.log('openReviewModal called with productName:', productName);
-            console.log('productNo type:', typeof productNo);
-            
-            if (!productNo || productNo === 'null' || productNo === 'undefined') {
-                alert('상품 번호를 찾을 수 없습니다. 관리자에게 문의해주세요.');
-                console.error('productNo is invalid:', productNo);
-                return;
-            }
-            
-            currentProductNo = parseInt(productNo);
-            console.log('currentProductNo set to:', currentProductNo);
-            
-            // 모달창 제목에 상품명 표시
-            const modalTitle = document.querySelector('.review-modal-header h2');
-            if (modalTitle && productName) {
-                modalTitle.textContent = "리뷰 작성 - " + productName;
-            }
-            
-            document.getElementById("reviewModal").style.display = "block";
-            // 모달창이 열릴 때 폼 초기화
-            document.getElementById("reviewForm").reset();
-        }
+	
 
         function closeReviewModal() {
             document.getElementById("reviewModal").style.display = "none";

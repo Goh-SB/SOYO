@@ -18,7 +18,7 @@
 		<result column="STATUS" property="status" />
 	</resultMap>
 	
-	<resultMap id="deliveryResultSet" type="com.kh.soyo.product.model.vo.Product">
+	<resultMap id="deliveryResultSet" type="delivery">
 		<result property="receiverName" column="RECEIVER_NAME"/>
 		<result property="receiverPhone" column="RECEIVER_PHONE"/>
 		<result property="memberName" column="MEMBER_NAME"/>
@@ -63,6 +63,25 @@
 		<result property="productChange" column="PRODUCT_CHANGE"/>
 		<result property="productSize" column="PRODUCT_SIZE"/>
 		<result property="stockCount" column="STOCK_COUNT"/>
+	</resultMap>
+
+	<resultMap id="productMap" type="product">
+	  <result property="productNo" column="PRODUCT_NO"/>
+	  <result property="productName" column="PRODUCT_NAME"/>
+	  <result property="productPrice" column="PRODUCT_PRICE"/>
+	  <result property="productOrigin" column="PRODUCT_ORIGIN"/>
+	  <result property="productCaption" column="PRODUCT_CAPTION"/>
+	  <result property="productChange" column="PRODUCT_CHANGE"/>
+	  <result property="productCategory" column="PRODUCT_CATEGORY"/>
+	  <result property="productSubCaption" column="PRODUCT_SUB_CAPTION"/>
+	  <result property="productRegisteredDate" column="PRODUCT_REGISTERED_DATE"/>
+	  <result property="status" column="STATUS"/>
+	  <result property="productSort" column="PRODUCT_TAG"/>
+	  <result property="productSubOrigin" column="PRODUCT_SUB_ORIGIN"/>
+	  <result property="productSubChange" column="PRODUCT_SUB_CHANGE"/>
+	  <result property="productCount" column="PRODUCT_COUNT"/>
+	  <result property="productSize" column="PRODUCT_SIZE"/>
+	  <result property="orderImpNo" column="ORDER_IMPNO"/>
 	</resultMap>
 
 	<!-- 로그인용 쿼리문 -->
@@ -110,33 +129,27 @@
     	
 	</select>
 	
-	<select id="orderProduct" parameterType="string" resultMap="deliveryResultSet">
-    SELECT *
-FROM (
-    SELECT 
-        O.ORDER_IMPNO,
-        D.RECEIVER_NAME,
-        D.RECEIVER_PHONE,
-        D.ADDRESS_NAME,
-        D.ADDRESS_OTHER,
-        O.TOTAL_PRICE,
-        O.ORDER_DATE,
-        P.PRODUCT_NO,
-        P.PRODUCT_NAME,
-        P.PRODUCT_PRICE,
-        P.PRODUCT_CHANGE,
-        PAY.PRODUCT_COUNT,
-        ROW_NUMBER() OVER (PARTITION BY O.ORDER_IMPNO ORDER BY P.PRODUCT_NO) AS RN
-    FROM ORDER_TB O
-    JOIN DELIVERY_ADDRESS D ON D.MEMBER_ID = O.MEMBER_ID
-    JOIN PAYMENT PAY ON PAY.ORDER_IMPNO = O.ORDER_IMPNO
-    JOIN PRODUCT P ON P.PRODUCT_NO = PAY.PRODUCT_NO
-    WHERE O.MEMBER_ID = #{memberId}
-      AND O.RECEIVER_NAME = D.RECEIVER_NAME
-) A
-WHERE A.RN = 1
-ORDER BY A.ORDER_IMPNO DESC
-</select>
+	<select id="orderProduct" parameterType="hashmap" resultMap="deliveryResultSet">
+	SELECT *
+		FROM (
+			SELECT ROWNUM RNUM,A.*
+			FROM(
+				SELECT RECEIVER_NAME,
+					   RECEIVER_PHONE,
+					   O.ADDRESS,
+					   ADDRESS_ALIAS,
+					   TOTAL_PRICE,
+					   ORDER_IMPNO,
+					   DELIVERY_DATE,
+					   REQUEST_MSG
+				FROM ORDER_TB O
+				JOIN MEMBER M ON M.MEMBER_ID=O.MEMBER_ID
+				WHERE O.MEMBER_ID=#{memberId}
+				) A
+			)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+    
+	</select>
 	
 	<!-- 회원가입용 쿼리문 -->
 	<insert id="insertMember" parameterType="member">
@@ -217,16 +230,12 @@ ORDER BY A.ORDER_IMPNO DESC
 	    ORDER BY R.REVIEW_DATE DESC
 	</select>
 
-	<select id="orderProductList" parameterType="string" resultMap="deliveryResultSet">
-	SELECT PD.PRODUCT_NAME,
-		   PD.PRODUCT_NO,
-	       PD.PRODUCT_PRICE,
-	       P.PRODUCT_COUNT,
-	       PD.PRODUCT_CHANGE,
-	       P.ORDER_IMPNO
-	  FROM PAYMENT P
-	  JOIN PRODUCT PD ON P.PRODUCT_NO = PD.PRODUCT_NO
-	 WHERE P.ORDER_IMPNO = #{orderImpNo}
+	<select id="orderProductList" parameterType="string" resultMap="productMap">
+  	SELECT
+		   PRODUCT_NO,
+           ORDER_IMPNO
+	  FROM PAYMENT 
+	 WHERE ORDER_IMPNO = #{orderImpNo}
 	</select>
 	
 	<!-- 내 찜 목록 갯수 -->
@@ -256,6 +265,30 @@ ORDER BY A.ORDER_IMPNO DESC
 		    WHERE MEMBER_ID = #{memberId}
 		      AND PRODUCT_NO = #{productNo}
 	</select>
+	
+	<select id="listPageCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM ORDER_TB O
+		  JOIN MEMBER M ON M.MEMBER_ID=O.MEMBER_ID
+		 WHERE O.MEMBER_ID=#{memberId}		
+	</select>
+	
+	<select id="productCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM PAYMENT
+		 WHERE ORDER_IMPNO=#{orderImpNo}
+	</select>
 
+	<select id="myProduct" parameterType="product" resultMap="productMap">
+	
+		SELECT PRODUCT_CHANGE
+		       ,PRODUCT_NAME
+		       ,PRODUCT_PRICE
+		       ,PRODUCT_COUNT
+		  FROM PAYMENT P
+		  JOIN PRODUCT PD ON PD.PRODUCT_NO = P.PRODUCT_NO
+		  WHERE P.ORDER_IMPNO =#{orderImpNo}
+		  AND P.PRODUCT_NO=#{productNo}
+	</select>
 		
 </mapper>

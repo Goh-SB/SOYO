@@ -36,7 +36,7 @@ public interface MemberService {
 
 	
 
-	List<Product> orderProduct(String memberId);
+	List<Product> orderProduct(String memberId,PageInfo pi);
 
 	int insertMember(Member m);
 
@@ -50,7 +50,7 @@ public interface MemberService {
 
 	ArrayList<Review> myReview(String mi, PageInfo pi);
 
-	List<Product> orderProductList(String impNo);
+	ArrayList<Product> orderProductList(String impNo);
 
 	int myReviewCount(String mi);
 
@@ -59,6 +59,13 @@ public interface MemberService {
 	ArrayList<Wish> myWishList(String mi, PageInfo pi);
 
 	Wish myWishListSize(Wish mi);
+
+	int listPageCount(Member loginUser);
+
+	int productCount(String impNo);
+
+	Product myProduct(Product p1);
+
 
 
 	

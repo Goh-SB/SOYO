@@ -736,17 +736,28 @@ public class MemberController {
 	
 	
 	@GetMapping("/myOrderPage")
-	public String myOrderListPage(Model model, HttpSession session) {
+	public String myOrderListPage(Model model, HttpSession session
+								 ,@RequestParam(value="cPage", defaultValue="1") int currentPage) {
 
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    
+//	    sSystem.out.println(loginUser);
+	    
+	    int listCount = memberService.listPageCount(loginUser);
+	    
+		int pageLimit = 5;
+		
+		// 페이지당 보여질 갯수
+		int boardLimit = 4;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage,pageLimit,boardLimit);
+	    
 	    if (loginUser != null) {
-	        List<Product> order = memberService.orderProduct(loginUser.getMemberId());
+	        List<Product> order = memberService.orderProduct(loginUser.getMemberId(),pi);
 	  
 	        model.addAttribute("order", order);
 	    }
 
-	   
 	    return "member/myOrderPage";
 	}
 	
@@ -754,11 +765,27 @@ public class MemberController {
 	public String myOrderPage(@RequestParam("impNo") String impNo,
 							  Model model) {
 		
-		List<Product> product=memberService.orderProductList(impNo);
+		ArrayList<Product> product=memberService.orderProductList(impNo);
 		
-		model.addAttribute("product",product);
+		int productCount = memberService.productCount(impNo);
 		
+		ArrayList<Product> result = new ArrayList<>();
+		for(int i=0; i<productCount; i++) {
+			
+			Product p1 = new Product();
+			
+			p1.setOrderImpNo(product.get(i).getOrderImpNo());
+			p1.setProductNo(product.get(i).getProductNo());
+			
+			p1 = memberService.myProduct(p1);
+			
+			result.add(p1);		
+		}
+		System.out.println(impNo);
+		System.out.println(result);
 		System.out.println(product);
+		model.addAttribute("result",result);
+	
 	    return "member/orderDetail";
 	}
 	

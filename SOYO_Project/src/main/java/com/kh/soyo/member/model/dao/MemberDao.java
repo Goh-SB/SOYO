@@ -47,9 +47,16 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.checkId" ,checkId);
 	}
 	// 회원이 주문한 상품 조회용 메소드
-	public List<Product> orderProduct(SqlSessionTemplate sqlSession, String memberId) {
+	public List<Product> orderProduct(SqlSessionTemplate sqlSession, String memberId,PageInfo pi) {
 		
-		return sqlSession.selectList("memberMapper.orderProduct",memberId);
+		int startRow = ((pi.getCurrentPage() - 1) * pi.getBoardLimit()) + 1;
+		int endRow = pi.getCurrentPage() * pi.getBoardLimit();
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
+		hm.put("memberId", memberId);
+		return sqlSession.selectList("memberMapper.orderProduct",hm);
 
 	}
 
@@ -90,9 +97,9 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.myReview", mi, rowBounds);
 
 	}
-	public List<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
+	public ArrayList<Product> orderProductList(SqlSessionTemplate sqlSession, String impNo) {
 		
-		return sqlSession.selectList("memberMapper.orderProductList",impNo);
+		return (ArrayList)sqlSession.selectList("memberMapper.orderProductList",impNo);
 
 	}
 
@@ -120,6 +127,20 @@ public class MemberDao {
 	public Wish myWishListSize(SqlSessionTemplate sqlSession, Wish mi) {
 		
 		return sqlSession.selectOne("memberMapper.myWishListSize", mi);
+	}
+
+	public int listPageCount(SqlSessionTemplate sqlSession, Member loginUser) {
+		
+		return sqlSession.selectOne("memberMapper.listPageCount",loginUser);
+	}
+
+	public int productCount(SqlSessionTemplate sqlSession, String impNo) {
+		
+		return sqlSession.selectOne("memberMapper.productCount",impNo);
+	}
+
+	public Product myProduct(SqlSessionTemplate sqlSession, Product p1) {
+		return sqlSession.selectOne("memberMapper.myProduct",p1);
 	}
 
 }

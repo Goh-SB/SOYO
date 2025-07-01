@@ -147,12 +147,13 @@ public class CartController {
 			
 			delivery.setProductNo(delivery.getSelectedProductList().get(i)); 
 			delivery.setProductSize(delivery.getSelectedProductSizeList().get(i));
-			
+//			System.out.println(delivery.getProductNo());
+//			System.out.println(delivery.getProductSize());
 			result3 *= cartService.deleteCartProduct(delivery);
 		}
-	    System.out.println( "1 번" + result1);
-	    System.out.println(" 2번 "+ result2);
-	    System.out.println("3번"+result3);
+//	    System.out.println( "1 번" + result1);
+//	    System.out.println(" 2번 "+ result2);
+//	    System.out.println("3번"+result3);
 
 	    return (result1 * result2 * result3) >= 1 ? 1 : 0;
 	}
