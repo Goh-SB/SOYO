@@ -82,5 +82,30 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryDao.paymentListCount(sqlSession);
 	}
 
+	@Override
+	public int filterListCount(String orderStatus) {
+
+		return deliveryDao.filterListCount(sqlSession, orderStatus);
+	}
+
+	@Override
+	public ArrayList<Delivery> filterList(PageInfo pi, String orderStatus) {
+
+		return deliveryDao.filterList(sqlSession, pi, orderStatus);
+	}
+
+	@Override
+	public ArrayList<Delivery> paymentCount(int orderNo) {
+
+		return deliveryDao.paymentCount(sqlSession, orderNo);
+	}
+
+	@Override
+	public Delivery paymentList(Delivery d2) {
+
+		return deliveryDao.paymentList(sqlSession, d2);
+	}
+
+
 
 }

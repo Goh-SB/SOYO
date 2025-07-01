@@ -98,7 +98,7 @@
                                     <td><input type="text" name="receiverName" placeholder="수령인" class="inputStyle" maxlength="4" required></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="receiverPhone" class="inputStyle" maxlength="11" placeholder="- 없는 전화번호" required></td>
+                                    <td><input type="text" name="receiverPhone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="inputStyle" maxlength="11" placeholder="- 없는 전화번호" required></td>
                                 </tr>
                                 <tr>
                                     <td><input name="addressOther" type="text" class="inputStyle"  id="address" class="updateInput"  name="address" maxlength="66" placeholder="주소" required></td>

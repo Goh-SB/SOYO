@@ -149,7 +149,7 @@
                         </tr>
                         <tr>
                             <th width="200px"><span class="fontsize20">이름</span></th>
-                            <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
+                            <td width="400px"><input maxlength="4" name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
                         </tr>
                         <tr>
                             <td><input type="password" name="memberPwd" class="fontsize20 updateInput" value="${ sessionScope.loginUser.memberPwd }" style="display: none;"></td>
@@ -159,7 +159,8 @@
                         	<td style="padding: 10px; font-size: 17px;">
                         		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M"><span class="fontsize20">&nbsp;남</span>
                                 <input id="genderF" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F"><span class="fontsize20">&nbsp;여</span>
-                        	</td>
+                                <input id="genderX" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="X"><span class="fontsize20">&nbsp; 선택안함</span>
+                            </td>
                         </tr>
                         <tr>
                             <th><span class="fontsize20">생년월일</span></th>
@@ -167,7 +168,7 @@
                         </tr>
                         <tr>
                             <th><span class="fontsize20">휴대전화번호</span></th>
-                            <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ></td>
+                            <td><input name="phone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ></td>
                         </tr>
                         <tr>
                             <th><span class="fontsize20">주소</span></th>
@@ -216,6 +217,8 @@
 
     } else if("${sessionScope.loginUser.gender} == 'F'"){
         document.getElementById("genderF").checked = true;
+    } else if("${sessionScope.loginUser.gender} == 'X'"){
+        document.getElementById("genderX").checked = true;
     }
 </script>
 </html>

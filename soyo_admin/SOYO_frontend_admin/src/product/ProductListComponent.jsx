@@ -211,7 +211,7 @@ function ProductListComponent() {
                 </div>
                 <div id="product-categoryArea">
                     {category.map((item, index) => (
-                        <button
+                        <button 
                             key={index}
                             onClick={(e) => { categoryFilter(e) }}
                             className="product-categoryBtn"
@@ -219,7 +219,6 @@ function ProductListComponent() {
                             style={{
                                 backgroundColor: selectCate == item ? "#E3E4FA" : "",
                                 borderRadius: selectCate == item ? "10px" : ""
-
                             }}
                         >
                             {item}
