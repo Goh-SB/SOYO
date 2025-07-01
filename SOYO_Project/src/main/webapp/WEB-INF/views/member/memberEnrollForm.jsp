@@ -10,7 +10,7 @@
 <!-- 도로명주소 스크립트 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 이메일 인증 스크립트 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
@@ -255,20 +255,26 @@
         border-color: #27ae60;
         box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
     }
-</style>
-<script>
-// 도로명주소
-function execDaumPostcode() {
-    new daum.Postcode({
-        oncomplete: function(data) {
-            document.getElementById("address").value = data.roadAddress;
-        }
-    }).open();
-}
 
-</script>
-</head>
+
+
+</style>
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+#loadingOverlay {
+    display: none; /* 기본적으로 숨김 */
+}
+</style>
 <body>
+<div id="loadingOverlay" style="position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px 60px; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center;">
+    <div class="spinner" style="width:48px; height:48px; border:6px solid #eee; border-top:6px solid #667eea; border-radius:50%; animation:spin 1s linear infinite;"></div>
+    <div style="margin-top:18px; color:#333; font-size:1.1rem;">요청 처리 중입니다...</div>
+  </div>
+</div>
 <jsp:include page="../common/menubar.jsp" />
 <div class="container">
     
@@ -308,7 +314,7 @@ function execDaumPostcode() {
                     <!-- 이름 -->
                     <div class="form-group">
                         <label class="form-label">이름</label>
-                        <input type="text" name="memberName" class="input-field" maxlength="9" required>
+                        <input type="text" name="memberName" class="input-field" maxlength="3" required>
                     </div>
 
                     <!-- 성별 -->
@@ -356,7 +362,7 @@ function execDaumPostcode() {
                     <!-- 전화번호 -->
                     <div class="form-group">
                         <label class="form-label">전화번호</label>
-                        <input name="phone" class="input-field" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required>
+                        <input name="phone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="input-field" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required>
                     </div>
 
                     <!-- 주소 -->
@@ -427,38 +433,41 @@ function hideMessage(element) {
     element.style.display = 'none';
 }
 
+function showLoading() {
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+}
+
 // 이메일 인증번호 발급을 위한 함수
 function cert() {
     let email = $("#email").val();
-
     const emailCheck = document.getElementById("emailCheck");
     const emailCheckGroup = document.getElementById("emailCheckGroup");
-
     if(email == "" || !email.includes("@")){
         showMessage(emailMsg, "유효한 이메일을 입력해주세요", "error");
         return false;
     }
-
+    showLoading();
     $.ajax({
         url : "../member/cert",
         type : "post",
         data : { email : email },
         success : function(result) {
-
+            hideLoading();
             alert(result);
-
             // 숨겨져있던 인증 요소 활성화 및 이메일 입력관련 요소 비활성화
             emailCheckGroup.classList.remove("hidden");
-
             $("#emailCheck").val("").attr("disabled", false);
             $("#validate").attr("disabled", false);
-
             $("#email").attr("readonly", true);
             $("#sert").attr("disabled", true);
             hideMessage(emailMsg);
         },
         error : function() {
-
+            hideLoading();
             console.log("인증번호 발급용 ajax 실패");
         }
     });
@@ -466,11 +475,9 @@ function cert() {
 
 // 인증 버튼을 눌렀을 때 실행할 함수
 function valid() {
-			
-    // 사용자가 입력했었던 이메일 주소와 인증번호를 변수에 담기
     let email = $("#email").val();
     let emailCheck = $("#emailCheck").val();
-
+    showLoading();
     $.ajax({
         url : "../member/validate",
         type : "post", 
@@ -479,34 +486,28 @@ function valid() {
             emailCheck : emailCheck
         },
         success : function(result) {
-            
+            hideLoading();
             if(result == "인증성공") {
                 hideMessage(emailMsg);
                 $("#emailCheck").attr("readonly", true);
                 $("#validate").attr("disabled", true);
                 showMessage(emailMsg, "인증성공", "success");
                 goInsert = 1;
-                
-                
             } else {
-                
                 // 재인증을 위해 초기화
                 $("#emailCheck").val("").attr("disabled", true);
                 $("#validate").attr("disabled", true);
-                
                 $("#email").val("").attr("readonly", false);
                 $("#sert").attr("disabled", false);
                 goInsert = 0;
                 showMessage(emailMsg, "인증실패", "error");
             }
-            
         }, 
         error : function() {
-            
+            hideLoading();
             console.log("인증번호 확인용 ajax 통신 실패!");	
         }
     });
-			
 }
 
 // 비밀번호칸을 벗어났을때 실행할 이벤트
@@ -634,6 +635,15 @@ function insertMember(){
     // 나머지는 존재여부만 체크하기 vs reqiurd로 때우기인데..흠
 
 
+}
+
+// 도로명주소
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById("address").value = data.roadAddress;
+        }
+    }).open();
 }
 
 </script>
