@@ -152,15 +152,15 @@
                             </tr>
                             <tr>
                                 <th width="200px">현재 비밀번호</th>
-                                <td width="400px"><input class="inputStyle" type="password" name="originPwd"></td>
+                                <td width="400px"><input class="inputStyle" type="password" maxlength="20" name="originPwd"></td>
                             </tr>
                             <tr>
                                 <th>변경할 비밀번호</th>
-                                <td><input type="password" class="inputStyle" name="updatePwd"></td>
+                                <td><input type="password" maxlength="20" class="inputStyle" name="updatePwd"></td>
                             </tr>
                             <tr>
                                 <th>비밀번호 확인</th>
-                                <td><input type="password" class="inputStyle" name="checkPwd"></td>
+                                <td><input type="password" maxlength="20" class="inputStyle" name="checkPwd"></td>
                             </tr>
                             <tr height="40px">
                                 <th></th>

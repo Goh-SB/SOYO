@@ -12,6 +12,12 @@
             margin: auto;
         }
 
+        #content::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
         @font-face {
             font-family: 'MaruBuriSemiBold';
             src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot);
@@ -24,53 +30,17 @@
             font-size: 40px;
             text-align: center;
             vertical-align: middle;
+            line-height: 120px;
         }
 
         #content{
             width: 1200px;
-            height: 800px; /* 여기 조절하기 */
+             /* 여기 조절하기 */
         }
 
         #content>div{
             float: left;
             display: block;
-        }
-
-        #left-Menu{
-            width: 180px;
-        }
-
-        #left-MenuList{
-            list-style-type: none;
-            margin: 0px;
-            padding: 0px;
-            font-size: 23px;
-            height: 50px;
-        }
-
-        #left-MenuList li{
-            margin-top: 5px;
-            padding-left: 7px;
-            
-        }
-
-        #left-MenuList li:hover{
-            background-color: rgba(252, 206, 255, 0.821);
-            border-top-right-radius: 25px;
-            border-bottom-right-radius: 25px;
-            border-bottom-left-radius: 5px;
-            border-top-left-radius: 5px;
-            width: 166px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        #left-MenuList a{
-            text-decoration: none;
-            color: rgb(67, 66, 66);
-            display: block;
-            width: 170px;
-            /* border: 1px solid lightgray; */
-            
         }
 
         #myContent{
@@ -109,11 +79,6 @@
             margin-left: 10px;
         }
 
-        table{
-            text-align: left;
-            margin: auto;
-        }
-
         .fontsize20{
             font-size: 20px;
             color: rgb(43, 62, 115);
@@ -123,10 +88,9 @@
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
+
+<br><br><br>
 <div class="container">
-        <div class="" id="myTitle">
-            마이페이지
-        </div>
         <div class="" id="content">
             <div class="" id="left-Menu">
                 <jsp:include page="leftMenu.jsp" />

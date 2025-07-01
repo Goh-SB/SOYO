@@ -255,6 +255,9 @@
         border-color: #27ae60;
         box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
     }
+
+
+
 </style>
 <style>
 @keyframes spin {
@@ -311,7 +314,7 @@
                     <!-- 이름 -->
                     <div class="form-group">
                         <label class="form-label">이름</label>
-                        <input type="text" name="memberName" class="input-field" maxlength="9" required>
+                        <input type="text" name="memberName" class="input-field" maxlength="3" required>
                     </div>
 
                     <!-- 성별 -->
@@ -359,7 +362,7 @@
                     <!-- 전화번호 -->
                     <div class="form-group">
                         <label class="form-label">전화번호</label>
-                        <input name="phone" class="input-field" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required>
+                        <input name="phone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="input-field" type="text" placeholder="- 없는 11자리 숫자" maxlength="11" required>
                     </div>
 
                     <!-- 주소 -->
