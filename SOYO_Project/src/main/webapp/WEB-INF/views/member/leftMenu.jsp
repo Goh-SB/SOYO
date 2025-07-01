@@ -6,8 +6,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-            #left-Menu{
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        #left-Menu{
             width: 160px;
+            font-family: 'NanumSquareRound';
         }
 
         #left-MenuList{
@@ -39,6 +47,7 @@
             color: gray;
             display: block;
             width: 95%;
+            margin-top: 8px;
             /* border: 1px solid lightgray; */
             
         }
@@ -79,9 +88,9 @@
     </div>
      <ul id="left-MenuList">
          <li><a href="../member/myOrderPage">주문/배송조회</a></li>
-         <li><a href="../member/myPageMyReview">내 리뷰</a></li>
          <li><a href="../deliveryAddress/myDeliveryList">배송지 관리</a></li>
          <li><a href="../member/myInformation">내 정보</a></li>
+         <li><a href="../member/myPageMyReview">내 리뷰</a></li>
          <li><a href="../recent/myRecent">최근 본 상품</a></li>
      </ul>
 </body>
