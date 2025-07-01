@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>내 정보 관리</title>
 <style>
+        body{
+            background-color: #f8f9fa;
+        }
+
 	    .container{
             width: 1200px;
             margin: auto;
@@ -24,8 +28,15 @@
             src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.ttf) format("truetype");
         }
 
+        @font-face {
+            font-family: 'LINESeedKR-Bd';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
         #myTitle{
-            width: 1200px;
+            width: 1500px;
             height: 120px;
             font-size: 40px;
             text-align: center;
@@ -34,7 +45,7 @@
         }
 
         #content{
-            width: 1200px;
+            width: 1500px;
              /* 여기 조절하기 */
         }
 
@@ -44,14 +55,17 @@
         }
 
         #myContent{
-            width: 800px;
+            width: 570px;
              /*border: 2px solid rgb(122, 64, 126);*/
             box-sizing: border-box;
-            box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            background-color: rgba(235, 214, 255, 0.349);
+            box-shadow: 0 2px 9px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            background-color: white;
+            margin: 30px;
+            margin-left: 50px;
+            margin-top: 50px;
+            padding-bottom: 13px;
         }
-
 
         #order-List>ul{
             list-style-type: none;
@@ -67,7 +81,7 @@
         }
         
         .goUpdate{
-        	width: 150px;
+        	width: 100px;
         	height: 40px;
         	margin-top: 30px;
         	margin-bottom: 30px;
@@ -77,13 +91,41 @@
             background-color: aliceblue;
             border-radius: 10px;
             margin-left: 10px;
+            padding-top: 3px;
         }
 
         .fontsize20{
-            font-size: 20px;
+            font-size: 15px;
+            color: rgb(43, 62, 115);
+            font-family: 'LINESeedKR-Bd';
+        }
+
+        .fontsize10{
+            font-size: 21px;
             color: rgb(43, 62, 115);
             font-family: 'MaruBuriSemiBold';
         }
+
+        .infomationTitle{
+            background-color: rgb(252, 232, 255);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            font-size: 25px;
+            height: 60px;
+            padding-top: 12px;
+            font-weight: bold;
+            color: #7e4f8b85;
+            font-family: 'LINESeedKR-Bd';
+        }
+
+        .fontbold{
+            color: #7e4f8b85;
+            font-weight: bold;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 15px !important;
+        }
+
 </style>
 </head>
 <body>
@@ -95,61 +137,49 @@
             <div class="" id="left-Menu">
                 <jsp:include page="leftMenu.jsp" />
             </div>
-            <div class="" id="myContent">
-                <div style="height: 5%; font-size: 30px; text-align: center;
-                padding: 15px;">내 정보</div>
-                <form action="" align="center">
-                    <table>
-                        <tr height="40px">
-                            <th width="200px">아이디</th>
-                            <td width="400px"><span class="fontsize20">${ sessionScope.loginUser.memberId }</span> </td>
-                        </tr>
-                        <tr height="40px">
-                            <th>이름</th>
-                            <td><span class="fontsize20">${ sessionScope.loginUser.memberName }</span> </td>
-                        </tr>
-                        <tr height="40px">
-                        	<th>성별</th>
-                        	<td style="padding: 10px; font-size: 17px; font: bold;"><span class="fontsize20">
-                        		<c:choose>
-                        			<c:when test="${ sessionScope.loginUser.gender =='M'}">남</c:when>
-                        			<c:when test="${ sessionScope.loginUser.gender =='F'}">여</c:when>
-                        			<c:otherwise>선택안함</c:otherwise>
-                        		</c:choose></span>
-                        	</td>
-                        </tr>
-                        <tr height="40px">
-                            <th>생년월일</th>
-                            <td><span class="fontsize20">${ sessionScope.loginUser.birthDate }</span></td>
-                        </tr>
-                        <tr height="40px">
-                            <th>이메일</th>
-                            <td><span class="fontsize20">${ sessionScope.loginUser.email }</span> </td>
-                        </tr>
-                        <tr height="40px">
-                            <th>휴대전화번호</th>
-                            <td><span class="fontsize20">${ sessionScope.loginUser.phone }</span> </td>
-                        </tr>
-                        <tr height="40px">
-                            <th>주소</th>
-                            <td><span class="fontsize20">${ sessionScope.loginUser.address }</span> </td>
-                        </tr>
-                        <tr height="40px">
-                        	<th>가입일</th>
-                        	<td><span class="fontsize20">${ sessionScope.loginUser.enrollDate }</span> </td>
-                        </tr>
+            <div class="" id="myContent" align="center">
+                <div class="infomationTitle">My Information
+                </div>
+                <div style="width: 400px; text-align: left; padding: 5px; margin-top: 30px;" align="center" >
                     
-                    </table>
-
-                    <div>
-                        <button type="button" class="goUpdate fontsize20" onclick="updatePage();">수정하기</button>
-                        <button type="button" class="goUpdate fontsize20" onclick="updatePwd();">비밀번호 변경</button>
-                        <button type="button" class="goUpdate fontsize20" onclick="deletePage();">회원탈퇴</button>
-                    </div>
-                    
-                </form>
-                    
-                
+                        <span>아이디 : </span>
+                        <span class="fontsize10">${ sessionScope.loginUser.memberId }</span>
+                        <br><br>
+                        <hr>
+                        <br>
+                        <span class="fontbold">기본 정보</span>
+                        <label for="">이름 : </label>
+                        <span class="fontsize10">${ sessionScope.loginUser.memberName }</span><br>
+                        <label for="">생년월일 : </label>
+                        <span class="fontsize10">${ sessionScope.loginUser.birthDate }</span><br>
+                        <label for="">성별 :</label> &nbsp;
+                        <span class="fontsize10">
+                            <c:choose>
+                                <c:when test="${ sessionScope.loginUser.gender =='M'}">남</c:when>
+                                <c:when test="${ sessionScope.loginUser.gender =='F'}">여</c:when>
+                                <c:otherwise>선택안함</c:otherwise>
+                            </c:choose>
+                        </span>
+                        <br><br>
+                        <hr>
+                        <br>
+                        <span class="fontbold">연락처 정보</span>
+                        <label for="">이메일 : </label>
+                        <span class="fontsize10">${ sessionScope.loginUser.email }</span><br>
+                        <label for="">전화번호 : </label>
+                        <span class="fontsize10">${ sessionScope.loginUser.phone }</span>
+                        <br><br>
+                        <hr>
+                        <br>
+                        <span class="fontbold">주소</span>
+                        <span class="fontsize10">${ sessionScope.loginUser.address }</span>
+                        <br>
+                </div>
+                <div>
+                    <button type="button" class="goUpdate fontsize20" onclick="updatePage();">수정하기</button>
+                    <button type="button" class="goUpdate fontsize20" onclick="updatePwd();">비밀번호 변경</button>
+                    <button type="button" class="goUpdate fontsize20" onclick="deletePage();">회원탈퇴</button>
+                </div>
             </div>
         </div>
     </div>

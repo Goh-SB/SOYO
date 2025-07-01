@@ -136,11 +136,13 @@
     }
 
     .addrSpan{
+        margin: 8px;
         margin-left: 15px;
     }
 
     .btnset{
         margin-left: 680px;
+        margin-bottom: 10px;
     }
 
     .btnsetButton{
@@ -162,14 +164,26 @@
     .addrtitle{
         font-weight: bold;
         font-size: 17px;
-        
+        color: #442a4be2;
     }
+
+    .addrDetail{
+        border: 2px solid rgba(211, 211, 211, 0.362);
+        border-radius: 5px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        padding-bottom: 15px;
+    }
+
 
         /* 모달창 디자인 */
     
     #editModal {
-        width: 300px;
-        height: 500px;
+        width: 400px;
+        height: 730px;
         display: none;
         position: fixed;
         top: 50%;
@@ -177,18 +191,28 @@
         transform: translate(-50%, -50%);
         background: white;
         border: 1px solid #ccc;
-        padding: 20px;
         z-index: 9999;
         box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         border-radius: 15px;
-        
+    }
+
+    .modalLabel{
+        box-sizing: border-box;
+        font-size: 16px;
+        text-align: left;
+        color: #442a4be2;
     }
 
     .modalInput{
-        width: 250px;
-        height: 30px;
+        box-sizing: inherit;
+        width: 300px;
+        height: 40px;
         padding: 5px;
         border-radius: 9px;
+        border: none;
+        box-shadow: 0 2px 7px rgba(0,0,0,0.1);
+        margin-top: 2px !important;
+        margin-bottom: 30px !important;
     }
 
     #aa {
@@ -196,6 +220,36 @@
         padding-top: 12px;
     }
 
+    .modalbtn{
+        width: 90px;
+        height: 30px;
+        background-color: aliceblue;
+        border: none;
+        border-radius: 9px;
+    }
+
+    .btnSubmit{
+        width: 300px;
+        height: 30px;
+        border-radius: 5px;
+        border: none;
+        background-color: aliceblue;
+        margin-bottom: 30px !important;
+    }
+
+    .modalTitle{
+        background-color: rgb(252, 232, 255);
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        height: 60px;
+        padding-top: 16px;
+        font-size: 23px;
+        color: #442a4be2;
+    }
+
+    .titleSpan{
+        margin-top: 20px;
+    }
 
 </style>
 </head>
@@ -225,13 +279,11 @@
                                                 onclick="setDefaultAddress(${a.addressNo})"
                                                 <c:if test="${a.isDefault eq 'Y'}">checked</c:if>>
                                             <span class="addrtitle">${a.addressName} &nbsp; </span><span style="color: gray;">(기본 배송지)</span><br>
-                                            <div style="padding: 5px;">
-                                                <hr style="background-color: gray;">
-                                                <span class="addrSpan">${a.addressOther}</span>
+                                            <div class="addrDetail">                                                <span class="addrSpan">${a.addressOther}</span>
                                                 <br>
-                                                
+                                                <br>
                                                 <span class="addrSpan">${a.receiverName}</span><br>
-                                                <span class="addrSpan">${a.receiverPhone}</span>
+                                                <span class="addrSpan">${a.receiverPhone}</span><br>
                                             </div>
                                             <div style="display: flex;" class="btnset">
                                                 <!-- 수정 버튼 -->
@@ -253,13 +305,12 @@
                                                 onclick="setDefaultAddress(${w.addressNo})"
                                                 <c:if test="${w.isDefault eq 'Y'}">checked</c:if>>
                                             <span class="addrtitle">${w.addressName}</span><br>
-                                            <div style="padding: 5px;">
-                                                <hr style="background-color: gray;">
+                                            <div class="addrDetail">
                                                 <span class="addrSpan">${w.addressOther}</span>
                                                 <br>
-                                                
+                                                <br>
                                                 <span class="addrSpan">${w.receiverName}</span><br>
-                                                <span class="addrSpan">${w.receiverPhone}</span>
+                                                <span class="addrSpan">${w.receiverPhone}</span><br>
                                             </div>
                                             <div style="display: flex;" class="btnset">
                                                 <!-- 수정 버튼 -->
@@ -267,7 +318,7 @@
                                                     수정하기
                                                 </button>
                                                 <form method="post" action="../deliveryAddress/delete">
-                                                    <input type="hidden"  name="addressNo" value="${w.addressNo}">
+                                                    <input type="hidden"  name="addressNo" value="${a.addressNo}">
                                                     <button type="submit" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" class="btnsetButton">삭제하기</button>
                                                 </form>
                                             </div>
@@ -279,7 +330,7 @@
                                 </c:when>
                                     <c:otherwise>
                                         <div style="height: 500px; text-align: center;" >
-                                            <span>
+                                            <span style="margin-left: 250px; color: gray; font-size: 20px;">
                                                 등록된 배송지가 없습니다.
                                             </span>
                                             <br>
@@ -328,27 +379,29 @@
 <jsp:include page="../common/footer.jsp" />
 
 <div id="editModal">
-    <form id="editForm" method="post" action="../deliveryAddress/update">
+    <div class="modalTitle" align="center">배송지 수정</div>
+    <form id="editForm" style="margin-top: 30px;" align="center" method="post" action="../deliveryAddress/update">
         <input type="hidden" class="modalInput" name="addressNo" id="modalAddressNo">
 
-        <label>배달지명</label><br>
-        <input type="text" class="modalInput" name="addressName" maxlength="10" id="modalAddressName" required><br>
+        <label class="modalLabel">배달지명</label><br>
+        <input style="margin-bottom: 20px;" type="text" class="modalInput" name="addressName" maxlength="10" id="modalAddressName" required><br>
 
-        <label>수령인</label><br>
-        <input type="text" class="modalInput" name="receiverName" maxlength="4" id="modalReceiverName" required><br>
+        <label class="modalLabel">수령인</label><br>
+        <input style="margin-bottom: 20px;" type="text" class="modalInput" name="receiverName" maxlength="4" id="modalReceiverName" required><br>
 
-        <label>주소</label><input  type="button" style="margin: 5px;" class="btnSubmit" onClick="execDaumPostcode()" value="주소검색"><br>
-        <input type="text" class="modalInput"  name="addressOther" maxlength="66" id="modalAddressOther"><br>
+        <label class="modalLabel" >주소</label><br>
+        <input style="margin-bottom: 6px !important; " type="text" class="modalInput"  name="addressOther" maxlength="66" id="modalAddressOther"><br>
+        <input type="button" class="btnSubmit" onClick="execDaumPostcode()" value="주소검색"><br>
 
-        <label>상세주소</label><br>
-        <input type="text" class="modalInput" name="addressDetail" maxlength="66" id="modalAddressDetail"><br>
+        <label class="modalLabel">상세주소</label><br>
+        <input style="margin-bottom: 20px;" type="text" class="modalInput" name="addressDetail" maxlength="66" id="modalAddressDetail"><br>
 
-        <label>연락처</label><br>
-        <input type="text" class="modalInput" name="receiverPhone" maxlength="11" id="modalReceiverPhone" required><br><br>
+        <label class="modalLabel">연락처</label><br>
+        <input style="margin-bottom: 20px;" type="text" class="modalInput" name="receiverPhone" maxlength="11" id="modalReceiverPhone" required><br><br>
 
-        <button type="submit">수정하기</button>
+        <button class="modalbtn" type="submit">수정하기</button>
 
-        <button type="button" onclick="closeEditModal()">취소</button>
+        <button class="modalbtn" type="button" onclick="closeEditModal()">취소</button>
     </form>
 </div>
 

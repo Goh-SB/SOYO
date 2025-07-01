@@ -79,18 +79,12 @@
 <br><br><br>
 
 <div class="container">
-    <div id="myTitle">최근 본 상품</div>
-
     <div id="content">
         <div id="left-Menu">
             <jsp:include page="../member/leftMenu.jsp" />
         </div>
 
         <div id="myContent">
-            
-            <div style="height: 20px; font-size: 30px; padding: 15px;">
-                최근 본 상품
-            </div>
 
             <div class="myWishList">
             	<c:choose>
