@@ -477,23 +477,20 @@
 						                        	수령인 : ${p.receiverName} <br>
 						                        	배송지 : ${p.addressOther}<br>
 						                            가격 : ${p.totalPrice}<br>
-						                            주문번호 : ${p.orderImpNo }<br>
-						                            상품도착일 : ${p.deliveryDate }<br> 
-						                          
-						          
-						                            
-						                            <button type="button" onclick="copyImpUid('${p.orderImpNo}')
-						                            							   openModal()"
-						                            							   class="order-link-button">
-						                            							   환불하기
-						                            </button>
+						                            주문번호 : ${p.orderImpNo}<br>
+						                            상품도착일 : ${p.deliveryDate}<br> 
+	                            
 						                        </div>
 						                    </td>
 						                    <td class="product-menu">
 						                        <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
 						                        	상세 조회
 						                        </a>
-						           
+						           					<button type="button" onclick="copyImpUid('${p.orderImpNo}')
+						                            							   openModal()"
+						                            							   class="order-link-button">
+						                            							   환불하기
+						                            </button>
 						                    </td>
 						                </tr>
 						            </table>

@@ -124,6 +124,10 @@
             width: 25%;
             padding-top: 10px;
         }
+        .review-Button {
+		    width: 50%;
+		    text-align: right;
+		}
 
         #page{
 
@@ -255,8 +259,20 @@
 		.review-modal-body {
 			padding: 32px;
 		}
-		
-		/* ===== 리뷰 작성 모달 스타일 ===== */
+		.review-button {
+		    display: inline-block;
+		    text-align: center;
+		    text-decoration: none;
+		    color: black;
+		    background-color: rgba(175, 128, 219, 0.518);
+		    border: none;
+		    border-radius: 5px;
+		    padding: 10px 20px;
+		    font-family: inherit;
+		    font-size: 14px;
+		    width: 100%;
+		    margin-top: 10px;
+		}
 
 .review-modal {
 	display: none;
@@ -507,10 +523,11 @@
 										    <div>
 										        상품명: ${p.productName}<br>  
 										        가격: ${p.productPrice}원<br>
-										        주문번호: ${p.orderImpNo}<br>
-
 										    </div>
+										</td>
+										<td class="review-Button">
 					                 <button class="review-button" type="button" onclick="openReviewModal('${p.productNo}', '${p.productName}')">리뷰 작성</button>
+										
 										</td>
 	
 					                </tr>

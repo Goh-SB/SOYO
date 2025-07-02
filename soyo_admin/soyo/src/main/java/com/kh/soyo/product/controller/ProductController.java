@@ -286,4 +286,13 @@ public class ProductController {
 		
 		
 	}
+	
+	@GetMapping("chartData")
+	public int chartData() {
+		
+		return productService.chartData();
+	}
+	
+	
+	
 }

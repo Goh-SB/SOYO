@@ -4,6 +4,7 @@ import './Chart.css';
 import axios from 'axios';
 
 
+
 function Chart1() {
 
     useEffect(() => {
@@ -150,18 +151,76 @@ function Chart3() {
 
 
     return (
-        <div id="total-member-area" align="right">
-            <div id="total-member">
-                <span>총 회원 수
+        <div className="chart-card" >
+            <div className="chart-card-block">
+                <div align="center" className="chart-title">
+                    총 회원 수
                     <br />
-                    {memberData}
-                </span>
+                    <div align="center" className="chart-content">
+                        {memberData}
+                    </div>
+                </div>
             </div>
         </div>
     );
 
 }
 
+function Chart4() {
+    useEffect(() => {
+        productCount();
+    }, [])
+ const productCount = () => {
+        let url = "http://192.168.40.32:8100/soyo/product/chartData";
+        axios({
+            url,
+            method: "get"            
+        }).then((response) => {
+            document.getElementById("chart5").innerText = response.data;
+        })
+
+    }
+    return (
+
+        <div className="chart-card">
+            <div align="center" className="chart-card-block">
+                <div className="chart-title" align="center">
+                    상품 종류
+                    <div align="center" id="chart5" className="chart-content">
+                        
+                    </div>
+                </div>
+                <br />
+            </div>
+
+        </div>
+    );
+}
 
 
-export { Chart1, Chart2, Chart3 };
+function Chart5() {
+
+    return (
+        <div className="chart-card">
+            <div className="chart-card-block">
+
+            </div>
+
+        </div>
+    );
+}
+
+function Chart6(){
+
+    return (
+        <div className="chart-card">
+            <div className="chart-card-block">
+
+            </div>
+
+        </div>
+    );
+
+}
+
+export { Chart1, Chart2, Chart3, Chart4, Chart5, Chart6 };

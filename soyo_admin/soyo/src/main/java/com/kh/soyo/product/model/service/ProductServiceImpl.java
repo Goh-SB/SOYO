@@ -147,6 +147,12 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.detailSubTag(sqlSession, p);
 	}
 
+	@Override
+	public int chartData() {
+
+		return productDao.chartData(sqlSession);
+	}
+
 
 
 

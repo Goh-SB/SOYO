@@ -748,6 +748,7 @@ public class MemberController {
 	    if (loginUser != null) {
 	        List<Product> order = memberService.orderProduct(loginUser.getMemberId(),pi);
 	  
+	        System.out.println(order);
 	        model.addAttribute("order", order);
 	    }
 
@@ -774,10 +775,10 @@ public class MemberController {
 			
 			result.add(p1);		
 		}
-		System.out.println(impNo);
-		System.out.println(result);
-		System.out.println(product);
-		model.addAttribute("result",result);
+//		System.out.println(impNo);
+//		System.out.println(result);
+//		System.out.println(product);
+//		model.addAttribute("result",result);
 	
 	    return "member/orderDetail";
 	}
