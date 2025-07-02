@@ -1,14 +1,32 @@
 import axios from 'axios';
 import React from 'react';
-import { Chart1, Chart2, Chart3} from './dashboard/Chart';
+import { Chart1, Chart2, Chart3, Chart4, Chart5, Chart6 } 
+from './dashboard/Chart';
 import './Home.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function Home (props) {
+function Home(props) {
 
     // 실행 구문
     let loginUser = props.loginUser;
     let setLoginUser = props.setLoginUser;
+
+    useEffect(()=> {
+
+    }, [])
+
+    // 차트 값을 가져오는 함수
+    const productCount = () => {
+        let url = "http://192.168.40.32:8100/soyo/product/chartData";
+        axios({
+            url,
+            method: "get"            
+        }).then((response) => {
+            
+        })
+
+    }
+
 
     // 로그인 버튼 클릭 시 실행 함수
     const login = (e) => {
@@ -23,8 +41,8 @@ function Home (props) {
 
         axios({
             url,
-            method : "post",
-            data : {
+            method: "post",
+            data: {
                 memberId,
                 memberPwd
             }
@@ -32,16 +50,16 @@ function Home (props) {
 
             // console.log(response.data);
 
-            if(response.data == "") {
+            if (response.data == "") {
                 // > 로그인 실패
 
                 alert("관리자 로그인에 실패했습니다.");
-                
+
             } else {
                 // > 로그인 성공
-                
+
                 alert("관리자 로그인에 성공했습니다.");
-                
+
                 sessionStorage.setItem("loginUser", response.data);
                 // > sessionStorage 에 키 + 밸류 형태로 데이터를 담는 메서드
                 //   sessionStorage.setItem("키값", "밸류값");
@@ -71,7 +89,7 @@ function Home (props) {
     // };
 
     // return 구문
-    if(loginUser != null) {
+    if (loginUser != null) {
         // 로그인 후에 보여질 화면
         return (
             <div>
@@ -86,20 +104,23 @@ function Home (props) {
                 </button> */}
 
                 <br /><br />
-
-                <Chart1 />
+                <div id="chart1_2">
+                    <Chart1 />
+                    <Chart2 />
+                </div>
+                <div id="chart-card-area">
+                    <Chart3 />
+                    <Chart4 />
+                    <Chart5 />
+                    <Chart6 />
+                </div>
                 <br />
-                <Chart3 />
-                <br />
-                
-                <Chart2 />
-
             </div>
         );
     } else {
 
-    // 로그인 전에 보여질 화면
-    return (
+        // 로그인 전에 보여질 화면
+        return (
             <div>
                 <h4 style={{ color: 'gray', fontWeight: 'bold', marginLeft: '300px' }}>
                     ● 관리자 로그인
@@ -131,15 +152,12 @@ function Home (props) {
 
                     <div align="center">
 
-                        <button type="submit" onClick={ login }
-                                className="btn btn-primary btn-bg">
+                        <button type="submit" onClick={login}
+                            className="btn btn-primary btn-bg">
                             로그인
                         </button>
 
                         <br /><br /><br />
-
-                        <h5>디자인은 추후 다듬을 예정입니다.</h5>
-
                     </div>
 
                 </form>

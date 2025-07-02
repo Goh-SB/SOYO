@@ -295,4 +295,9 @@
  	
  	</select>
  	
+ 	<select id="chartData" resultType="_int">
+ 		SELECT COUNT(*)
+ 		  FROM PRODUCT
+ 	</select>
+ 	
 </mapper>

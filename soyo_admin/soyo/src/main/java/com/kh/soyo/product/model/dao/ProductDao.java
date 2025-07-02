@@ -158,6 +158,11 @@ public class ProductDao {
 			return sqlSession.update("productMapper.updateSubThumbnail", p);
 		}
 
+		public int chartData(SqlSessionTemplate sqlSession) {
+
+			return sqlSession.selectOne("productMapper.chartData");
+		}
+
 
 
 

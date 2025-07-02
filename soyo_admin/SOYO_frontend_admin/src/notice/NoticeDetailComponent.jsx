@@ -32,8 +32,10 @@ function NoticeDetailComponent() {
             if(response.data.noticeImage == null){
                 document.getElementById("fileImg").remove();
             }
+            document.getElementById("noticeContent").innerHTML = response.data.noticeContent;
 
-            setDataList(response.data)
+            setDataList(response.data);
+            
             
 
 
@@ -77,7 +79,7 @@ function NoticeDetailComponent() {
                         <td>
                             <img id="fileImg" src={`http://192.168.40.32:8100/soyo/resources/notice_upfile/${dataList.noticeImage}`} />
                             <br /><br />
-                            <p id="noticeContent">{dataList.noticeContent}
+                            <p id="noticeContent">
                             </p>
                         </td>
                     </tr>

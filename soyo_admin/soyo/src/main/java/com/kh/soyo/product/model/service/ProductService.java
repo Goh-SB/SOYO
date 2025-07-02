@@ -46,6 +46,8 @@ public interface ProductService {
 
 	int updateSubTag(Product p, List<String> productSubTag);
 
+	int chartData();
+
 
 
 }

@@ -1,0 +1,8 @@
+#chart1_2{
+    display : flex;
+}
+#chart-card-area{
+    margin-top: 100px;
+    display: flex;
+    gap: 50px;
+}
