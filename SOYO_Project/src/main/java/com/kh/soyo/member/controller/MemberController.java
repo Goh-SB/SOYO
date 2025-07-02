@@ -422,7 +422,7 @@ public class MemberController {
 		
 		// 메세지 정보 담기
 		message.setSubject("[soyo] 이메일 인증 번호입니다");
-		message.setText("본인이 아니시라면 무시하시면 됩니다. \n인증번호 : " + random);
+		message.setText("발급된 인증번호를 입력해주세요. \n\n인증번호 : " + random);
 		message.setTo(email);
 		
 		mailSender.send(message);

@@ -111,21 +111,4 @@
 		WHERE NOTICE_NO = #{noticeNo}
 			AND STATUS = 'Y'
 	</select>
-	
-	<!-- 공지사항 수정용 쿼리문 -->
-	<update id="updateNotice" parameterType="notice">
-		UPDATE NOTICE
-		SET NOTICE_TITLE = #{noticeTitle},
-			NOTICE_CONTENT = #{noticeContent}
-		WHERE NOTICE_NO = #{noticeNo}
-			AND STATUS = 'Y'
-	</update>
-	
-	<!-- 공지사항 삭제용 쿼리문 -->
-	<update id="deleteNotice" parameterType="_int">
-		UPDATE NOTICE
-		SET STATUS = 'N'
-		WHERE NOTICE_NO = #{noticeNo}
-			AND STATUS = 'Y'
-	</update>
 </mapper>
