@@ -187,6 +187,14 @@
                         </tr>
                         
                         <tr>
+						  <th><span class="fontsize20">주소선택</span></th>
+						  <td>
+						    <input type="radio" name="addressType" value="기본배송지"> 기본배송지
+						    <input type="radio" name="addressType" value="직접입력"> 직접입력
+						    <input type="button" value="배송지 선택">
+						  </td>
+						</tr>
+                        <tr>
                             <th><span class="fontsize20">주소</span></th>
                             <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required></td>
                         </tr>
@@ -227,10 +235,6 @@
                     </div>
           
 		            </div>
-		            
-		            <div id="paymentInfo">
-		         	 <h2>결제 정보</h2>
-					 <p>총 결제 금액: <strong>${totalPrice}</strong>원</p>
 		     	    </div>
 		     	   
 		     	   <!-- 체크된 상품번호 가져오기
@@ -295,8 +299,7 @@
 		  IMP.init("imp28344582");  // 네 포트원 userCode
 		
 		  function requestPay() {
-			  
-		
+			  	
 			  const memberName = document.querySelector("input[name='memberName']").value;
 			  const phone = document.querySelector("input[name='phone']").value;
 			  const address = document.querySelector("input[name='address']").value;
@@ -306,9 +309,7 @@
 			  const addressAlias = document.querySelector("input[name='addressName']").value;
 			  const addressName = document.querySelector("input[name='addressName']").value;
 			  const fullAddress = address + " " + addrDetail;
-			  
-			  
-			  
+			  		  
 			  const selectedProductList = [];
 			  const selectedProductCountList = []; 
 			  const selectedProductSizeList = [];
@@ -391,5 +392,18 @@
 		      }
 		    });
 		  }
+		  
+		  document.querySelectorAll("input[name='addressType']").forEach(function(radio) {
+			  radio.addEventListener("change", function() {
+			    if (this.value === "기본배송지") {
+			      //console.log("기본배송지 선택");
+			      
+			    } else if (this.value === "직접입력") {
+			      //console.log("직접입력 선택");
+			     
+			    }
+			  });
+			});
+
 		</script>
 </html>

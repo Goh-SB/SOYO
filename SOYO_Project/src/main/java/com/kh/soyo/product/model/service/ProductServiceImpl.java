@@ -1,21 +1,21 @@
 package com.kh.soyo.product.model.service;
 
 import java.util.ArrayList;
-
-import org.apache.ibatis.session.RowBounds;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.kh.soyo.common.model.vo.PageInfo;
-import com.kh.soyo.product.model.dao.ProductDao;
-import com.kh.soyo.product.model.vo.Product;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Service
+import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.product.model.dao.ProductDao;
+import com.kh.soyo.product.model.vo.Product;
+
+
+@Repository
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDao productDao;
@@ -161,6 +161,24 @@ public class ProductServiceImpl implements ProductService {
 		param.put("category", category);
 		param.put("tagFilter", tagFilter);
 		return productDao.selectProductListCountForSort(param);
+	}
+
+	@Override
+	public int cancelStatus(String impUid, String reason) {
+		
+		HashMap<String,Object> hm = new HashMap<>();
+		hm.put("impUid", impUid);
+		hm.put("reason", reason);
+		return sqlSession.update("productMapper.cancelStatus",hm);
+	}
+
+	@Override
+	public int cancelDate(String impUid, String reason) {
+		
+		HashMap<String,Object> hm = new HashMap<>();
+		hm.put("impUid", impUid);
+		hm.put("reason", reason);
+		return sqlSession.update("productMapper.cancelDate",hm);
 	}
     
     

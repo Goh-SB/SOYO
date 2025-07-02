@@ -1,8 +1,10 @@
 package com.kh.soyo.common;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,9 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.kh.soyo.product.model.service.ProductService;
+
 @Controller
 @RequestMapping("/soyo")
 public class PortOneController {
+	
+	@Autowired
+	private ProductService productService;
 	
     @PostMapping("/cancelPayment")
     @ResponseBody
@@ -36,6 +43,10 @@ public class PortOneController {
             int code = (codeObj instanceof Number) ? ((Number) codeObj).intValue() : -1;
 
             if (code == 0) {
+            	
+            	int result1 = productService.cancelStatus(impUid,reason);
+            	int result2 = productService.cancelDate(impUid,reason);
+            	
                 result.put("success", true);
                 result.put("message", "환불 성공");
             } else {

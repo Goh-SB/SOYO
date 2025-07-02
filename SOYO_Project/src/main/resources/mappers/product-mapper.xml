@@ -191,7 +191,18 @@
 	      AND TRIM(PRODUCT_SIZE) = #{productSize}
 	</select>
 
-
+	<update id="cancelStatus" parameterType="hashmap">
+		UPDATE PAYMENT
+		SET CANCEL_STATUS='환불완료',
+		    CANCEL_REASON=#{reason}
+		WHERE ORDER_IMPNO=#{impUid}
+	</update>
+	
+	<update id="cancelDate" parameterType="hashmap">
+		UPDATE ORDER_TB
+		   SET CANCEL_DATE=SYSDATE
+		 WHERE ORDER_IMPNO=#{impUid}
+	</update>
 
 
 </mapper>

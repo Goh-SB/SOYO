@@ -44,4 +44,8 @@ public interface ProductService {
 	List<Product> searchProductList(String category, String tag, String keyword, PageInfo pi);
 
 	int searchProductListCount(String category, String tag, String keyword);
+
+	int cancelStatus(String impUid, String reason);
+
+	int cancelDate(String impUid, String reason);
 }
