@@ -273,8 +273,8 @@ function Chart6() {
 
     return (
         <div className="chart-card">
-            <div className="chart-card-block">
-                <div className="chart-title" align="center" onClick={() => { navigate("/delivery/list") }}>
+            <div className="chart-card-block" onClick={() => { navigate("/delivery/list") }}>
+                <div className="chart-title" align="center" >
                     주문 량
                     <div align="center" id="chart6" className="chart-content">
 
