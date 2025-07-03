@@ -22,9 +22,23 @@
     font-style: normal;
     }
 
+    @font-face {
+        font-family: 'NEXON Lv2 Gothic';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'HancomHoonminjeongeumH';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/HancomHoonminjeongeumH.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
     body {
-        padding-top: 70px;
-        background-image: url('/soyo/resources/images/findId.png');
+        padding-top: 5px;
+        background-image: url('/soyo/resources/images/soyo-bg.jpg');
     }
 
     .container{
@@ -34,10 +48,10 @@
     }
 
     #findIdContent {
-        width: 500px;
+        width: 480px;
         margin: auto;
         text-align: center;
-        margin-top: 80px;
+        margin-top: 100px;
 
     }
 
@@ -57,7 +71,7 @@
     .enrollform{
         clear: both;
         width: 100%;
-        height: 600px;
+        height: 570px;
         border: 3px solid lightgray;
         background-color: rgba(255, 255, 255, 0.851);
         border-bottom-left-radius: 8px;
@@ -80,7 +94,9 @@
         border: 3px solid lightgray;
         background-color: rgb(245, 255, 254);
         height: 70px;
-        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .findPwd{
@@ -91,6 +107,7 @@
         height: 70px;
         background-color: rgba(113, 141, 150, 0.377);
         color: lightcyan;
+        padding-top: 5px;
     }
 
     .findPwd a {
@@ -113,11 +130,11 @@
         border: 3px;
         font-size: 20px;
         width: 400px;
-        font-family: 'GowunDodum-Regular';
+        font-family: 'HancomHoonminjeongeumH';
     }
 
     .fontGowunB{
-        font-family: 'GowunDodum-Regular';
+        font-family: 'HancomHoonminjeongeumH';
         width: 400px;
         height: 50px;
         padding: 10px;
@@ -129,7 +146,7 @@
     }
 
     .fontGowunD{
-        font-family: 'GowunBatang-Regular';
+        font-family: 'HancomHoonminjeongeumH';
         font-size: 25px;
         color: #546E7A;
         text-decoration: none;
@@ -145,8 +162,8 @@
 	<div id="findIdContent">
         
         <div id="findIdform">
-            <div class="findId"><span class="fontGowunD">ID 찾기</span></div>
-            <div class="findPwd"><a href="../member/newMemberPwd" class="fontGowunD" style="color: lightcyan;">비밀번호 찾기</a></div>
+            <div class="findId"><span class="fontGowunD" style="font-size: 20px;">ID 찾기</span></div>
+            <div class="findPwd"><a href="../member/newMemberPwd" class="fontGowunD" style="color: lightcyan; font-size: 20px;">비밀번호 찾기</a></div>
             <div class="enrollform">
                 <form action="../member/findId" method="post">
                     <table class="formTable">

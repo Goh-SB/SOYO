@@ -371,6 +371,47 @@
 		.btn-submit:active {
 			transform: translateY(0);
 		}
+		
+		.paging-area {
+			margin-top: 30px;
+			text-align: center;
+		}
+
+		.pagination {
+			display: inline-flex;
+			list-style: none;
+			gap: 5px;
+		}
+
+		.page-item {
+			display: inline-block;
+		}
+
+		.page-link {
+			display: block;
+			padding: 8px 12px;
+			text-decoration: none;
+			color: #495057;
+			border: 1px solid #dee2e6;
+			border-radius: 4px;
+			transition: all 0.2s ease;
+		}
+
+		.page-link:hover {
+			background-color: #e9ecef;
+		}
+
+		.page-item.active .page-link {
+			background-color: #495057;
+			color: white;
+			border-color: #495057;
+		}
+
+		.page-item.disabled .page-link {
+			color: #adb5bd;
+			pointer-events: none;
+			background-color: #f8f9fa;
+		}
 </style>
 </head>
 <body>
@@ -478,19 +519,35 @@
 						                        	배송지 : ${p.addressOther}<br>
 						                            가격 : ${p.totalPrice}<br>
 						                            주문번호 : ${p.orderImpNo}<br>
-						                            상품도착일 : ${p.deliveryDate}<br> 
-	                            
+						                            환불상태 : 
+						                            <c:if test="${p.cancelStatus eq '환불완료'}">
+												        <span style="color: red; font-weight: bold;">환불 완료</span>
+												    </c:if>
+	                            					
 						                        </div>
 						                    </td>
 						                    <td class="product-menu">
 						                        <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
 						                        	상세 조회
 						                        </a>
-						           					<button type="button" onclick="copyImpUid('${p.orderImpNo}')
-						                            							   openModal()"
-						                            							   class="order-link-button">
-						                            							   환불하기
-						                            </button>
+						                        	 <c:choose>
+												        <c:when test="${p.cancelStatus eq '환불완료'}">
+												            <button type="button"
+												                    class="order-link-button"
+												                    style="background-color: lightgray;"
+												                    onclick="alertNotAllowed();"
+												                    >
+												                환불 완료
+												            </button>
+												        </c:when>
+												        <c:otherwise>
+												            <button type="button"
+												                    onclick="copyImpUid('${p.orderImpNo}'); openModal();"
+												                    class="order-link-button">
+												                환불 하기
+												            </button>
+												        </c:otherwise>
+												    </c:choose>
 						                    </td>
 						                </tr>
 						            </table>
@@ -498,12 +555,97 @@
 						    </li>
 						</c:forEach>
 						</ul>
-                        <div id="page">
-		                    <button>&lt;</button>
-		                    <button>1</button>
-		                    <button>2</button>
-		                    <button>&gt;</button>
-		                </div>
+                        <div class="paging-area">
+				<ul class="pagination justify-content-center">
+					<!-- currentPage가 1번 페이지일 경우 Previous 비활성화 -->
+					<c:choose>
+						<c:when test="${ requestScope.pi.currentPage eq 1 }">
+							<li class="page-item disabled">
+								<a class="page-link">
+									&lt;
+								</a>
+							</li>
+						</c:when>
+
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${ empty requestScope.condition }">
+									<li class="page-item">
+										<a class="page-link" 
+											href="/soyo/member/myOrderPage?nPage=${ requestScope.pi.currentPage - 1 }">
+											&lt;
+										</a>
+									</li>
+								</c:when>
+
+								<c:otherwise>
+									<!-- 검색이 유지되도록 설정 -->
+									<li class="page-item">
+										<a class="page-link" 
+											href="/soyo/member/myOrderPage?nPage=${ requestScope.pi.currentPage - 1 }">
+											&lt;
+										</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					
+					<c:forEach var="p" begin="${ requestScope.pi.startPage }"
+									end="${ requestScope.pi.endPage }"
+									step="1">
+					
+						<!-- 현재 내가 보고 있는 페이지 버튼은 비활성화 -->
+						<c:choose>
+							<c:when test="${ requestScope.pi.currentPage eq p }">
+								<li class="page-item active">
+									<a class="page-link">
+										${ p }
+									</a>
+								</li>
+							</c:when>
+
+							<c:otherwise>
+						
+										<!-- 일반 목록 조회(condition이 없을 경우) -->
+										<li class="page-item">
+											<a class="page-link" href="/soyo/member/myOrderPage?cPage=${ p }">
+												${ p }
+											</a>
+										</li>
+							
+
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+					<!-- currentPage가 maxPage일 경우 Next 비활성화 -->
+					<c:choose>
+						<c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+							<li class="page-item disabled">
+								<a class="page-link">
+									&gt;
+								</a>
+							</li>
+						</c:when>
+
+						<c:otherwise>
+							
+								
+							
+									<!-- 검색이 유지되도록 설정 -->
+									<li class="page-item">
+										<a class="page-link" 
+											href="/soyo/member/myOrderPage?cPage=${ requestScope.pi.currentPage + 1 }">
+											&gt;
+										</a>
+									</li>
+							
+						
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
                     </div> 
             </div>
         </div>
@@ -568,6 +710,11 @@
             document.getElementById("reviewModal").style.display = "none";
             currentProductNo = null;
         }
+        
+        function alertNotAllowed(){
+        	alert("이미 환불된 주문입니다");
+        }
+
 
         // 페이지 로드 시 리뷰 폼 제출 이벤트 리스너 추가
         document.addEventListener('DOMContentLoaded', function() {
