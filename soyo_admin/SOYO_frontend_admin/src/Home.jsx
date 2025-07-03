@@ -84,9 +84,10 @@ function Home(props) {
         // 로그인 후에 보여질 화면
         return (
             <div>
-
-                <h2>관리자님 환영합니다!</h2>
-
+                {/*
+                <h2 id="h2">관리자님 환영합니다!</h2>
+                */}
+                
                 <br />
 
                 {/* <button id='logout-btn' className="btn btn-primary btn-bg btn-block"
@@ -95,15 +96,15 @@ function Home(props) {
                 </button> */}
 
                 <br /><br />
-                <div id="chart1_2">
-                    <Chart1 />
-                    <Chart2 />
-                </div>
                 <div id="chart-card-area">
                     <Chart3 />
                     <Chart4 />
                     <Chart5 />
                     <Chart6 />
+                </div>
+                <div id="chart1_2">
+                    <Chart1 />
+                    <Chart2 />
                 </div>
                 <br />
             </div>

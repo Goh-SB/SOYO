@@ -104,7 +104,9 @@ function Chart2() {
 
             // 그래프 그리기 옵션
             var options = {
-                title: '판매 현황'
+                title: '판매 현황',
+                height: 300,
+                width: 400,
             };
 
             // 그래프를 그려넣을 요소 선택 후 데이터, 옵션을 매개변수로 넣어 그리기
@@ -183,14 +185,13 @@ function Chart4() {
     return (
 
         <div className="chart-card">
-            <div align="center" className="chart-card-block">
+            <div className="chart-card-block">
                 <div className="chart-title" align="center">
                     상품 종류
                     <div align="center" id="chart4" className="chart-content">
 
                     </div>
                 </div>
-                <br />
             </div>
 
         </div>
