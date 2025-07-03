@@ -1060,15 +1060,45 @@
             }
         });
 
-        // 썸네일 클릭 핸들링용
-        const thumbnails = document.querySelectorAll('.product-thumbnail');
-        const mainImage = document.getElementById('mainImage');
         
+        const mainImage = document.getElementById('mainImage');
+        mainImage.style.transition = 'opacity 1s cubic-bezier(0.4,0,0.2,1)';
+        
+        
+        const mainImageUrl = mainImage.src;
+        const subImageUrl = "http://192.168.40.32:8100/soyo/resources/product_upfile/${product.productSubChange}";
+        let showMain = true;
+        let autoChangeInterval;
+        function fadeToImage(url) {
+            mainImage.style.opacity = 0;
+            setTimeout(() => {
+                mainImage.src = url;
+                mainImage.onload = () => {
+                    mainImage.style.opacity = 1;
+                };
+            }, 350);
+        }
+        function startAutoChangeMainImage() {
+            autoChangeInterval = setInterval(function() {
+                showMain = !showMain;
+                if (showMain) {
+                    fadeToImage(mainImageUrl);
+                } else {
+                    fadeToImage(subImageUrl);
+                }
+            }, 4000);
+        }
+        function stopAutoChangeMainImage() {
+            clearInterval(autoChangeInterval);
+        }
+        const thumbnails = document.querySelectorAll('.product-thumbnail');
         thumbnails.forEach(thumbnail => {
             thumbnail.addEventListener('click', function() {
-                mainImage.src = this.src;
+                fadeToImage(this.src);
+                stopAutoChangeMainImage();
             });
         });
+        startAutoChangeMainImage();
 
         // Favorite(찜) 버튼 토글
         const favoriteBtn = document.getElementById('favoriteBtn');
