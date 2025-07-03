@@ -20,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.soyo.cart.controller.CartController;
 import com.kh.soyo.cart.model.service.CartService;
 import com.kh.soyo.cart.model.vo.Cart;
-import com.kh.soyo.cart.controller.CartController;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.common.template.XssDefencePolicy;
+import com.kh.soyo.deliveryAddress.model.vo.DeliveryAddress;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
@@ -783,4 +784,17 @@ public class MemberController {
 	    return "member/orderDetail";
 	}
 	
+	@GetMapping("/defaultAddress")
+	@ResponseBody
+	public DeliveryAddress defaultAddress(HttpSession session) {
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    String memberId = loginUser.getMemberId();
+	    
+	    DeliveryAddress d = memberService.defaultAddress(memberId);
+	    
+	    System.out.println(memberId);
+	    System.out.println("기본배송지: " + d);
+	    
+	    return d;
+	}
 }

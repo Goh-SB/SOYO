@@ -491,17 +491,7 @@
             마이페이지
         </div>
         <div class="" id="content">
-            <div class="" id="left-Menu">
-                <img width="150px" src="/soyo/resources/images/real-soyo-logo.png" alt="">
-                <ul id="left-MenuList">
-                    <li><a href="./myOrderPage">주문/배송조회</a></li>
-                    <li><a href="">찜한 상품</a></li>
-                    <li><a href="myPage-myrivew.html">내 리뷰</a></li>
-                    <li><a href="">배송지 관리</a></li>
-                    <li><a href="../member/myInformation">내 정보</a></li>
-                    <li><a href="">최근 본 상품</a></li>
-                </ul>
-            </div>
+            <jsp:include page="../leftMenu.jsp" />
 
             <div class="" id="myContent">
                 <div style="height: 5%; font-size: 30px;

@@ -1,11 +1,14 @@
 package com.kh.soyo.deliveryAddress.model.vo;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Alias("deliveryAddress")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
