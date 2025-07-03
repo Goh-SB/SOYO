@@ -242,7 +242,9 @@
 					  <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:10px; position:relative;">
 					    <h3 style="text-align:center;">배송지 선택</h3>
 					    <ul style="list-style:none; padding:0;">
-							
+					      <li style="margin:10px 0; cursor:pointer;" onclick="selectAddress('서울 강남구+테헤란로 123', '집')">서울 강남구 + 테헤란로 123 (집)</li>
+					      <li style="margin:10px 0; cursor:pointer;" onclick="selectAddress('서울 송파구+올림픽로 88', '회사')">서울 송파구 + 올림픽로 88 (회사)</li>
+					      <li style="margin:10px 0; cursor:pointer;" onclick="selectAddress('인천 연수구+송도과학로 12', '친구집')">인천 연수구 + 송도과학로 12 (친구집)</li>
 					    </ul>
 					    <button onclick="closeModal()" style="display:block; margin:20px auto; padding:5px 15px;">닫기</button>
 					  </div>
