@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>최근 본 상품</title>
 <style>
+
+    body{
+        background-color: #f8f9fa;
+    }
+
     .container {
         width: 1200px;
         margin: auto;
@@ -19,7 +24,7 @@
     }
 
     #myTitle {
-        width: 1200px;
+        width: 1000px;
         height: 120px;
         font-size: 40px;
         text-align: center;
@@ -28,7 +33,7 @@
     }
 
     #content {
-        width: 1200px;
+        width: 1000px;
     }
 
     #content > div {
@@ -42,14 +47,9 @@
     }
 
     .productImg {
-        width: 75px;
-        height: 75px;
-    }
-
-    .wishTable {
-        width: 800px;
-        margin: 50px;
-        margin-top: 80px;
+        width: 91px;
+        height: 91px;
+        border-radius: 15px;
     }
 
     .pageBtn {
@@ -71,6 +71,53 @@
         height: 50px;
         text-align: center;
     }
+
+    .recentContent{
+        width: 1000px;
+        margin: 50px;
+        background-color: white;
+        border-radius: 15px;
+    }
+
+    .recentTitle{
+        height: 50px;
+        background-color: rgb(252, 232, 255);
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        height: 60px;
+        padding-top: 16px;
+        font-size: 23px;
+        color: #442a4be2;
+    }
+
+    .wishTable{
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: 0 2px 7px rgba(0,0,0,0.1);
+        margin: 20px;
+        margin-left: 40px;
+        margin-right: 40px;
+        transition: transform 0.4s ease;
+        border: 2px solid lightgrey;
+    }
+
+    .wishTable:hover{
+        border: 2px solid rgb(105, 105, 255);
+        transform: translateY(2px);
+    }
+
+    .resultText{
+        width: 250px;
+    }
+
+    .resultImg{
+        width: 200px;
+    }
+
+    .fontsize{
+        font-size: 20px;
+    }
+
 </style>
 </head>
 <body>
@@ -89,28 +136,26 @@
             <div class="myWishList">
             	<c:choose>
             		<c:when test="${not empty myRecent}">
-		                <form action="../member/wishGo" method="post">
-		                    <table class="wishTable">
-		                        <tr>
-		                            
-		                            <th style="width: 85px;"></th>
-		                            <th style="width: 520px;"></th>
-		                            <th style="width: 80px;"></th>
-		                            <th style="width: 70px;"></th>
-		                        </tr>
-		                        <c:forEach var="r" items="${myRecent}" varStatus="status">
-		                            <tr>
-		                                
-		                                <td><img class="productImg" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${r.productChange}" alt=""></td>
-		                                <td><span>${r.productName}</span></td>
-		                                <td><span>${r.productPrice} 원</span></td>
-		                                <td>
-		                                    <a href="../product/productDetail?no=${r.productNo}">상세보기</a>
-		                                </td>
-		                            </tr>
-		                        </c:forEach>
-		                    </table>
-		                </form>
+                        <div class="recentContent" align="center">
+                            <div class="recentTitle" align="center"><label for="">Recent</label></div>
+                            <form action="../member/wishGo" method="post" style="padding-bottom: 20px;">
+                                <c:forEach var="r" items="${myRecent}" varStatus="status">
+                                    <a href="../product/productDetail?no=${r.productNo}" style="text-decoration: none; color: inherit;">
+                                        <div class="wishTable" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                                            <div class="resultImg">
+                                                <img class="productImg" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${r.productChange}" alt="">
+                                            </div>
+                                            <div class="resultText">
+                                                <span class="fontsize">${r.productName}</span>
+                                            </div>
+                                            <div class="resultText">
+                                                <span class="fontsize">${r.productPrice} 원</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </c:forEach>
+                            </form>
+                        </div>
 	                </c:when>
 	                <c:otherwise>
 	                	<div style="height: 500px; text-align: center;" >

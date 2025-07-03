@@ -560,7 +560,7 @@ public class MemberController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
 		// 일단 현재 사용중인 비밀번호가 맞는지 확인
-		if(bCryptPasswordEncoder.matches(checkPwd, loginUser.getMemberPwd())) { // 같을경우
+		if(bCryptPasswordEncoder.matches(originPwd, loginUser.getMemberPwd())) { // 같을경우
 			
 			// 바꿀 비밀번호도 암호화
 			String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
@@ -575,20 +575,13 @@ public class MemberController {
 			
 			if(result > 0) { // 성공
 				
-				// 갱신된 회원 정보 세션에 다시 넣어 덮어씌워주기
-				Member m = new Member();
-				m.setMemberId(userId);
-				m.setMemberPwd(updatePwd);
 				
+				session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다.");
 				
-				Member updateMem = memberService.loginMember(m);
-				// System.out.println(updateMem);
-				session.setAttribute("loginUser", updateMem);
-				
-				session.setAttribute("alertMsg", "비밀번호 변경 성공");
+				return "member/loginPage";
 				
 			} else { // 실패
-				 session.setAttribute("alertMsg", "비밀번호 변경 실패");
+				 session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다.");
 			}
 			
 			

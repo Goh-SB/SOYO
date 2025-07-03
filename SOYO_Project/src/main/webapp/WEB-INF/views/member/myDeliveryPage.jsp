@@ -305,6 +305,7 @@
                                                 onclick="setDefaultAddress(${w.addressNo})"
                                                 <c:if test="${w.isDefault eq 'Y'}">checked</c:if>>
                                             <span class="addrtitle">${w.addressName}</span><br>
+                                            
                                             <div class="addrDetail">
                                                 <span class="addrSpan">${w.addressOther}</span>
                                                 <br>
@@ -318,7 +319,7 @@
                                                     수정하기
                                                 </button>
                                                 <form method="post" action="../deliveryAddress/delete">
-                                                    <input type="hidden"  name="addressNo" value="${a.addressNo}">
+                                                    <input type="hidden"  name="addressNo" value="${w.addressNo}">
                                                     <button type="submit" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" class="btnsetButton">삭제하기</button>
                                                 </form>
                                             </div>
@@ -397,7 +398,7 @@
         <input style="margin-bottom: 20px;" type="text" class="modalInput" name="addressDetail" maxlength="66" id="modalAddressDetail"><br>
 
         <label class="modalLabel">연락처</label><br>
-        <input style="margin-bottom: 20px;" type="text" class="modalInput" name="receiverPhone" maxlength="11" id="modalReceiverPhone" required><br><br>
+        <input style="margin-bottom: 20px;" oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text" class="modalInput" name="receiverPhone" maxlength="11" id="modalReceiverPhone" required><br><br>
 
         <button class="modalbtn" type="submit">수정하기</button>
 
