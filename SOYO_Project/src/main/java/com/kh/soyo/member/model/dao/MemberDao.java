@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.deliveryAddress.model.vo.DeliveryAddress;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
@@ -141,6 +142,11 @@ public class MemberDao {
 
 	public Product myProduct(SqlSessionTemplate sqlSession, Product p1) {
 		return sqlSession.selectOne("memberMapper.myProduct",p1);
+	}
+
+	public DeliveryAddress defaultAddress(SqlSessionTemplate sqlSession, String memberId) {
+		
+		return sqlSession.selectOne("memberMapper.defaultAddress",memberId);
 	}
 
 }

@@ -16,16 +16,7 @@ function Home(props) {
     }, [])
 
     // 차트 값을 가져오는 함수
-    const productCount = () => {
-        let url = "http://192.168.40.32:8100/soyo/product/chartData";
-        axios({
-            url,
-            method: "get"            
-        }).then((response) => {
-            
-        })
-
-    }
+   
 
 
     // 로그인 버튼 클릭 시 실행 함수

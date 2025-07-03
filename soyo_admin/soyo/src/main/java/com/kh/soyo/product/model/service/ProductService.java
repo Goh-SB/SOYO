@@ -48,6 +48,10 @@ public interface ProductService {
 
 	int chartData();
 
+	int cashData();
+
+	int orderData();
+
 
 
 }
