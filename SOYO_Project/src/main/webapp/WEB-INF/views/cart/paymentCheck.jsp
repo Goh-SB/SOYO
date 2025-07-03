@@ -191,7 +191,7 @@
 						  <td>
 						    <input type="radio" name="addressType" value="기본배송지"> 기본배송지
 						    <input type="radio" name="addressType" value="직접입력"> 직접입력
-						    <input type="button" value="배송지 선택">
+						    <input type="button" value="배송지 선택" id="selectAddress">
 						  </td>
 						</tr>
                         <tr>
@@ -210,7 +210,7 @@
                         
                         <tr>
 						  <th><span>배송지 이름</span></th>
-						  <td><input type="text" class="updateInput" name="addressName" placeholder="예: 집, 회사, 친구집"></td>
+						  <td><input type="text" class="updateInput" id="addressName" name="addressName" placeholder="예: 집, 회사, 친구집"></td>
 						</tr>
 						                        
                         <tr>
@@ -236,6 +236,18 @@
           
 		            </div>
 		     	    </div>
+		     	    
+		     	    <!-- 모달창 -->
+					<div id="addressModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
+					  <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:10px; position:relative;">
+					    <h3 style="text-align:center;">배송지 선택</h3>
+					    <ul style="list-style:none; padding:0;">
+							
+					    </ul>
+					    <button onclick="closeModal()" style="display:block; margin:20px auto; padding:5px 15px;">닫기</button>
+					  </div>
+					</div>
+		     	    
 		     	   
 		     	   <!-- 체크된 상품번호 가져오기
 		     	    <c:forEach var="productNo" items="${paramValues.productNoList}">
@@ -256,6 +268,8 @@
 						  <input type="hidden" name="productCountList" value="${paramValues.productCountList[i]}" />
 						  <input type="hidden" name="productSize" value="${paramValues.productSize[i]}" />
 						</c:forEach>
+						
+						
 					 
           
     			</div>
@@ -396,14 +410,74 @@
 		  document.querySelectorAll("input[name='addressType']").forEach(function(radio) {
 			  radio.addEventListener("change", function() {
 			    if (this.value === "기본배송지") {
-			      //console.log("기본배송지 선택");
-			      
+			      console.log("기본배송지 선택");
+
+			      $.ajax({
+			        url: "/soyo/member/defaultAddress",
+			        type: "GET",
+			        dataType: "json",
+			        success: function(data) {
+			          console.log("기본배송지 응답:", data);
+
+			          if (data.addressOther) {
+			            const parts = data.addressOther.split("+");
+			            const beforePlus = parts[0] || "";
+			            const afterPlus = parts[1] || "";
+
+			            document.getElementById("address").value = beforePlus.trim();
+			            document.getElementById("addrDetail").value = afterPlus.trim();
+			            
+			            document.getElementById("address").readOnly = true;
+			            document.getElementById("addrDetail").readOnly = true;
+			          } 
+			          
+			          document.getElementById("addressName").value = data.addressName
+			        },
+			        error: function(xhr, status, error) {
+			          console.error("기본배송지 불러오기 실패:", error);
+			          alert("기본배송지 정보를 불러오는 데 실패했습니다.");
+			        }
+			      });
+
 			    } else if (this.value === "직접입력") {
-			      //console.log("직접입력 선택");
-			     
+			      console.log("직접입력 선택");
+			      document.getElementById("address").value = "";
+			      document.getElementById("addrDetail").value = "";
+			      document.getElementById("addressName").value = "";
+			      
+			      document.getElementById("address").readOnly = false;
+		            document.getElementById("addrDetail").readOnly = false;
 			    }
 			  });
 			});
+		  
+		// 모달 열기
+		  document.getElementById("selectAddress").addEventListener("click", function() {
+		    document.getElementById("addressModal").style.display = "block";
+		  });
+
+		  // 모달 닫기
+		  function closeModal() {
+		    document.getElementById("addressModal").style.display = "none";
+		  }
+
+		  // 주소 선택
+		  function selectAddress(fullAddress, alias) {
+		    const parts = fullAddress.split("+");
+		    const beforePlus = parts[0] || "";
+		    const afterPlus = parts[1] || "";
+
+		    document.getElementById("address").value = beforePlus.trim();
+		    document.getElementById("addrDetail").value = afterPlus.trim();
+		    document.getElementById("addressName").value = alias;
+
+		    document.getElementById("address").readOnly = true;
+		    document.getElementById("addrDetail").readOnly = true;
+
+		    closeModal();
+		  }
+
+
 
 		</script>
 </html>
