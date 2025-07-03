@@ -154,17 +154,17 @@
                             <td style="font-size: 25px;"><span class="fontGowunD" style="font-size: 30px;">ID 찾기</span></td>
                         </tr>
                         <tr>
-                            <td><input name="memberName" class="fontGowunB" type="text" placeholder="이름" required></td>
+                            <td><input name="memberName" class="fontGowunB" type="text" placeholder="이름" maxlength="4" required></td>
                             
                         </tr>
                         <tr>
-                            <td><input id="birth" name="birthDate" class="fontGowunB" type="date" placeholder="생년월일" required ></td>
+                            <td><input id="memberDate" name="birthDate" class="fontGowunB" type="date" placeholder="생년월일" required ></td>
                         </tr>
                         <tr>
-                            <td><input name="email" class="fontGowunB" type="email" placeholder="이메일" required></td>
+                            <td><input name="email" class="fontGowunB" type="email" maxlength="30" placeholder="이메일" required></td>
                         </tr>
                         <tr>
-                            <td><input name="phone" class="fontGowunB" type="text" placeholder="- 없는 전화번호" required></td>
+                            <td><input name="phone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="fontGowunB" type="text" maxlength="11" placeholder="- 없는 전화번호" required></td>
                             
                         </tr>
                         <tr>
@@ -178,7 +178,10 @@
 </div>
 <jsp:include page="../common/footer.jsp" />
 <script>
-    
+const today = new Date().toISOString().split('T')[0];
+
+// 오늘이후 날짜 선택 불가능하게
+document.getElementById('memberDate').setAttribute('max', today);
 </script>
 </body>
 </html>

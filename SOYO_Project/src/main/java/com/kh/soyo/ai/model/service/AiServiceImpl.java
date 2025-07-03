@@ -162,8 +162,8 @@ public class AiServiceImpl implements AiService {
             }
         }
         
-        System.out.println("처리된 태그: " + processedTags);
-        System.out.println("=== 키워드 처리 완료 ===");
+        // System.out.println("처리된 태그: " + processedTags);
+        // System.out.println("=== 키워드 처리 완료 ===");
         
         return processedTags;
     }

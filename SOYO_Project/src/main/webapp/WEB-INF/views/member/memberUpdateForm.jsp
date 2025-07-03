@@ -164,7 +164,7 @@
                         </tr>
                         <tr>
                             <th><span class="fontsize20">생년월일</span></th>
-                            <td><input name="birthDate" type="date" class="fontsize20 updateInput" value="${ sessionScope.loginUser.birthDate }" ></td>
+                            <td><input id="memberDate" name="birthDate" type="date" class="fontsize20 updateInput" value="${ sessionScope.loginUser.birthDate }" ></td>
                         </tr>
                         <tr>
                             <th><span class="fontsize20">휴대전화번호</span></th>
@@ -200,7 +200,10 @@
     <jsp:include page="../common/footer.jsp" />
 </body>
 <script>
+const today = new Date().toISOString().split('T')[0];
 
+// 오늘이후 날짜 선택 불가능하게
+document.getElementById('memberDate').setAttribute('max', today);
 
     function execDaumPostcode() {
     new daum.Postcode({

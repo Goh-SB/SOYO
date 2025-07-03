@@ -118,7 +118,7 @@ function MenuComponent(props) {
                     <span>
                         <img src="../../resources/soyo-logo.png"
                             id="mainLogo" onClick={() => { navigate("/") }} />
-                        <h2>SOYO 관리자 페이지 입니다.</h2>
+                        <h2 style={{ fontFamily: 'paybooc-Bold' }}>SOYO - 관리자 페이지</h2>
                     </span>
 
                 </div>
