@@ -154,7 +154,7 @@ function Chart3() {
         <div className="chart-card" >
             <div className="chart-card-block">
                 <div align="center" className="chart-title">
-                    총 회원 수
+                    회원 가입수
                     <br />
                     <div align="center" className="chart-content">
                         {memberData}
@@ -170,13 +170,13 @@ function Chart4() {
     useEffect(() => {
         productCount();
     }, [])
- const productCount = () => {
+    const productCount = () => {
         let url = "http://192.168.40.32:8100/soyo/product/chartData";
         axios({
             url,
-            method: "get"            
+            method: "get"
         }).then((response) => {
-            document.getElementById("chart5").innerText = response.data;
+            document.getElementById("chart4").innerText = response.data;
         })
 
     }
@@ -186,8 +186,8 @@ function Chart4() {
             <div align="center" className="chart-card-block">
                 <div className="chart-title" align="center">
                     상품 종류
-                    <div align="center" id="chart5" className="chart-content">
-                        
+                    <div align="center" id="chart4" className="chart-content">
+
                     </div>
                 </div>
                 <br />
@@ -199,23 +199,59 @@ function Chart4() {
 
 
 function Chart5() {
+    useEffect(() => {
+        cashData();
+    }, [])
+    const cashData = () => {
+        let url = "http://192.168.40.32:8100/soyo/product/cashData";
+        axios({
+            url,
+            method: "get"
+        }).then((response) => {
 
+            document.getElementById("chart5").innerText = Number(response.data).toLocaleString('ko-KR') + '원';
+        })
+    }
     return (
         <div className="chart-card">
             <div className="chart-card-block">
+                <div className="chart-title" align="center">
+                    총 매출 액
+                    <div align="center" id="chart5" className="chart-content">
 
+                    </div>
+                </div>
             </div>
 
         </div>
     );
 }
 
-function Chart6(){
+function Chart6() {
+
+    useEffect(() => {
+        orderCount();
+    }, [])
+
+    const orderCount = () => {
+        let url = "http://192.168.40.32:8100/soyo/product/orderData";
+        axios({
+            url,
+            method : "get"
+        }).then((response) => {
+            document.getElementById("chart6").innerText = response.data + '건';
+        })
+    }
 
     return (
         <div className="chart-card">
             <div className="chart-card-block">
+                <div className="chart-title" align="center">
+                    주문 량
+                    <div align="center" id="chart6" className="chart-content">
 
+                    </div>
+                </div>
             </div>
 
         </div>

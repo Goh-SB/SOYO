@@ -216,12 +216,9 @@ function ProductDetailComponent() {
       $("#subThumbnail").click();
     })
     loadContent();
-
-  }, [productSize]);
-
-  useEffect(() => {
     tagfunc();
-  }, [productSubTag]);
+
+  }, [productSize, productSubTag]);
 
   const loadContent = () => {
     // 상품 정보 불러오기 함수
