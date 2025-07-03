@@ -666,11 +666,11 @@ public class MemberController {
 	@PostMapping("changePwd")
 	public String changePwd(Member m, HttpSession session) {
 		
-		String originEmail = memberService.findEmail(m);
-		
 		// XSS 공격 막기
 	    m.setMemberId(XssDefencePolicy.defence(m.getMemberId()));
 	    m.setEmail(XssDefencePolicy.defence(m.getEmail()));
+	    
+	    String originEmail = memberService.findEmail(m);
 	    
 		// 이메일이 같을경우에만 비밀번호가 바뀌도록 조건문
 		if(originEmail.equals(m.getEmail())) {
