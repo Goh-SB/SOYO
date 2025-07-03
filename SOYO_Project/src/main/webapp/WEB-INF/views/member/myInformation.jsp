@@ -55,7 +55,7 @@
         }
 
         #myContent{
-            width: 570px;
+            width: 770px;
              /*border: 2px solid rgb(122, 64, 126);*/
             box-sizing: border-box;
             box-shadow: 0 2px 9px rgba(0,0,0,0.1);
@@ -140,7 +140,7 @@
             <div class="" id="myContent" align="center">
                 <div class="infomationTitle">My Information
                 </div>
-                <div style="width: 400px; text-align: left; padding: 5px; margin-top: 30px;" align="center" >
+                <div style="width: 600px; text-align: left; padding: 5px; margin-top: 30px; word-wrap: break-word;" align="center" >
                     
                         <span>아이디 : </span>
                         <span class="fontsize10">${ sessionScope.loginUser.memberId }</span>

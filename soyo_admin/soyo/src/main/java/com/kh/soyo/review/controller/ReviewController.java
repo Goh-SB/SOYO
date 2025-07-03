@@ -17,7 +17,7 @@ import com.kh.soyo.review.model.service.ReviewService;
 import com.kh.soyo.review.model.vo.Review;
 
 @RestController
-@CrossOrigin(origins="http://192.168.40.32:5173")
+@CrossOrigin(origins={"http://192.168.40.32:5173", "http://192.168.40.17:5173"})
 @RequestMapping("review")
 public class ReviewController {
 	

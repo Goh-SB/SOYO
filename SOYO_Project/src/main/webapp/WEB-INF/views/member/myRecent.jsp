@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,13 @@
 
     body{
         background-color: #f8f9fa;
+    }
+
+    @font-face {
+        font-family: 'LINESeedKR-Bd';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
     }
 
     .container {
@@ -85,9 +93,9 @@
         border-top-right-radius: 15px;
         border-top-left-radius: 15px;
         height: 60px;
-        padding-top: 16px;
-        font-size: 23px;
-        color: #442a4be2;
+        padding-top: 10px;
+        font-size: 25px;
+        color: #7e4f8b85;
     }
 
     .wishTable{
@@ -118,6 +126,16 @@
         font-size: 20px;
     }
 
+    .border1px{
+        border: 2px solid lightgrey;
+        background-color: #f8f9fa;
+        font-size: 20px;
+        width: 130px;
+        height: 100px;
+        padding-top: 30px;
+        border-radius: 15px;
+    }
+
 </style>
 </head>
 <body>
@@ -137,19 +155,26 @@
             	<c:choose>
             		<c:when test="${not empty myRecent}">
                         <div class="recentContent" align="center">
-                            <div class="recentTitle" align="center"><label for="">Recent</label></div>
+                            <div class="recentTitle" align="center"><label for="" style="font-family: 'LINESeedKR-Bd';">Recent</label></div>
                             <form action="../member/wishGo" method="post" style="padding-bottom: 20px;">
                                 <c:forEach var="r" items="${myRecent}" varStatus="status">
                                     <a href="../product/productDetail?no=${r.productNo}" style="text-decoration: none; color: inherit;">
                                         <div class="wishTable" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                                            
                                             <div class="resultImg">
                                                 <img class="productImg" src="http://192.168.40.32:8100/soyo/resources/product_upfile/${r.productChange}" alt="">
                                             </div>
                                             <div class="resultText">
                                                 <span class="fontsize">${r.productName}</span>
                                             </div>
+                                            
                                             <div class="resultText">
-                                                <span class="fontsize">${r.productPrice} 원</span>
+                                                <span class="fontsize">
+												  <fmt:formatNumber value="${r.productPrice}" type="number" groupingUsed="true" /> 원
+												</span>
+                                            </div>
+                                            <div class="border1px">
+                                                <span>${r.viewDate}</span>
                                             </div>
                                         </div>
                                     </a>
