@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin(origins="http://192.168.40.32:5173")
+@CrossOrigin(origins={"http://192.168.40.32:5173", "http://192.168.40.17:5173"})
 @RequestMapping("product")
 @Slf4j
 public class ProductController {

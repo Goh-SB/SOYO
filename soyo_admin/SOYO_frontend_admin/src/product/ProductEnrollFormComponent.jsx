@@ -396,7 +396,7 @@ function ProductEnrollFormComponent() {
               onChange={(e) => { setProductCaption(e.target.value) }} />
           </div>
           <br />
-          <div style={{ height: '650px' }}>
+          <div style={{ height: '1100px' }}>
 
             {/* ======== Quill ======== */}
 
@@ -404,7 +404,7 @@ function ProductEnrollFormComponent() {
               modules={modules}
               placeholder='상품 상세 설명을 입력하세요'
               onChange={onChagecontent}
-              style={{ height: "600px" }}
+              style={{ height: "1000px" }}
             />
           </div>
 
@@ -420,6 +420,8 @@ function ProductEnrollFormComponent() {
                 SaveBoard()
               }}
             >저장하기</button>
+            <br /><br />
+            
           </div>
         </div>
       </div>

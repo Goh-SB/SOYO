@@ -104,7 +104,9 @@ function Chart2() {
 
             // 그래프 그리기 옵션
             var options = {
-                title: '판매 현황'
+                title: '판매 현황',
+                height: 300,
+                width: 300,
             };
 
             // 그래프를 그려넣을 요소 선택 후 데이터, 옵션을 매개변수로 넣어 그리기
@@ -237,7 +239,7 @@ function Chart6() {
         let url = "http://192.168.40.32:8100/soyo/product/orderData";
         axios({
             url,
-            method : "get"
+            method: "get"
         }).then((response) => {
             document.getElementById("chart6").innerText = response.data + '건';
         })
