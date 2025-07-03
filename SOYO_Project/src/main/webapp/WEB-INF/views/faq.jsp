@@ -29,9 +29,9 @@
             background: #fff;
             border-radius: 20px;
             box-shadow: 0 8px 32px 0 rgba(120, 130, 180, 0.18), 0 2px 8px 0 rgba(180, 180, 220, 0.10), 0 1.5px 8px 0 rgba(220, 210, 250, 0.10);
-            max-width: 700px;
+            max-width: 750px;
             margin: 4rem auto 2rem auto;
-            padding: 2.8rem 2.5rem 2.2rem 2.5rem;
+            padding: 2.8rem 3.5rem 2.2rem 3.5rem;
             position: relative;
             font-family: 'NanumSquareRound';
         }
@@ -117,6 +117,53 @@
             padding: 1.4rem 2.2rem 1.4rem 2.9rem;
             max-height: 500px;
         }
+
+        .faq-wrapper {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .char-img-left, .char-img-right {
+            position: fixed;
+            top: 77%;
+            transform: translateY(-50%);
+            width: 250px;
+            height: auto;
+            z-index: 100;
+            transition: opacity 0.3s, box-shadow 0.3s;
+            pointer-events: none;
+            border-radius: 24px;
+            opacity: 0.80;
+            background: rgba(255,255,255,0.01);
+            animation: float-scale 4s ease-in-out infinite;
+        }
+        .char-img-left {
+            left: 75px;
+        }
+        .char-img-right {
+            right: 110px;
+        }
+        .char-img-hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        @media (max-width: 1200px) {
+            .char-img-left, .char-img-right {
+                width: 120px;
+                left: 10px;
+                right: 10px;
+            }
+        }
+        @media (max-width: 900px) {
+            .char-img-left, .char-img-right {
+                display: none;
+            }
+        }
+        @keyframes float-scale {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.07); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
     </style>
 </head>
 	
@@ -126,43 +173,47 @@
 
 	<br><br>
 
-    <div class="faq-container">
-        <div class="faq-title">자주 묻는 질문</div>
-        <div class="faq-desc">소요 쇼핑몰을 이용하시면서 자주 궁금해하시는 내용을 모았습니다.</div>
-        <ul class="collapsible popout">
-            <li>
-                <div class="collapsible-header">Q. 배송은 얼마나 걸리나요?</div>
-                <div class="collapsible-body">A. 결제 완료 후 평균 2~3일 이내에 발송되며,<br>지역에 따라 1~2일 추가 소요될 수 있습니다. (주말/공휴일 제외)</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 배송지 정보를 변경하고 싶어요.</div>
-                <div class="collapsible-body">A. 발송 전이라면 마이페이지 또는 문의를 통해 배송지 변경이 가능합니다.<br>이미 발송된 경우에는 변경이 어려울 수 있습니다.</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 교환/반품은 어떻게 하나요?</div>
-                <div class="collapsible-body">A. 상품 수령 후 7일 이내에 고객센터 또는 1:1 문의를 통해 신청해주시면<br>안내해드립니다. 단, 착용 흔적이 있거나 택 제거 시 교환/반품이 불가합니다.</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 세탁은 어떻게 해야 하나요?</div>
-                <div class="collapsible-body">A. 한복 재질 특성상 드라이클리닝을 권장합니다.<br>가정에서 세탁 시 찬물에 중성세제로 단독 손세탁해 주세요.</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 품절 상품은 재입고 되나요?</div>
-                <div class="collapsible-body">A. 품절된 상품은 재입고 알림 신청이 가능합니다.<br>상품 상세 페이지에서 <b>'재입고 알림'</b> 버튼을 이용해 주세요.</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 결제 수단에는 어떤 것이 있나요?</div>
-                <div class="collapsible-body">A. 신용카드, 체크카드, 실시간 계좌이체, 무통장입금,<br>간편결제(카카오페이, 네이버페이 등) 등 다양한 결제 수단을 지원합니다.</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 사이즈가 맞지 않으면 어떻게 하나요?</div>
-                <div class="collapsible-body">A. 사이즈가 맞지 않을 경우, 동일 상품 내에서 1회 무료 교환이 가능합니다.<br>교환 신청은 상품 수령 후 7일 이내에 해주세요.</div>
-            </li>
-            <li>
-                <div class="collapsible-header">Q. 주문 내역은 어디서 확인할 수 있나요?</div>
-                <div class="collapsible-body">A. 마이페이지의 <b>'주문내역'</b> 메뉴에서 모든 주문 내역을 확인하실 수 있습니다.</div>
-            </li>
-        </ul>
+    <div class="faq-wrapper">
+        <img src="${pageContext.request.contextPath}/resources/images/char1.png" class="char-img-left" alt="캐릭터1">
+        <img src="${pageContext.request.contextPath}/resources/images/char2.png" class="char-img-right" alt="캐릭터2">
+        <div class="faq-container">
+            <div class="faq-title">자주 묻는 질문</div>
+            <div class="faq-desc">소요 쇼핑몰을 이용하시면서 자주 궁금해하시는 내용을 모았습니다.</div>
+            <ul class="collapsible popout">
+                <li>
+                    <div class="collapsible-header">Q. 배송은 얼마나 걸리나요?</div>
+                    <div class="collapsible-body">A. 결제 완료 후 평균 2~3일(영업일 기준) 이내에 발송되며,<br>지역에 따라 1~2일 추가 소요될 수 있습니다. (주말/공휴일 제외)</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 배송지 정보를 변경하고 싶어요.</div>
+                    <div class="collapsible-body">A. 발송 전이라면 마이페이지 또는 문의를 통해 배송지 변경이 가능합니다.<br>이미 발송된 경우에는 변경이 어려울 수 있습니다.</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 교환/반품은 어떻게 하나요?</div>
+                    <div class="collapsible-body">A. 상품 수령 후 7일 이내에 고객센터 또는 1:1 문의를 통해 신청해주시면<br>안내해드립니다. 단, 착용 흔적이 있거나 택 제거 시 교환/반품이 불가합니다.</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 세탁은 어떻게 해야 하나요?</div>
+                    <div class="collapsible-body">A. 한복 재질 특성상 드라이클리닝을 권장합니다.<br>가정에서 세탁 시 찬물에 중성세제로 단독 손세탁해 주세요.</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 품절 상품은 재입고 되나요?</div>
+                    <div class="collapsible-body">A. 품절된 상품은 재입고 알림 신청이 가능합니다.<br>상품 상세 페이지에서 <b>'재입고 알림'</b> 버튼을 이용해 주세요.</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 결제 수단에는 어떤 것이 있나요?</div>
+                    <div class="collapsible-body">A. 신용카드, 체크카드, 실시간 계좌이체, 무통장입금,<br>간편결제(카카오페이, 네이버페이 등) 등 다양한 결제 수단을 지원합니다.</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 사이즈가 맞지 않으면 어떻게 하나요?</div>
+                    <div class="collapsible-body">A. 사이즈가 맞지 않을 경우, 동일 상품 내에서 1회 무료 교환이 가능합니다.<br>교환 신청은 상품 수령 후 7일 이내에 해주세요.</div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Q. 주문 내역은 어디서 확인할 수 있나요?</div>
+                    <div class="collapsible-body">A. 마이페이지의 <b>'주문내역'</b> 메뉴에서 모든 주문 내역을 확인하실 수 있습니다.</div>
+                </li>
+            </ul>
+        </div>
     </div>
     
     <jsp:include page="common/footer.jsp" />
@@ -188,6 +239,30 @@
                     }
                 });
             });
+
+            const leftImg = document.querySelector('.char-img-left');
+            const rightImg = document.querySelector('.char-img-right');
+            const faqWrapper = document.querySelector('.faq-wrapper');
+            let footer = document.querySelector('footer, .footer, #footer');
+            if (!footer) {
+                
+                footer = { getBoundingClientRect: () => ({ top: document.documentElement.scrollHeight - 200 }) };
+            }
+
+            function checkImageVisibility() {
+                const footerRect = footer.getBoundingClientRect();
+               
+                if (footerRect.top < window.innerHeight - 40) {
+                    leftImg.classList.add('char-img-hide');
+                    rightImg.classList.add('char-img-hide');
+                } else {
+                    leftImg.classList.remove('char-img-hide');
+                    rightImg.classList.remove('char-img-hide');
+                }
+            }
+            window.addEventListener('scroll', checkImageVisibility);
+            window.addEventListener('resize', checkImageVisibility);
+            checkImageVisibility();
         });
     </script>
 </body>
