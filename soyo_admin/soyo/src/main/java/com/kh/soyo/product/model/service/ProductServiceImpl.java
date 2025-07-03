@@ -37,17 +37,22 @@ public class ProductServiceImpl implements ProductService {
 	public int enrollForm(Product product, List<String> productSubTag) {
 
 		int result1 = productDao.enrollForm(sqlSession, product);
+		// 상품 정보를 PRODUCT 테이블에 insert
 		int result2 = 0;
 		int result3 = 1;
-		for(int i = 0; i < productSubTag.size(); i++ ) {
-			product.setProductSubTag(productSubTag.get(i));
-			result3 *= productDao.enrollFormTag(sqlSession, product);
-		}
-		
 		if(result1 > 0) {
+			for(int i = 0; i < productSubTag.size(); i++ ) {
+				product.setProductSubTag(productSubTag.get(i));
+				result3 *= productDao.enrollFormTag(sqlSession, product);
+				// PRODUCT_TAG 테이블에 상품번호별 태그를 insert
+				// 상품에 달린 태그 갯수만큼 반복
+			}
+		
 			 result2 = productDao.enrollFormSize(sqlSession, product);
-		}
-		return result1 * result2;
+			 // PRODUCT 테이블에 데이터삽입 성공 시
+			 // PRODUCT_SIZE 테이블에 상품번호에 해당하는 사이즈별 재고수량 insert
+			 }
+		return result1 * result2 * result3;
 	}
 
 	@Override
@@ -145,6 +150,24 @@ public class ProductServiceImpl implements ProductService {
 	public List<String> detailSubTag(Product p) {
 		
 		return productDao.detailSubTag(sqlSession, p);
+	}
+
+	@Override
+	public int chartData() {
+
+		return productDao.chartData(sqlSession);
+	}
+
+	@Override
+	public int cashData() {
+
+		return productDao.cashData(sqlSession);
+	}
+
+	@Override
+	public int orderData() {
+
+		return productDao.orderData(sqlSession);
 	}
 
 

@@ -189,12 +189,28 @@
         color: #546E7A;
         text-decoration: none;
     }
+    </style>
+    <style>
+    @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+    }
+    #loadingOverlay {
+        display: none; /* 기본적으로 숨김 */
+    }
 
 </style>
 </head>
 <body>
+<div id="loadingOverlay" style="position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px 60px; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.15); display:flex; flex-direction:column; align-items:center;">
+    <div class="spinner" style="width:48px; height:48px; border:6px solid #eee; border-top:6px solid #667eea; border-radius:50%; animation:spin 1s linear infinite;"></div>
+    <div style="margin-top:18px; color:#333; font-size:1.1rem;">요청 처리 중입니다...</div>
+  </div>
+</div>
 <jsp:include page="../common/menubar.jsp" />
 <br><br>
+
 <div class="container">
 	<div id="findIdContent">
         
@@ -239,6 +255,14 @@
 <script>
 let goInsert = 0;
 
+function showLoading() {
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+}
+
 // 이메일 인증번호 발급을 위한 함수
 function cert() {
     let email = $("#email").val();
@@ -250,16 +274,17 @@ function cert() {
         submitMsg.textContent = "유효한 이메일을 입력해주세요"
         return false;
     }
-
+    showLoading();
     $.ajax({
         url : "../member/cert",
         type : "post",
         data : { email : email },
         success : function(result) {
-
+            hideLoading();
             alert(result);
 
             // 숨겨져있던 인증 요소 활성화 및 이메일 입력관련 요소 비활성화
+            
             $("#emailCheck").closest("tr").css("display", "table-row");
 
             $("#emailCheck").val("").attr("disabled", false);
@@ -270,7 +295,7 @@ function cert() {
             submitMsg.textContent = "";
         },
         error : function() {
-
+            hideLoading();
             console.log("인증번호 발급용 ajax 실패");
         }
     });

@@ -139,11 +139,6 @@ function ProductEnrollFormComponent() {
     // subTag
     // console.log(productSubTag);
     // console.log(productTag);
-
-    const data = new FormData();
-
-    let thumbnail = document.querySelector("#thumbnail");
-    let subThumbnail = document.querySelector("#subThumbnail");
     // console.log("이거이거", thumbnail.files.length)
     // console.log("productPrice", productPrice)
     // console.log("productName", productName)
@@ -152,6 +147,11 @@ function ProductEnrollFormComponent() {
     // console.log("productSize", productSize)
     // console.log("productCategory", productCategory)
     // console.log("imageList", urlArray)
+
+    const data = new FormData();
+
+    let thumbnail = document.querySelector("#thumbnail");
+    let subThumbnail = document.querySelector("#subThumbnail");
     data.append("productCaption", productCaption);
     data.append("productPrice", productPrice);
     data.append("productName", productName);
@@ -213,9 +213,9 @@ function ProductEnrollFormComponent() {
   // 이미지 미리보기용 스테이트 변수
   let [imgUrl, setImgUrl] = useState(null);
   let [subUrl, setSubUrl] = useState(null);
+  // console.log(e.target.files[0].name)
   //console.log(upfile.files.length);
   const loadImg = (e) => {
-    // console.log(e.target.files[0].name)
     // 이미지 미리보기용 src 속성을 만드는 함수
 
     if (e.target.files[0] == null) {
@@ -225,9 +225,9 @@ function ProductEnrollFormComponent() {
     }
   }
 
+  // console.log(e.target.files[0].name)
 
   const loadSubImg = (e) => {
-    // console.log(e.target.files[0].name)
     // 이미지 미리보기용 src 속성을 만드는 함수
 
     if (e.target.files[0] == null) {

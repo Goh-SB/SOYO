@@ -834,3 +834,4 @@ commit
 				  ) A
 			)
 			WHERE RNUM BETWEEN 1 AND 10
+            

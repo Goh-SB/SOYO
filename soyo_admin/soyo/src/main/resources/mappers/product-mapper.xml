@@ -252,8 +252,6 @@
  		DELETE 
 		  FROM PRODUCT_TAG
 		 WHERE PRODUCT_NO = #{productNo}
-
- 	
  	</delete>
  	
  	<insert id="updateSubTag" parameterType="product">
@@ -294,5 +292,21 @@
 		  WHERE PRODUCT_NO = #{productNo}
  	
  	</select>
+ 	
+ 	<select id="chartData" resultType="_int">
+ 		SELECT COUNT(*)
+ 		  FROM PRODUCT
+ 	</select>
+ 	
+ 	<select id="cashData" resultType="_int">
+ 		SELECT SUM(TOTAL_PRICE)
+  		  FROM ORDER_TB
+ 	</select>
+ 	
+ 	<select id="orderData" resultType="_int">
+ 		SELECT COUNT(*)
+ 		  FROM ORDER_TB
+ 	</select>
+ 	
  	
 </mapper>

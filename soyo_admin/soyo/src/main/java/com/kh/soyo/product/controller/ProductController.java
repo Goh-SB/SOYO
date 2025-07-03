@@ -209,9 +209,12 @@ public class ProductController {
 	 */
 	@PostMapping("update")
 	public String update (@ModelAttribute Product p,
-						@RequestParam(value="productSubTag", required=false) List<String> productSubTag,
-						@RequestParam(value="thumbnail", required=false) MultipartFile thumbnail,
-						@RequestParam(value="subThumbnail", required=false) MultipartFile subThumbnail) {
+						@RequestParam(value="productSubTag", required=false) 
+						List<String> productSubTag,
+						@RequestParam(value="thumbnail", required=false) 
+						MultipartFile thumbnail,
+						@RequestParam(value="subThumbnail", required=false) 
+						MultipartFile subThumbnail) {
 		
 		// System.out.println(p);
 		// System.out.println(thumbnail);
@@ -271,14 +274,13 @@ public class ProductController {
 				result = productService.updateProduct(p);
 				// > 썸네일 없을떄 수정 폼
 			}
+						
 			
-			result *= productService.updateSize(p);
-			if(productSubTag != null && !productSubTag.isEmpty() ) {
-				result *= productService.updateSubTag(p, productSubTag);
-			}
-			
-			
-			
+		}
+		result *= productService.updateSize(p);
+		
+		if(productSubTag != null && !productSubTag.isEmpty() ) {
+			result *= productService.updateSubTag(p, productSubTag);
 		}
 		
 		return (result > 0) ? "상품 수정 성공" : "상품 수정 실패";
@@ -286,4 +288,26 @@ public class ProductController {
 		
 		
 	}
+	
+	@GetMapping("chartData")
+	public int chartData() {
+		
+		return productService.chartData();
+	}
+	
+	@GetMapping("cashData")
+	public int cashData() {
+		
+		return productService.cashData();
+	}
+	
+	@GetMapping("orderData")
+	public int orderData () {
+		
+		return productService.orderData();
+		
+	}
+	
+	
+	
 }

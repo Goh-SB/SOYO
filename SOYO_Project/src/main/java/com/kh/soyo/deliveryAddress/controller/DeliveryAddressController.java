@@ -130,7 +130,8 @@ public class DeliveryAddressController {
 	
 	// 배송지 수정용 메소드
 	@PostMapping("update")
-	public String updateAddress(@RequestParam("addressDetail")String addressDetail ,DeliveryAddress d ,HttpSession session) {
+	public String updateAddress(@RequestParam("addressDetail")String addressDetail 
+											  ,DeliveryAddress d ,HttpSession session) {
 
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		
@@ -176,6 +177,8 @@ public class DeliveryAddressController {
 	@PostMapping("delete")
 	public String deleteAddress(DeliveryAddress d ,HttpSession session) {
 		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		System.out.println(d);
 		
 		if(loginUser != null) {
 			int result = deliveryService.deleteAddress(d);

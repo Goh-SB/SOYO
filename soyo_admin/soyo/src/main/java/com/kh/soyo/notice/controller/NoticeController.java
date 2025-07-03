@@ -78,7 +78,7 @@ public class NoticeController {
 	
 	
 	@PostMapping("enrollForm")
-	public String noticeEnrollForm(MultipartFile upfile,
+	public String noticeEnrollForm(@RequestParam(value = "upfile", required = false) MultipartFile upfile,
 								Notice n,
 								HttpSession session) {
 		
@@ -89,7 +89,7 @@ public class NoticeController {
 		n.setNoticeTitle(chageTitle);
 		
 		
-		if(upfile.getOriginalFilename() != null) {
+		if(upfile != null && !upfile.isEmpty()) {
 			String originName = upfile.getOriginalFilename();
 		
 			String path = "/resources/notice_upfile/"; 
