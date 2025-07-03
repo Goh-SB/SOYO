@@ -39,6 +39,7 @@
 		    FROM RECENT_VIEW R
 		    JOIN PRODUCT P ON R.PRODUCT_NO = P.PRODUCT_NO
 		    WHERE R.MEMBER_ID = #{memberId}
+		    ORDER BY VIEW_DATE DESC
 	</select>
 	
 	<!-- 최근 본 상품 갯수 -->

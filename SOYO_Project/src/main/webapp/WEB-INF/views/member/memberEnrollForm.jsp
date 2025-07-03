@@ -314,7 +314,7 @@
                     <!-- 이름 -->
                     <div class="form-group">
                         <label class="form-label">이름</label>
-                        <input type="text" name="memberName" class="input-field" maxlength="3" required>
+                        <input type="text" name="memberName" class="input-field" maxlength="4" required>
                     </div>
 
                     <!-- 성별 -->
@@ -339,7 +339,7 @@
                     <!-- 생년월일 -->
                     <div class="form-group">
                         <label class="form-label">생년월일</label>
-                        <input name="birthDate" class="input-field" type="date" required>
+                        <input name="birthDate" id="memberDate" class="input-field" type="date" required>
                     </div>
                 </div>
 
@@ -353,7 +353,7 @@
                             <button type="button" class="btn btn-primary" id="sert" onclick="cert()">인증번호 발급</button>
                         </div>
                         <div id="emailCheckGroup" class="input-group hidden" style="margin-top: 8px;">
-                            <input type="text" class="input-field" id="emailCheck" placeholder="인증번호를 입력하세요">
+                            <input type="text" class="input-field" id="emailCheck" maxlength="10" placeholder="인증번호를 입력하세요">
                             <button type="button" class="btn btn-primary" id="validate" onclick="valid();">인증</button>
                         </div>
                         <div id="emailMsg" class="message hidden"></div>
@@ -421,6 +421,12 @@ submitMsg.textContent = "";
 // 이메일 안내문구 출력용
 const emailMsg = document.getElementById("emailMsg");
 emailMsg.textContent = "";
+
+
+const today = new Date().toISOString().split('T')[0];
+
+// 오늘이후 날짜 선택 불가능하게
+document.getElementById('memberDate').setAttribute('max', today);
 
 // 메시지 표시 함수
 function showMessage(element, message, type) {
