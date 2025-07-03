@@ -113,47 +113,32 @@ function Home(props) {
 
         // 로그인 전에 보여질 화면
         return (
-            <div>
-                <h4 style={{ color: 'gray', fontWeight: 'bold', marginLeft: '300px' }}>
-                    ● 관리자 로그인
-                </h4>
-                <br /><br />
-
-                <form>
-
-                    <table className="form">
-
-                        <tbody>
-                            <tr>
-                                <th>아이디</th>
-                                <td>
-                                    <input type="text" id="memberId" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>비밀번호</th>
-                                <td>
-                                    <input type="password" id="memberPwd" />
-                                </td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-
-                    <br /><br />
-
-                    <div align="center">
-
-                        <button type="submit" onClick={login}
-                            className="btn btn-primary btn-bg">
+            <div className="login-container">
+                <div className="login-card">
+                    <div className="login-header">
+                        <span className="material-icons login-icon">admin_panel_settings</span>
+                        <h2>관리자 로그인</h2>
+                    </div>
+                    <form className="login-form">
+                        <div className="input-group">
+                            <label htmlFor="memberId" style={{fontSize: '18px'}}>아이디</label>
+                            <div className="input-wrapper">
+                                <span className="material-icons input-icon">person</span>
+                                <input type="text" id="memberId" placeholder="아이디를 입력하세요" autoComplete="username" />
+                            </div>
+                        </div>
+                        <div className="input-group">
+                            <label htmlFor="memberPwd" style={{fontSize: '18px'}}>비밀번호</label>
+                            <div className="input-wrapper">
+                                <span className="material-icons input-icon">lock</span>
+                                <input type="password" id="memberPwd" placeholder="비밀번호를 입력하세요" autoComplete="current-password" />
+                            </div>
+                        </div>
+                        <button type="submit" onClick={login} className="login-btn">
                             로그인
                         </button>
-
-                        <br /><br /><br />
-                    </div>
-
-                </form>
-
+                    </form>
+                </div>
             </div>
         );
     }
