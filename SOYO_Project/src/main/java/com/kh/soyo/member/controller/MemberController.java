@@ -20,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.soyo.cart.controller.CartController;
 import com.kh.soyo.cart.model.service.CartService;
 import com.kh.soyo.cart.model.vo.Cart;
-import com.kh.soyo.cart.controller.CartController;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.common.template.XssDefencePolicy;
+import com.kh.soyo.deliveryAddress.model.vo.DeliveryAddress;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
@@ -666,11 +667,11 @@ public class MemberController {
 	@PostMapping("changePwd")
 	public String changePwd(Member m, HttpSession session) {
 		
-		String originEmail = memberService.findEmail(m);
-		
 		// XSS 공격 막기
 	    m.setMemberId(XssDefencePolicy.defence(m.getMemberId()));
 	    m.setEmail(XssDefencePolicy.defence(m.getEmail()));
+	    
+	    String originEmail = memberService.findEmail(m);
 	    
 		// 이메일이 같을경우에만 비밀번호가 바뀌도록 조건문
 		if(originEmail.equals(m.getEmail())) {
@@ -783,4 +784,17 @@ public class MemberController {
 	    return "member/orderDetail";
 	}
 	
+	@GetMapping("/defaultAddress")
+	@ResponseBody
+	public DeliveryAddress defaultAddress(HttpSession session) {
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    String memberId = loginUser.getMemberId();
+	    
+	    DeliveryAddress d = memberService.defaultAddress(memberId);
+	    
+	    System.out.println(memberId);
+	    System.out.println("기본배송지: " + d);
+	    
+	    return d;
+	}
 }

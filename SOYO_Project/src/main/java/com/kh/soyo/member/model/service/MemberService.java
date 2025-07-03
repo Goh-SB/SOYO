@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.deliveryAddress.model.vo.DeliveryAddress;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
 import com.kh.soyo.review.model.vo.Review;
@@ -65,6 +66,8 @@ public interface MemberService {
 	int productCount(String impNo);
 
 	Product myProduct(Product p1);
+
+	DeliveryAddress defaultAddress(String memberId);
 
 
 

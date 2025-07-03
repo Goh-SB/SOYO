@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.soyo.common.model.vo.PageInfo;
+import com.kh.soyo.deliveryAddress.model.vo.DeliveryAddress;
 import com.kh.soyo.member.model.dao.MemberDao;
 import com.kh.soyo.member.model.vo.Member;
 import com.kh.soyo.product.model.vo.Product;
@@ -149,6 +150,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Product myProduct(Product p1) {
 		return memberDao.myProduct(sqlSession,p1);
+	}
+
+	@Override
+	public DeliveryAddress defaultAddress(String memberId) {
+		
+		return memberDao.defaultAddress(sqlSession,memberId);
 	}
 
 

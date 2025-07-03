@@ -290,5 +290,13 @@
 		  WHERE P.ORDER_IMPNO =#{orderImpNo}
 		  AND P.PRODUCT_NO=#{productNo}
 	</select>
+	
+	<select id="defaultAddress" parameterType="string" resultType="deliveryAddress">
+    SELECT  ADDRESS_OTHER AS addressOther,
+    		ADDRESS_NAME AS addressName
+		    FROM DELIVERY_ADDRESS
+		    WHERE MEMBER_ID = #{memberId}
+		    AND IS_DEFAULT = 'Y'
+	</select>
 		
 </mapper>
