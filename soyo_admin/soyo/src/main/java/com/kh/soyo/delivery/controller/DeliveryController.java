@@ -23,7 +23,7 @@ import com.kh.soyo.product.model.vo.Product;
 
 
 @RestController
-@CrossOrigin(origins={"http://192.168.40.32:5173", "http://192.168.40.23:5173"})
+@CrossOrigin(origins={"http://192.168.40.32:5173", "http://192.168.40.23:5173", "http://192.168.40.17:5173"})
 @RequestMapping("delivery")
 public class DeliveryController {
 

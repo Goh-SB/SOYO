@@ -21,7 +21,7 @@ import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
 
 @RestController
-@CrossOrigin(origins="http://192.168.40.32:5173")
+@CrossOrigin(origins={"http://192.168.40.32:5173", "http://192.168.40.23:5173", "http://192.168.40.17:5173"})
 @RequestMapping("member")
 public class MemberController {
 
@@ -68,8 +68,8 @@ public class MemberController {
 	@GetMapping("detail/{memberId}")
 	public Member memberDetail(@PathVariable String memberId) {
 		
-		// System.out.println(memberId);
 		Member m = memberService.memberDetail(memberId);
+		m.setAddress(m.getAddress().replace("+", ""));
 		
 		return m;
 	}
@@ -145,6 +145,23 @@ public class MemberController {
 	public List<Map<String, Object>> chart1Data() {
 		
 		return memberService.chart1Data();
+		
+	}
+	
+	@GetMapping("percent")
+	public HashMap<String, Integer> percent () {
+		int men = memberService.percentMen();
+		
+		int women = memberService.percentWomen();
+		
+		int noGender = memberService.percentNoGender();
+		
+		HashMap<String, Integer> map = new HashMap<> ();
+		map.put("men", men);
+		map.put("women", women);
+		map.put("noGender", noGender);
+		
+		return map;
 		
 	}
 	

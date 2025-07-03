@@ -486,13 +486,15 @@
 	    </div>
 	</div>
 	<jsp:include page="../common/menubar.jsp" />
+        
 	<div class="container">
         <div class="" id="myTitle">
             마이페이지
         </div>
         <div class="" id="content">
-            <jsp:include page="../leftMenu.jsp" />
-
+			<div id="left-Menu">
+                <jsp:include page="../member/leftMenu2.jsp" />
+            </div>
             <div class="" id="myContent">
                 <div style="height: 5%; font-size: 30px;
                 padding: 15px;">상품 리스트</div>

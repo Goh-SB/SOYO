@@ -86,5 +86,20 @@ public class MemberDao {
 		return sqlSession.selectList("memberMapper.chart1Data");
 	}
 
+	public int percentMen(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectOne("memberMapper.percentMen");
+	}
+
+	public int percentWomen(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectOne("memberMapper.percentWomen");
+	}
+
+	public int percentNoGender(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("memberMapper.percentNoGender");
+	}
+
 
 }

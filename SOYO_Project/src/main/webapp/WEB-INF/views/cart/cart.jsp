@@ -417,6 +417,17 @@
         	font-size : 13px;
         	color : gray;
         }
+        .pop_out {
+		    -moz-appearance: textfield; /* Firefox */
+		    -webkit-appearance: none; /* Chrome, Safari */
+		    appearance: none; /* 최신 브라우저 */
+		}
+
+		.pop_out::-webkit-outer-spin-button,
+		.pop_out::-webkit-inner-spin-button {
+		    -webkit-appearance: none;
+		    margin: 0;
+		}
     </style>
 
     <body>
@@ -492,7 +503,8 @@
                                             <button type="button" onclick="count('minus', this)">
                                                 <i class="fas fa-minus"></i>
                                             </button>
-                                            <input type="number" name="pop_out" class="pop_out" value="${cart.productCount}" min="1"/>
+                                            <input type="number" name="pop_out" class="pop_out" value="${cart.productCount}" min="1"
+                                            readonly/>
                                             <button type="button" onclick="count('plus', this)">
                                                 <i class="fas fa-plus"></i>
                                             </button>
