@@ -148,5 +148,22 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("percent")
+	public HashMap<String, Integer> percent () {
+		int men = memberService.percentMen();
+		
+		int women = memberService.percentWomen();
+		
+		int noGender = memberService.percentNoGender();
+		
+		HashMap<String, Integer> map = new HashMap<> ();
+		map.put("men", men);
+		map.put("women", women);
+		map.put("noGender", noGender);
+		
+		return map;
+		
+	}
+	
 
 }

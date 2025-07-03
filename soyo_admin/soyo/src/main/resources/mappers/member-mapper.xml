@@ -182,4 +182,23 @@
 		
 	</select>
 	
+	
+ 	<select id="percentMen" resultType="_int">
+ 		SELECT COUNT(*)
+ 		FROM MEMBER
+ 		WHERE GENDER = 'M'
+ 	</select>
+ 	
+ 	<select id="percentWomen" resultType="_int">
+ 	   SELECT COUNT(*)
+ 		 FROM MEMBER
+ 		WHERE GENDER = 'F'
+ 	</select>
+ 	
+ 	<select id="percentNoGender" resultType="_int">
+ 	 	SELECT COUNT(*)
+ 		  FROM MEMBER
+ 		 WHERE GENDER = 'X'
+ 	</select>
+	
 </mapper>

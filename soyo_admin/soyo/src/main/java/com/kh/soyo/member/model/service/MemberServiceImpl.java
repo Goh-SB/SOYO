@@ -80,6 +80,24 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.chart1Data(sqlSession);
 	}
 
+	@Override
+	public int percentMen() {
+
+		return memberDao.percentMen(sqlSession);
+	}
+
+	@Override
+	public int percentWomen() {
+
+		return memberDao.percentWomen(sqlSession);
+	}
+
+	@Override
+	public int percentNoGender() {
+
+		return memberDao.percentNoGender(sqlSession);
+	}
+
 
 
 
