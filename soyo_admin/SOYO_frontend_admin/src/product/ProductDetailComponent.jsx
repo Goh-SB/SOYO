@@ -216,9 +216,13 @@ function ProductDetailComponent() {
       $("#subThumbnail").click();
     })
     loadContent();
+    
+  }, [productSize]);
+  
+  useEffect(() => {
     tagfunc();
-
-  }, [productSize, productSubTag]);
+    
+  }, [productSubTag])
 
   const loadContent = () => {
     // 상품 정보 불러오기 함수
@@ -257,7 +261,7 @@ function ProductDetailComponent() {
         }
       }).then((response) => {
         // console.log(response.data.productStock);
-        document.querySelector("#productStock").value = response.data.productStock;
+        document.getElementById("productStock").value = response.data.productStock;
       }).catch(() => {
         console.log("재고 수량 통신 실패");
       })
@@ -388,7 +392,7 @@ function ProductDetailComponent() {
                     className="price"
                     placeholder="가격을 입력하세요"
                     style={{ padding: '7px', marginBottom: '10px', width: '50%', heigth: "50px", border: '1px solid lightGray', fontSize: '15px' }}
-                    onChange={(e) => { setProductPrice(e.target.value) }}
+                    onChange={(e) => { setProductPrice(Number(e.target.value)) }}
                     required
                     value={productPrice}
                     id="productPrice"
@@ -466,7 +470,7 @@ function ProductDetailComponent() {
 
           <br />
 
-          <div style={{ height: '650px' }}>
+          <div style={{ height: '1100px' }}>
 
             {/* ======== Quill ======== */}
 
@@ -475,7 +479,7 @@ function ProductDetailComponent() {
               value={content}
               placeholder='상품 상세 설명을 입력하세요'
               onChange={onChagecontent}
-              style={{ height: "600px" }}
+              style={{ height: "1000px" }}
 
             />
           </div>
@@ -492,6 +496,7 @@ function ProductDetailComponent() {
                 SaveBoard()
               }}
             >수정하기</button>
+            <br /><br />
           </div>
         </div>
       </div>

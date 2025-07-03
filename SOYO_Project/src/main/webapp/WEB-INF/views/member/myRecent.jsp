@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,7 +169,9 @@
                                             </div>
                                             
                                             <div class="resultText">
-                                                <span class="fontsize">${r.productPrice} 원</span>
+                                                <span class="fontsize">
+												  <fmt:formatNumber value="${r.productPrice}" type="number" groupingUsed="true" /> 원
+												</span>
                                             </div>
                                             <div class="border1px">
                                                 <span>${r.viewDate}</span>
