@@ -261,7 +261,7 @@
 <div class="container">
 
         <div id="content">
-            <div id="left-Menu">
+            <div id="left-Menu2">
                 <jsp:include page="../member/leftMenu.jsp" />
             </div>
                 

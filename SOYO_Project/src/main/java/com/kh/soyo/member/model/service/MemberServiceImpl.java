@@ -158,5 +158,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.defaultAddress(sqlSession,memberId);
 	}
 
+	@Override
+	public List<DeliveryAddress> selectAddress(String memberId) {
+
+		return memberDao.selectAddress(sqlSession, memberId);
+	}
+
+
 
 }

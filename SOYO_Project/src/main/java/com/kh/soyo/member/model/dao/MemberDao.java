@@ -149,4 +149,9 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.defaultAddress",memberId);
 	}
 
+	public List<DeliveryAddress> selectAddress(SqlSessionTemplate sqlSession, String memberId) {
+		
+		return sqlSession.selectList("memberMapper.selectAddress",memberId);
+	}
+
 }
