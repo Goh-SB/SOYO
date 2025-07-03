@@ -69,6 +69,10 @@ public interface MemberService {
 
 	DeliveryAddress defaultAddress(String memberId);
 
+	List<DeliveryAddress> selectAddress(String memberId);
+
+	
+
 
 
 	

@@ -178,12 +178,12 @@
                         
                         <tr>
                             <th width="200px"><span class="fontsize20">수령인</span></th>
-                            <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
+                            <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" required></td>
                         </tr>
                        
                         <tr>
                             <th><span class="fontsize20">휴대전화번호</span></th>
-                            <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ></td>
+                            <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" required></td>
                         </tr>
                         
                         <tr>
@@ -239,16 +239,19 @@
 		     	    
 		     	    <!-- 모달창 -->
 					<div id="addressModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
-					  <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:10px; position:relative;">
-					    <h3 style="text-align:center;">배송지 선택</h3>
-					    <ul style="list-style:none; padding:0;">
-					      <li style="margin:10px 0; cursor:pointer;" onclick="selectAddress('서울 강남구+테헤란로 123', '집')">서울 강남구 + 테헤란로 123 (집)</li>
-					      <li style="margin:10px 0; cursor:pointer;" onclick="selectAddress('서울 송파구+올림픽로 88', '회사')">서울 송파구 + 올림픽로 88 (회사)</li>
-					      <li style="margin:10px 0; cursor:pointer;" onclick="selectAddress('인천 연수구+송도과학로 12', '친구집')">인천 연수구 + 송도과학로 12 (친구집)</li>
-					    </ul>
-					    <button onclick="closeModal()" style="display:block; margin:20px auto; padding:5px 15px;">닫기</button>
-					  </div>
-					</div>
+				    <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:10px; position:relative;">
+				        <h3 style="text-align:center;">배송지 선택</h3>
+				        <div id="addressList" style="list-style:none; padding:0;">
+
+					
+				            <!-- 데이터베이스에서 불러온 주소들 출력 
+				            <c:forEach var="address" items="${requestScope.address}">
+				               
+				            </c:forEach> -->
+				        </div>
+				        <button onclick="closeModal()" style="display:block; margin:20px auto; padding:5px 15px;">닫기</button>
+				    </div>
+				</div>
 		     	    
 		     	   
 		     	   <!-- 체크된 상품번호 가져오기
@@ -316,10 +319,10 @@
 		
 		  function requestPay() {
 			  	
-			  const memberName = document.querySelector("input[name='memberName']").value;
-			  const phone = document.querySelector("input[name='phone']").value;
-			  const address = document.querySelector("input[name='address']").value;
-			  const addrDetail = document.querySelector("input[name='addrDetail']").value;
+			  const memberName = document.querySelector("input[name='memberName']").value.trim();
+			  const phone = document.querySelector("input[name='phone']").value.trim();
+			  const address = document.querySelector("input[name='address']").value.trim();
+			  const addrDetail = document.querySelector("input[name='addrDetail']").value.trim();
 			  const requestMsg = document.querySelector("input[name='requestMsg']").value;
 			  const totalPrice = document.querySelector("input[name='totalPrice']").value;
 			  const addressAlias = document.querySelector("input[name='addressName']").value;
@@ -347,8 +350,11 @@
 
 			  // console.log(selectedProductSizeList);
 			  
-
-			  
+			 if (!memberName || !phone || !address || !addrDetail) {
+			    alert("모든 필수 항목을 입력해주세요.");
+			    return; // 결제 진행 중단
+			  }
+						  
 		    IMP.request_pay({
 		      pg: "html5_inicis", // 또는 "html5_inicis", "danal" 등 테스트 가능한 pg
 		      pay_method: "card",
@@ -417,7 +423,6 @@
 			      $.ajax({
 			        url: "/soyo/member/defaultAddress",
 			        type: "GET",
-			        dataType: "json",
 			        success: function(data) {
 			          console.log("기본배송지 응답:", data);
 
@@ -456,7 +461,33 @@
 		// 모달 열기
 		  document.getElementById("selectAddress").addEventListener("click", function() {
 		    document.getElementById("addressModal").style.display = "block";
-		  });
+		  
+		    $.ajax({
+		        url: "/soyo/member/selectAddress",
+		        type: "GET",
+		        success: function(data) {
+		            console.log("기본배송지 응답:", data);
+		            let resultStr = "";
+		            for (let item of data) {
+		                const parts = item.addressOther.split("+");
+		                const beforePlus = parts[0] || "";
+		                const afterPlus = parts[1] || "";
+
+		                resultStr += "<ul class='addressUl'>" +
+		                             "<li>" + item.addressName + "</li>" +
+		                             "<li>" + beforePlus + "</li>" +
+		                             "<li>" + afterPlus + "</li>" +
+		                             "<li><button onclick=\"selectAddress('" + item.addressOther + "', '" + item.addressName + "')\">선택</button></li>" +
+		                             "</ul>";
+		            }
+		            document.getElementById("addressList").innerHTML = resultStr; 
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("기본배송지 불러오기 실패:", error);
+		            alert("기본배송지 정보를 불러오는 데 실패했습니다.");
+		        }
+		    });
+		 });
 
 		  // 모달 닫기
 		  function closeModal() {
@@ -464,14 +495,15 @@
 		  }
 
 		  // 주소 선택
-		  function selectAddress(fullAddress, alias) {
-		    const parts = fullAddress.split("+");
-		    const beforePlus = parts[0] || "";
-		    const afterPlus = parts[1] || "";
+		  function selectAddress(addressOther, addressName) {
 
-		    document.getElementById("address").value = beforePlus.trim();
+			  let parts = addressOther.split("+");
+
+			  const beforePlus = parts[0] || "";  // "서울 강남구 테헤란로 123"
+			  const afterPlus = parts[1] || ""; 
+		    document.getElementById("address").value = beforePlus;
 		    document.getElementById("addrDetail").value = afterPlus.trim();
-		    document.getElementById("addressName").value = alias;
+		    document.getElementById("addressName").value = addressName;
 
 		    document.getElementById("address").readOnly = true;
 		    document.getElementById("addrDetail").readOnly = true;

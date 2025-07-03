@@ -742,7 +742,7 @@ public class MemberController {
 		int pageLimit = 5;
 		
 		// 페이지당 보여질 갯수
-		int boardLimit = 4;
+		int boardLimit = 5;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage,pageLimit,boardLimit);
 	    
@@ -751,6 +751,7 @@ public class MemberController {
 	  
 	        System.out.println(order);
 	        model.addAttribute("order", order);
+	        model.addAttribute("pi",pi);
 	    }
 
 	    return "member/myOrderPage";
@@ -779,7 +780,7 @@ public class MemberController {
 //		System.out.println(impNo);
 //		System.out.println(result);
 //		System.out.println(product);
-//		model.addAttribute("result",result);
+		model.addAttribute("result",result);
 	
 	    return "member/orderDetail";
 	}
@@ -792,9 +793,41 @@ public class MemberController {
 	    
 	    DeliveryAddress d = memberService.defaultAddress(memberId);
 	    
-	    System.out.println(memberId);
-	    System.out.println("기본배송지: " + d);
+//	    System.out.println(memberId);
+//	    System.out.println("기본배송지: " + d);
 	    
 	    return d;
 	}
+	
+	@GetMapping("/selectAddress")
+	@ResponseBody
+	public List<DeliveryAddress> selectAddress(HttpSession session,Model model) {
+	    Member loginUser = (Member) session.getAttribute("loginUser");
+	    String memberId = loginUser.getMemberId();
+	    
+	    // 여러 주소를 가져오는 서비스 호출
+	    List<DeliveryAddress> address = memberService.selectAddress(memberId);
+	    
+//	    System.out.println(address);
+	   
+	    System.out.println(address);
+	    
+	    model.addAttribute("address",address);
+	    
+	    return address; 
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

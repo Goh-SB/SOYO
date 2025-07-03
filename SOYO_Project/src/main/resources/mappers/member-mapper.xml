@@ -34,6 +34,7 @@
 		<result property="addressName" column="ADDRESS_NAME"/>
 		<result property="totalPrice" column="TOTAL_PRICE"/>
 		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="cancelStatus" column="CANCEL_STATUS"/>
 	</resultMap>
 	
 	<!-- 리뷰용 resultmap -->
@@ -136,15 +137,18 @@
 			FROM(
 				SELECT RECEIVER_NAME,
 					   RECEIVER_PHONE,
-					   O.ADDRESS AS ADDRESS_OTHER,
-					   ADDRESS_ALIAS,
-					   TOTAL_PRICE,
-					   ORDER_IMPNO,
-					   DELIVERY_DATE,
-					   REQUEST_MSG
-				FROM ORDER_TB O
-				JOIN MEMBER M ON M.MEMBER_ID=O.MEMBER_ID
-				WHERE O.MEMBER_ID=#{memberId}
+			           O.ADDRESS AS ADDRESS_OTHER,
+			           ADDRESS_ALIAS,
+			           TOTAL_PRICE,
+			           O.ORDER_IMPNO,
+			           DELIVERY_DATE,
+			           REQUEST_MSG,
+			           CANCEL_STATUS
+			    FROM ORDER_TB O
+			    JOIN MEMBER M ON M.MEMBER_ID=O.MEMBER_ID
+			    JOIN PAYMENT P ON P.ORDER_IMPNO = O.ORDER_IMPNO
+			    WHERE O.MEMBER_ID=#{memberId}
+			    ORDER BY ORDER_DATE DESC
 				) A
 			)
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
@@ -297,6 +301,14 @@
 		    FROM DELIVERY_ADDRESS
 		    WHERE MEMBER_ID = #{memberId}
 		    AND IS_DEFAULT = 'Y'
+	</select>
+	
+	<select id="selectAddress" parameterType="string" resultType="deliveryAddress">
+	 SELECT  ADDRESS_OTHER AS addressOther,
+    		ADDRESS_NAME AS addressName
+		    FROM DELIVERY_ADDRESS
+		    WHERE MEMBER_ID = #{memberId}
+		    AND IS_DEFAULT = 'N'
 	</select>
 		
 </mapper>
