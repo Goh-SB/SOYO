@@ -57,7 +57,19 @@
 			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
 			                   #{tag}
 			               </foreach>
-			           THEN 1 ELSE 0 END as product_tag_match
+			           THEN 1 ELSE 0 END as product_tag_match,
+			       CASE 
+			           WHEN p.PRODUCT_NO = 17 AND '드레스' IN
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           THEN 10 ELSE 0 END as priority_17,
+			       CASE 
+			           WHEN p.PRODUCT_NO = 14 AND '악세사리' IN
+			               <foreach item="tag" collection="tags" open="(" separator="," close=")">
+			                   #{tag}
+			               </foreach>
+			           THEN 10 ELSE 0 END as priority_14
 			FROM PRODUCT p
 			WHERE p.STATUS = 'Y'
 			<if test="tags != null and tags.size() > 0">
@@ -85,7 +97,7 @@
 				)
 			)
 			</if>
-			ORDER BY (category_match + tag_match + product_tag_match) DESC, DBMS_RANDOM.VALUE()
+			ORDER BY (priority_17 + priority_14 + category_match + tag_match + product_tag_match) DESC, DBMS_RANDOM.VALUE()
 		)
 		WHERE ROWNUM = 1
 	</select>
