@@ -64,6 +64,12 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 		return deliveryAddress.deleteAddress(sqlSession, d);
 	}
 
+	@Override
+	public int enrollerDelivery(DeliveryAddress del) {
+		
+		return deliveryAddress.enrollDelivery(sqlSession, del);
+	}
+
 
 
 	

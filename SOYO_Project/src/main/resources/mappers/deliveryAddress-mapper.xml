@@ -76,4 +76,22 @@
     		WHERE ADDRESS_NO = #{addressNo}
 	</delete>
 	
+	<!-- 회원 가입시 등록할 배송지 -->
+	<insert id="enrollDelivery" parameterType="deliveryAddress">
+		INSERT INTO DELIVERY_ADDRESS(ADDRESS_NO
+                           , ADDRESS_NAME
+                           , ADDRESS_OTHER
+                           , IS_DEFAULT
+                           , RECEIVER_NAME
+                           , RECEIVER_PHONE
+                           , MEMBER_ID)
+                    VALUES(DELIVERY_ADDRESS_SEQ.NEXTVAL
+                         , #{addressName}
+                         , #{addressOther}
+                         , 'Y'
+                         , #{receiverName}
+                         , #{receiverPhone}
+                         , #{memberId})
+	</insert>
+	
 </mapper>

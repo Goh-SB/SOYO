@@ -20,4 +20,6 @@ public interface DeliveryAddressService {
 
 	int deleteAddress(DeliveryAddress d);
 
+	int enrollerDelivery(DeliveryAddress del);
+
 }
