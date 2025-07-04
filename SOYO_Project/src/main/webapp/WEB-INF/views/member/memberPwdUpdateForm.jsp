@@ -17,6 +17,13 @@
             src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.ttf) format("truetype");
         }
 
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         #myTitle{
             width: 1200px;
             height: 120px;
@@ -72,15 +79,125 @@
             
         }
 
-        #myContent{
-            width: 800px;
-             /*border: 2px solid rgb(122, 64, 126);*/
+        #myContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            width: 750px;
             box-sizing: border-box;
-            box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            background-color: aliceblue;
+            box-shadow: 0 8px 32px rgba(60, 80, 120, 0.13), 0 1.5px 4px rgba(0,0,0,0.08);
+            border-radius: 18px;
+            background: #fafdff;
+            margin-left: 55px;
+            padding: 28px 40px 60px 40px;
+            border: 1.5px solid #e3e8f0;
+            transition: box-shadow 0.2s, border 0.2s;
         }
-
+        #myContent:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.10);
+        }
+        #myContent form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        #myContent table {
+            width: 40%;
+            border-collapse: separate;
+            border-spacing: 0 28px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(60, 80, 120, 0.10);
+            border: 1.5px solid #e3e8f0;
+            margin: 0 auto;
+            padding: 24px 32px;
+            align-self: center;
+        }
+        #myContent tr {
+            display: block;
+            width: 100%;
+            margin-bottom: 32px;
+        }
+        #myContent tr:last-child {
+            margin-bottom: 0;
+        }
+        #myContent th, #myContent td {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0;
+        }
+        #myContent th {
+            text-align: left !important;
+            color: #222;
+            font-family: 'NanumSquareRound';
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 11px;
+            height: auto;
+            line-height: 1.2;
+        }
+        #myContent td {
+            margin-bottom: 0;
+        }
+        #myContent .inputStyle {
+            width: 360px;
+            height: 44px;
+            border: 1.5px solid #e3e8f0;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 15px;
+            padding: 0 14px;
+            box-shadow: none;
+            margin: 0;
+            font-family: 'NanumSquareRound';
+            transition: border 0.2s;
+            display: block;
+        }
+        #myContent .inputStyle:focus {
+            border: 1.5px solid #b993d6;
+            outline: none;
+            background: #faf7ff;
+        }
+        #myContent .inputStyle::placeholder {
+            color: #b0b0b0;
+            font-size: 14px;
+            font-family: 'NanumSquareRound';
+        }
+        #myContent .btn-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            margin-top: 18px;
+            margin-bottom: 4px;
+        }
+        #myContent .btnStyle {
+            width: 130px;
+            height: 38px;
+            font-size: 15px;
+            padding: 8px 0;
+            background: linear-gradient(90deg, #f6eaff 0%, #e3d6f7 100%);
+            color: #7a5fa4;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            border: 1.5px solid #e3d6f7;
+            box-shadow: 0 2px 8px rgba(185,147,214,0.08);
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+            font-family: 'NanumSquareRound';
+            cursor: pointer;
+        }
+        #myContent .btnStyle:hover {
+            background: linear-gradient(90deg, #e3d6f7 0%, #f6eaff 100%);
+            box-shadow: 0 4px 16px rgba(185,147,214,0.16);
+            color: #fff;
+            border-color: #b993d6;
+        }
 
         #order-List>ul{
             list-style-type: none;
@@ -115,7 +232,7 @@
             width: 250px;
             height: 30px;
             margin: 5px;
-            font-family: 'MaruBuriSemiBold';
+            font-family: 'NanumSquareRound';
         }
 
         .btnStyle{
@@ -126,9 +243,31 @@
             margin: 10px;
             cursor: pointer;
             border-radius: 8px;
-            font-family: 'MaruBuriSemiBold';
+            font-family: 'NanumSquareRound';
         }
         
+        #myContent .table-center-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            min-height: 420px;
+        }
+        #myContent table {
+            margin: 0 auto;
+        }
+        #myContent th, #myContent td {
+            text-align: center;
+        }
+        #myContent .inputStyle {
+            margin: 0 auto;
+            display: block;
+        }
+        #myContent .btn-area {
+            justify-content: center;
+        }
 </style>
 </head>
 <body>
@@ -143,36 +282,40 @@
                 </div>
                 <div class="" id="myContent">
                     <div style="height: 5%; font-size: 30px; text-align: center;
-                    padding: 15px; font-family: 'MaruBuriSemiBold';">비밀번호 변경</div>
-                    <form action="../member/updatePwd" align="center" method="post" onsubmit="return checkUpdatePwd()">
-                        <table>
-                            <tr style="display: none;">
-                                <th width="200px">아이디</th>
-                                <td width="400px">${ sessionScope.loginUser.memberId }</td>
-                            </tr>
-                            <tr>
-                                <th width="200px">현재 비밀번호</th>
-                                <td width="400px"><input class="inputStyle" type="password" maxlength="20" name="originPwd"></td>
-                            </tr>
-                            <tr>
-                                <th>변경할 비밀번호</th>
-                                <td><input type="password" maxlength="20" class="inputStyle" name="updatePwd"></td>
-                            </tr>
-                            <tr>
-                                <th>비밀번호 확인</th>
-                                <td><input type="password" maxlength="20" class="inputStyle" name="checkPwd"></td>
-                            </tr>
-                            <tr height="40px">
-                                <th></th>
-                                <td><span style="color: red;" id="informationMsg"></span></td>
-                            </tr>
-                        </table>
-
-                        <div>
-                            <button type="submit" class="btnStyle">변경하기</button>
-                            <button type="button" class="btnStyle" onclick="history.back();">취소</button>
+                    padding: 15px; font-family: 'NanumSquareRound';">비밀번호 변경</div>
+                    <form action="../member/updatePwd" method="post" onsubmit="return checkUpdatePwd()">
+                        <div class="table-center-wrap">
+                            <table>
+                                <tr style="display: none;">
+                                    <th width="200px">아이디</th>
+                                    <td width="360px">${ sessionScope.loginUser.memberId }</td>
+                                </tr>
+                                <tr>
+                                    <th width="200px">현재 비밀번호</th>
+                                    <td width="360px"><input class="inputStyle" type="password" maxlength="20" name="originPwd" placeholder="현재 비밀번호"></td>
+                                </tr>
+                                <tr>
+                                    <th>변경할 비밀번호</th>
+                                    <td width="360px"><input type="password" maxlength="20" class="inputStyle" name="updatePwd" placeholder="영문, 숫자, 특수기호를 포함한 8 ~ 20글자"></td>
+                                </tr>
+                                <tr>
+                                    <th>비밀번호 확인</th>
+                                    <td width="360px"><input type="password" maxlength="20" class="inputStyle" name="checkPwd" placeholder="비밀번호 확인"></td>
+                                </tr>
+                                <tr height="20px">
+                                    <th></th>
+                                    <td><span style="font-size: 14px; color: red;" id="informationMsg"></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center; vertical-align: middle;">
+                                        <div class="btn-area">
+                                            <button type="submit" class="btnStyle">변경하기</button>
+                                            <button type="button" class="btnStyle" onclick="history.back();">취소</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        
                     </form>
                         
                     
