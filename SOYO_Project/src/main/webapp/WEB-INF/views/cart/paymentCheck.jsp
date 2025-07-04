@@ -282,7 +282,7 @@
 						</tr>
                         <tr>
                             <th><span class="fontsize20">주소</span></th>
-                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required readOnly></td>
+                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" required readOnly></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -291,7 +291,7 @@
                         
                         <tr>
                             <th><span class="fontsize20">상세주소</span></th>
-                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required></td>                
+                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66"  required></td>                
                         </tr>
                         
                         <tr>
