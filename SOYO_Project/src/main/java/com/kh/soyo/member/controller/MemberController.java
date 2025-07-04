@@ -161,7 +161,7 @@ public class MemberController {
 		
 		// 세션에서 로그인한 사람의 정보 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		
+		 if(loginUser != null) {	
 		// 거기서 id 만 가져오기
 		String mi = loginUser.getMemberId();
 		
@@ -185,8 +185,11 @@ public class MemberController {
 		// jsp 에서 쓰기위해 model 이용
 		model.addAttribute("myreview", myreview);
 		model.addAttribute("pi", pi);
-		
 		return "member/myPageMyReview";
+		}else {
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+    		return "member/loginPage";
+		}
 	}
 	
 	// 내 찜 페이지 이동용 메소드
@@ -504,7 +507,7 @@ public class MemberController {
 		if(result > 0 && result2 > 0) {
 			
 			session.setAttribute("alertMsg", "SOYO의 회원이 되신 것을 환영합니다.");
-			
+			System.out.println();
 			return "redirect:/";
 		} else {
 			
@@ -832,7 +835,7 @@ public class MemberController {
 	public int addressList(Member member,Model model) {
 		int result = memberService.addressList(member.getMemberId());
 		System.out.println(member.getMemberId());
-		System.out.println(result);
+		//System.out.println(result);
 
 		return result;
 	}

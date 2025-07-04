@@ -24,8 +24,10 @@ public class RecentController {
 	// 최근본 상품 이동시 보여줄 것
 	@GetMapping("/myRecent")
 	public String myRecent(HttpSession session, Model model) {
-		
 		Member loginUser = (Member) session.getAttribute("loginUser");
+		if(loginUser!=null) {
+			
+		
 		
 		String memberId = loginUser.getMemberId();
 		
@@ -35,6 +37,11 @@ public class RecentController {
 		model.addAttribute("myRecent", myRecent);
 		
 		return "member/myRecent";
+		}else {
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+    		return "member/loginPage";
+		}
+		
 	}
 	
 }
