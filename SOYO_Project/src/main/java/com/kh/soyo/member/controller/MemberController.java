@@ -93,9 +93,16 @@ public class MemberController {
 	
 	// 내 정보 조회 페이지 이동메소드
 	@GetMapping("/myInformation")
-	public String myInformation() {
+	public String myInformation(HttpSession session) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
 		
-		return "member/myInformation";
+		if(loginUser != null) {
+			return "member/myInformation";
+		} else {
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+			return "member/loginPage";
+		}
+		
 	}
 	
 	// 내 정보 수정페이지 이동메소드
@@ -133,20 +140,36 @@ public class MemberController {
 			
 			
 			return "member/memberUpdateForm";
+		} else {
+			
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+			return "member/loginPage";
 		}
-		return "member/myInformation";
+		
 	}
 	
 	// 회원 탈퇴페이지 이동메소드
 	@GetMapping("/memberDeleteForm")
-	public String memberDeleteForm() {
-		return "member/memberDeleteForm";
+	public String memberDeleteForm(HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser != null) {	
+			return "member/memberDeleteForm";
+		} else {
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+			return "member/loginPage";
+		}
 	}
 	
 	// 비밀번호 변경페이지 이동 메소드
 	@GetMapping("/memberPwdUpdateForm")
-	public String memberPwdUpdateForm() {
-		return "member/memberPwdUpdateForm";
+	public String memberPwdUpdateForm(HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser != null) {	
+			return "member/memberPwdUpdateForm";
+		} else {
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+			return "member/loginPage";
+		}
 	}
 	
 	// 새 비밀번호 받기 페이지
@@ -530,40 +553,49 @@ public class MemberController {
 	public ModelAndView updateMember(Member m, @RequestParam("addrDetail")String addrDetail , HttpSession session, ModelAndView mv) {
 		// System.out.println(m);
 		
-		// XSS 공격 막기
-		// m.setMemberId(XssDefencePolicy.defence(m.getMemberId())); // 아이디
-		// m.setMemberPwd(XssDefencePolicy.defence(m.getMemberPwd())); // 비밀번호
-		m.setMemberName(XssDefencePolicy.defence(m.getMemberName())); // 이름
-		// m.setEmail(XssDefencePolicy.defence(m.getEmail())); // 이메일
-		m.setAddress(XssDefencePolicy.defence(m.getAddress())); // 주소
-		addrDetail = (XssDefencePolicy.defence(addrDetail)); // 상세주소
-		
-		// 도로명 주소와 상세주소를 합쳐기
-		String fulladd = m.getAddress() + " + "+ addrDetail ;
-		// 합친거 객체에넣기
-		m.setAddress(fulladd);
-		
-		// 정보 바꾸고 오기
-		int result = memberService.updateMember(m);
-		
-		if(result > 0) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+    	
+    	if(loginUser != null) {
+			// XSS 공격 막기
+			// m.setMemberId(XssDefencePolicy.defence(m.getMemberId())); // 아이디
+			// m.setMemberPwd(XssDefencePolicy.defence(m.getMemberPwd())); // 비밀번호
+			m.setMemberName(XssDefencePolicy.defence(m.getMemberName())); // 이름
+			// m.setEmail(XssDefencePolicy.defence(m.getEmail())); // 이메일
+			m.setAddress(XssDefencePolicy.defence(m.getAddress())); // 주소
+			addrDetail = (XssDefencePolicy.defence(addrDetail)); // 상세주소
 			
-			Member updateMem = memberService.loginMember(m);
+			// 도로명 주소와 상세주소를 합쳐기
+			String fulladd = m.getAddress() + " + "+ addrDetail ;
+			// 합친거 객체에넣기
+			m.setAddress(fulladd);
 			
-			session.setAttribute("loginUser", updateMem);
+			// 정보 바꾸고 오기
+			int result = memberService.updateMember(m);
 			
-			session.setAttribute("alertMsg", "회원정보 변경 성공");
+			if(result > 0) {
+				
+				Member updateMem = memberService.loginMember(m);
+				
+				session.setAttribute("loginUser", updateMem);
+				
+				session.setAttribute("alertMsg", "회원정보 변경 성공");
+				
+				mv.setViewName("redirect:/member/myInformation");
+				
+			} else {
+				
+				mv.addObject("alertMsg", "회원정보 변경 실패");
+				
+				mv.setViewName("member/loginPage");
+			}
 			
-			mv.setViewName("redirect:/member/myInformation");
-			
-		} else {
-			
-			mv.addObject("alertMsg", "회원정보 변경 실패");
-			
-			mv.setViewName("member/loginPage");
-		}
-		
-		return mv;
+			return mv;
+    	} else {
+    		
+    		session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+    		mv.setViewName("member/loginPage");
+    		return mv;
+    	}
 		
 		
 	}
@@ -772,6 +804,7 @@ public class MemberController {
 
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    
+	    if(loginUser != null) {
 //	    sSystem.out.println(loginUser);
 	    
 	    int listCount = memberService.listPageCount(loginUser);
@@ -790,8 +823,13 @@ public class MemberController {
 	        model.addAttribute("order", order);
 	        model.addAttribute("pi",pi);
 	    }
-
 	    return "member/myOrderPage";
+	  } else {
+		  session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+			return "member/loginPage";
+	  }
+	    
+	    
 	}
 	
 	@GetMapping("/myOrderPage/detail")
