@@ -12,6 +12,10 @@
         margin: auto;
     }
 
+    body{
+        background-color: #f8f9fa;
+    }
+
     #content::after {
         content: "";
         display: block;
@@ -31,10 +35,15 @@
         width: 1200px;
     }
 
+    #myContent{
+        margin-bottom: 50px;
+    }
+
     #content > div {
         float: left;
         display: block;
     }
+
 
     .myWishList {
         width: 800px;
@@ -65,8 +74,28 @@
     }
 
     .addressTable{
+        width: 600px;
         text-align: center;
         margin: auto;
+        margin-top: 60px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 2px solid lightgray;
+        background-color: rgb(252, 244, 255);
+        padding: 40px;
+        margin-bottom: 50px;
+        border-radius: 15px;
+    }
+
+    .btnsetButton{
+        margin-left: 10px;
+        width: 70px;
+        height: 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 9px;
+        cursor: pointer;
     }
 
 </style>
@@ -77,8 +106,7 @@
 <br><br><br>
 
 <div class="container">
-    <div id="myTitle">배송지 등록</div>
-
+<br>
         <div id="content">
             <div id="left-Menu">
                 <jsp:include page="../member/leftMenu.jsp" />
@@ -86,10 +114,15 @@
 
             <div id="myContent">
                 <div>
-                    배송지 등록
+
                     <div class="myWishList">
                         <form action="../deliveryAddress/newDeliveryAddress" method="post" align="center">
                             <table class="addressTable">
+                                <tr>
+                                    <th>
+                                        <span>배송지 등록</span>
+                                    </th>
+                                </tr>
                                 <tr>
                                     <td><input name="addressName" type="text" class="inputStyle" placeholder="배송지 이름" maxlength="10" required></td>
                                     
@@ -104,15 +137,15 @@
                                     <td><input name="addressOther" type="text" class="inputStyle"  id="address" class="updateInput"  name="address" maxlength="66" placeholder="주소" required></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="button" style="margin: 5px;" class="btnSubmit" onClick="execDaumPostcode()" value="주소검색"></td>
+                                    <td><input type="button" style="margin: 5px;" class="btnSubmit btnsetButton" onClick="execDaumPostcode()" value="주소검색"></td>
                                 </tr>
                                 <tr>
                                     <td><input name="addressDetail" type="text" class="inputStyle" id="addressDetail" placeholder="상세주소" maxlength="66"></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <button type="submit">등록하기</button>
-                                        <button type="reset">초기화</button>
+                                        <button class="btnsetButton" type="submit">등록하기</button>
+                                        <button style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" class="btnsetButton" type="reset">초기화</button>
                                     </td>              
                                 </tr>
                             </table>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.soyo.cart.model.service.CartService;
 import com.kh.soyo.cart.model.vo.Cart;
 import com.kh.soyo.cart.model.vo.Delivery;
+import com.kh.soyo.common.template.XssDefencePolicy;
 import com.kh.soyo.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpSession;
@@ -62,12 +63,9 @@ public class CartController {
 		    int result=  cartService.updateCartCount(cart);
 		    
 		    Cart c = cartService.updateCart(memberId,cart.getProductNo(),cart.getProductCount());
-
-		  
+	  
 		    cart.setMemberId(loginUser.getMemberId());
-		    
-		    
-		    
+    
 		    model.addAttribute("c",c);
 		    //System.out.println(c.getProductCount());
 		    return c.getProductCount();
@@ -93,7 +91,10 @@ public class CartController {
 											  HttpSession session) {
 
 		Member loginUser = (Member) session.getAttribute("loginUser");
-	    if (loginUser == null) return "실패";
+		
+	    if (loginUser == null) {
+	    	model.addAttribute("errorMsg","로그인 후 이용해주세요.");
+	    	return "./common/errorPage";}
 
 	    String memberId = loginUser.getMemberId();
 	   
@@ -124,6 +125,12 @@ public class CartController {
 		int result1 = 0;
 		int result2 = 1;
 		// 장바구니 정보 불러오기
+		delivery.setReceiverName(XssDefencePolicy.defence(delivery.getReceiverName()));
+		delivery.setReceiverPhone(XssDefencePolicy.defence(delivery.getReceiverPhone()));
+		delivery.setAddressOther(XssDefencePolicy.defence(delivery.getAddressOther()));
+		delivery.setRequestMsg(XssDefencePolicy.defence(delivery.getRequestMsg()));
+		delivery.setAddressAlias(XssDefencePolicy.defence(delivery.getAddressAlias()));
+		
 		for(int i=0; i<delivery.getSelectedProductList().size(); i++) {
 			
 			delivery.setProductNo(delivery.getSelectedProductList().get(i)); 

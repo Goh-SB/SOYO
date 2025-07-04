@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,9 +27,9 @@
 
     #title{
         text-align: center;
-        height: 60px;
+        height: 63px;
         font-size: 20px;
-        background-color: rgb(248, 226, 254);
+        background: linear-gradient(135deg, #f3e8f9 0%, #e7dcf4 100%);
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         color: #7e4f8b85;
@@ -48,10 +49,13 @@
         border-radius: 15px;
         background-color: white;
         width: 970px;
+        margin-left: 30px;
+        margin-top: 40px;
     }
 
     #content {
         width: 1500px;
+        margin-top: 30px;
     }
 
     #content > div {
@@ -60,7 +64,7 @@
     }
 
     .myWishList {
-        width: 700px;
+        width: 600px;
         min-height: 500px;
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
@@ -124,9 +128,11 @@
         width: 200px;
         border: none;
         cursor: pointer;
-        background-color: white;
+        background: linear-gradient(135deg, #f2adfa 0%, #e2daff 100%);
         border: 1px solid rgb(247, 213, 255);
-        color: #7e4f8b85;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
     }
 
     .addBtn:hover{
@@ -251,17 +257,22 @@
         margin-top: 20px;
     }
 
+    #left-Menu{
+        margin-top: 40px;
+        margin-left: 20px;
+    }
+
 </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
 
-<br><br><br>
+<br>
 
 <div class="container">
 
         <div id="content">
-            <div id="left-Menu2">
+            <div id="left-Menu">
                 <jsp:include page="../member/leftMenu.jsp" />
             </div>
                 
@@ -283,7 +294,11 @@
                                                 <br>
                                                 <br>
                                                 <span class="addrSpan">${a.receiverName}</span><br>
-                                                <span class="addrSpan">${a.receiverPhone}</span><br>
+                                                <span class="addrSpan">
+                                                    ${fn:substring(a.receiverPhone, 0, 3)}&nbsp;-
+                                                    ${fn:substring(a.receiverPhone, 3, 7)}&nbsp;-
+                                                    ${fn:substring(a.receiverPhone, 7, 11)}
+                                                </span><br>
                                             </div>
                                             <div style="display: flex;" class="btnset">
                                                 <!-- 수정 버튼 -->
@@ -311,7 +326,11 @@
                                                 <br>
                                                 <br>
                                                 <span class="addrSpan">${w.receiverName}</span><br>
-                                                <span class="addrSpan">${w.receiverPhone}</span><br>
+                                                <span class="addrSpan">
+                                                    ${fn:substring(w.receiverPhone, 0, 3)}&nbsp;-
+                                                    ${fn:substring(w.receiverPhone, 3, 7)}&nbsp;-
+                                                    ${fn:substring(w.receiverPhone, 7, 11)}
+                                                </span><br>
                                             </div>
                                             <div style="display: flex;" class="btnset">
                                                 <!-- 수정 버튼 -->
