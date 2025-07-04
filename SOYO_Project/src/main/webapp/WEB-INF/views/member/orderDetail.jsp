@@ -81,7 +81,7 @@
 
         #myContent{
             width: 85%;
-            height: 100%;
+            min-height: 600px;
              /*border: 2px solid rgb(122, 64, 126);*/
             box-sizing: border-box;
             box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
