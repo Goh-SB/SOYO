@@ -808,8 +808,6 @@ public class MemberController {
 	    // 여러 주소를 가져오는 서비스 호출
 	    List<DeliveryAddress> address = memberService.selectAddress(memberId);
 	    
-//	    System.out.println(address);
-	   
 	    System.out.println(address);
 	    
 	    model.addAttribute("address",address);

@@ -91,7 +91,10 @@ public class CartController {
 											  HttpSession session) {
 
 		Member loginUser = (Member) session.getAttribute("loginUser");
-	    if (loginUser == null) return "실패";
+		
+	    if (loginUser == null) {
+	    	model.addAttribute("errorMsg","로그인 후 이용해주세요.");
+	    	return "./common/errorPage";}
 
 	    String memberId = loginUser.getMemberId();
 	   
