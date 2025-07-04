@@ -244,73 +244,79 @@ public class MemberController {
     public String wishGo(@RequestParam(value = "selected", required = false) List<Integer> selected,
                          HttpServletRequest request, HttpSession session, Cart cart , Model model, Wish wish) {
     	
-    	int result = 0;
+    	Member loginUser = (Member)session.getAttribute("loginUser");
     	
-        if (selected != null) {
-        	
-        	// 반복문 돌려서 넣기
-            for (int index : selected) {
-            	
-            	// int 타입으로 바꾸기
-            	String productNoStr = request.getParameter("productNo" + index);
-            	int productNo = Integer.parseInt(productNoStr);
-            	
-                String productSize = request.getParameter("productSize" + index);
-
-                Member loginUser = (Member)session.getAttribute("loginUser");
-                String memberId = loginUser.getMemberId();
-                
-                // 상품번호: productNo
-                //사이즈: productSize 
-                
-                cart.setMemberId(memberId);
-                cart.setProductNo(productNo);
-                cart.setProductSize(productSize);
-                
-                // 카트에 넣기전 이미 들어가있는지 확인 아이디, 상품번호로
-                int check = cartService.checkCart(cart);
-                
-                if(check > 0) {
-                	// 하나라도 들어가있다면 중지시킴
-                	
-                	session.setAttribute("alertMsg", "이미 들어가있는 제품이 있습니다.");
-                	
-                	return myWishList(1, session, model);
-                	
-                } else {
-                	// 안들어가있다면 장바구니에 추가
-                	result = cartService.insertCart(cart);
-                	
-                	// 장바구니에 추가 성공했다면 찜 리스트에서 삭제
-                	wish.setMemberId(memberId);
-                	wish.setProductNo(productNo);
-                	wishListService.deleteWish(wish);
-                }
-                
-                     
-            }
-            if(result > 0) {
-            		
-                session.setAttribute("alertMsg", "장바구니 담기 성공.");
-                
-                return cartController.showCartPage(model, session);
-                
-            } else {
-                
-            	session.setAttribute("alertMsg", "상품을 선택해주세요.");
-            	
-            	return myWishList(1, session, model);
-            }
-            
-            
-            
-        } else {
-        	
-        	session.setAttribute("alertMsg", "상품을 선택해주세요.");
-        	
-        	return myWishList(1, session, model);
-        }
-        
+    	if(loginUser != null) {
+    	
+	    	int result = 0;
+	    	
+	        if (selected != null) {
+	        	
+	        	// 반복문 돌려서 넣기
+	            for (int index : selected) {
+	            	
+	            	// int 타입으로 바꾸기
+	            	String productNoStr = request.getParameter("productNo" + index);
+	            	int productNo = Integer.parseInt(productNoStr);
+	            	
+	                String productSize = request.getParameter("productSize" + index);
+	
+	                String memberId = loginUser.getMemberId();
+	                
+	                // 상품번호: productNo
+	                //사이즈: productSize 
+	                
+	                cart.setMemberId(memberId);
+	                cart.setProductNo(productNo);
+	                cart.setProductSize(productSize);
+	                
+	                // 카트에 넣기전 이미 들어가있는지 확인 아이디, 상품번호로
+	                int check = cartService.checkCart(cart);
+	                
+	                if(check > 0) {
+	                	// 하나라도 들어가있다면 중지시킴
+	                	
+	                	session.setAttribute("alertMsg", "이미 들어가있는 제품이 있습니다.");
+	                	
+	                	return myWishList(1, session, model);
+	                	
+	                } else {
+	                	// 안들어가있다면 장바구니에 추가
+	                	result = cartService.insertCart(cart);
+	                	
+	                	// 장바구니에 추가 성공했다면 찜 리스트에서 삭제
+	                	wish.setMemberId(memberId);
+	                	wish.setProductNo(productNo);
+	                	wishListService.deleteWish(wish);
+	                }
+	                
+	                     
+	            }
+	            if(result > 0) {
+	            		
+	                session.setAttribute("alertMsg", "장바구니 담기 성공.");
+	                
+	                return cartController.showCartPage(model, session);
+	                
+	            } else {
+	                
+	            	session.setAttribute("alertMsg", "상품을 선택해주세요.");
+	            	
+	            	return myWishList(1, session, model);
+	            }
+	            
+	            
+	            
+	        } else {
+	        	
+	        	session.setAttribute("alertMsg", "상품을 선택해주세요.");
+	        	
+	        	return myWishList(1, session, model);
+	        }
+    	} else {
+    		session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			return "member/loginPage";
+    	}
     }
 	
 	// 로그인 요청 처리용 메서드
