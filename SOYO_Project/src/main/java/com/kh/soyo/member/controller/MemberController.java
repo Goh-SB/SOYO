@@ -498,7 +498,7 @@ public class MemberController {
 		del.setReceiverName(m.getMemberName());
 		del.setMemberId(m.getMemberId());
 		del.setReceiverPhone(m.getPhone());
-		
+
 		int result2 = deliveryAddressService.enrollerDelivery(del);
 		
 		if(result > 0 && result2 > 0) {
