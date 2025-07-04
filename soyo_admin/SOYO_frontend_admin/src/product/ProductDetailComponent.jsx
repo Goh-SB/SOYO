@@ -8,7 +8,6 @@ import { ImageFormats } from '@xeger/quill-image-formats';
 import axios from 'axios';
 import $ from 'jquery';
 import { useNavigate, useParams } from 'react-router-dom';
-import DOMPurify from 'dompurify';
 import React from 'react';
 
 
