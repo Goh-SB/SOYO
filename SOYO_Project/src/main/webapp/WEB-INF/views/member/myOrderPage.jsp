@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,6 @@
 
         #content{
             width: 1200px;
-            height: 1200px; /* 여기 조절하기 */
         }
 
         #content>div{
@@ -81,7 +81,6 @@
 
         #myContent{
             width: 85%;
-            height: 100%;
              /*border: 2px solid rgb(122, 64, 126);*/
             box-sizing: border-box;
             box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
@@ -166,15 +165,18 @@
 		    display: inline-block;
 		    text-align: center;
 		    text-decoration: none;
-		    color: black;
-		    background-color: rgba(175, 128, 219, 0.518);
+		    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    		color: white;
 		    border: none;
-		    border-radius: 5px;
-		    padding: 10px 20px;
+		    border-radius: 10px;
+		    padding: 5px 10px;
 		    font-family: inherit;
 		    font-size: 14px;
 		    width: 100%;
 		    margin-top: 10px;
+			margin-right: 10px;
+			font-weight: bold;
+			cursor: pointer;
 		}
 		
 		.order-link-button:hover {
@@ -412,6 +414,306 @@
 			pointer-events: none;
 			background-color: #f8f9fa;
 		}
+		.container {
+    width: 1200px;
+    margin: auto;
+    font-size: 18px; /* 전체 기본 폰트 크기 업 */
+}
+
+#myTitle {
+    font-size: 48px; /* 타이틀 크기 업 */
+}
+
+#left-MenuList {
+    font-size: 25px; /* 메뉴 글자 크기 업 */
+}
+
+.order-link-button {
+    font-size: 16px; /* 버튼 글자 크기 업 */
+}
+
+.review-modal-header h2 {
+    font-size: 24px; /* 모달 제목 크기 업 */
+}
+
+.form-group label {
+    font-size: 20px; /* 리뷰 폼 라벨 크기 업 */
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    font-size: 18px; /* 입력창 폰트 업 */
+}
+
+.star-rating .star {
+    font-size: 36px; /* 별 크기 업 */
+}
+
+.btn-cancel,
+.btn-submit {
+    font-size: 16px; /* 모달 버튼 크기 업 */
+}
+
+.page-link {
+    font-size: 16px; /* 페이징 링크 글자 크기 업 */
+}
+
+#order-List > ul > li {
+    font-size: 18px; /* 주문목록 글자 크기 업 */
+}
+
+body{
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        width: 1200px;
+        margin: auto;
+    }
+
+    #content::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    #title{
+        text-align: center;
+        height: 63px;
+        font-size: 20px;
+        background: linear-gradient(135deg, #f3e8f9 0%, #e7dcf4 100%);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        color: #7e4f8b85;
+        font-weight: bold;
+    }
+
+    .fontspan{
+        display: inline-block;
+        padding-top: 10px;
+        margin: auto;
+        font-size: 25px;
+    }
+
+    #myContent{
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 50px;
+        border-radius: 15px;
+        background-color: white;
+        width: 970px;
+        margin-left: 30px;
+        margin-top: 40px;
+    }
+
+    #content {
+        width: 1500px;
+        margin-top: 30px;
+    }
+
+    #content > div {
+        float: left;
+        display: block;
+    }
+
+    .myWishList {
+        width: 600px;
+        min-height: 500px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding-top: 15px;
+    }
+
+    .productImg {
+        width: 75px;
+        height: 75px;
+    }
+
+    .wishTable {
+        width: 800px;
+        margin: 50px;
+        margin-top: 80px;
+    }
+
+    .pageBtn {
+        width: 30px;
+        height: 30px;
+        text-decoration: none;
+        border: 1px solid black;
+        border-radius: 9px;
+        color: cadetblue;
+        background-color: lightgrey;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    .pagination {
+        justify-content: center;
+        width: 100%;
+        height: 50px;
+        text-align: center;
+		padding-left: 250px;
+		margin-left: 40px;
+    }
+
+    .addressForm{
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border: 2px solid lightgrey;
+        border-radius: 15px;
+        width: 900px;
+        padding: 8px;
+        margin: auto;
+        margin-bottom: 20px;
+        transition: transform 0.4s ease;
+        margin-left: 40px;
+    }
+
+    .addressForm:hover {
+        border: 2px solid rgb(105, 105, 255);
+        transform: translateY(-2px);
+    }
+
+    .addBtn{
+        height: 30px;
+        display: block;
+        margin-left: 40px;
+        margin-bottom: 15px;
+        border-radius: 9px;
+        width: 200px;
+        border: none;
+        cursor: pointer;
+        background-color: white;
+        border: 1px solid rgb(247, 213, 255);
+        color: #7e4f8b85;
+    }
+
+    .addBtn:hover{
+        box-shadow: 0 2px 10px rgba(251, 230, 255, 0.817);
+        background-color: rgb(247, 213, 255);
+        color: #7e4f8b85;
+    }
+
+    .addrSpan{
+        margin: 8px;
+        margin-left: 15px;
+    }
+
+    .btnset{
+        margin-left: 680px;
+        margin-bottom: 10px;
+    }
+
+    .btnsetButton{
+        margin-left: 10px;
+        width: 70px;
+        height: 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 9px;
+        cursor: pointer;
+    }
+
+    .btnsetButton:hover{
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .addrtitle{
+        font-weight: bold;
+        font-size: 17px;
+        color: #442a4be2;
+    }
+
+    .addrDetail{
+        border: 2px solid rgba(211, 211, 211, 0.362);
+        border-radius: 5px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        padding-bottom: 15px;
+    }
+
+
+        /* 모달창 디자인 */
+    
+    #editModal {
+        width: 400px;
+        height: 730px;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border: 1px solid #ccc;
+        z-index: 9999;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        border-radius: 15px;
+    }
+
+    .modalLabel{
+        box-sizing: border-box;
+        font-size: 16px;
+        text-align: left;
+        color: #442a4be2;
+    }
+
+    .modalInput{
+        box-sizing: inherit;
+        width: 300px;
+        height: 40px;
+        padding: 5px;
+        border-radius: 9px;
+        border: none;
+        box-shadow: 0 2px 7px rgba(0,0,0,0.1);
+        margin-top: 2px !important;
+        margin-bottom: 30px !important;
+    }
+
+    #aa {
+        padding-bottom: 30px;
+        padding-top: 12px;
+    }
+
+    .modalbtn{
+        width: 90px;
+        height: 30px;
+        background-color: aliceblue;
+        border: none;
+        border-radius: 9px;
+    }
+
+    .btnSubmit{
+        width: 300px;
+        height: 30px;
+        border-radius: 5px;
+        border: none;
+        background-color: aliceblue;
+        margin-bottom: 30px !important;
+    }
+
+    .modalTitle{
+        background-color: rgb(252, 232, 255);
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        height: 60px;
+        padding-top: 16px;
+        font-size: 23px;
+        color: #442a4be2;
+    }
+
+    .titleSpan{
+        margin-top: 20px;
+    }
+
+    #left-Menu{
+        margin-top: 40px;
+        margin-left: 20px;
+    }
+		
 </style>
 </head>
 <body>
@@ -421,6 +723,9 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous">
 	    </script>
+	    
+	    
+	    
 	<!-- 모달 창 -->
 	<div id="refundModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
 	    <div style="background:white; width:400px; padding:20px; border-radius:10px; margin:150px auto; position:relative;">				
@@ -490,51 +795,46 @@
 		</div>
 	</div>
 	<jsp:include page="../common/menubar.jsp" />
+	<br>
 	<div class="container">
-        <div class="" id="myTitle">
-            마이페이지
-        </div>
         <div class="" id="content">
             <div class="" id="left-Menu">
                 <jsp:include page="leftMenu.jsp" />
             </div>
 
             <div class="" id="myContent">
-                <div style="height: 5%; font-size: 30px;
-                padding: 15px;">내 주문 목록</div>
-                    <div id="order-List">
-                        <ul>
-                       <c:forEach var="p" items="${order}">
-						    <li>
-						            <table class="order-table">
-						                <tr>
-						                    <th> 주문</th>
-						                </tr>
-						                <tr></tr>
-						                <tr>
-	
-						                    <td class="product-name">
-						                        <div>
-						                        	수령인 : ${p.receiverName} <br>
-						                        	배송지 : ${p.addressOther}<br>
-						                            가격 : ${p.totalPrice}<br>
-						                            주문번호 : ${p.orderImpNo}<br>
-						                            환불상태 : 
-						                            <c:if test="${p.cancelStatus eq '환불완료'}">
+				<div id="title"><span class="fontspan">Order</span></div>
+                    <div id="aa">
+                        <div class="myWishList">
+                            <c:choose>
+                                <c:when test="${not empty order}">
+                                    
+                                    <c:forEach var="p" items="${order}">
+                                        <div class="addressForm">
+                                            <span class="addrtitle">&nbsp; 수령인 : ${p.receiverName}</span><br>
+                                            
+                                            <div class="addrDetail">
+                                                <span class="addrSpan" style="margin-left: 0px;">배송지 : ${p.addressOther}</span>
+                                                <br>
+                                                <br>
+                                                <span id="total-price">가격 : <fmt:formatNumber value="${p.totalPrice}" type="number" groupingUsed="true"/>원</span><br>
+												주문번호 : ${p.orderImpNo}<br>
+												 
+												    <c:if test="${p.cancelStatus eq '환불완료'}">
 												        <span style="color: red; font-weight: bold;">환불 완료</span>
 												    </c:if>
-	                            					
-						                        </div>
-						                    </td>
-						                    <td class="product-menu">
-						                        <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
+												<br>
+                                            </div>
+                                            <div style="display: flex;" class="btnset">
+                                                <!-- 수정 버튼 -->
+                                                <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
 						                        	상세 조회
 						                        </a>
-						                        	 <c:choose>
+                                                <c:choose>
 												        <c:when test="${p.cancelStatus eq '환불완료'}">
 												            <button type="button"
 												                    class="order-link-button"
-												                    style="background-color: lightgray;"
+												                    style="color: lightgrey; background: linear-gradient(135deg, #9a5fa1 0%, #9c3745 100%); cursor: default;"
 												                    onclick="alertNotAllowed();"
 												                    >
 												                환불 완료
@@ -542,111 +842,120 @@
 												        </c:when>
 												        <c:otherwise>
 												            <button type="button"
+																	style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 												                    onclick="copyImpUid('${p.orderImpNo}'); openModal();"
 												                    class="order-link-button">
 												                환불 하기
 												            </button>
 												        </c:otherwise>
 												    </c:choose>
-						                    </td>
-						                </tr>
-						            </table>
-						      
-						    </li>
-						</c:forEach>
-						</ul>
-                        <div class="paging-area">
-				<ul class="pagination justify-content-center">
-					<!-- currentPage가 1번 페이지일 경우 Previous 비활성화 -->
-					<c:choose>
-						<c:when test="${ requestScope.pi.currentPage eq 1 }">
-							<li class="page-item disabled">
-								<a class="page-link">
-									&lt;
-								</a>
-							</li>
-						</c:when>
+                                            </div>
+                                            <!-- 삭제 버튼-->
+                                            
+                                        </div>
+                                    </c:forEach>
+									<div class="paging-area">
+										<ul class="pagination justify-content-center">
+											<!-- currentPage가 1번 페이지일 경우 Previous 비활성화 -->
+											<c:choose>
+												<c:when test="${ requestScope.pi.currentPage eq 1 }">
+													<li class="page-item disabled">
+														<a class="page-link">
+															&lt;
+														</a>
+													</li>
+												</c:when>
 
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${ empty requestScope.condition }">
-									<li class="page-item">
-										<a class="page-link" 
-											href="/soyo/member/myOrderPage?nPage=${ requestScope.pi.currentPage - 1 }">
-											&lt;
-										</a>
-									</li>
-								</c:when>
+												<c:otherwise>
+													<c:choose>
+														<c:when test="${ empty requestScope.condition }">
+															<li class="page-item">
+																<a class="page-link" 
+																	href="/soyo/member/myOrderPage?nPage=${ requestScope.pi.currentPage - 1 }">
+																	&lt;
+																</a>
+															</li>
+														</c:when>
 
-								<c:otherwise>
-									<!-- 검색이 유지되도록 설정 -->
-									<li class="page-item">
-										<a class="page-link" 
-											href="/soyo/member/myOrderPage?nPage=${ requestScope.pi.currentPage - 1 }">
-											&lt;
-										</a>
-									</li>
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-					
-					<c:forEach var="p" begin="${ requestScope.pi.startPage }"
-									end="${ requestScope.pi.endPage }"
-									step="1">
-					
-						<!-- 현재 내가 보고 있는 페이지 버튼은 비활성화 -->
-						<c:choose>
-							<c:when test="${ requestScope.pi.currentPage eq p }">
-								<li class="page-item active">
-									<a class="page-link">
-										${ p }
-									</a>
-								</li>
-							</c:when>
+														<c:otherwise>
+															<!-- 검색이 유지되도록 설정 -->
+															<li class="page-item">
+																<a class="page-link" 
+																	href="/soyo/member/myOrderPage?nPage=${ requestScope.pi.currentPage - 1 }">
+																	&lt;
+																</a>
+															</li>
+														</c:otherwise>
+													</c:choose>
+												</c:otherwise>
+											</c:choose>
+											
+											<c:forEach var="p" begin="${ requestScope.pi.startPage }"
+															end="${ requestScope.pi.endPage }"
+															step="1">
+												<!-- 현재 내가 보고 있는 페이지 버튼은 비활성화 -->
+												<c:choose>
+													<c:when test="${ requestScope.pi.currentPage eq p }">
+														<li class="page-item active">
+															<a class="page-link">
+																${ p }
+															</a>
+														</li>
+													</c:when>
 
-							<c:otherwise>
-						
-										<!-- 일반 목록 조회(condition이 없을 경우) -->
-										<li class="page-item">
-											<a class="page-link" href="/soyo/member/myOrderPage?cPage=${ p }">
-												${ p }
-											</a>
-										</li>
-							
+													<c:otherwise>
+												
+																<!-- 일반 목록 조회(condition이 없을 경우) -->
+																<li class="page-item">
+																	<a class="page-link" href="/soyo/member/myOrderPage?cPage=${ p }">
+																		${ p }
+																	</a>
+																</li>
+													
 
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					
-					<!-- currentPage가 maxPage일 경우 Next 비활성화 -->
-					<c:choose>
-						<c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
-							<li class="page-item disabled">
-								<a class="page-link">
-									&gt;
-								</a>
-							</li>
-						</c:when>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											
+											<!-- currentPage가 maxPage일 경우 Next 비활성화 -->
+											<c:choose>
+												<c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+													<li class="page-item disabled">
+														<a class="page-link">
+															&gt;
+														</a>
+													</li>
+												</c:when>
 
-						<c:otherwise>
-							
-								
-							
-									<!-- 검색이 유지되도록 설정 -->
-									<li class="page-item">
-										<a class="page-link" 
-											href="/soyo/member/myOrderPage?cPage=${ requestScope.pi.currentPage + 1 }">
-											&gt;
-										</a>
-									</li>
-							
-						
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-                    </div> 
+												<c:otherwise>
+													
+														
+													
+															<!-- 검색이 유지되도록 설정 -->
+															<li class="page-item">
+																<a class="page-link" 
+																	href="/soyo/member/myOrderPage?cPage=${ requestScope.pi.currentPage + 1 }">
+																	&gt;
+																</a>
+															</li>
+													
+												
+												</c:otherwise>
+											</c:choose>
+										</ul>
+									</div>
+                                </c:when>
+                                    <c:otherwise>
+                                        <div style="height: 500px; text-align: center;" >
+                                            <span style="margin-left: 350px; color: gray; font-size: 20px;">
+                                                등록된 주문이 없습니다.
+                                            </span>
+                                            <br>
+                                        </div>
+                                    </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -773,6 +1082,7 @@
                 });
             });
 
+            
             // 모달창 외부 클릭 시 닫기
             document.getElementById('reviewModal').addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -780,6 +1090,8 @@
                 }
             });
         });
+        
+        
 	</script>
 </body>
 </html>

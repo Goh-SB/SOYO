@@ -139,7 +139,7 @@
 					<c:if test="${not empty requestScope.n.noticeImage}">
 						<img id="fileImg" src="http://192.168.40.32:8100/soyo/resources/notice_upfile/${requestScope.n.noticeImage}"/>
 					</c:if>
-					<p>${requestScope.n.noticeContent}</p>
+					<p id="noticeContent">${requestScope.n.noticeContent}</p>
 				</div>
 			</div>
 
@@ -152,6 +152,72 @@
 			function list() {
 				location.href="/soyo/notice/noticeList"
 			}
+		
+			window.onload = function () {
+				const noticeNo = ${requestScope.n.noticeNo};
+				const file = document.getElementById("fileImg");
+				const noticeContent = document.getElementById("noticeContent");
+
+				file.addEventListener("click", function () {
+					if (noticeNo === 24) {
+						let dol = document.getElementById("dol");
+
+						if (!dol) {
+							// 이미지 없으면 새로 생성
+							dol = document.createElement("img");
+							dol.id = "dol";
+							dol.src = "http://192.168.40.32:8100/soyo/resources/product_upfile/note.PNG";
+							dol.style.marginTop = "20px"; // 예시 스타일
+							dol.style.maxWidth = "100%";
+							dol.style.width = "400px";
+							dol.style.height = "250px";
+
+							// file의 부모 요소 (예: notice-body)에 추가
+							file.parentNode.appendChild(dol);
+						} else {
+							// 이미지가 이미 있으면 제거
+							dol.remove();
+						}
+					}
+				});
+				
+				if (noticeNo === 27) {
+					// 버튼 생성
+					const couponBtn = document.createElement("button");
+					couponBtn.id = "couponBtn";
+					couponBtn.textContent = "🎁 쿠폰받기";
+					couponBtn.style.marginTop = "20px";
+					couponBtn.style.padding = "10px 20px";
+					couponBtn.style.fontSize = "16px";
+					couponBtn.style.cursor = "pointer";
+					couponBtn.style.borderRadius = "8px";
+					couponBtn.style.border = "none";
+					couponBtn.style.backgroundColor = "#a4c0d4";
+					couponBtn.style.color = "white";
+
+					// 버튼 클릭 시 이미지 토글
+					couponBtn.addEventListener("click", function () {
+						let couponImg = document.getElementById("couponImg");
+
+						if (!couponImg) {
+							couponImg = document.createElement("img");
+							couponImg.id = "couponImg";
+							couponImg.src = "http://192.168.40.32:8100/soyo/resources/product_upfile/notigob.png"; // 쿠폰 이미지 경로로 수정
+							couponImg.style.width = "400px";
+							couponImg.style.height = "auto";
+							couponImg.style.marginTop = "20px";
+							couponImg.style.borderRadius = "10px";
+
+							noticeContent.appendChild(couponImg);
+						} else {
+							couponImg.remove();
+						}
+					});
+
+					// 버튼 삽입
+					noticeContent.appendChild(couponBtn);
+				}
+			};
 		</script>
 		
 		<jsp:include page="../common/footer.jsp" />

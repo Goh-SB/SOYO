@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +48,7 @@
         #content{
             width: 1500px;
              /* 여기 조절하기 */
+            margin-top: 30px;
         }
 
         #content>div{
@@ -62,8 +64,8 @@
             border-radius: 15px;
             background-color: white;
             margin: 30px;
-            margin-left: 50px;
-            margin-top: 50px;
+            margin-left: 30px;
+            margin-top: 40px;
             padding-bottom: 13px;
         }
 
@@ -107,11 +109,11 @@
         }
 
         .infomationTitle{
-            background-color: rgb(252, 232, 255);
+            background: linear-gradient(135deg, #f3e8f9 0%, #e7dcf4 100%);
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
             font-size: 25px;
-            height: 60px;
+            height: 63px;
             padding-top: 12px;
             font-weight: bold;
             color: #7e4f8b85;
@@ -126,12 +128,17 @@
             margin-bottom: 15px !important;
         }
 
+    #left-Menu{
+        margin-top: 40px;
+        margin-left: 20px;
+    }
+
 </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
 
-<br><br><br>
+<br>
 <div class="container">
         <div class="" id="content">
             <div class="" id="left-Menu">
@@ -167,7 +174,11 @@
                         <label for="">이메일 : </label>
                         <span class="fontsize10">${ sessionScope.loginUser.email }</span><br>
                         <label for="">전화번호 : </label>
-                        <span class="fontsize10">${ sessionScope.loginUser.phone }</span>
+                        <span class="fontsize10">
+                            ${fn:substring(sessionScope.loginUser.phone, 0, 3)}&nbsp;-
+                            ${fn:substring(sessionScope.loginUser.phone, 3, 7)}&nbsp;-
+                            ${fn:substring(sessionScope.loginUser.phone, 7, 11)}
+                        </span>
                         <br><br>
                         <hr>
                         <br>

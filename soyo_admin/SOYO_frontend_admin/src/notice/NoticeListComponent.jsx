@@ -9,17 +9,22 @@ function NoticeListComponent() {
     let navigate = useNavigate();
 
     let [listData, setListData] = useState([]);
-
+    
     let [cpage, setCpage] = useState(1);
-
+    
     let [keyword, setKeyword] = useState("");
-
+    
     let [pageList, setPageList] = useState([]);
+    
+    const filter = ['공지사항', '이벤트', '모든사항'];
+
+    const [selected, setSelected] = useState('모든사항');
 
     useEffect(() => {
         if (keyword == "") {
             noticeList();
         } else {
+            setSelected('모든사항');
             searchList();
         }
     }, [cpage, keyword]);
@@ -199,9 +204,6 @@ function NoticeListComponent() {
         });
     }
 
-    const filter = ['공지사항', '이벤트', '모든사항'];
-
-    const [selected, setSelected] = useState('모든사항');
 
     const filtering = () => {
         return filter.map((item, index) => {
@@ -209,7 +211,7 @@ function NoticeListComponent() {
             return (
                 <button key={index}
                     className={active} value={item}
-                    onClick={() => { filt(item) }}>
+                    onClick={() => { filt(item)}}>
                     {item}
                 </button>
             );
@@ -217,10 +219,9 @@ function NoticeListComponent() {
     };
 
     const filt = (item) => {
-
         setSelected(item);
         setCpage(1);
-
+        document.querySelector("#notice-search-text").value = '';
         let url = "http://192.168.40.32:8100/soyo/notice/filter";
         axios({
             url,
@@ -242,6 +243,8 @@ function NoticeListComponent() {
         let noticeMenu = document.querySelector("#notice-search-menu").value;
         let url = "http://192.168.40.32:8100/soyo/notice/search";
         setCpage(1);
+        
+
         axios({
             url,
             method : "get",
@@ -309,7 +312,7 @@ function NoticeListComponent() {
                 </input>
                 <button type="button"
                     id="notice-search-btn"
-                    onClick={searchList}>
+                    onClick={() => {searchList()}}>
                     검색
                 </button>
 

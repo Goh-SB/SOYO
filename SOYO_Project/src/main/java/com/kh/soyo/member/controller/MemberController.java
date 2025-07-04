@@ -26,6 +26,7 @@ import com.kh.soyo.cart.model.vo.Cart;
 import com.kh.soyo.common.model.vo.PageInfo;
 import com.kh.soyo.common.template.Pagination;
 import com.kh.soyo.common.template.XssDefencePolicy;
+import com.kh.soyo.deliveryAddress.model.service.DeliveryAddressService;
 import com.kh.soyo.deliveryAddress.model.vo.DeliveryAddress;
 import com.kh.soyo.member.model.service.MemberService;
 import com.kh.soyo.member.model.vo.Member;
@@ -47,6 +48,9 @@ public class MemberController {
 
 	@Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private DeliveryAddressService deliveryAddressService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -487,7 +491,17 @@ public class MemberController {
 		// 회원 db에 넣기
 		int result = memberService.insertMember(m);
 		
-		if(result > 0) {
+		// 회원가입 하면서 기본배송지로 등록도 같이 하기
+		DeliveryAddress del = new DeliveryAddress();
+		del.setAddressName("내 주소");
+		del.setAddressOther(fulladd);
+		del.setReceiverName(m.getMemberName());
+		del.setMemberId(m.getMemberId());
+		del.setReceiverPhone(m.getPhone());
+		
+		int result2 = deliveryAddressService.enrollerDelivery(del);
+		
+		if(result > 0 && result2 > 0) {
 			
 			session.setAttribute("alertMsg", "SOYO의 회원이 되신 것을 환영합니다.");
 			
@@ -739,17 +753,17 @@ public class MemberController {
 	    
 	    int listCount = memberService.listPageCount(loginUser);
 	    
-		int pageLimit = 5;
+		int pageLimit = 4;
 		
 		// 페이지당 보여질 갯수
-		int boardLimit = 5;
+		int boardLimit = 4;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage,pageLimit,boardLimit);
 	    
 	    if (loginUser != null) {
 	        List<Product> order = memberService.orderProduct(loginUser.getMemberId(),pi);
 	  
-	        System.out.println(order);
+//	        System.out.println(order);
 	        model.addAttribute("order", order);
 	        model.addAttribute("pi",pi);
 	    }
@@ -808,8 +822,6 @@ public class MemberController {
 	    // 여러 주소를 가져오는 서비스 호출
 	    List<DeliveryAddress> address = memberService.selectAddress(memberId);
 	    
-//	    System.out.println(address);
-	   
 	    System.out.println(address);
 	    
 	    model.addAttribute("address",address);
