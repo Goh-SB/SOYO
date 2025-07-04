@@ -121,7 +121,7 @@
             width: 100px;
             height: 40px;
             padding: 5px;
-            margin: 30px;
+            margin-top: 10px; 
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -226,6 +226,12 @@
             background-color: #dfe6fc6c;
             border-radius: 8px;
         }
+        #address{
+        	margin-bottom : 5px;
+        }
+        #payButton{
+        	margin : 10px;
+        }
 </style>
 </head>
 <body>
@@ -265,17 +271,18 @@
                             <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" required maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></td>
                         </tr>
                         
-                        <tr>
+                        <tr >
 						  <th><span class="fontsize20">주소선택</span></th>
 						  <td >
 						    <input type="radio" name="addressType" value="기본배송지" class="radio-Btn"> 기본배송지
-						    <input type="radio" name="addressType" value="직접입력" class="radio-Btn"> 직접입력
-						    <button type="button"id="selectAddress" class="btnSubmit"style="height: 40px; margin : 5px;">배송지 선택</button>
+						    <input type="radio" name="addressType" value="직접입력" class="radio-Btn"> 직접입력	
+						   	 <button type="button" id="selectAddress" class="btnSubmit">배송지 선택</button>
+					  
 						  </td>
 						</tr>
                         <tr>
                             <th><span class="fontsize20">주소</span></th>
-                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required readOnly></td>
+                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" required readOnly></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -284,7 +291,7 @@
                         
                         <tr>
                             <th><span class="fontsize20">상세주소</span></th>
-                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required></td>                
+                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66"  required></td>                
                         </tr>
                         
                         <tr>
@@ -309,8 +316,8 @@
                     </div>
 
                     <div id="buttondiv">
-                        <button onclick="requestPay()" class="btnSubmit">결제</button>
-                        <button type="button" class="btnSubmit" onclick="history.back();">취소</button>
+                        <button onclick="requestPay()" class="btnSubmit" id="payButton">결제</button>
+                        <button type="button" class="btnSubmit" id="payButton" onclick="history.back();">취소</button>
                     </div>
           
 		            </div>
@@ -541,6 +548,26 @@
 			    }
 			  });
 			});
+		  
+		  window.onload = function() {
+			  let memberId = "${sessionScope.loginUser.memberId}".trim();
+			  
+			  $.ajax({
+			    url: "/soyo/member/addressList",
+			    type: "GET",
+			    data: { memberId },
+			    success: function(result) {
+			      console.log("주소 개수:", result);
+			      if (result == 1) {
+			        $("#selectAddress").text("배송지 없음").prop("disabled", true);
+			      }
+			    },
+			    error: function(xhr, status, error) {
+			      console.error("주소 목록 가져오기 실패:", error);
+			    }
+			  });
+			}
+
 		  
 		// 모달 열기
 		  document.getElementById("selectAddress").addEventListener("click", function() {

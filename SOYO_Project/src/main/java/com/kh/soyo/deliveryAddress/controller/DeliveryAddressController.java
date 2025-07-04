@@ -87,24 +87,29 @@ public class DeliveryAddressController {
 		da.setReceiverPhone(XssDefencePolicy.defence(da.getReceiverPhone()));
 		da.setAddressOther(XssDefencePolicy.defence(da.getAddressOther()));
 		addressDetail = XssDefencePolicy.defence(addressDetail);
-		
-		// 주소와 상세주소를 합친 후 객체에 담기
-		String fulladd = da.getAddressOther() + " + "+ addressDetail ;
-		da.setAddressOther(fulladd);
-		
-		int result = deliveryService.newDeliveryAddress(da);
-		
-		if(result > 0) {
+		if(loginUser != null) {
+			// 주소와 상세주소를 합친 후 객체에 담기
+			String fulladd = da.getAddressOther() + " + "+ addressDetail ;
+			da.setAddressOther(fulladd);
 			
-			session.setAttribute("alertMsg" , "배송지 등록 성공");
+			int result = deliveryService.newDeliveryAddress(da);
 			
-			return "redirect:myDeliveryList";
-			
+			if(result > 0) {
+				
+				session.setAttribute("alertMsg" , "배송지 등록 성공");
+				
+				return "redirect:myDeliveryList";
+				
+			} else {
+				
+				session.setAttribute("alertMsg" , "배송지 등록 실패");
+				
+				return "member/myDeliveryPage";
+			}
 		} else {
+			session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
 			
-			session.setAttribute("alertMsg" , "배송지 등록 실패");
-			
-			return "member/myDeliveryPage";
+			return "member/loginPage";
 		}
 		
 		

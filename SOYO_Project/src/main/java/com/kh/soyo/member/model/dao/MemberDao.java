@@ -154,4 +154,8 @@ public class MemberDao {
 		return sqlSession.selectList("memberMapper.selectAddress",memberId);
 	}
 
+	public int addressList(SqlSessionTemplate sqlSession, String memberId) {
+		return sqlSession.selectOne("memberMapper.addressList",memberId);
+	}
+
 }

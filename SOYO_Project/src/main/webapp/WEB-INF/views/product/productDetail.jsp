@@ -559,7 +559,7 @@
             margin: 0 auto;
             padding: 2.5rem 2rem 1.5rem 2rem;
             width: 100%;
-            max-width: 500px;
+            min-width: 600px;
             border-radius: 18px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.18);
             animation: modalFadeIn 0.25s;
