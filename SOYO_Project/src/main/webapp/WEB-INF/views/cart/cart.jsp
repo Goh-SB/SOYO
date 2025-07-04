@@ -470,6 +470,7 @@
                         
                         <tbody>
                             <c:forEach var="cart" items="${cartList}">
+                            	
                                 <tr class="cart-item">
                                     <!-- 체크박스 -->
                                     <td>
@@ -580,7 +581,7 @@
                 <div class="xans-order-totalorder">
                     <ul>
                         <li class="order-btn">
-                            <a href="#none" onclick="submitAll()">
+                            <a href="#none" onclick="submitAll(event)">
                                 <i class="fas fa-shopping-bag"></i>
                                 전체상품 주문
                             </a>
@@ -819,7 +820,11 @@
             }
 
             // 전체상품 주문 함수 (기존 기능 유지)
-            function submitAll() {
+            function submitAll(event) {
+            	 event.preventDefault();
+            	 
+            	 let $td=$(".cart-item>td");
+            	
 			    // 모든 체크박스를 체크
 			    $('input[name="productId"]').prop('checked', true);
 			
@@ -827,6 +832,13 @@
 			    let productNoList = [];
 			    let productCountList = [];
 			    let productSizeList = [];
+			    
+			    if ($td.length==0) {
+                    alert("장바구니 상품이 없습니다.");
+                    return;
+                }else{
+                	
+                
 			
 			    $('input[name="productId"]').each(function () {
                     const $row = $(this).closest("tr");
@@ -872,6 +884,7 @@
 			    // 폼 제출
 			    $('#paymentCheck').submit();
 			}
+            }
 
         </script>
     </body>

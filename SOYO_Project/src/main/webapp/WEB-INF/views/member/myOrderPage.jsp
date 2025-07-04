@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -412,6 +413,54 @@
 			pointer-events: none;
 			background-color: #f8f9fa;
 		}
+		.container {
+    width: 1200px;
+    margin: auto;
+    font-size: 18px; /* 전체 기본 폰트 크기 업 */
+}
+
+#myTitle {
+    font-size: 48px; /* 타이틀 크기 업 */
+}
+
+#left-MenuList {
+    font-size: 25px; /* 메뉴 글자 크기 업 */
+}
+
+.order-link-button {
+    font-size: 16px; /* 버튼 글자 크기 업 */
+}
+
+.review-modal-header h2 {
+    font-size: 24px; /* 모달 제목 크기 업 */
+}
+
+.form-group label {
+    font-size: 20px; /* 리뷰 폼 라벨 크기 업 */
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    font-size: 18px; /* 입력창 폰트 업 */
+}
+
+.star-rating .star {
+    font-size: 36px; /* 별 크기 업 */
+}
+
+.btn-cancel,
+.btn-submit {
+    font-size: 16px; /* 모달 버튼 크기 업 */
+}
+
+.page-link {
+    font-size: 16px; /* 페이징 링크 글자 크기 업 */
+}
+
+#order-List > ul > li {
+    font-size: 18px; /* 주문목록 글자 크기 업 */
+}
+		
 </style>
 </head>
 <body>
@@ -421,6 +470,9 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous">
 	    </script>
+	    
+	    
+	    
 	<!-- 모달 창 -->
 	<div id="refundModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999;">
 	    <div style="background:white; width:400px; padding:20px; border-radius:10px; margin:150px auto; position:relative;">				
@@ -515,16 +567,15 @@
 	
 						                    <td class="product-name">
 						                        <div>
-						                        	수령인 : ${p.receiverName} <br>
-						                        	배송지 : ${p.addressOther}<br>
-						                            가격 : ${p.totalPrice}<br>
-						                            주문번호 : ${p.orderImpNo}<br>
-						                            환불상태 : 
-						                            <c:if test="${p.cancelStatus eq '환불완료'}">
+												    수령인 : ${p.receiverName} <br>
+												    배송지 : ${p.addressOther}<br>
+												    <span id="total-price">가격 : <fmt:formatNumber value="${p.totalPrice}" type="number" groupingUsed="true"/>원</span><br>
+												    주문번호 : ${p.orderImpNo}<br>
+												    환불상태 : 
+												    <c:if test="${p.cancelStatus eq '환불완료'}">
 												        <span style="color: red; font-weight: bold;">환불 완료</span>
 												    </c:if>
-	                            					
-						                        </div>
+												</div>
 						                    </td>
 						                    <td class="product-menu">
 						                        <a href="./myOrderPage/detail?impNo=${p.orderImpNo}" class="order-link-button">
@@ -773,6 +824,7 @@
                 });
             });
 
+            
             // 모달창 외부 클릭 시 닫기
             document.getElementById('reviewModal').addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -780,6 +832,8 @@
                 }
             });
         });
+        
+        
 	</script>
 </body>
 </html>

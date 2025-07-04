@@ -742,14 +742,14 @@ public class MemberController {
 		int pageLimit = 5;
 		
 		// 페이지당 보여질 갯수
-		int boardLimit = 5;
+		int boardLimit = 4;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage,pageLimit,boardLimit);
 	    
 	    if (loginUser != null) {
 	        List<Product> order = memberService.orderProduct(loginUser.getMemberId(),pi);
 	  
-	        System.out.println(order);
+//	        System.out.println(order);
 	        model.addAttribute("order", order);
 	        model.addAttribute("pi",pi);
 	    }

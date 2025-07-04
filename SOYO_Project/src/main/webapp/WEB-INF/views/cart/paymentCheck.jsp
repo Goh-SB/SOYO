@@ -149,6 +149,37 @@
             display: flex;
             justify-content: center;    /* 가로 중앙 정렬 */
         }
+       .addressUl {
+       	  background-color : rgba(241, 241, 221, 0.651);
+		  list-style: none;
+		  padding: 10px; /* 필요 시 추가 */
+		  margin: 0;  /* 필요 시 추가 */
+		}
+		.btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+        border-radius: 10px;
+   		 }
+   		 .radio-Btn{
+   		 width : 20px;
+   		 height : 20px;
+   		 vertical-align : middle;
+   		 }
+   		 #modalHeader{
+   	    text-align: center;
+        height: 60px;
+        font-size: 20px;
+        background-color: rgb(248, 226, 254);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        color: #7e4f8b85;
+        font-weight: bold;
+        padding : 12px;
+   		 }
+   		 .addressFont{
+   		 font-weight: bold;
+   		 }
 </style>
 </head>
 <body>
@@ -178,25 +209,25 @@
                         
                         <tr>
                             <th width="200px"><span class="fontsize20">수령인</span></th>
-                            <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" required></td>
+                            <td width="400px"><input name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" required maxlength="15"></td>
                         </tr>
                        
                         <tr>
                             <th><span class="fontsize20">휴대전화번호</span></th>
-                            <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" required></td>
+                            <td><input name="phone" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" required maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></td>
                         </tr>
                         
                         <tr>
 						  <th><span class="fontsize20">주소선택</span></th>
-						  <td>
-						    <input type="radio" name="addressType" value="기본배송지"> 기본배송지
-						    <input type="radio" name="addressType" value="직접입력"> 직접입력
-						    <input type="button" value="배송지 선택" id="selectAddress">
+						  <td >
+						    <input type="radio" name="addressType" value="기본배송지" class="radio-Btn"> 기본배송지
+						    <input type="radio" name="addressType" value="직접입력" class="radio-Btn"> 직접입력
+						    <button type="button"id="selectAddress" class="btnSubmit"style="height: 40px; margin : 5px;">배송지 선택</button>
 						  </td>
 						</tr>
                         <tr>
                             <th><span class="fontsize20">주소</span></th>
-                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required></td>
+                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required readOnly></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -210,7 +241,7 @@
                         
                         <tr>
 						  <th><span>배송지 이름</span></th>
-						  <td><input type="text" class="updateInput" id="addressName" name="addressName" placeholder="예: 집, 회사, 친구집"></td>
+						  <td><input type="text" class="updateInput" id="addressName" name="addressName" placeholder="예: 집, 회사, 친구집" maxlength="10"></td>
 						</tr>
 						                        
                         <tr>
@@ -239,8 +270,8 @@
 		     	    
 		     	    <!-- 모달창 -->
 					<div id="addressModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
-				    <div style="background:#fff; width:400px; margin:100px auto; padding:20px; border-radius:10px; position:relative;">
-				        <h3 style="text-align:center;">배송지 선택</h3>
+				    <div style="background:#fff; width:400px; margin:100px auto;  border-radius:10px; position:relative; ">
+				       <div id="modalHeader"><h3 style="text-align:center;" >배송지 선택</h3></div>
 				        <div id="addressList" style="list-style:none; padding:0;">
 
 					
@@ -249,7 +280,9 @@
 				               
 				            </c:forEach> -->
 				        </div>
-				        <button onclick="closeModal()" style="display:block; margin:20px auto; padding:5px 15px;">닫기</button>
+				        <button onclick="closeModal()" style="display:block; margin:10px auto;  padding : 10px; ">닫기</button>
+				        <div style="height : 5px;"></div>
+				        
 				    </div>
 				</div>
 		     	    
@@ -386,6 +419,8 @@
 		    			    selectedProductSizeList : selectedProductSizeList
 		    			    
 		    			};
+		    	 
+		    	 console.log(orderInfo);
 		    	 $.ajax({
 		    		    type: "POST",
 		    		    url: "/soyo/cart/insertOrder", // 컨트롤러에 맞게 URL 조정
@@ -452,7 +487,7 @@
 			      document.getElementById("addrDetail").value = "";
 			      document.getElementById("addressName").value = "";
 			      
-			      document.getElementById("address").readOnly = false;
+			      document.getElementById("address").readOnly = true;
 		            document.getElementById("addrDetail").readOnly = false;
 			    }
 			  });
@@ -473,12 +508,18 @@
 		                const beforePlus = parts[0] || "";
 		                const afterPlus = parts[1] || "";
 
-		                resultStr += "<ul class='addressUl'>" +
-		                             "<li>" + item.addressName + "</li>" +
-		                             "<li>" + beforePlus + "</li>" +
-		                             "<li>" + afterPlus + "</li>" +
-		                             "<li><button onclick=\"selectAddress('" + item.addressOther + "', '" + item.addressName + "')\">선택</button></li>" +
-		                             "</ul>";
+		                resultStr += "<br>" +
+		                "<ul class='addressUl'>" +
+		                "<li class='addressFont'>" +
+		                "<label style='cursor:pointer;'>" + 
+		                "<input id='chooseAddress" + item.addressNo + "' name='chooseAddress' type='checkbox' style='margin-right: 10px; cursor:pointer;' " +
+		                "onclick=\"selectAddress('" + item.addressOther + "', '" + item.addressName + "')\">" +
+		                item.addressName + 
+		                "</label>" +
+		                "</li>" +
+		                "<li class='addressFont'>" + beforePlus + "</li>" +
+		                "<li class='addressFont'>" + afterPlus + "</li>" +
+		                "</ul><br><hr>";
 		            }
 		            document.getElementById("addressList").innerHTML = resultStr; 
 		        },
