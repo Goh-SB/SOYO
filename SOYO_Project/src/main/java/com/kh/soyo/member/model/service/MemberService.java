@@ -71,6 +71,8 @@ public interface MemberService {
 
 	List<DeliveryAddress> selectAddress(String memberId);
 
+	int addressList(String memberId);
+
 	
 
 

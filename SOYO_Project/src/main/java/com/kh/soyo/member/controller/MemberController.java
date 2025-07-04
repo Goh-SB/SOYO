@@ -801,7 +801,7 @@ public class MemberController {
 	
 	@GetMapping("/defaultAddress")
 	@ResponseBody
-	public DeliveryAddress defaultAddress(HttpSession session) {
+	public DeliveryAddress defaultAddress(HttpSession session,Model model) {
 	    Member loginUser = (Member) session.getAttribute("loginUser");
 	    String memberId = loginUser.getMemberId();
 	    
@@ -822,14 +822,20 @@ public class MemberController {
 	    // 여러 주소를 가져오는 서비스 호출
 	    List<DeliveryAddress> address = memberService.selectAddress(memberId);
 	    
-	    System.out.println(address);
-	    
 	    model.addAttribute("address",address);
 	    
 	    return address; 
 	}
 	
-	
+	@GetMapping("addressList")
+	@ResponseBody
+	public int addressList(Member member,Model model) {
+		int result = memberService.addressList(member.getMemberId());
+		System.out.println(member.getMemberId());
+		System.out.println(result);
+
+		return result;
+	}
 	
 	
 	
