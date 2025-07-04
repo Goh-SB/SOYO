@@ -61,6 +61,38 @@
             font-weight: 600;
             text-align: center;
         }
+        #goblin {
+        position: relative;
+        width: 0;
+        height: 0;
+        overflow: visible;
+    }
+
+    /* 달려오는 고블린 애니메이션 */
+    @keyframes runLeft {
+        0% {
+            right: -2000px;
+            opacity: 0.7;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            right: 100%;
+            opacity: 0;
+        }
+    }
+
+    .goblin-run {
+        position: absolute;
+        top: 0;
+        right: -300px;
+        width: 200px;
+        height: 200px;
+        z-index : 2;
+        animation: runLeft 2s ease-out forwards;
+        pointer-events: none;
+    }
     </style>
 </head>
 <body>
@@ -72,6 +104,9 @@
     <div class="celeb-container">
         <h1 id="celeb-title">GALLERY</h1>
         <br>
+        <div id="goblin">
+        </div>
+        
         <div class="celeb-grid">
             
             <div class="celeb-item">
@@ -166,6 +201,32 @@
     
     <br><br><br>
     <jsp:include page="../common/footer.jsp" />
+    <script>
+    window.onload = function () {
+    const items = document.getElementsByClassName("celeb-item");
+        const goblinContainer = document.getElementById("goblin");
+
+        Array.from(items).forEach(item => {
+            item.addEventListener("click", function () {
+                // 기존 고블린 제거 (중복 방지)
+                const existing = document.getElementById("gobrun");
+                if (existing) existing.remove();
+
+                // 고블린 이미지 생성
+                const gobrun = document.createElement("img");
+                gobrun.id = "gobrun";
+                gobrun.src = "http://192.168.40.32:8100/soyo/resources/product_upfile/goblin.gif";
+                gobrun.className = "goblin-run";
+                
+
+                // #goblin에 삽입
+                goblinContainer.appendChild(gobrun);
+            });
+        });
+    };
+    
+    
+    </script>
     
 </body>
 </html>
