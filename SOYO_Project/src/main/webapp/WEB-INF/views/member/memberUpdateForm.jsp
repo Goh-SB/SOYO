@@ -26,8 +26,9 @@
         }
 
         #content{
-            width: 1100px;
+            width: 1200px;
             height: 1150px; /* 여기 조절하기 */
+            margin-top: 30px;
         }
 
         #content>div{
@@ -43,9 +44,14 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 25px;
             background-color: rgba(254, 247, 253, 0.865);
-            margin: 50px;
+            margin: 30px;
+            margin-top: 40px;
         }
 
+        #left-Menu{
+        margin-top: 40px;
+        margin-left: 20px;
+    }
 
         table{
             text-align: left;
@@ -126,8 +132,7 @@
 <jsp:include page="../common/menubar.jsp" />
 <div class="container">
     <br>
-    <br>
-    <br>
+
         <div class="" id="content">
             <div class="" id="left-Menu">
                 <jsp:include page="../member/leftMenu.jsp" />
@@ -135,9 +140,6 @@
             <div class="" id="myContent">
                 <div class="title">내 정보 변경</div>
                 <form id="myupdate-form" action="../member/update" method="post" align="center">
-                    
-                        
-                        
                         	<input type="hidden" class="fontsize20 updateInput" name="memberId" value="${ sessionScope.loginUser.memberId }" >
                         
                             <div class="resultDiv">
