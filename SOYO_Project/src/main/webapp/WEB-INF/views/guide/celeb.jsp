@@ -136,7 +136,7 @@
             <div class="celeb-item">
                 <img src="${pageContext.request.contextPath}/resources/images/celeb/6.jpg" alt="셀러브리티 이미지" class="celeb-image">
                 <div class="celeb-info">
-                    <h3 class="celeb-title">김연아 (전직 피겨선수)</h3>
+                    <h3 class="celeb-title">김연아 (前 피겨선수)</h3>
                     <p class="celeb-description">with SOYO</p>
                 </div>
             </div>
