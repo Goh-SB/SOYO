@@ -50,6 +50,11 @@ public class DeliveryAddressDao {
 		return sqlSession.delete("deliveryAddressMapper.deleteAddress",d);
 	}
 
+	public int enrollDelivery(SqlSessionTemplate sqlSession, DeliveryAddress del) {
+		
+		return sqlSession.insert("deliveryAddressMapper.enrollDelivery", del);
+	}
+
 	
 	
 }

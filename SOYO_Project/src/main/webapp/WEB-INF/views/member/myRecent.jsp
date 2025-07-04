@@ -42,6 +42,7 @@
 
     #content {
         width: 1000px;
+        margin-top: 20px;
     }
 
     #content > div {
@@ -81,18 +82,20 @@
     }
 
     .recentContent{
-        width: 1000px;
+        width: 970px;
         margin: 50px;
         background-color: white;
         border-radius: 15px;
+        margin-left: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .recentTitle{
         height: 50px;
-        background-color: rgb(252, 232, 255);
+        background: linear-gradient(135deg, #f3e8f9 0%, #e7dcf4 100%);
         border-top-right-radius: 15px;
         border-top-left-radius: 15px;
-        height: 60px;
+        height: 63px;
         padding-top: 10px;
         font-size: 25px;
         color: #7e4f8b85;
@@ -136,12 +139,17 @@
         border-radius: 15px;
     }
 
+    #left-Menu{
+        margin-top: 50px;
+        margin-left: 20px;
+    }
+
 </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
 
-<br><br><br>
+<br>
 
 <div class="container">
     <div id="content">
