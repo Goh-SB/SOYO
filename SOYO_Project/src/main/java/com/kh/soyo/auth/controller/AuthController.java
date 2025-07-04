@@ -19,7 +19,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://192.168.40.17:5173")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
