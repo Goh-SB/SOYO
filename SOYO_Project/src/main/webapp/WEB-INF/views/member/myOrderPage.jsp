@@ -842,7 +842,7 @@ body{
 												        </c:when>
 												        <c:otherwise>
 												            <button type="button"
-																	style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+																	style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"
 												                    onclick="copyImpUid('${p.orderImpNo}'); openModal();"
 												                    class="order-link-button">
 												                환불 하기

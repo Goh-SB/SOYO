@@ -60,6 +60,7 @@
         text-align: center;
         margin-bottom: 50px;
         padding-bottom: 30px;
+        margin-left: 40px;
     }
 
     .productImg {
