@@ -835,3 +835,10 @@ commit
 			)
 			WHERE RNUM BETWEEN 1 AND 10
             
+            
+SELECT SUM(TOTAL_PRICE)
+  FROM ORDER_TB
+  
+   		SELECT COUNT(*)
+ 		FROM MEMBER
+ 		WHERE GENDER = 'M'

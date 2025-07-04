@@ -32,5 +32,11 @@ public interface MemberService {
 
 	List<Map<String, Object>> chart1Data();
 
+	int percentMen();
+
+	int percentWomen();
+
+	int percentNoGender();
+
 
 }

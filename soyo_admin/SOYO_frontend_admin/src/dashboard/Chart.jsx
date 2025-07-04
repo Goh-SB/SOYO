@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import './Chart.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Chart1() {
-
+    let navigate = useNavigate();
     useEffect(() => {
         chart1();
     }, []);
@@ -55,6 +56,7 @@ function Chart1() {
 
 
         function drawBar2(chartData) {
+
             // 그래프 상에 표현할 데이터
             var data = google.visualization.arrayToDataTable(chartData);
 
@@ -87,38 +89,60 @@ function Chart1() {
 }
 
 function Chart2() {
+    let [men, setMen] = useState(0);
+    let [women, setWomen] = useState(0);
+    let [noGender, setNoGender] = useState(0);
+
     // ----- 원형 그래프
     useEffect(() => {
         google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawPie);
-
-        function drawPie() {
-            // 그래프 상에 표현할 데이터
-            var data = google.visualization.arrayToDataTable([
-                ['판매 현황', '비율'],
-                ['남성', 19],
-                ['여성', 28],
-                ['아동', 37],
-                ['악세사리', 16]
-            ]);
-
-            // 그래프 그리기 옵션
-            var options = {
-                title: '판매 현황',
-                height: 300,
-                width: 400,
-            };
-
-            // 그래프를 그려넣을 요소 선택 후 데이터, 옵션을 매개변수로 넣어 그리기
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
-            chart.draw(data, options);
-        }
+        google.charts.setOnLoadCallback(() => {
+            let url = "http://192.168.40.32:8100/soyo/member/percent";
+            axios({
+                url,
+                method: "get"
+            }).then((response) => {
+                setMen(Number(response.data.men));
+                setWomen(Number(response.data.women));
+                setNoGender(Number(response.data.noGender));
+                
+            })
+        });
     }, []);
+
+    useEffect(() => {
+        if(men > 0){
+            drawPie();
+        }
+    }, [men, women, noGender])
+
+    function drawPie() {
+        // 그래프 상에 표현할 데이터
+        var data = google.visualization.arrayToDataTable([
+            ['회원 성별', '비율'],
+            ['남성', men],
+            ['여성', women], 
+            ['성별없음', noGender]
+        ]);
+
+        // 그래프 그리기 옵션
+        var options = {
+            title: '회원 성별',
+            height: 300,
+            width: 400,
+        };
+
+        // 그래프를 그려넣을 요소 선택 후 데이터, 옵션을 매개변수로 넣어 그리기
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+    }
 
 
     return (
         <div id="chart_div3_area">
-            <div id="chart_div3"></div>
+            <div id="chart_div3">
+
+            </div>
 
         </div>
     );
@@ -129,6 +153,7 @@ function Chart2() {
 
 
 function Chart3() {
+    let navigate = useNavigate();
 
     const [memberData, setMemberData] = useState(0);
 
@@ -155,7 +180,7 @@ function Chart3() {
     return (
         <div className="chart-card" >
             <div className="chart-card-block">
-                <div align="center" className="chart-title">
+                <div align="center" className="chart-title" onClick={() => { navigate("/member/list") }}>
                     회원 가입수
                     <br />
                     <div align="center" className="chart-content">
@@ -169,6 +194,7 @@ function Chart3() {
 }
 
 function Chart4() {
+    let navigate = useNavigate();
     useEffect(() => {
         productCount();
     }, [])
@@ -185,7 +211,7 @@ function Chart4() {
     return (
 
         <div className="chart-card">
-            <div className="chart-card-block">
+            <div className="chart-card-block" onClick={() => { navigate("/product/list") }}>
                 <div className="chart-title" align="center">
                     상품 종류
                     <div align="center" id="chart4" className="chart-content">
@@ -200,6 +226,7 @@ function Chart4() {
 
 
 function Chart5() {
+    let navigate = useNavigate();
     useEffect(() => {
         cashData();
     }, [])
@@ -215,7 +242,7 @@ function Chart5() {
     }
     return (
         <div className="chart-card">
-            <div className="chart-card-block">
+            <div className="chart-card-block" onClick={() => { navigate("/delivery/list") }}>
                 <div className="chart-title" align="center">
                     총 매출 액
                     <div align="center" id="chart5" className="chart-content">
@@ -229,7 +256,7 @@ function Chart5() {
 }
 
 function Chart6() {
-
+    let navigate = useNavigate();
     useEffect(() => {
         orderCount();
     }, [])
@@ -246,8 +273,8 @@ function Chart6() {
 
     return (
         <div className="chart-card">
-            <div className="chart-card-block">
-                <div className="chart-title" align="center">
+            <div className="chart-card-block" onClick={() => { navigate("/delivery/list") }}>
+                <div className="chart-title" align="center" >
                     주문 량
                     <div align="center" id="chart6" className="chart-content">
 
