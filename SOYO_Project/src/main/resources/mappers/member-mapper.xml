@@ -285,7 +285,8 @@
 
 	<select id="myProduct" parameterType="product" resultMap="productMap">
 	
-		SELECT PRODUCT_CHANGE
+		SELECT P.PRODUCT_NO,
+				PRODUCT_CHANGE
 		       ,PRODUCT_NAME
 		       ,PRODUCT_PRICE
 		       ,PRODUCT_COUNT

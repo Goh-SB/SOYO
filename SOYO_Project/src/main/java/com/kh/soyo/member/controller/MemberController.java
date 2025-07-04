@@ -851,6 +851,7 @@ public class MemberController {
 			p1 = memberService.myProduct(p1);
 			
 			result.add(p1);		
+			System.out.println(p1);
 		}
 //		System.out.println(impNo);
 //		System.out.println(result);

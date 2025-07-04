@@ -657,10 +657,10 @@
             	const $select = $(selectElement); // DOM 객체 보존
                 const $row = $select.closest("tr");
                 const productSize = $select.val();
-                
+                 
                 const stock = $row.find("#stock");
                 const $count = $row.find(".pop_out");
-
+				$count.val(1);
                 const productNo = parseInt($row.find("input[name='productId']").val());
  
                  $.ajax({
