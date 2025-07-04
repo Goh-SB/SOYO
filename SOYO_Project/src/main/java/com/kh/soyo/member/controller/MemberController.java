@@ -244,73 +244,79 @@ public class MemberController {
     public String wishGo(@RequestParam(value = "selected", required = false) List<Integer> selected,
                          HttpServletRequest request, HttpSession session, Cart cart , Model model, Wish wish) {
     	
-    	int result = 0;
+    	Member loginUser = (Member)session.getAttribute("loginUser");
     	
-        if (selected != null) {
-        	
-        	// 반복문 돌려서 넣기
-            for (int index : selected) {
-            	
-            	// int 타입으로 바꾸기
-            	String productNoStr = request.getParameter("productNo" + index);
-            	int productNo = Integer.parseInt(productNoStr);
-            	
-                String productSize = request.getParameter("productSize" + index);
-
-                Member loginUser = (Member)session.getAttribute("loginUser");
-                String memberId = loginUser.getMemberId();
-                
-                // 상품번호: productNo
-                //사이즈: productSize 
-                
-                cart.setMemberId(memberId);
-                cart.setProductNo(productNo);
-                cart.setProductSize(productSize);
-                
-                // 카트에 넣기전 이미 들어가있는지 확인 아이디, 상품번호로
-                int check = cartService.checkCart(cart);
-                
-                if(check > 0) {
-                	// 하나라도 들어가있다면 중지시킴
-                	
-                	session.setAttribute("alertMsg", "이미 들어가있는 제품이 있습니다.");
-                	
-                	return myWishList(1, session, model);
-                	
-                } else {
-                	// 안들어가있다면 장바구니에 추가
-                	result = cartService.insertCart(cart);
-                	
-                	// 장바구니에 추가 성공했다면 찜 리스트에서 삭제
-                	wish.setMemberId(memberId);
-                	wish.setProductNo(productNo);
-                	wishListService.deleteWish(wish);
-                }
-                
-                     
-            }
-            if(result > 0) {
-            		
-                session.setAttribute("alertMsg", "장바구니 담기 성공.");
-                
-                return cartController.showCartPage(model, session);
-                
-            } else {
-                
-            	session.setAttribute("alertMsg", "상품을 선택해주세요.");
-            	
-            	return myWishList(1, session, model);
-            }
-            
-            
-            
-        } else {
-        	
-        	session.setAttribute("alertMsg", "상품을 선택해주세요.");
-        	
-        	return myWishList(1, session, model);
-        }
-        
+    	if(loginUser != null) {
+    	
+	    	int result = 0;
+	    	
+	        if (selected != null) {
+	        	
+	        	// 반복문 돌려서 넣기
+	            for (int index : selected) {
+	            	
+	            	// int 타입으로 바꾸기
+	            	String productNoStr = request.getParameter("productNo" + index);
+	            	int productNo = Integer.parseInt(productNoStr);
+	            	
+	                String productSize = request.getParameter("productSize" + index);
+	
+	                String memberId = loginUser.getMemberId();
+	                
+	                // 상품번호: productNo
+	                //사이즈: productSize 
+	                
+	                cart.setMemberId(memberId);
+	                cart.setProductNo(productNo);
+	                cart.setProductSize(productSize);
+	                
+	                // 카트에 넣기전 이미 들어가있는지 확인 아이디, 상품번호로
+	                int check = cartService.checkCart(cart);
+	                
+	                if(check > 0) {
+	                	// 하나라도 들어가있다면 중지시킴
+	                	
+	                	session.setAttribute("alertMsg", "이미 들어가있는 제품이 있습니다.");
+	                	
+	                	return myWishList(1, session, model);
+	                	
+	                } else {
+	                	// 안들어가있다면 장바구니에 추가
+	                	result = cartService.insertCart(cart);
+	                	
+	                	// 장바구니에 추가 성공했다면 찜 리스트에서 삭제
+	                	wish.setMemberId(memberId);
+	                	wish.setProductNo(productNo);
+	                	wishListService.deleteWish(wish);
+	                }
+	                
+	                     
+	            }
+	            if(result > 0) {
+	            		
+	                session.setAttribute("alertMsg", "장바구니 담기 성공.");
+	                
+	                return cartController.showCartPage(model, session);
+	                
+	            } else {
+	                
+	            	session.setAttribute("alertMsg", "상품을 선택해주세요.");
+	            	
+	            	return myWishList(1, session, model);
+	            }
+	            
+	            
+	            
+	        } else {
+	        	
+	        	session.setAttribute("alertMsg", "상품을 선택해주세요.");
+	        	
+	        	return myWishList(1, session, model);
+	        }
+    	} else {
+    		session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			return "member/loginPage";
+    	}
     }
 	
 	// 로그인 요청 처리용 메서드
@@ -576,40 +582,45 @@ public class MemberController {
 		
 		// 비밀번호 비교를 위해 세션에서 비밀번호 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		
-		// 일단 현재 사용중인 비밀번호가 맞는지 확인
-		if(bCryptPasswordEncoder.matches(originPwd, loginUser.getMemberPwd())) { // 같을경우
-			
-			// 바꿀 비밀번호도 암호화
-			String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
-			
-			// 해시맵으로 묶어서 전달값 넘겨주기
-			HashMap<String, String> hm = new HashMap<>();
-			hm.put("memberId", userId);
-			hm.put("updatePwd", updateEncPwd);
-			
-			// 비밀번호 변경 진행
-			int result = memberService.updatePwd(hm);
-			
-			if(result > 0) { // 성공
+		if(loginUser != null) {
+			// 일단 현재 사용중인 비밀번호가 맞는지 확인
+			if(bCryptPasswordEncoder.matches(originPwd, loginUser.getMemberPwd())) { // 같을경우
+				
+				// 바꿀 비밀번호도 암호화
+				String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
+				
+				// 해시맵으로 묶어서 전달값 넘겨주기
+				HashMap<String, String> hm = new HashMap<>();
+				hm.put("memberId", userId);
+				hm.put("updatePwd", updateEncPwd);
+				
+				// 비밀번호 변경 진행
+				int result = memberService.updatePwd(hm);
+				
+				if(result > 0) { // 성공
+								
+					session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다.");
+					
+					return "member/loginPage";
+					
+				} else { // 실패
+					 session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다.");
+					 return "redirect:/member/myInformation";
+				}
 				
 				
-				session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다.");
+			} else {
 				
-				return "member/loginPage";
-				
-			} else { // 실패
-				 session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다.");
+				session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+				return "redirect:/member/myInformation";
 			}
-			
-			
 		} else {
 			
-			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+			session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			return "member/loginPage";
 		}
-		
-		return "redirect:/member/myInformation";
 	}
+		
 	
 	
 	// 회원 탈퇴용 메소드
@@ -620,33 +631,42 @@ public class MemberController {
 		userPwd = (XssDefencePolicy.defence(userPwd));
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		//loginUser에 세션값 담기
-		// System.out.println(loginUser);
-		if(bCryptPasswordEncoder.matches(userPwd, loginUser.getMemberPwd()))
-		{ // 성공시
-			// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가)
-			
-			int result = memberService.deleteMember(loginUser.getMemberId());
-			// 회원탈퇴 시키고 오기
-			if(result > 0) { // 탈퇴 성공시
+		
+		if(loginUser != null) {
+		
+			//loginUser에 세션값 담기
+			// System.out.println(loginUser);
+			if(bCryptPasswordEncoder.matches(userPwd, loginUser.getMemberPwd()))
+			{ // 성공시
+				// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가)
 				
-				session.setAttribute("alertMsg", "회원탈퇴 성공");
+				int result = memberService.deleteMember(loginUser.getMemberId());
+				// 회원탈퇴 시키고 오기
+				if(result > 0) { // 탈퇴 성공시
+					
+					session.setAttribute("alertMsg", "회원탈퇴 성공");
+					
+					session.removeAttribute("loginUser");
+					
+					return "redirect:/";
+					
+				} else { // 탈퇴 실패시
+					
+					session.setAttribute("alertMsg", "회원탈퇴 실패");
+					
+					return "common/errorPage";
+				}
 				
-				session.removeAttribute("loginUser");
+			} else { // 실패시
+				session.setAttribute("alertMsg", "잘못된 비밀번호 입니다.");
 				
-				return "redirect:/";
-				
-			} else { // 탈퇴 실패시
-				
-				session.setAttribute("alertMsg", "회원탈퇴 실패");
-				
-				return "common/errorPage";
+				return "redirect:/member/myInformation";
 			}
+		
+		} else {
 			
-		} else { // 실패시
-			session.setAttribute("alertMsg", "잘못된 비밀번호 입니다.");
-			
-			return "redirect:/member/myInformation";
+			session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			return "member/loginPage";
 		}
 		
 	}
