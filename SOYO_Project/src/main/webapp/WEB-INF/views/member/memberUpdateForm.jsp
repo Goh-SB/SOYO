@@ -14,17 +14,20 @@
             margin: auto;
         }
 
-        #myTitle{
-            width: 1200px;
-            height: 120px;
-            font-size: 40px;
-            text-align: center;
-            vertical-align: middle;
+        @font-face {
+            font-family: 'LINESeedKR-Bd';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body{
+            background-color: #f8f9fa;
         }
 
         #content{
-            width: 1200px;
-            height: 800px; /* 여기 조절하기 */
+            width: 1100px;
+            height: 1150px; /* 여기 조절하기 */
         }
 
         #content>div{
@@ -32,65 +35,17 @@
             display: block;
         }
 
-        #left-Menu{
-            width: 180px;
-        }
-
-        #left-MenuList{
-            list-style-type: none;
-            margin: 0px;
-            padding: 0px;
-            font-size: 23px;
-            height: 50px;
-        }
-
-        #left-MenuList li{
-            margin-top: 5px;
-            padding-left: 7px;
-            
-        }
-
-        #left-MenuList li:hover{
-            background-color: rgba(252, 206, 255, 0.821);
-            border-top-right-radius: 25px;
-            border-bottom-right-radius: 25px;
-            border-bottom-left-radius: 5px;
-            border-top-left-radius: 5px;
-            width: 166px;
-            
-        }
-
-        #left-MenuList a{
-            text-decoration: none;
-            color: gray;
-            display: block;
-            width: 170px;
-            /* border: 1px solid lightgray; */
-            
-        }
 
         #myContent{
             width: 800px;
              /*border: 2px solid rgb(122, 64, 126);*/
             box-sizing: border-box;
-            box-shadow: 0px 0px 2px 3px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            background-color: rgba(255, 242, 253, 0.663);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 25px;
+            background-color: rgba(254, 247, 253, 0.865);
+            margin: 50px;
         }
 
-
-        #order-List>ul{
-            list-style-type: none;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        #order-List>ul>li{
-            border: 2px solid rgb(225, 168, 255);
-            padding: 10px;
-            border-radius: 5px;
-            margin: 20px;
-        }
 
         table{
             text-align: left;
@@ -109,8 +64,9 @@
             padding: 5px;
             margin-top: 10px;
             border-radius: 8px;
-            border: none;
+            border: 2px solid lightgray;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
         .btnSubmit{
@@ -125,63 +81,94 @@
             border-radius: 8px;
         }
 
+        .resultDiv{
+            width: 600px;
+            border: 2px solid lightgrey;
+            border-radius: 15px;
+            margin: auto;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .searchAdd{
+            width: 400px;
+            height: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: aliceblue;
+            
+        }
+
+        .title{
+            background-color: rgb(252, 232, 255);
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            font-size: 25px;
+            height: 60px;
+            padding-top: 12px;
+            font-weight: bold;
+            color: #7e4f8b85;
+            font-family: 'LINESeedKR-Bd';
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
 </style>
 
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp" />
 <div class="container">
-        <div class="" id="myTitle">
-            마이페이지
-        </div>
+    <br>
+    <br>
+    <br>
         <div class="" id="content">
             <div class="" id="left-Menu">
                 <jsp:include page="../member/leftMenu.jsp" />
             </div>
             <div class="" id="myContent">
-                <div style="height: 5%; font-size: 30px; text-align: center;
-                padding: 15px;">내 정보 변경</div>
+                <div class="title">내 정보 변경</div>
                 <form id="myupdate-form" action="../member/update" method="post" align="center">
-                    <table>
+                    
                         
-                        <tr>
-                        	<td colspan="3"><input type="hidden" class="fontsize20 updateInput" name="memberId" value="${ sessionScope.loginUser.memberId }" ></td>
-                        </tr>
-                        <tr>
-                            <th width="200px"><span class="fontsize20">이름</span></th>
-                            <td width="400px"><input maxlength="4" name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" ></td>
-                        </tr>
-                        <tr>
-                            <td><input type="password" name="memberPwd" class="fontsize20 updateInput" value="${ sessionScope.loginUser.memberPwd }" style="display: none;"></td>
-                        </tr>
-                        <tr>
-                        	<th><span class="fontsize20">성별</span></th>
-                        	<td style="padding: 10px; font-size: 17px;">
+                        
+                        	<input type="hidden" class="fontsize20 updateInput" name="memberId" value="${ sessionScope.loginUser.memberId }" >
+                        
+                            <div class="resultDiv">
+                                <span class="fontsize20">이름</span><br>
+                                <input maxlength="4" name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" > <br>
+                            
+                            <input type="password" name="memberPwd" class="fontsize20 updateInput" value="${ sessionScope.loginUser.memberPwd }" style="display: none;">
+                            <span class="fontsize20">성별</span><br>
+                            <div style="width: 400px; height: 50px; padding-top: 8px; margin-top: 10px;  margin: auto; margin-bottom: 10px; border-radius: 10px; border: 2px solid lightgrey;">
+                                
                         		<input id="genderM" name="gender" type="radio" style="width: 20px; height: 20px;" value="M"><span class="fontsize20">&nbsp;남</span>
                                 <input id="genderF" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="F"><span class="fontsize20">&nbsp;여</span>
                                 <input id="genderX" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="X"><span class="fontsize20">&nbsp; 선택안함</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><span class="fontsize20">생년월일</span></th>
-                            <td><input id="memberDate" name="birthDate" type="date" class="fontsize20 updateInput" value="${ sessionScope.loginUser.birthDate }" ></td>
-                        </tr>
-                        <tr>
-                            <th><span class="fontsize20">휴대전화번호</span></th>
-                            <td><input name="phone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ></td>
-                        </tr>
-                        <tr>
-                            <th><span class="fontsize20">주소</span></th>
-                            <td><input type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="button" style="margin: 5px;" class="btnSubmit" onClick="execDaumPostcode()" value="주소검색"></td>
-                        </tr>
-                        <tr>
-                            <th><span>상세주소</span></th>
-                            <td><input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required></td>
+                            </div>
+                                <span class="fontsize20">생년월일</span><br>
+                                <input name="birthDate" type="date" class="fontsize20 updateInput" value="${ sessionScope.loginUser.birthDate }" ><br>
+           
+                                <span class="fontsize20">휴대전화번호</span><br>
+                                <input name="phone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ><br>
+                            </div>
+
+                            <div class="resultDiv">
+                                <span class="fontsize20">주소</span><br>
+                                <input style="margin-bottom: 5px;" type="text" id="address" class="updateInput"  name="address" maxlength="66" value="${ baseAddress }" required><br>
                             
+                                
+                                <input type="button" class="searchAdd" onClick="execDaumPostcode()" value="주소검색"><br>
+                            
+                                <span class="fontsize20">상세주소</span><br>
+                                <input type="text" class="updateInput" id="addrDetail" name="addrDetail" maxlength="66" value="${ detailAddress }" required>
+                            </div>
                         </tr>
                     
                     </table>
@@ -200,10 +187,7 @@
     <jsp:include page="../common/footer.jsp" />
 </body>
 <script>
-const today = new Date().toISOString().split('T')[0];
 
-// 오늘이후 날짜 선택 불가능하게
-document.getElementById('memberDate').setAttribute('max', today);
 
     function execDaumPostcode() {
     new daum.Postcode({
