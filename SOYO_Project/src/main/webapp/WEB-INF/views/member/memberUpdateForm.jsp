@@ -155,7 +155,7 @@
                                 <input id="genderX" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="X"><span class="fontsize20">&nbsp; 선택안함</span>
                             </div>
                                 <span class="fontsize20">생년월일</span><br>
-                                <input name="birthDate" type="date" class="fontsize20 updateInput" value="${ sessionScope.loginUser.birthDate }" ><br>
+                                <input name="birthDate" type="date" id="memberDate" class="fontsize20 updateInput input-field" value="${ sessionScope.loginUser.birthDate }" ><br>
            
                                 <span class="fontsize20">휴대전화번호</span><br>
                                 <input name="phone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ><br>
@@ -189,6 +189,10 @@
     <jsp:include page="../common/footer.jsp" />
 </body>
 <script>
+const today = new Date().toISOString().split('T')[0];
+
+// 오늘이후 날짜 선택 불가능하게
+document.getElementById('memberDate').setAttribute('max', today);
 
 
     function execDaumPostcode() {
