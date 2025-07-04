@@ -187,19 +187,20 @@
                 <form action="../member/changePwd" method="post" onsubmit="return changeMemberPwd()">
                     <table class="formTable">
                         <tr>
-                            <td><span style="font-size: 30px;" class="fontGowunD">비밀번호 찾기</span></td>
+                            <td colspan="2"><span style="font-size: 30px;" class="fontGowunD">비밀번호 찾기</span></td>
                         </tr>
                         <tr>
-                            <td><input name="memberId" type="text" class="fontGowunB" placeholder="아이디" maxlength="20" required></td>
+                            <td colspan="2"><input name="memberId" type="text" class="fontGowunB" placeholder="아이디" maxlength="20" required></td>
                         </tr>
                         <tr>
-                            <td><input id="email" name="email" class="fontGowunB" type="email" maxlength="30" placeholder="이메일" required></td>
+                            <td colspan="2"><input id="email" name="email" class="fontGowunB" type="email" maxlength="30" placeholder="이메일" required></td>
                         </tr>
                         <tr>
-                            <td><button style="cursor: pointer;" type="button" id="sert" class="fontGowunB" onclick="cert()">인증번호 발급</button></td>
+                            <td colspan="2"><button style="cursor: pointer;" type="button" id="sert" class="fontGowunB" onclick="cert()">인증번호 발급</button></td>
                         </tr>
                         <tr style="display: none;">
-                            <td><input type="text" id="emailCheck" maxlength="10" class="fontGowunB" placeholder="인증번호"><br><button type="button" style="cursor: pointer;" class="validateBtn fontGowunB" id="validate" onclick="valid();">인증</button></td>
+                            <td><input style="width: 280px;" type="text" id="emailCheck" maxlength="10" class="fontGowunB" placeholder="인증번호">
+                            <button type="button" style="cursor: pointer; margin-left: 20px; width: 100px;" class="validateBtn fontGowunB" id="validate" onclick="valid();">인증</button></td>
                         </tr>
                         <tr>
                             <td colspan="3"><span id="submitMsg" class="fontGowunB"></span></td>
