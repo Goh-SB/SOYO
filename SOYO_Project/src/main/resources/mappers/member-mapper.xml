@@ -311,4 +311,9 @@
 		    AND IS_DEFAULT = 'N'
 	</select>
 		
+	<select id="addressList" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM DELIVERY_ADDRESS
+		WHERE MEMBER_ID=#{memberId}
+	</select>
 </mapper>

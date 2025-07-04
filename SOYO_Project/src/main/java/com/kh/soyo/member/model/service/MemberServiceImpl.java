@@ -164,6 +164,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectAddress(sqlSession, memberId);
 	}
 
+	@Override
+	public int addressList(String memberId) {
+		return memberDao.addressList(sqlSession,memberId);
+	}
+
 
 
 }
