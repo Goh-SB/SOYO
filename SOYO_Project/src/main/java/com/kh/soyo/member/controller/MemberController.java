@@ -573,40 +573,45 @@ public class MemberController {
 		
 		// 비밀번호 비교를 위해 세션에서 비밀번호 가져오기
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		
-		// 일단 현재 사용중인 비밀번호가 맞는지 확인
-		if(bCryptPasswordEncoder.matches(originPwd, loginUser.getMemberPwd())) { // 같을경우
-			
-			// 바꿀 비밀번호도 암호화
-			String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
-			
-			// 해시맵으로 묶어서 전달값 넘겨주기
-			HashMap<String, String> hm = new HashMap<>();
-			hm.put("memberId", userId);
-			hm.put("updatePwd", updateEncPwd);
-			
-			// 비밀번호 변경 진행
-			int result = memberService.updatePwd(hm);
-			
-			if(result > 0) { // 성공
+		if(loginUser != null) {
+			// 일단 현재 사용중인 비밀번호가 맞는지 확인
+			if(bCryptPasswordEncoder.matches(originPwd, loginUser.getMemberPwd())) { // 같을경우
+				
+				// 바꿀 비밀번호도 암호화
+				String updateEncPwd = bCryptPasswordEncoder.encode(updatePwd);
+				
+				// 해시맵으로 묶어서 전달값 넘겨주기
+				HashMap<String, String> hm = new HashMap<>();
+				hm.put("memberId", userId);
+				hm.put("updatePwd", updateEncPwd);
+				
+				// 비밀번호 변경 진행
+				int result = memberService.updatePwd(hm);
+				
+				if(result > 0) { // 성공
+								
+					session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다.");
+					
+					return "member/loginPage";
+					
+				} else { // 실패
+					 session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다.");
+					 return "redirect:/member/myInformation";
+				}
 				
 				
-				session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다.");
+			} else {
 				
-				return "member/loginPage";
-				
-			} else { // 실패
-				 session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다.");
+				session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+				return "redirect:/member/myInformation";
 			}
-			
-			
 		} else {
 			
-			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+			session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			return "member/loginPage";
 		}
-		
-		return "redirect:/member/myInformation";
 	}
+		
 	
 	
 	// 회원 탈퇴용 메소드
@@ -617,33 +622,42 @@ public class MemberController {
 		userPwd = (XssDefencePolicy.defence(userPwd));
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		//loginUser에 세션값 담기
-		// System.out.println(loginUser);
-		if(bCryptPasswordEncoder.matches(userPwd, loginUser.getMemberPwd()))
-		{ // 성공시
-			// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가)
-			
-			int result = memberService.deleteMember(loginUser.getMemberId());
-			// 회원탈퇴 시키고 오기
-			if(result > 0) { // 탈퇴 성공시
+		
+		if(loginUser != null) {
+		
+			//loginUser에 세션값 담기
+			// System.out.println(loginUser);
+			if(bCryptPasswordEncoder.matches(userPwd, loginUser.getMemberPwd()))
+			{ // 성공시
+				// 비밀번호가 세션의 비밀번호와 같은지 판별(비크립트 추가)
 				
-				session.setAttribute("alertMsg", "회원탈퇴 성공");
+				int result = memberService.deleteMember(loginUser.getMemberId());
+				// 회원탈퇴 시키고 오기
+				if(result > 0) { // 탈퇴 성공시
+					
+					session.setAttribute("alertMsg", "회원탈퇴 성공");
+					
+					session.removeAttribute("loginUser");
+					
+					return "redirect:/";
+					
+				} else { // 탈퇴 실패시
+					
+					session.setAttribute("alertMsg", "회원탈퇴 실패");
+					
+					return "common/errorPage";
+				}
 				
-				session.removeAttribute("loginUser");
+			} else { // 실패시
+				session.setAttribute("alertMsg", "잘못된 비밀번호 입니다.");
 				
-				return "redirect:/";
-				
-			} else { // 탈퇴 실패시
-				
-				session.setAttribute("alertMsg", "회원탈퇴 실패");
-				
-				return "common/errorPage";
+				return "redirect:/member/myInformation";
 			}
+		
+		} else {
 			
-		} else { // 실패시
-			session.setAttribute("alertMsg", "잘못된 비밀번호 입니다.");
-			
-			return "redirect:/member/myInformation";
+			session.setAttribute("alertMsg", "로그인 후 이용해주세요.");
+			return "member/loginPage";
 		}
 		
 	}
