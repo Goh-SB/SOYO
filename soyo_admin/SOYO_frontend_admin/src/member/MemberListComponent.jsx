@@ -18,6 +18,8 @@ function MemberListComponent() {
 
     let [statusFilter, setStatusFilter] = useState('모든사항');
 
+    let [ sun, setSun ] = useState(null);
+
     let navigate = useNavigate();
 
 
@@ -275,13 +277,20 @@ function MemberListComponent() {
         }).catch(() => { });
 
     }
-
+    const sunglasses = () => {
+        if(sun == null){
+        setSun("http://192.168.40.32:8100/soyo/resources/product_upfile/sunglasses.PNG");
+        } else {
+            setSun(null);
+        }
+    }
 
     return (
 
         <div>
 
-            <h2>회원 관리</h2>
+            <h2 onClick={sunglasses}>회원 관리</h2>
+            <img id="sunglasses" src={sun}></img>
             <div className="filter-container">
                 <p>회원 상태별 필터링</p>
                 <div className="filter-buttons">
