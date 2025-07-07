@@ -742,6 +742,8 @@ public class MemberController {
 	    
 	    String originEmail = memberService.findEmail(m);
 	    
+	    if(originEmail == null) {
+	    
 		// 이메일이 같을경우에만 비밀번호가 바뀌도록 조건문
 		if(originEmail.equals(m.getEmail())) {
 			// 이메일이 같을 경우
@@ -803,6 +805,10 @@ public class MemberController {
 			session.setAttribute("alertMsg", "이메일이 등록된 이메일과 다릅니다.");
 			return "member/newMemberPwd";
 		}
+	    } else {
+	    	session.setAttribute("alertMsg", "이메일이 등록된 이메일과 다릅니다.");
+			return "member/newMemberPwd";
+	    }
 		
 	}
 	
