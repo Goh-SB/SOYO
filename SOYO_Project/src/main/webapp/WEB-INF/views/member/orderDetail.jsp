@@ -1202,7 +1202,7 @@ body{
                 <jsp:include page="../member/leftMenu2.jsp" />
             </div>
             <div class="" id="myContent">
-				<div id="title"><span class="fontspan">OrderDetail</span></div>
+				<div id="title"><span class="fontspan">주문 상세</span></div>
                 <div id="aa">
                         <div class="myWishList">
                             <c:choose>
