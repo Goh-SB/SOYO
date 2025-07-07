@@ -498,7 +498,7 @@
 		    	 
 		    	 
 		    
-		        alert("결제 성공! imp_uid: " + rsp.imp_uid);
+		        alert("결제 성공! 주문번호는 " + rsp.imp_uid+ "입니다." );
 		        sessionStorage.setItem("last_imp_uid", rsp.imp_uid);
 		      } else {
 		        alert("결제 실패: " + rsp.error_msg);
