@@ -144,7 +144,7 @@
                         
                             <div class="resultDiv">
                                 <span class="fontsize20">이름</span><br>
-                                <input maxlength="4" name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" > <br>
+                                <input maxlength="4" required name="memberName" class="fontsize20 updateInput" type="text" value="${ sessionScope.loginUser.memberName }" > <br>
                             
                             <input type="password" name="memberPwd" class="fontsize20 updateInput" value="${ sessionScope.loginUser.memberPwd }" style="display: none;">
                             <span class="fontsize20">성별</span><br>
@@ -155,10 +155,10 @@
                                 <input id="genderX" name="gender" type="radio" style="width: 20px; height: 20px; margin-left: 50px;" value="X"><span class="fontsize20">&nbsp; 선택안함</span>
                             </div>
                                 <span class="fontsize20">생년월일</span><br>
-                                <input name="birthDate" type="date" id="memberDate" class="fontsize20 updateInput input-field" value="${ sessionScope.loginUser.birthDate }" ><br>
+                                <input name="birthDate" type="date" id="memberDate" class="fontsize20 updateInput input-field" value="${ sessionScope.loginUser.birthDate }" required ><br>
            
                                 <span class="fontsize20">휴대전화번호</span><br>
-                                <input name="phone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" ><br>
+                                <input name="phone" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" type="text" class="fontsize20 updateInput" value="${ sessionScope.loginUser.phone }" required ><br>
                             </div>
 
                             <div class="resultDiv">
@@ -204,13 +204,18 @@ document.getElementById('memberDate').setAttribute('max', today);
 }
 
     // 라디오버튼 성별 체크표시를 위한 스크립트
-    if("${sessionScope.loginUser.gender}" == 'M') {
-        document.getElementById("genderM").checked = true;
-        // console.log("${sessionScope.loginUser.gender}");
+    var gender = "${sessionScope.loginUser.gender}";
 
-    } else if("${sessionScope.loginUser.gender} == 'F'"){
+    if (gender === 'M') {
+
+        document.getElementById("genderM").checked = true;
+
+    } else if (gender === 'F') {
+
         document.getElementById("genderF").checked = true;
-    } else if("${sessionScope.loginUser.gender} == 'X'"){
+
+    } else if (gender === 'X') {
+
         document.getElementById("genderX").checked = true;
     }
 </script>
