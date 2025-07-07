@@ -784,7 +784,16 @@ public class MemberController {
 			int result = memberService.changePwd(m);
 			
 			if(result > 0) {
-				session.setAttribute("alertMsg", "현재 알림창을 닫으면 변경된 비밀번호를 다시 확인할 수 없습니다. 로그인 후 마이페이지에서 비밀번호를 변경해주세요. 변경된 임시비밀번호 : " + sb);
+				session.setAttribute("alertMsg", " 이메일로 새 비밀번호가 발급되었습니다. ");
+				SimpleMailMessage message = new SimpleMailMessage();
+				
+				// 메세지 정보 담기
+				message.setSubject("[soyo] 비밀번호 재발급 이메일입니다.");
+				message.setText(" 비밀번호 변경에서 비밀번호를 재설정해 주시길 바랍니다. \n 비밀번호 : \n " + sb);
+				message.setTo(originEmail);
+				
+				mailSender.send(message);
+				
 				return "member/newMemberPwd";
 			} else {
 				session.setAttribute("alertMsg", "비밀번호 재발급 실패 다시 시도해주세요");
