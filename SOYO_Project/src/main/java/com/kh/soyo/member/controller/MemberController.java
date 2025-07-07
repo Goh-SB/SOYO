@@ -742,7 +742,7 @@ public class MemberController {
 	    
 	    String originEmail = memberService.findEmail(m);
 	    
-	    if(originEmail == null) {
+	    if(originEmail.equals(null)) {
 	    
 		// 이메일이 같을경우에만 비밀번호가 바뀌도록 조건문
 		if(originEmail.equals(m.getEmail())) {
