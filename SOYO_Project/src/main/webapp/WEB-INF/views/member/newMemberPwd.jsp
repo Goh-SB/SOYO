@@ -206,7 +206,7 @@
                             <td colspan="3"><span id="submitMsg" class="fontGowunB"></span></td>
                         </tr>
                         <tr>
-                            <td class="submitBtnTr" colspan="3"><button style="cursor: pointer;" class="submitBtn fontGowunB" type="submit">찾기</button></td>
+                            <td class="submitBtnTr" colspan="3"><button style="cursor: pointer;" class="submitBtn fontGowunB" onclick="certsu()" type="submit">찾기</button></td>
                         </tr>
                     </table>
                 </form>
@@ -223,6 +223,12 @@ function showLoading() {
 function hideLoading() {
     document.getElementById('loadingOverlay').style.display = 'none';
 }
+
+function certsu(){
+    showLoading();
+}
+
+
 function cert() {
     let email = $("#email").val();
     const emailCheck = document.getElementById("emailCheck");
